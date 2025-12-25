@@ -7,33 +7,62 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-Komande za pokretanje projekta nakon kloniranja
+Commands to Run the Project After Cloning
+
+Install PHP dependencies:
 
 composer install
 
+Install Node.js dependencies:
+
 npm install
+
+Copy the example environment file:
 
 cp .env.example .env
 
+Generate the application key:
+
 php artisan key:generate
+
+Create the SQLite database file:
+
+touch database/database.sqlite
+
+Run migrations:
 
 php artisan migrate
 
-php artisan db:seed -- opciono, napravljeni su seeder-i za oglase, Customer user-e i kategorije
+Run seeders (optional):
 
-Napomena za seedere: slika oglasa se nece prikazivati jer je storage folder prazan, ali rucno ubacivanje slika ce savrseno raditi
+php artisan db:seed
 
-php artisan storage:link -- opciono, pravljenje linkova ka slikama u storage folderu
+Seeders create ads, Customer users, and categories.
+Note: Ad images will not appear because the storage folder is empty. You can add images manually and it will work perfectly.
 
-php artisan config:cache -- opciono, brisanje cache
+Create symbolic links for storage (optional):
+
+php artisan storage:link
+
+Clear and cache config (optional):
+
+php artisan config:cache
+
+Build frontend assets:
 
 npm run dev
 
+Start the Laravel development server:
+
 php artisan serve
 
-pravljenje Admin usera (super admin)
+Creating a Super Admin User
+
+Open Tinker:
 
 php artisan tinker
+
+Run the following command in Tinker:
 
 \App\Models\User::create([
     'name' => 'Super Admin',
@@ -41,3 +70,8 @@ php artisan tinker
     'password' => bcrypt('12345678'),
     'role' => 'admin',
 ]);
+
+
+For the lazy 🙂
+
+composer install && npm install && cp .env.example .env && php artisan key:generate && touch database/database.sqlite && php artisan migrate --seed && mkdir -p public/storage/ads && php artisan storage:link && php artisan config:clear && php artisan cache:clear && npm run dev && php artisan serve

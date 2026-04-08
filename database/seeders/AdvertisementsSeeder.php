@@ -16,7 +16,7 @@ class AdvertisementsSeeder extends Seeder
         $userIds    = User::pluck('id')->toArray();
         $categoryIds = Category::pluck('id')->toArray();
 
-        foreach (range(1, 20) as $index) {
+        foreach (range(1, 60) as $index) {
             $title = $faker->sentence(3, true);
 
             Advertisement::create([

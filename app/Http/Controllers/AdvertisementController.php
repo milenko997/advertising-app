@@ -29,7 +29,14 @@ class AdvertisementController extends Controller
                 });
             })
             ->latest()
-            ->get();
+            ->paginate(20);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'html'    => view('partials.ad-cards', compact('ads'))->render(),
+                'hasMore' => $ads->hasMorePages(),
+            ]);
+        }
 
         $user = auth()->user();
 
@@ -159,7 +166,7 @@ class AdvertisementController extends Controller
         return redirect()->route('advertisements.trash')->with('success', 'Advertisement restored successfully.');
     }
 
-    public function byCategory(string $parent, ?string $child = null)
+    public function byCategory(Request $request, string $parent, ?string $child = null)
     {
         $parentCategory = Category::where('slug', $parent)->firstOrFail();
 
@@ -171,8 +178,15 @@ class AdvertisementController extends Controller
             $category = $parentCategory;
         }
 
-        $advertisements = $category->advertisements()->with('user', 'category')->latest()->get();
+        $ads = $category->advertisements()->with('user', 'category')->latest()->paginate(20);
 
-        return view('advertisements.by-category', compact('category', 'advertisements'));
+        if ($request->ajax()) {
+            return response()->json([
+                'html'    => view('partials.ad-cards', compact('ads'))->render(),
+                'hasMore' => $ads->hasMorePages(),
+            ]);
+        }
+
+        return view('advertisements.by-category', compact('category', 'ads'));
     }
 }

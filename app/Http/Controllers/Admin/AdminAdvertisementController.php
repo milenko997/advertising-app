@@ -61,7 +61,7 @@ class AdminAdvertisementController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'phone' => 'required|string|min:8|max:15',
             'location' => 'required|string',
-            'category_id' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         if ($request->hasFile('image')) {

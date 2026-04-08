@@ -3,98 +3,68 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class AdminCustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
-     */
     public function index()
     {
         $customers = User::where('role', 'customer')->get();
         return view('admin.customers.index', compact('customers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        // no need for now
+        // not needed
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store()
     {
-        // no need for now
+        // not needed
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show()
     {
-        // now need for now
+        // not needed
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param User $customer
-     * @return Application|Factory|View|Response
-     */
     public function edit(User $customer)
     {
         return view('admin.customers.edit', compact('customer'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param User $customer
-     * @return RedirectResponse
-     */
-    public function update(Request $request, User $customer)
+    public function update(UpdateCustomerRequest $request, User $customer): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'role' => 'required',
-        ]);
+        $customer->update($request->only(['name', 'email', 'role']));
 
-        $customer->update($request->all());
         return redirect()->route('admin.customers.index')->with('success', 'Customer updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param User $customer
-     * @return RedirectResponse
-     */
-    public function destroy(User $customer)
+    public function destroy(User $customer): RedirectResponse
     {
         $customer->delete();
+
         return redirect()->route('admin.customers.index')->with('success', 'Customer deleted successfully');
+    }
+
+    public function restore($id): RedirectResponse
+    {
+        $user = User::withTrashed()->with('advertisements')->findOrFail($id);
+
+        if ($user->trashed()) {
+            $user->restore();
+
+            foreach ($user->advertisements as $post) {
+                if ($post->trashed()) {
+                    $post->restore();
+                }
+            }
+
+            return redirect()->back()->with('success', 'User and their advertisements restored successfully.');
+        }
+
+        return redirect()->back()->with('info', 'User is not deleted.');
     }
 }

@@ -38,6 +38,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
 });
 
 Route::get('/advertisements/{slug}', [AdvertisementController::class, 'show'])->name('advertisements.show');
-Route::get('/category/{slug}', [AdvertisementController::class, 'byCategory'])->name('advertisements.byCategory');
+Route::get('/category/{parent}/{child?}', [AdvertisementController::class, 'byCategory'])
+    ->name('advertisements.byCategory');
 
 require __DIR__.'/auth.php';

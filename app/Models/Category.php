@@ -44,4 +44,18 @@ class Category extends Model
             }
         });
     }
+
+    public function getUrlAttribute()
+    {
+        if ($this->parent) {
+            return route('advertisements.byCategory', [
+                'parent' => $this->parent->slug,
+                'child' => $this->slug,
+            ]);
+        }
+
+        return route('advertisements.byCategory', [
+            'parent' => $this->slug,
+        ]);
+    }
 }

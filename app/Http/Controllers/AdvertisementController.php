@@ -6,6 +6,7 @@ use App\Http\Requests\StoreAdvertisementRequest;
 use App\Http\Requests\UpdateAdvertisementRequest;
 use App\Models\Advertisement;
 use App\Models\Category;
+use App\Services\ImageService;
 use App\Services\SlugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +42,7 @@ class AdvertisementController extends Controller
         $imagePath = null;
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('ads', 'public');
+            $imagePath = ImageService::store($request->file('image'));
         }
 
         Advertisement::create([
@@ -93,7 +94,8 @@ class AdvertisementController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            $ad->image = $request->file('image')->store('ads', 'public');
+            ImageService::delete($ad->image);
+            $ad->image = ImageService::store($request->file('image'));
         }
 
         $ad->save();

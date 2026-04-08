@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement;
 use App\Models\Category;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 
 class AdminAdvertisementController extends Controller
@@ -58,15 +59,15 @@ class AdminAdvertisementController extends Controller
             'description' => 'required|string',
             'price' => 'required|string|max:255',
             'condition' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'phone' => 'required|string|min:8|max:15',
             'location' => 'required|string',
             'category_id' => 'required|exists:categories,id',
         ]);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('ads', 'public');
-            $validated['image'] = $path;
+            ImageService::delete($advertisement->image);
+            $validated['image'] = ImageService::store($request->file('image'));
         }
 
         $advertisement->update($validated);

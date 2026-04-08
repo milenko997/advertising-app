@@ -27,8 +27,7 @@
                             <option value="used">{{ __('Used') }}</option>
                         </select>
 
-                        <x-label>{{ __('Image') }}:</x-label>
-                        <input type="file" name="image" class="mb-4">
+                        @include('partials.image-upload')
 
                         <x-label>{{ __('Phone') }}:</x-label>
                         <x-input name="phone" class="mb-2" maxlength="15"></x-input>

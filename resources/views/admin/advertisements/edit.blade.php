@@ -40,17 +40,7 @@
                         @error('condition') <div class="text-red-600 text-sm">{{ $message }}</div> @enderror
                     </div>
 
-                    <div class="mb-4">
-                        <x-label for="image">{{ __('Current Image') }}</x-label>
-                        <img src="{{ asset('storage/' . $advertisement->image) }}" alt="Advertisement Image" class="w-48 h-auto rounded shadow mb-2">
-
-                        <x-label for="image">{{ __('Change Image') }}</x-label>
-                        <input type="file" name="image" id="image" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4
-                            file:rounded file:border-0 file:text-sm file:font-semibold
-                            file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"/>
-
-                        @error('image') <div class="text-red-600 text-sm mt-1">{{ $message }}</div> @enderror
-                    </div>
+                    @include('partials.image-upload', ['current' => $advertisement->image])
 
                     <div class="mb-4">
                         <label class="block font-medium text-sm text-gray-700">{{ __('Phone') }}</label>

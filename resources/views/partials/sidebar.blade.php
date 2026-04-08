@@ -8,7 +8,8 @@
     <ul class="space-y-2">
         @foreach ($categories as $category)
             <li>
-                <a href="{{ route('advertisements.byCategory', $category->slug) }}" class="text-blue-600 hover:underline font-semibold">
+                <a href="{{ route('advertisements.byCategory', ['parent' => $category->slug]) }}"
+                   class="text-blue-600 hover:underline font-semibold">
                     {{ $category->name }}
                 </a>
 
@@ -16,7 +17,8 @@
                     <ul class="ml-4 mt-1 space-y-1 list-disc list-inside text-sm text-gray-700">
                         @foreach ($category->children as $child)
                             <li>
-                                <a href="{{ route('advertisements.byCategory', $child->slug) }}" class="hover:underline">
+                                <a href="{{ route('advertisements.byCategory', ['parent' => $category->slug, 'child' => $child->slug]) }}"
+                                   class="hover:underline">
                                     {{ $child->name }}
                                 </a>
                             </li>

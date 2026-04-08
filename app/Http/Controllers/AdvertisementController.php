@@ -158,9 +158,6 @@ class AdvertisementController extends Controller
 
         $advertisements = $category->advertisements()->with('user', 'category')->latest()->get();
 
-        return inertia('Advertisements/Category', [
-            'category'       => $category,
-            'advertisements' => $advertisements,
-        ]);
+        return view('advertisements.by-category', compact('category', 'advertisements'));
     }
 }

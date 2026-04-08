@@ -45,6 +45,11 @@ class Category extends Model
         });
     }
 
+    public function advertisements()
+    {
+        return $this->hasMany(\App\Models\Advertisement::class);
+    }
+
     public function getUrlAttribute()
     {
         if ($this->parent) {

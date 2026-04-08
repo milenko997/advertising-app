@@ -13,12 +13,27 @@ use Illuminate\Support\Facades\Auth;
 
 class AdvertisementController extends Controller
 {
-    public function publicIndex()
+    public function publicIndex(Request $request)
     {
-        $ads = Advertisement::with('user', 'category')->latest()->get();
+        $search = $request->get('search');
+
+        $ads = Advertisement::with('user', 'category')
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', '%' . $search . '%')
+                      ->orWhere('description', 'like', '%' . $search . '%')
+                      ->orWhere('location', 'like', '%' . $search . '%')
+                      ->orWhereHas('category', function ($q) use ($search) {
+                          $q->where('name', 'like', '%' . $search . '%');
+                      });
+                });
+            })
+            ->latest()
+            ->get();
+
         $user = auth()->user();
 
-        return view('advertisements.public-index', compact('ads', 'user'));
+        return view('advertisements.public-index', compact('ads', 'user', 'search'));
     }
 
     public function userIndex()

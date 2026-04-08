@@ -1,61 +1,94 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create Advertisement') }}
-        </h2>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('Post Advertisement') }}</h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white">
-                    <form action="{{ route('advertisements.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <x-label>{{ __('Title') }}:</x-label>
-                        <x-input name="title" class="mb-2"></x-input>
+    <div class="py-8">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
 
-                        <x-label>{{ __('Description') }}:</x-label>
-                        <x-textarea name="description" class="mb-2"></x-textarea>
+                @if ($errors->any())
+                    <div class="mb-5 bg-red-50 border border-red-200 rounded-lg p-4">
+                        <ul class="text-sm text-red-600 space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-                        <x-label>{{ __('Price') }}:</x-label>
-                        <x-input name="price" class="mb-2"></x-input>
+                <form action="{{ route('advertisements.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
 
-                        <x-label>{{ __('Condition') }}:</x-label>
-                        <select name="condition" class="mb-2">
-                            <option value="" selected disabled>{{ __('Select Option') }}</option>
-                            <option value="new">{{ __('New') }}</option>
-                            <option value="used">{{ __('Used') }}</option>
-                        </select>
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Title') }}</label>
+                        <input type="text" name="title" value="{{ old('title') }}"
+                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        @error('title') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                    </div>
 
-                        @include('partials.image-upload')
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Description') }}</label>
+                        <textarea name="description" rows="4"
+                                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">{{ old('description') }}</textarea>
+                        @error('description') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                    </div>
 
-                        <x-label>{{ __('Phone') }}:</x-label>
-                        <x-input name="phone" class="mb-2" maxlength="15"></x-input>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Price') }}</label>
+                            <input type="text" name="price" value="{{ old('price') }}"
+                                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            @error('price') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Condition') }}</label>
+                            <select name="condition"
+                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                <option value="" disabled selected>{{ __('Select condition') }}</option>
+                                <option value="new" {{ old('condition') === 'new' ? 'selected' : '' }}>{{ __('New') }}</option>
+                                <option value="used" {{ old('condition') === 'used' ? 'selected' : '' }}>{{ __('Used') }}</option>
+                            </select>
+                            @error('condition') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
 
-                        <x-label>{{ __('Location') }}:</x-label>
-                        <x-input name="location" class="mb-2"></x-input>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Phone') }}</label>
+                            <input type="text" name="phone" value="{{ old('phone') }}" maxlength="15"
+                                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            @error('phone') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Location') }}</label>
+                            <input type="text" name="location" value="{{ old('location') }}"
+                                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            @error('location') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
 
-                        <x-label>{{ __('Category') }}:</x-label>
-                        <select name="category_id" required class="mb-2">
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Category') }}</label>
+                        <select name="category_id"
+                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                             <option value="">{{ __('Select category') }}</option>
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
                             @endforeach
                         </select>
-                        <br>
-                        <x-button>{{ __('Save') }}</x-button>
-                    </form>
+                        @error('category_id') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                    </div>
 
-                    @if ($errors->any())
-                        <div class="bg-red-100 text-red-700 p-3 mb-4">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                </div>
+                    @include('partials.image-upload')
+
+                    <div class="mt-6 flex items-center gap-3">
+                        <x-button type="submit">{{ __('Post Ad') }}</x-button>
+                        <a href="{{ route('advertisements.user') }}" class="text-sm text-gray-500 hover:text-gray-700">{{ __('Cancel') }}</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

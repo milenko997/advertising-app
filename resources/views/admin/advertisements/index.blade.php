@@ -1,65 +1,58 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('All Advertisements') }}
-        </h2>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('All Advertisements') }}</h2>
     </x-slot>
 
-    <div class="py-12">
-        <aside class="fixed right-0 top-1/2 -translate-y-1/2">
-            @include('partials.sidebar')
-        </aside>
+    <div class="py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            @include('partials.flash')
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white">
-                    @if(session('success'))
-                        <div class="mb-4 text-green-600 font-semibold">{{ session('success') }}</div>
-                    @endif
-
-                    @forelse($ads as $ad)
-                        <div class="border p-4 mb-4 rounded shadow d-flex justify-content-between align-items-center">
-                            <div class="">
-                                <h2 class="text-xl font-semibold">{{ $ad->title }}</h2>
-
-                                <p class="text-gray-700 mb-2">{{ $ad->description }}</p>
-
-                                <p class="text-sm text-gray-500 mb-2">{{ __('Price') }}: {{ $ad->price }}</p>
-
-                                <p class="text-sm text-gray-500 mb-2">{{ __('Condition') }}: {{ $ad->condition }}</p>
-
-                                @if($ad->image)
-                                    <img src="{{ asset('storage/' . $ad->image) }}" alt="image" class="w-48 h-auto mb-2">
-                                @endif
-
-                                <p class="text-sm text-gray-500 mb-2">{{ __('Phone') }}: {{ $ad->phone }}</p>
-
-                                <p class="text-sm text-gray-500 mb-2">{{ __('Location') }}: {{ $ad->location }}</p>
-
-                                <p class="text-sm text-gray-500 mb-2">{{ __('Category') }}: {{ $ad->category->name }}</p>
-
-                                <p class="text-sm text-gray-500 mb-2">{{ __('Author') }}: {{ $ad->user->name }}</p>
-
-                                @if ($ad->created_at != $ad->updated_at)
-                                    <p class="text-sm text-gray-500 mt-2">{{ __('Updated') }}: {{ $ad->updated_at->format('d.m.Y') }}</p>
-                                @else
-                                    <p class="text-sm text-gray-500 mt-2">{{ __('Posted') }}: {{ $ad->created_at->format('d.m.Y') }}</p>
-                                @endif
-                            </div>
-                            <div class="flex">
-                                <x-button href="{{ route('admin.advertisements.edit', $ad) }}" >{{ __('EDIT') }}</x-button>
-
-                                <form action="{{ route('admin.advertisements.destroy', $ad) }}" method="POST" onsubmit="return confirm('Are you sure?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <x-button class="bg-danger">{{ __('DELETE') }}</x-button>
-                                </form>
-                            </div>
-                        </div>
-                    @empty
-                        <p>{{ __('No advertisements found.') }}</p>
-                    @endforelse
-                </div>
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ __('Title') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ __('Category') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ __('User') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ __('Price') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ __('Date') }}</th>
+                            <th class="px-6 py-3"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @forelse($ads as $ad)
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4">
+                                    <p class="font-medium text-gray-900 text-sm">{{ $ad->title }}</p>
+                                    <p class="text-xs text-gray-400 mt-0.5 truncate max-w-xs">{{ $ad->description }}</p>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600">{{ $ad->category->name }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">{{ $ad->user->name }}</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-indigo-600">{{ $ad->price }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-400">{{ $ad->created_at->format('d.m.Y') }}</td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <x-button :href="route('admin.advertisements.edit', $ad)" variant="secondary">
+                                            {{ __('Edit') }}
+                                        </x-button>
+                                        <form action="{{ route('admin.advertisements.destroy', $ad) }}" method="POST"
+                                              onsubmit="return confirm('{{ __('Are you sure?') }}')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-button variant="danger">{{ __('Delete') }}</x-button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="px-6 py-16 text-center text-gray-500">
+                                    {{ __('No advertisements found.') }}
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

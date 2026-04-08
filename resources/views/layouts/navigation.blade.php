@@ -1,149 +1,127 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="/">
-                        <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
-                    </a>
-                </div>
+        <div class="flex justify-between items-center h-16">
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="/" :active="request()->routeIs('/')">
+            {{-- Left: Logo + links --}}
+            <div class="flex items-center gap-8">
+                <a href="{{ route('home') }}" class="shrink-0 text-xl font-bold text-indigo-600 tracking-tight">
+                    AdBoard
+                </a>
+
+                <div class="hidden sm:flex items-center gap-1">
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
-                    @auth
-                        @if(auth()->user()->role === 'admin')
-                            {{-- Admin navigacija --}}
-                            <x-nav-link :href="route('admin.advertisements.index')" :active="request()->routeIs('admin.advertisements.*')">
-                                {{ __('All Advertisements') }}
-                            </x-nav-link>
 
+                    @auth
+                        @if(auth()->user()->isAdmin())
+                            <x-nav-link :href="route('admin.advertisements.index')" :active="request()->routeIs('admin.advertisements.*')">
+                                {{ __('Advertisements') }}
+                            </x-nav-link>
                             <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
                                 {{ __('Categories') }}
                             </x-nav-link>
-
                             <x-nav-link :href="route('admin.customers.index')" :active="request()->routeIs('admin.customers.*')">
                                 {{ __('Customers') }}
                             </x-nav-link>
                         @else
-                            {{-- Customer navigacija --}}
                             <x-nav-link :href="route('advertisements.user')" :active="request()->routeIs('advertisements.user')">
-                                {{ __('My Advertisements') }}
+                                {{ __('My Ads') }}
                             </x-nav-link>
-
+                            <x-nav-link :href="route('advertisements.create')" :active="request()->routeIs('advertisements.create')">
+                                {{ __('Post Ad') }}
+                            </x-nav-link>
                             <x-nav-link :href="route('advertisements.trash')" :active="request()->routeIs('advertisements.trash')">
                                 {{ __('Trash') }}
                             </x-nav-link>
                         @endif
                     @endauth
-{{--                    @php--}}
-{{--                        use App\Models\Category;--}}
-{{--                        $categories = Category::all();--}}
-{{--                    @endphp--}}
-
-{{--                    <x-dropdown align="left" width="48">--}}
-{{--                        <x-slot name="trigger">--}}
-{{--                            <button class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium text-gray-500 hover:text-gray-700">--}}
-{{--                                {{ __('Categories') }}--}}
-{{--                                <svg class="ml-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">--}}
-{{--                                    <path fill-rule="evenodd" d="..." clip-rule="evenodd" />--}}
-{{--                                </svg>--}}
-{{--                            </button>--}}
-{{--                        </x-slot>--}}
-
-{{--                        <x-slot name="content">--}}
-{{--                            @foreach ($categories as $category)--}}
-{{--                                <x-dropdown-link :href="route('advertisements.byCategory', $category->slug)">--}}
-{{--                                    {{ $category->name }}--}}
-{{--                                </x-dropdown-link>--}}
-{{--                            @endforeach--}}
-{{--                        </x-slot>--}}
-{{--                    </x-dropdown>--}}
-                </div>
-                <div class="relative flex items-top justify-center">
-                    @if (Route::has('login'))
-                        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                            @auth
-                                <div class="hidden sm:flex sm:items-center sm:ml-6">
-                                    <x-dropdown align="right" width="48">
-                                        <x-slot name="trigger">
-                                            <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                                <div>{{ Auth::user()->name }}</div>
-
-                                                <div class="ml-1">
-                                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                    </svg>
-                                                </div>
-                                            </button>
-                                        </x-slot>
-
-                                        <x-slot name="content">
-                                            <!-- Authentication -->
-                                            <form method="POST" action="{{ route('logout') }}">
-                                                @csrf
-
-                                                <x-dropdown-link :href="route('logout')"
-                                                                 onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                                    {{ __('Log Out') }}
-                                                </x-dropdown-link>
-                                            </form>
-                                        </x-slot>
-                                    </x-dropdown>
-                                </div>
-                            @else
-                                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">{{ __('Log in') }}</a>
-
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">{{ __('Register') }}</a>
-                                @endif
-                            @endauth
-                        </div>
-                    @endif
                 </div>
             </div>
 
-            <!-- Hamburger -->
-            <div class="-mr-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+            {{-- Right: User menu / auth links --}}
+            <div class="hidden sm:flex items-center">
+                @auth
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 focus:outline-none transition">
+                                <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-sm">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                </span>
+                                <span>{{ Auth::user()->name }}</span>
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                        </x-slot>
+                        <x-slot name="content">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault(); this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                @else
+                    <div class="flex items-center gap-4">
+                        <a href="{{ route('login') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900">
+                            {{ __('Log in') }}
+                        </a>
+                        @if(Route::has('register'))
+                            <a href="{{ route('register') }}"
+                               class="text-sm font-medium bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                {{ __('Register') }}
+                            </a>
+                        @endif
+                    </div>
+                @endauth
             </div>
+
+            {{-- Mobile hamburger --}}
+            <button @click="open = !open"
+                    class="sm:hidden p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path :class="{'hidden': open, 'inline-flex': !open}" class="inline-flex"
+                          stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    <path :class="{'hidden': !open, 'inline-flex': open}" class="hidden"
+                          stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
+    {{-- Mobile menu --}}
+    <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden border-t border-gray-200 bg-gray-50">
+        <div class="px-4 py-3 space-y-1">
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                {{ __('Home') }}
+            </x-responsive-nav-link>
+            @auth
+                @if(auth()->user()->isAdmin())
+                    <x-responsive-nav-link :href="route('admin.advertisements.index')">{{ __('Advertisements') }}</x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.categories.index')">{{ __('Categories') }}</x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.customers.index')">{{ __('Customers') }}</x-responsive-nav-link>
+                @else
+                    <x-responsive-nav-link :href="route('advertisements.user')">{{ __('My Ads') }}</x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('advertisements.create')">{{ __('Post Ad') }}</x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('advertisements.trash')">{{ __('Trash') }}</x-responsive-nav-link>
+                @endif
+            @endauth
         </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-{{--                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>--}}
-{{--                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>--}}
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
+        @auth
+            <div class="px-4 py-3 border-t border-gray-200">
+                <p class="text-sm font-semibold text-gray-800">{{ Auth::user()->name }}</p>
+                <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
+                <form method="POST" action="{{ route('logout') }}" class="mt-2">
                     @csrf
-
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                        onclick="event.preventDefault(); this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
-        </div>
+        @endauth
     </div>
 </nav>

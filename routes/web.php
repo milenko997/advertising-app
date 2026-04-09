@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminAdvertisementController;
 use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
 });
 
 Route::get('/advertisements/{slug}', [AdvertisementController::class, 'show'])->name('advertisements.show');
+Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show');
 Route::get('/category/{parent}/{child?}', [AdvertisementController::class, 'byCategory'])
     ->name('advertisements.byCategory');
 

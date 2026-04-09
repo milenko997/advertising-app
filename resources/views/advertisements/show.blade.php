@@ -63,7 +63,10 @@
                         </div>
                         <div>
                             <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">{{ __('Seller') }}</p>
-                            <p class="text-gray-800">{{ $ad->user->name }}</p>
+                            <a href="{{ route('user.show', $ad->user) }}"
+                               class="text-indigo-600 hover:underline font-medium">
+                                {{ $ad->user->name }}
+                            </a>
                         </div>
                         <div>
                             <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">

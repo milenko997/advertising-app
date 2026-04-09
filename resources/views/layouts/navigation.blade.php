@@ -55,6 +55,10 @@
                             </button>
                         </x-slot>
                         <x-slot name="content">
+                            <x-dropdown-link :href="route('profile.show')">
+                                {{ __('My Profile') }}
+                            </x-dropdown-link>
+                            <div class="border-t border-gray-100 my-1"></div>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link :href="route('logout')"
@@ -114,13 +118,18 @@
             <div class="px-4 py-3 border-t border-gray-200">
                 <p class="text-sm font-semibold text-gray-800">{{ Auth::user()->name }}</p>
                 <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
-                <form method="POST" action="{{ route('logout') }}" class="mt-2">
-                    @csrf
-                    <x-responsive-nav-link :href="route('logout')"
-                        onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                <div class="mt-2 space-y-1">
+                    <x-responsive-nav-link :href="route('profile.show')" :active="request()->routeIs('profile.*')">
+                        {{ __('My Profile') }}
                     </x-responsive-nav-link>
-                </form>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault(); this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-responsive-nav-link>
+                    </form>
+                </div>
             </div>
         @endauth
     </div>

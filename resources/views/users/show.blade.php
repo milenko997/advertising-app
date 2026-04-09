@@ -8,11 +8,17 @@
 
             {{-- Seller card --}}
             <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8 flex items-center gap-5">
-                <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
-                    <span class="text-2xl font-bold text-indigo-600">
-                        {{ strtoupper(substr($user->name, 0, 1)) }}
-                    </span>
-                </div>
+                @if($user->avatar)
+                    <img src="{{ asset('storage/' . $user->avatar) }}"
+                         alt="{{ $user->name }}"
+                         class="w-16 h-16 rounded-full object-cover border-2 border-gray-200 shrink-0">
+                @else
+                    <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
+                        <span class="text-2xl font-bold text-indigo-600">
+                            {{ strtoupper(substr($user->name, 0, 1)) }}
+                        </span>
+                    </div>
+                @endif
                 <div>
                     <h1 class="text-xl font-bold text-gray-900">{{ $user->name }}</h1>
                     <p class="text-sm text-gray-500 mt-0.5">

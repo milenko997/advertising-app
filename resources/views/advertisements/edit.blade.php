@@ -21,6 +21,7 @@
                     @csrf
                     @method('PUT')
 
+                    {{-- Title --}}
                     <div class="mb-5">
                         <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Title') }}</label>
                         <input type="text" name="title" value="{{ old('title', $ad->title) }}"
@@ -28,6 +29,7 @@
                         @error('title') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
                     </div>
 
+                    {{-- Description --}}
                     <div class="mb-5">
                         <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Description') }}</label>
                         <textarea name="description" rows="4"
@@ -35,41 +37,74 @@
                         @error('description') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
                     </div>
 
+                    {{-- Vehicle Type + Availability --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Price') }}</label>
-                            <input type="text" name="price" value="{{ old('price', $ad->price) }}"
-                                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                            @error('price') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Vehicle Type') }} <span class="text-red-500">*</span></label>
+                            <select name="vehicle_type"
+                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                <option value="" disabled>{{ __('Select vehicle type') }}</option>
+                                @foreach(['truck' => 'Truck', 'van' => 'Van', 'pickup' => 'Pickup', 'trailer' => 'Trailer', 'flatbed' => 'Flatbed', 'refrigerator_truck' => 'Refrigerator Truck', 'tanker' => 'Tanker', 'other' => 'Other'] as $val => $label)
+                                    <option value="{{ $val }}" {{ old('vehicle_type', $ad->vehicle_type) === $val ? 'selected' : '' }}>{{ __($label) }}</option>
+                                @endforeach
+                            </select>
+                            @error('vehicle_type') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Condition') }}</label>
-                            <select name="condition"
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Availability') }} <span class="text-red-500">*</span></label>
+                            <select name="availability"
                                     class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                                <option value="new" {{ old('condition', $ad->condition) === 'new' ? 'selected' : '' }}>{{ __('New') }}</option>
-                                <option value="used" {{ old('condition', $ad->condition) === 'used' ? 'selected' : '' }}>{{ __('Used') }}</option>
+                                <option value="available" {{ old('availability', $ad->availability) === 'available' ? 'selected' : '' }}>{{ __('Available') }}</option>
+                                <option value="on_request" {{ old('availability', $ad->availability) === 'on_request' ? 'selected' : '' }}>{{ __('On Request') }}</option>
                             </select>
-                            @error('condition') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            @error('availability') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
                         </div>
                     </div>
 
+                    {{-- Payload + Route --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Phone') }}</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Payload Capacity') }}</label>
+                            <input type="text" name="payload" value="{{ old('payload', $ad->payload) }}" placeholder="{{ __('e.g. 10 tons') }}"
+                                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            @error('payload') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Area / Route') }}</label>
+                            <input type="text" name="route" value="{{ old('route', $ad->route) }}" placeholder="{{ __('e.g. National, Belgrade–Novi Sad') }}"
+                                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            @error('route') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
+
+                    {{-- Price --}}
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Price') }}</label>
+                        <input type="text" name="price" value="{{ old('price', $ad->price) }}" placeholder="{{ __('e.g. 0.5 EUR/km, 50 EUR/h, Price on request') }}"
+                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        <p class="mt-1 text-xs text-gray-400">{{ __('Leave empty to show "Price on request"') }}</p>
+                        @error('price') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                    </div>
+
+                    {{-- Phone + Location --}}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Phone') }} <span class="text-red-500">*</span></label>
                             <input type="text" name="phone" value="{{ old('phone', $ad->phone) }}" maxlength="15"
                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                             @error('phone') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Location') }}</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Location') }} <span class="text-red-500">*</span></label>
                             <input type="text" name="location" value="{{ old('location', $ad->location) }}"
                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                             @error('location') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
                         </div>
                     </div>
 
+                    {{-- Category --}}
                     <div class="mb-5">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Category') }}</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Category') }} <span class="text-red-500">*</span></label>
                         <select name="category_id"
                                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                             @foreach($categories as $category)

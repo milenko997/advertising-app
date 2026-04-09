@@ -72,16 +72,19 @@ class AdvertisementController extends Controller
         }
 
         Advertisement::create([
-            'user_id'     => Auth::id(),
-            'title'       => $request->title,
-            'slug'        => SlugService::generate($request->title),
-            'description' => $request->description,
-            'price'       => $request->price,
-            'condition'   => $request->condition,
-            'image'       => $imagePath,
-            'phone'       => $request->phone,
-            'location'    => $request->location,
-            'category_id' => $request->category_id,
+            'user_id'      => Auth::id(),
+            'title'        => $request->title,
+            'slug'         => SlugService::generate($request->title),
+            'description'  => $request->description,
+            'vehicle_type' => $request->vehicle_type,
+            'payload'      => $request->payload,
+            'route'        => $request->route,
+            'availability' => $request->availability,
+            'price'        => $request->price,
+            'image'        => $imagePath,
+            'phone'        => $request->phone,
+            'location'     => $request->location,
+            'category_id'  => $request->category_id,
         ]);
 
         return redirect()->route('advertisements.user')->with('success', 'Advertisement created successfully.');
@@ -107,13 +110,16 @@ class AdvertisementController extends Controller
         $ad = Advertisement::where('slug', $slug)->firstOrFail();
         $this->authorize('update', $ad);
 
-        $ad->title       = $request->title;
-        $ad->description = $request->description;
-        $ad->price       = $request->price;
-        $ad->condition   = $request->condition;
-        $ad->phone       = $request->phone;
-        $ad->location    = $request->location;
-        $ad->category_id = $request->category_id;
+        $ad->title        = $request->title;
+        $ad->description  = $request->description;
+        $ad->vehicle_type = $request->vehicle_type;
+        $ad->payload      = $request->payload;
+        $ad->route        = $request->route;
+        $ad->availability = $request->availability;
+        $ad->price        = $request->price;
+        $ad->phone        = $request->phone;
+        $ad->location     = $request->location;
+        $ad->category_id  = $request->category_id;
 
         if ($request->title !== $ad->getOriginal('title')) {
             $ad->slug = SlugService::generate($request->title, $ad->id);

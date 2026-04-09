@@ -31,15 +31,15 @@
                 @endif
 
                 <div class="p-6">
-                    {{-- Price + condition --}}
+                    {{-- Price + availability --}}
                     <div class="flex items-center gap-3 mb-4">
-                        <span class="text-2xl font-bold text-indigo-600">{{ $ad->price }}</span>
-                        @if($ad->condition)
-                            <span class="px-2.5 py-0.5 text-xs font-medium rounded-full
-                                {{ $ad->condition === 'new' || $ad->condition === 'New' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700' }}">
-                                {{ ucfirst($ad->condition) }}
-                            </span>
-                        @endif
+                        <span class="text-2xl font-bold text-indigo-600">
+                            {{ $ad->price ?: __('Price on request') }}
+                        </span>
+                        <span class="px-2.5 py-0.5 text-xs font-medium rounded-full
+                            {{ $ad->availability === 'available' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700' }}">
+                            {{ $ad->availability === 'available' ? __('Available') : __('On Request') }}
+                        </span>
                     </div>
 
                     {{-- Description --}}
@@ -77,9 +77,25 @@
                     {{-- Details grid --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-gray-100 pt-6">
                         <div>
+                            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">{{ __('Vehicle Type') }}</p>
+                            <p class="text-gray-800">{{ ucwords(str_replace('_', ' ', $ad->vehicle_type)) ?: '—' }}</p>
+                        </div>
+                        <div>
                             <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">{{ __('Category') }}</p>
                             <p class="text-gray-800">{{ $ad->category->name }}</p>
                         </div>
+                        @if($ad->payload)
+                        <div>
+                            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">{{ __('Payload Capacity') }}</p>
+                            <p class="text-gray-800">{{ $ad->payload }}</p>
+                        </div>
+                        @endif
+                        @if($ad->route)
+                        <div>
+                            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">{{ __('Area / Route') }}</p>
+                            <p class="text-gray-800">{{ $ad->route }}</p>
+                        </div>
+                        @endif
                         <div>
                             <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">{{ __('Location') }}</p>
                             <p class="text-gray-800">{{ $ad->location }}</p>
@@ -91,7 +107,7 @@
                             </a>
                         </div>
                         <div>
-                            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">{{ __('Seller') }}</p>
+                            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">{{ __('Owner') }}</p>
                             <a href="{{ route('user.show', $ad->user) }}"
                                class="text-indigo-600 hover:underline font-medium">
                                 {{ $ad->user->name }}

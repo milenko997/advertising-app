@@ -24,7 +24,9 @@
                 <h3 class="font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors leading-snug line-clamp-2">
                     {{ $ad->title }}
                 </h3>
-                <span class="text-indigo-600 font-bold shrink-0">{{ $ad->price }}</span>
+                <span class="text-indigo-600 font-bold shrink-0 text-sm">
+                    {{ $ad->price ?: __('On request') }}
+                </span>
             </div>
 
             <p class="text-sm text-gray-500 line-clamp-2 mb-3">{{ $ad->description }}</p>
@@ -46,12 +48,17 @@
                 <span class="ml-auto">{{ $ad->created_at->format('d.m.Y') }}</span>
             </div>
 
-            @if($ad->condition)
-                <span class="inline-block mt-2 px-2 py-0.5 text-xs rounded-full w-fit
-                    {{ $ad->condition === 'new' || $ad->condition === 'New' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700' }}">
-                    {{ ucfirst($ad->condition) }}
+            <div class="flex items-center gap-2 mt-2">
+                @if($ad->vehicle_type)
+                    <span class="px-2 py-0.5 text-xs rounded-full bg-indigo-50 text-indigo-700">
+                        {{ ucwords(str_replace('_', ' ', $ad->vehicle_type)) }}
+                    </span>
+                @endif
+                <span class="px-2 py-0.5 text-xs rounded-full
+                    {{ $ad->availability === 'available' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700' }}">
+                    {{ $ad->availability === 'available' ? __('Available') : __('On Request') }}
                 </span>
-            @endif
+            </div>
         </div>
     </a>
 

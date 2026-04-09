@@ -45,6 +45,35 @@
                     {{-- Description --}}
                     <p class="text-gray-700 leading-relaxed mb-6">{{ $ad->description }}</p>
 
+                    {{-- Bookmark --}}
+                    @auth
+                    <div class="mb-4"
+                         x-data="{ saved: {{ auth()->user()->favorites()->where('advertisement_id', $ad->id)->exists() ? 'true' : 'false' }}, loading: false }">
+                        <button @click="
+                                    if (loading) return;
+                                    loading = true;
+                                    fetch('{{ route('favorites.toggle', $ad->id) }}', {
+                                        method: 'POST',
+                                        headers: {
+                                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+                                            'Accept': 'application/json'
+                                        }
+                                    }).then(r => r.json()).then(d => { saved = d.saved; loading = false; })"
+                                class="inline-flex items-center gap-2 px-4 py-2 border rounded-lg text-sm font-medium transition"
+                                :class="saved
+                                    ? 'border-indigo-300 bg-indigo-50 text-indigo-700 hover:bg-indigo-100'
+                                    : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'">
+                            <svg x-show="!saved" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                            </svg>
+                            <svg x-show="saved" class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                            </svg>
+                            <span x-text="saved ? '{{ __('Saved') }}' : '{{ __('Save ad') }}'"></span>
+                        </button>
+                    </div>
+                    @endauth
+
                     {{-- Details grid --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-gray-100 pt-6">
                         <div>

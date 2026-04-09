@@ -1,6 +1,8 @@
 @foreach($ads as $ad)
+    <div class="group bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md hover:border-indigo-200 transition-all flex flex-col relative">
+
     <a href="{{ route('advertisements.show', $ad->slug) }}"
-       class="group bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md hover:border-indigo-200 transition-all flex flex-col">
+       class="flex flex-col flex-1">
 
         @if($ad->image)
             <div class="aspect-video overflow-hidden bg-gray-100 shrink-0">
@@ -52,4 +54,33 @@
             @endif
         </div>
     </a>
+
+    {{-- Bookmark button — after <a> so it paints on top of the image --}}
+    @auth
+    <div class="absolute top-2 right-2 z-10"
+         x-data="{ saved: {{ in_array($ad->id, $favoritedIds ?? []) ? 'true' : 'false' }}, loading: false }"
+         @click.stop @click.prevent>
+        <button @click="
+                    if (loading) return;
+                    loading = true;
+                    fetch('{{ route('favorites.toggle', $ad->id) }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+                            'Accept': 'application/json'
+                        }
+                    }).then(r => r.json()).then(d => { saved = d.saved; loading = false; })"
+                class="w-8 h-8 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm shadow hover:bg-white transition"
+                :title="saved ? '{{ __('Remove from saved') }}' : '{{ __('Save ad') }}'">
+            <svg x-show="!saved" class="w-4 h-4 text-gray-400 hover:text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+            </svg>
+            <svg x-show="saved" class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+            </svg>
+        </button>
+    </div>
+    @endauth
+
+    </div>{{-- end card wrapper --}}
 @endforeach

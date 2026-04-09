@@ -6,6 +6,7 @@ use App\Http\Requests\StoreAdvertisementRequest;
 use App\Http\Requests\UpdateAdvertisementRequest;
 use App\Models\Advertisement;
 use App\Models\Category;
+use App\Models\Favorite;
 use App\Services\ImageService;
 use App\Services\SlugService;
 use Illuminate\Http\Request;
@@ -40,9 +41,10 @@ class AdvertisementController extends Controller
             ]);
         }
 
-        $user = auth()->user();
+        $user          = auth()->user();
+        $favoritedIds  = Favorite::idsForUser(Auth::id());
 
-        return view('advertisements.public-index', compact('ads', 'user', 'search', 'location'));
+        return view('advertisements.public-index', compact('ads', 'user', 'search', 'location', 'favoritedIds'));
     }
 
     public function userIndex()
@@ -194,6 +196,8 @@ class AdvertisementController extends Controller
             ]);
         }
 
-        return view('advertisements.by-category', compact('category', 'ads', 'location'));
+        $favoritedIds = Favorite::idsForUser(Auth::id());
+
+        return view('advertisements.by-category', compact('category', 'ads', 'location', 'favoritedIds'));
     }
 }

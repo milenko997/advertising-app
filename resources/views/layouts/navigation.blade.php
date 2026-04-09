@@ -31,6 +31,9 @@
                             <x-nav-link :href="route('advertisements.create')" :active="request()->routeIs('advertisements.create')">
                                 {{ __('Post Ad') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('favorites.index')" :active="request()->routeIs('favorites.*')">
+                                {{ __('Saved') }}
+                            </x-nav-link>
                             <x-nav-link :href="route('advertisements.trash')" :active="request()->routeIs('advertisements.trash')">
                                 {{ __('Trash') }}
                             </x-nav-link>
@@ -110,6 +113,7 @@
                 @else
                     <x-responsive-nav-link :href="route('advertisements.user')">{{ __('My Ads') }}</x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('advertisements.create')">{{ __('Post Ad') }}</x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('favorites.index')">{{ __('Saved') }}</x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('advertisements.trash')">{{ __('Trash') }}</x-responsive-nav-link>
                 @endif
             @endauth

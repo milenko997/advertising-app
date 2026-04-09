@@ -51,28 +51,50 @@
             @endforeach
         </nav>
 
-        {{-- Search --}}
-        <form action="{{ route('home') }}" method="GET"
-              class="flex items-center gap-2">
+        {{-- Search + Location --}}
+        <form action="{{ url()->current() }}" method="GET"
+              class="flex items-center gap-2 flex-wrap">
+            {{-- Preserve category route params --}}
+            @if(request()->route('parent'))
+                <input type="hidden" name="parent" value="{{ request()->route('parent') }}">
+            @endif
+            @if(request()->route('child'))
+                <input type="hidden" name="child" value="{{ request()->route('child') }}">
+            @endif
+
+            {{-- Keyword search --}}
             <div class="relative">
-                <input type="text"
-                       name="search"
-                       value="{{ request('search') }}"
-                       placeholder="{{ __('Search ads or categories…') }}"
-                       class="border border-gray-300 rounded-lg pl-9 pr-3 py-1.5 text-sm w-64
+                <input type="text" name="search" value="{{ request('search') }}"
+                       placeholder="{{ __('Search…') }}"
+                       class="border border-gray-300 rounded-lg pl-9 pr-3 py-1.5 text-sm w-44
                               focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                 <svg class="absolute left-2.5 top-2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
                 </svg>
             </div>
+
+            {{-- Location filter --}}
+            <div class="relative">
+                <input type="text" name="location" value="{{ request('location') }}"
+                       placeholder="{{ __('Location…') }}"
+                       class="border border-gray-300 rounded-lg pl-9 pr-3 py-1.5 text-sm w-36
+                              focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                <svg class="absolute left-2.5 top-2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+            </div>
+
             <button type="submit"
                     class="bg-indigo-600 text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-indigo-700 transition">
                 {{ __('Search') }}
             </button>
-            @if(request('search'))
-                <a href="{{ route('home') }}"
-                   class="text-gray-400 hover:text-gray-600 text-lg leading-none" title="{{ __('Clear search') }}">✕</a>
+
+            @if(request('search') || request('location'))
+                <a href="{{ request()->routeIs('home') ? route('home') : url()->current() }}"
+                   class="text-gray-400 hover:text-gray-600 text-lg leading-none" title="{{ __('Clear') }}">✕</a>
             @endif
         </form>
     </div>

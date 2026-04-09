@@ -15,7 +15,8 @@ class AdvertisementController extends Controller
 {
     public function publicIndex(Request $request)
     {
-        $search = $request->get('search');
+        $search   = $request->get('search');
+        $location = $request->get('location');
 
         $ads = Advertisement::with('user', 'category')
             ->when($search, function ($query) use ($search) {
@@ -28,6 +29,7 @@ class AdvertisementController extends Controller
                       });
                 });
             })
+            ->when($location, fn ($q) => $q->where('location', 'like', '%' . $location . '%'))
             ->latest()
             ->paginate(20);
 
@@ -40,7 +42,7 @@ class AdvertisementController extends Controller
 
         $user = auth()->user();
 
-        return view('advertisements.public-index', compact('ads', 'user', 'search'));
+        return view('advertisements.public-index', compact('ads', 'user', 'search', 'location'));
     }
 
     public function userIndex()
@@ -178,7 +180,12 @@ class AdvertisementController extends Controller
             $category = $parentCategory;
         }
 
-        $ads = $category->advertisements()->with('user', 'category')->latest()->paginate(20);
+        $location = $request->get('location');
+
+        $ads = $category->advertisements()->with('user', 'category')
+            ->when($location, fn ($q) => $q->where('location', 'like', '%' . $location . '%'))
+            ->latest()
+            ->paginate(20);
 
         if ($request->ajax()) {
             return response()->json([
@@ -187,6 +194,6 @@ class AdvertisementController extends Controller
             ]);
         }
 
-        return view('advertisements.by-category', compact('category', 'ads'));
+        return view('advertisements.by-category', compact('category', 'ads', 'location'));
     }
 }

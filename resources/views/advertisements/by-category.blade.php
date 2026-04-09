@@ -12,13 +12,14 @@
                 page: {{ $ads->currentPage() }},
                 loading: false,
                 hasMore: {{ $ads->hasMorePages() ? 'true' : 'false' }},
-                url: '{{ url()->current() }}',
                 async loadMore() {
                     if (this.loading || !this.hasMore) return;
                     this.loading = true;
                     this.page++;
                     try {
-                        const res = await fetch(this.url + '?page=' + this.page, {
+                        const params = new URLSearchParams(window.location.search);
+                        params.set('page', this.page);
+                        const res = await fetch('{{ url()->current() }}?' + params, {
                             headers: { 'X-Requested-With': 'XMLHttpRequest' }
                         });
                         const data = await res.json();

@@ -25,7 +25,7 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
     };
 
     return (
-        <AppLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Edit Advertisement</h2>}>
+        <AppLayout>
             <div className="py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">

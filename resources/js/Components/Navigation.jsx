@@ -47,12 +47,17 @@ export default function Navigation() {
 
                     {/* Left: Logo + links */}
                     <div className="flex items-center gap-8">
-                        <Link href="/" className="shrink-0 text-xl font-bold text-indigo-600 tracking-tight">
-                            AdBoard
+                        <Link href="/" className="shrink-0 flex items-center gap-2">
+                            <span className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center">
+                                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                </svg>
+                            </span>
+                            <span className="text-lg font-bold text-gray-900 tracking-tight">AdBoard</span>
                         </Link>
 
                         <div className="hidden sm:flex items-center gap-1">
-                            <NavLink href="/" active={currentPath === '/'}>Home</NavLink>
+                            <NavLink href="/" active={currentPath === '/'}>Browse</NavLink>
 
                             {user && user.isAdmin && (
                                 <>
@@ -65,7 +70,6 @@ export default function Navigation() {
                             {user && !user.isAdmin && (
                                 <>
                                     <NavLink href="/my-advertisements" active={currentPath === '/my-advertisements'}>My Ads</NavLink>
-                                    <NavLink href="/advertisements/create" active={currentPath === '/advertisements/create'}>Post Ad</NavLink>
                                     <NavLink href="/favorites" active={currentPath === '/favorites'}>Saved</NavLink>
                                     <NavLink href="/advertisements/trash" active={currentPath === '/advertisements/trash'}>Trash</NavLink>
                                 </>
@@ -74,7 +78,18 @@ export default function Navigation() {
                     </div>
 
                     {/* Right: User menu */}
-                    <div className="hidden sm:flex items-center">
+                    <div className="hidden sm:flex items-center gap-3">
+                        {user && !user.isAdmin && (
+                            <Link
+                                href="/advertisements/create"
+                                className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition-colors"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                </svg>
+                                Post Ad
+                            </Link>
+                        )}
                         {user ? (
                             <div className="relative">
                                 <button

@@ -47,7 +47,7 @@ export default function Home({ ads, search, location, favoritedIds }) {
             />
 
             <div className="py-8">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     {search && (
                         <p className="text-sm text-gray-500 mb-5">
@@ -68,7 +68,7 @@ export default function Home({ ads, search, location, favoritedIds }) {
                         </div>
                     ) : (
                         <>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                                 {adList.map(ad => (
                                     <AdCard key={ad.id} ad={ad} favoritedIds={favoritedIds} />
                                 ))}

@@ -12,9 +12,14 @@ export default function Trash({ ads }) {
     };
 
     return (
-        <AppLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Trash</h2>}>
+        <AppLayout>
             <div className="py-8">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    <div className="mb-6">
+                        <h1 className="text-2xl font-bold text-gray-900">Trash</h1>
+                        <p className="text-sm text-gray-500 mt-0.5">Deleted ads are permanently removed after 30 days.</p>
+                    </div>
                     {ads.length === 0 ? (
                         <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
                             <svg className="w-14 h-14 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

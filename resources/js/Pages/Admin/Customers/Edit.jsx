@@ -10,11 +10,11 @@ export default function CustomersEdit({ customer }) {
 
     const submit = (e) => {
         e.preventDefault();
-        put(`/admin/customers/${customer.id}`);
+        put(`/admin/customers/${customer.slug}`);
     };
 
     return (
-        <AppLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Edit Customer</h2>}>
+        <AppLayout>
             <div className="py-8">
                 <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">

@@ -82,6 +82,7 @@ class CategoryController extends Controller
         return Inertia::render('Admin/Categories/Edit', [
             'category'   => [
                 'id'        => $category->id,
+                'slug'      => $category->slug,
                 'name'      => $category->name,
                 'parent_id' => $category->parent_id,
             ],

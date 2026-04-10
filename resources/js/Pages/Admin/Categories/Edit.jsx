@@ -9,11 +9,11 @@ export default function CategoriesEdit({ category, categories }) {
 
     const submit = (e) => {
         e.preventDefault();
-        put(`/admin/categories/${category.id}`);
+        put(`/admin/categories/${category.slug}`);
     };
 
     return (
-        <AppLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Edit Category</h2>}>
+        <AppLayout>
             <div className="py-8">
                 <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">

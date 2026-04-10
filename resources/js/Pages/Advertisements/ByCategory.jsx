@@ -45,14 +45,14 @@ export default function ByCategory({ category, ads, location, favoritedIds }) {
             />
 
             <div className="py-8">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {adList.length === 0 ? (
                         <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
                             <p className="text-gray-500">No advertisements found in this category.</p>
                         </div>
                     ) : (
                         <>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                                 {adList.map(ad => (
                                     <AdCard key={ad.id} ad={ad} favoritedIds={favoritedIds} />
                                 ))}

@@ -2,9 +2,9 @@ import { Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 export default function CategoriesIndex({ categories }) {
-    const destroy = (id) => {
+    const destroy = (slug) => {
         if (!confirm('Are you sure?')) return;
-        router.delete(`/admin/categories/${id}`);
+        router.delete(`/admin/categories/${slug}`);
     };
 
     return (
@@ -46,13 +46,13 @@ export default function CategoriesIndex({ categories }) {
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 <Link
-                                                    href={`/admin/categories/${cat.id}/edit`}
+                                                    href={`/admin/categories/${cat.slug}/edit`}
                                                     className="px-3 py-1.5 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
                                                 >
                                                     Edit
                                                 </Link>
                                                 <button
-                                                    onClick={() => destroy(cat.id)}
+                                                    onClick={() => destroy(cat.slug)}
                                                     className="px-3 py-1.5 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
                                                 >
                                                     Delete

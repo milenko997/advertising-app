@@ -46,9 +46,13 @@ export default function ProfileShow({ user }) {
     };
 
     return (
-        <AppLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">My Profile</h2>}>
+        <AppLayout>
             <div className="py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+                    <div className="mb-2">
+                        <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
+                        <p className="text-sm text-gray-500 mt-0.5">Manage your account information and security settings.</p>
+                    </div>
 
                     {/* Profile Information */}
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">

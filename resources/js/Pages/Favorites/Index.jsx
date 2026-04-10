@@ -26,9 +26,17 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds 
     };
 
     return (
-        <AppLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Saved Ads</h2>}>
+        <AppLayout>
             <div className="py-8">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    {/* Page header */}
+                    <div className="mb-6">
+                        <h1 className="text-2xl font-bold text-gray-900">Saved Ads</h1>
+                        {adList.length > 0 && (
+                            <p className="text-sm text-gray-500 mt-0.5">{ads.total} saved advertisement{ads.total !== 1 ? 's' : ''}</p>
+                        )}
+                    </div>
 
                     {adList.length === 0 ? (
                         <div className="text-center py-20 bg-white rounded-xl border border-gray-200">
@@ -36,14 +44,15 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds 
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                                     d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                             </svg>
-                            <p className="text-gray-500 font-medium">No saved ads yet.</p>
-                            <Link href="/" className="mt-3 inline-block text-sm text-indigo-600 hover:underline">
+                            <p className="text-gray-500 font-medium mb-1">No saved ads yet.</p>
+                            <p className="text-sm text-gray-400 mb-4">Bookmark ads you're interested in to find them quickly.</p>
+                            <Link href="/" className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition">
                                 Browse ads
                             </Link>
                         </div>
                     ) : (
                         <>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                                 {adList.map(ad => (
                                     <AdCard key={ad.id} ad={ad} favoritedIds={favoritedIds} />
                                 ))}
@@ -54,7 +63,7 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds 
                                     <button
                                         onClick={loadMore}
                                         disabled={loading}
-                                        className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 transition disabled:opacity-50"
+                                        className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-indigo-300 transition disabled:opacity-50"
                                     >
                                         {loading && (
                                             <svg className="w-4 h-4 animate-spin text-indigo-600" fill="none" viewBox="0 0 24 24">

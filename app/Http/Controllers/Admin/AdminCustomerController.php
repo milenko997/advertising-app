@@ -14,6 +14,7 @@ class AdminCustomerController extends Controller
     {
         $customers = User::where('role', 'customer')->get()->map(fn ($u) => [
             'id'         => $u->id,
+            'slug'       => $u->slug,
             'name'       => $u->name,
             'email'      => $u->email,
             'role'       => $u->role,
@@ -43,6 +44,7 @@ class AdminCustomerController extends Controller
         return Inertia::render('Admin/Customers/Edit', [
             'customer' => [
                 'id'    => $customer->id,
+                'slug'  => $customer->slug,
                 'name'  => $customer->name,
                 'email' => $customer->email,
                 'role'  => $customer->role,

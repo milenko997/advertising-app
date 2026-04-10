@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Favorite;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,6 +44,33 @@ class UserController extends Controller
 
         $favoritedIds = Favorite::idsForUser(Auth::id());
 
+        $reviews = Review::with('reviewer')
+            ->where('reviewed_user_id', $user->id)
+            ->latest()
+            ->get()
+            ->map(fn ($r) => [
+                'id'         => $r->id,
+                'rating'     => $r->rating,
+                'comment'    => $r->comment,
+                'created_at' => $r->created_at->format('d.m.Y'),
+                'reviewer'   => [
+                    'id'     => $r->reviewer->id,
+                    'name'   => $r->reviewer->name,
+                    'slug'   => $r->reviewer->slug,
+                    'avatar' => $r->reviewer->avatar,
+                ],
+            ])->values()->all();
+
+        $avgRating = count($reviews) > 0
+            ? round(collect($reviews)->avg('rating'), 1)
+            : null;
+
+        $myReview = Auth::check()
+            ? Review::where('reviewer_id', Auth::id())
+                ->where('reviewed_user_id', $user->id)
+                ->first()
+            : null;
+
         return Inertia::render('Users/Show', [
             'user' => [
                 'id'     => $user->id,
@@ -57,6 +85,13 @@ class UserController extends Controller
                 'total'        => $ads->total(),
             ],
             'favoritedIds' => $favoritedIds,
+            'reviews'      => $reviews,
+            'avgRating'    => $avgRating,
+            'myReview'     => $myReview ? [
+                'id'      => $myReview->id,
+                'rating'  => $myReview->rating,
+                'comment' => $myReview->comment,
+            ] : null,
         ]);
     }
 }

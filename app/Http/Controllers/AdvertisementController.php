@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateAdvertisementRequest;
 use App\Models\Advertisement;
 use App\Models\Category;
 use App\Models\Favorite;
+use App\Models\Review;
 use App\Services\ImageService;
 use App\Services\SlugService;
 use Illuminate\Http\Request;
@@ -101,9 +102,46 @@ class AdvertisementController extends Controller
             ? Auth::user()->favorites()->where('advertisement_id', $ad->id)->exists()
             : false;
 
+        $reviews = [];
+        $avgRating = null;
+        $myReview = null;
+
+        if ($ad->user) {
+            $reviews = Review::with('reviewer')
+                ->where('reviewed_user_id', $ad->user_id)
+                ->latest()
+                ->get()
+                ->map(fn ($r) => [
+                    'id'         => $r->id,
+                    'rating'     => $r->rating,
+                    'comment'    => $r->comment,
+                    'created_at' => $r->created_at->format('d.m.Y'),
+                    'reviewer'   => [
+                        'id'     => $r->reviewer->id,
+                        'name'   => $r->reviewer->name,
+                        'slug'   => $r->reviewer->slug,
+                        'avatar' => $r->reviewer->avatar,
+                    ],
+                ])->values()->all();
+
+            $avgRating = count($reviews) > 0
+                ? round(collect($reviews)->avg('rating'), 1)
+                : null;
+
+            if (Auth::check()) {
+                $raw = Review::where('reviewer_id', Auth::id())
+                    ->where('reviewed_user_id', $ad->user_id)
+                    ->first();
+                $myReview = $raw ? ['id' => $raw->id, 'rating' => $raw->rating, 'comment' => $raw->comment] : null;
+            }
+        }
+
         return Inertia::render('Advertisements/Show', [
-            'ad'      => $this->formatAd($ad),
-            'isSaved' => $isSaved,
+            'ad'        => $this->formatAd($ad),
+            'isSaved'   => $isSaved,
+            'reviews'   => $reviews,
+            'avgRating' => $avgRating,
+            'myReview'  => $myReview,
         ]);
     }
 
@@ -248,7 +286,7 @@ class AdvertisementController extends Controller
                 ? ['id' => $ad->category->id, 'name' => $ad->category->name]
                 : null,
             'user'         => $ad->relationLoaded('user') && $ad->user
-                ? ['id' => $ad->user->id, 'name' => $ad->user->name, 'slug' => $ad->user->slug]
+                ? ['id' => $ad->user->id, 'name' => $ad->user->name, 'slug' => $ad->user->slug, 'avatar' => $ad->user->avatar]
                 : null,
         ];
     }

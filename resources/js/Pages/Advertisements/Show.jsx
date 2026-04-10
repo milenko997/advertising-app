@@ -24,9 +24,200 @@ function SpecRow({ icon, label, value }) {
     );
 }
 
-export default function Show({ ad, isSaved }) {
-    const { auth } = usePage().props;
+function StarRating({ value, onChange, readOnly = false }) {
+    const [hovered, setHovered] = useState(0);
+    const display = hovered || value;
+
+    return (
+        <div className="flex items-center gap-0.5">
+            {[1, 2, 3, 4, 5].map(star => (
+                <button
+                    key={star}
+                    type="button"
+                    disabled={readOnly}
+                    onClick={() => !readOnly && onChange?.(star)}
+                    onMouseEnter={() => !readOnly && setHovered(star)}
+                    onMouseLeave={() => !readOnly && setHovered(0)}
+                    className={`w-5 h-5 transition-colors ${readOnly ? 'cursor-default' : 'cursor-pointer'}`}
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        className={`w-full h-full transition-colors ${star <= display ? 'text-amber-400' : 'text-gray-200'}`}
+                        fill="currentColor"
+                    >
+                        <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                    </svg>
+                </button>
+            ))}
+        </div>
+    );
+}
+
+function ReviewCard({ review, authUserId }) {
+    const isOwn = authUserId === review.reviewer.id;
+    const [editing, setEditing] = useState(false);
+    const [rating, setRating] = useState(review.rating);
+    const [comment, setComment] = useState(review.comment ?? '');
+    const [submitting, setSubmitting] = useState(false);
+    const [error, setError] = useState('');
+
+    const handleDelete = () => {
+        if (!confirm('Delete your review?')) return;
+        router.delete(`/reviews/${review.id}`);
+    };
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        if (!rating) { setError('Please select a star rating.'); return; }
+        setError('');
+        setSubmitting(true);
+        router.put(`/reviews/${review.id}`, { rating, comment }, {
+            onSuccess: () => setEditing(false),
+            onFinish: () => setSubmitting(false),
+        });
+    };
+
+    return (
+        <div className="flex flex-col gap-3 py-4 border-b border-gray-100 last:border-0">
+            <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
+                        {review.reviewer.avatar ? (
+                            <img
+                                src={`/storage/${review.reviewer.avatar}`}
+                                alt={review.reviewer.name}
+                                className="w-8 h-8 rounded-full object-cover"
+                            />
+                        ) : (
+                            <span className="text-indigo-600 font-bold text-xs">
+                                {review.reviewer.name.charAt(0).toUpperCase()}
+                            </span>
+                        )}
+                    </div>
+                    <div>
+                        <Link
+                            href={`/user/${review.reviewer.slug}`}
+                            className="text-sm font-semibold text-gray-800 hover:text-indigo-600 transition-colors"
+                        >
+                            {review.reviewer.name}
+                        </Link>
+                        <p className="text-xs text-gray-400">{review.created_at}</p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                    {!editing && <StarRating value={review.rating} readOnly />}
+                    {isOwn && !editing && (
+                        <>
+                            <button
+                                onClick={() => setEditing(true)}
+                                className="text-gray-300 hover:text-indigo-500 transition-colors"
+                                title="Edit review"
+                            >
+                                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                className="text-gray-300 hover:text-red-500 transition-colors"
+                                title="Delete review"
+                            >
+                                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </>
+                    )}
+                </div>
+            </div>
+
+            {editing ? (
+                <form onSubmit={handleUpdate} className="space-y-2">
+                    <div>
+                        <StarRating value={rating} onChange={setRating} />
+                        {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+                    </div>
+                    <textarea
+                        rows={3}
+                        value={comment}
+                        onChange={e => setComment(e.target.value)}
+                        maxLength={1000}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
+                    />
+                    <div className="flex items-center gap-2">
+                        <button
+                            type="submit"
+                            disabled={submitting}
+                            className="px-4 py-1.5 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition disabled:opacity-50"
+                        >
+                            {submitting ? 'Saving…' : 'Save'}
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => { setEditing(false); setRating(review.rating); setComment(review.comment ?? ''); setError(''); }}
+                            className="px-4 py-1.5 text-sm text-gray-500 hover:text-gray-700 transition"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            ) : (
+                review.comment && (
+                    <p className="text-sm text-gray-600 leading-relaxed">{review.comment}</p>
+                )
+            )}
+        </div>
+    );
+}
+
+function ReviewForm({ userSlug }) {
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
+    const [submitting, setSubmitting] = useState(false);
+    const [error, setError] = useState('');
+
+    const submit = (e) => {
+        e.preventDefault();
+        if (!rating) { setError('Please select a star rating.'); return; }
+        setError('');
+        setSubmitting(true);
+        router.post(`/user/${userSlug}/reviews`, { rating, comment }, {
+            onFinish: () => setSubmitting(false),
+        });
+    };
+
+    return (
+        <form onSubmit={submit} className="mt-4 pt-4 border-t border-gray-100">
+            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Leave a Review</h4>
+            <div className="mb-3">
+                <StarRating value={rating} onChange={setRating} />
+                {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+            </div>
+            <textarea
+                rows={3}
+                value={comment}
+                onChange={e => setComment(e.target.value)}
+                maxLength={1000}
+                placeholder="Share your experience… (optional)"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none mb-3"
+            />
+            <button
+                type="submit"
+                disabled={submitting}
+                className="px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition disabled:opacity-50"
+            >
+                {submitting ? 'Submitting…' : 'Submit Review'}
+            </button>
+        </form>
+    );
+}
+
+export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
+    const { auth, flash } = usePage().props;
     const isOwner = auth?.user?.id === ad.user_id;
+    const canReview = auth?.user && !isOwner && !myReview;
     const [saved, setSaved] = useState(isSaved);
     const [bookmarkLoading, setBookmarkLoading] = useState(false);
 
@@ -148,6 +339,91 @@ export default function Show({ ad, isSaved }) {
                                     value={ad.category?.name}
                                 />
                             </div>
+
+                            {/* ── Reviews section ── */}
+                            {ad.user && !isOwner && (
+                                <div className="bg-white rounded-xl border border-gray-200 p-6" id="reviews">
+                                    {/* Header */}
+                                    <div className="flex items-center justify-between mb-1">
+                                        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+                                            Seller Reviews
+                                        </h2>
+                                        <Link
+                                            href={`/user/${ad.user.slug}#reviews`}
+                                            className="text-xs text-indigo-600 hover:underline"
+                                        >
+                                            View profile
+                                        </Link>
+                                    </div>
+
+                                    {/* Average rating */}
+                                    {avgRating !== null && (
+                                        <div className="flex items-center gap-2 mb-4">
+                                            <StarRating value={Math.round(avgRating)} readOnly />
+                                            <span className="text-sm font-bold text-gray-700">{avgRating}</span>
+                                            <span className="text-sm text-gray-400">
+                                                ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    {/* Flash messages */}
+                                    {flash?.success && (
+                                        <div className="mb-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg px-4 py-3 text-sm">
+                                            {flash.success}
+                                        </div>
+                                    )}
+                                    {flash?.error && (
+                                        <div className="mb-4 bg-red-50 border border-red-200 text-red-800 rounded-lg px-4 py-3 text-sm">
+                                            {flash.error}
+                                        </div>
+                                    )}
+
+                                    {/* Own review summary */}
+                                    {myReview && (
+                                        <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3 mb-4">
+                                            <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1.5">Your Review</p>
+                                            <StarRating value={myReview.rating} readOnly />
+                                            {myReview.comment && (
+                                                <p className="text-sm text-indigo-700 mt-1.5">{myReview.comment}</p>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* Reviews list */}
+                                    {reviews.length === 0 && !canReview && !auth?.user ? (
+                                        <p className="text-sm text-gray-400">No reviews yet.</p>
+                                    ) : reviews.length > 0 ? (
+                                        <div>
+                                            {reviews.map(review => (
+                                                <ReviewCard
+                                                    key={review.id}
+                                                    review={review}
+                                                    authUserId={auth?.user?.id}
+                                                />
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p className="text-sm text-gray-400">No reviews yet. Be the first!</p>
+                                    )}
+
+                                    {/* Review form for eligible logged-in users */}
+                                    {canReview && <ReviewForm userSlug={ad.user.slug} />}
+
+                                    {/* Guest CTA */}
+                                    {!auth?.user && (
+                                        <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between gap-4">
+                                            <p className="text-sm text-gray-500">Log in to leave a review for this seller.</p>
+                                            <Link
+                                                href={`/user/${ad.user.slug}/review-login`}
+                                                className="shrink-0 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition"
+                                            >
+                                                Log in to Review
+                                            </Link>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
 
                         {/* ── Right column (sticky sidebar) ── */}
@@ -226,7 +502,15 @@ export default function Show({ ad, isSaved }) {
                                                 <p className="text-sm font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
                                                     {ad.user.name}
                                                 </p>
-                                                <p className="text-xs text-gray-400">View profile</p>
+                                                {avgRating !== null && (
+                                                    <div className="flex items-center gap-1 mt-0.5">
+                                                        <StarRating value={Math.round(avgRating)} readOnly />
+                                                        <span className="text-xs text-gray-400">({reviews.length})</span>
+                                                    </div>
+                                                )}
+                                                {avgRating === null && (
+                                                    <p className="text-xs text-gray-400">View profile</p>
+                                                )}
                                             </div>
                                             <svg className="w-4 h-4 text-gray-300 ml-auto group-hover:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

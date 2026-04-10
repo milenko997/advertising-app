@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,12 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
 
 Route::get('/advertisements/{slug}', [AdvertisementController::class, 'show'])->name('advertisements.show');
 Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show');
+
+// Reviews — login-gate sets intended URL so user returns here after login
+Route::get('/user/{user}/review-login', [ReviewController::class, 'loginThenReview'])->middleware('auth')->name('reviews.login');
+Route::post('/user/{user}/reviews', [ReviewController::class, 'store'])->middleware('auth')->name('reviews.store');
+Route::put('/reviews/{review}', [ReviewController::class, 'update'])->middleware('auth')->name('reviews.update');
+Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->middleware('auth')->name('reviews.destroy');
 Route::get('/category/{parent}/{child?}', [AdvertisementController::class, 'byCategory'])
     ->name('advertisements.byCategory');
 

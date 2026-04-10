@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
     public function show()
     {
-        return view('profile.show', ['user' => auth()->user()]);
+        $user = auth()->user();
+        return Inertia::render('Profile/Show', [
+            'user' => [
+                'id'     => $user->id,
+                'name'   => $user->name,
+                'email'  => $user->email,
+                'phone'  => $user->phone,
+                'avatar' => $user->avatar,
+            ],
+        ]);
     }
 
     public function update(Request $request)

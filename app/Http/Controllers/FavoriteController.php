@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Advertisement;
 use App\Models\Favorite;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class FavoriteController extends Controller
 {
@@ -17,14 +18,51 @@ class FavoriteController extends Controller
             ->latest()
             ->paginate(20);
 
-        if ($request->ajax()) {
+        if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
             return response()->json([
-                'html'    => view('partials.ad-cards', compact('ads', 'favoritedIds'))->render(),
+                'ads'     => $ads->map(fn ($ad) => [
+                    'id'           => $ad->id,
+                    'slug'         => $ad->slug,
+                    'title'        => $ad->title,
+                    'description'  => $ad->description,
+                    'price'        => $ad->price,
+                    'vehicle_type' => $ad->vehicle_type,
+                    'availability' => $ad->availability,
+                    'payload'      => $ad->payload,
+                    'route'        => $ad->route,
+                    'image'        => $ad->image,
+                    'location'     => $ad->location,
+                    'created_at'   => $ad->created_at?->format('d.m.Y'),
+                    'category'     => $ad->category ? ['name' => $ad->category->name] : null,
+                ])->values()->all(),
                 'hasMore' => $ads->hasMorePages(),
             ]);
         }
 
-        return view('favorites.index', compact('ads', 'favoritedIds'));
+        return Inertia::render('Favorites/Index', [
+            'ads' => [
+                'data'         => $ads->map(fn ($ad) => [
+                    'id'           => $ad->id,
+                    'slug'         => $ad->slug,
+                    'title'        => $ad->title,
+                    'description'  => $ad->description,
+                    'price'        => $ad->price,
+                    'vehicle_type' => $ad->vehicle_type,
+                    'availability' => $ad->availability,
+                    'payload'      => $ad->payload,
+                    'route'        => $ad->route,
+                    'image'        => $ad->image,
+                    'location'     => $ad->location,
+                    'user_id'      => $ad->user_id,
+                    'created_at'   => $ad->created_at?->format('d.m.Y'),
+                    'category'     => $ad->category ? ['name' => $ad->category->name] : null,
+                ])->values()->all(),
+                'current_page' => $ads->currentPage(),
+                'last_page'    => $ads->lastPage(),
+                'total'        => $ads->total(),
+            ],
+            'favoritedIds' => $favoritedIds,
+        ]);
     }
 
     public function toggle(Advertisement $advertisement)

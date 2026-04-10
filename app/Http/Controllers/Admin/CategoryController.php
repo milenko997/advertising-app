@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -16,8 +17,15 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('admin.categories.index', compact('categories'));
+        $categories = Category::with('parent')->get()->map(fn ($c) => [
+            'id'          => $c->id,
+            'name'        => $c->name,
+            'slug'        => $c->slug,
+            'parent_id'   => $c->parent_id,
+            'parent_name' => $c->parent?->name,
+        ])->values();
+
+        return Inertia::render('Admin/Categories/Index', compact('categories'));
     }
 
     /**
@@ -27,9 +35,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::with('children')->get();
+        $categories = Category::orderBy('name')->get(['id', 'name']);
 
-        return view('admin.categories.create')->with(compact('categories'));
+        return Inertia::render('Admin/Categories/Create', compact('categories'));
     }
 
     /**
@@ -69,8 +77,16 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories = Category::where('id', '!=', $category->id)->get();
-        return view('admin.categories.edit', compact('category', 'categories'));
+        $categories = Category::where('id', '!=', $category->id)->orderBy('name')->get(['id', 'name']);
+
+        return Inertia::render('Admin/Categories/Edit', [
+            'category'   => [
+                'id'        => $category->id,
+                'name'      => $category->name,
+                'parent_id' => $category->parent_id,
+            ],
+            'categories' => $categories,
+        ]);
     }
 
     /**

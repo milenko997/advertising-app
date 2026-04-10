@@ -6,13 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
 
 class AdminCustomerController extends Controller
 {
     public function index()
     {
-        $customers = User::where('role', 'customer')->get();
-        return view('admin.customers.index', compact('customers'));
+        $customers = User::where('role', 'customer')->get()->map(fn ($u) => [
+            'id'         => $u->id,
+            'name'       => $u->name,
+            'email'      => $u->email,
+            'role'       => $u->role,
+            'created_at' => $u->created_at->format('d.m.Y'),
+        ])->values();
+
+        return Inertia::render('Admin/Customers/Index', compact('customers'));
     }
 
     public function create()
@@ -32,7 +40,14 @@ class AdminCustomerController extends Controller
 
     public function edit(User $customer)
     {
-        return view('admin.customers.edit', compact('customer'));
+        return Inertia::render('Admin/Customers/Edit', [
+            'customer' => [
+                'id'    => $customer->id,
+                'name'  => $customer->name,
+                'email' => $customer->email,
+                'role'  => $customer->role,
+            ],
+        ]);
     }
 
     public function update(UpdateCustomerRequest $request, User $customer): RedirectResponse

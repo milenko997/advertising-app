@@ -11,6 +11,7 @@ use App\Services\ImageService;
 use App\Services\SlugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class AdvertisementController extends Controller
 {
@@ -25,26 +26,26 @@ class AdvertisementController extends Controller
                     $q->where('title', 'like', '%' . $search . '%')
                       ->orWhere('description', 'like', '%' . $search . '%')
                       ->orWhere('location', 'like', '%' . $search . '%')
-                      ->orWhereHas('category', function ($q) use ($search) {
-                          $q->where('name', 'like', '%' . $search . '%');
-                      });
+                      ->orWhereHas('category', fn ($q) => $q->where('name', 'like', '%' . $search . '%'));
                 });
             })
             ->when($location, fn ($q) => $q->where('location', 'like', '%' . $location . '%'))
             ->latest()
             ->paginate(20);
 
-        if ($request->ajax()) {
+        if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
             return response()->json([
-                'html'    => view('partials.ad-cards', compact('ads'))->render(),
+                'ads'     => $this->formatAds($ads),
                 'hasMore' => $ads->hasMorePages(),
             ]);
         }
 
-        $user          = auth()->user();
-        $favoritedIds  = Favorite::idsForUser(Auth::id());
-
-        return view('advertisements.public-index', compact('ads', 'user', 'search', 'location', 'favoritedIds'));
+        return Inertia::render('Home', [
+            'ads'          => $this->paginationData($ads),
+            'search'       => $search,
+            'location'     => $location,
+            'favoritedIds' => Favorite::idsForUser(Auth::id()),
+        ]);
     }
 
     public function userIndex()
@@ -54,19 +55,21 @@ class AdvertisementController extends Controller
             ->latest()
             ->get();
 
-        return view('advertisements.user-index', compact('ads'));
+        return Inertia::render('Advertisements/UserIndex', [
+            'ads' => $ads->map(fn ($ad) => $this->formatAd($ad))->values(),
+        ]);
     }
 
     public function create()
     {
-        $categories = Category::all();
-        return view('advertisements.create', compact('categories'));
+        return Inertia::render('Advertisements/Create', [
+            'categories' => Category::orderBy('name')->get(['id', 'name']),
+        ]);
     }
 
     public function store(StoreAdvertisementRequest $request)
     {
         $imagePath = null;
-
         if ($request->hasFile('image')) {
             $imagePath = ImageService::store($request->file('image'));
         }
@@ -93,16 +96,26 @@ class AdvertisementController extends Controller
     public function show($slug)
     {
         $ad = Advertisement::with('user', 'category')->where('slug', $slug)->firstOrFail();
-        return view('advertisements.show', compact('ad'));
+
+        $isSaved = Auth::check()
+            ? Auth::user()->favorites()->where('advertisement_id', $ad->id)->exists()
+            : false;
+
+        return Inertia::render('Advertisements/Show', [
+            'ad'      => $this->formatAd($ad),
+            'isSaved' => $isSaved,
+        ]);
     }
 
     public function edit($slug)
     {
-        $ad = Advertisement::where('slug', $slug)->firstOrFail();
+        $ad = Advertisement::with('category')->where('slug', $slug)->firstOrFail();
         $this->authorize('update', $ad);
 
-        $categories = Category::all();
-        return view('advertisements.edit', compact('ad', 'categories'));
+        return Inertia::render('Advertisements/Edit', [
+            'ad'         => $this->formatAd($ad),
+            'categories' => Category::orderBy('name')->get(['id', 'name']),
+        ]);
     }
 
     public function update(UpdateAdvertisementRequest $request, $slug)
@@ -128,6 +141,9 @@ class AdvertisementController extends Controller
         if ($request->hasFile('image')) {
             ImageService::delete($ad->image);
             $ad->image = ImageService::store($request->file('image'));
+        } elseif ($request->input('remove_image')) {
+            ImageService::delete($ad->image);
+            $ad->image = null;
         }
 
         $ad->save();
@@ -139,7 +155,6 @@ class AdvertisementController extends Controller
     {
         $ad = Advertisement::findOrFail($id);
         $this->authorize('delete', $ad);
-
         $ad->delete();
 
         return redirect()->route('advertisements.user')->with('success', 'Advertisement deleted successfully.');
@@ -148,19 +163,24 @@ class AdvertisementController extends Controller
     public function trash()
     {
         $ads = Advertisement::onlyTrashed()
-            ->with('category')
             ->where('user_id', Auth::id())
             ->latest()
-            ->get();
+            ->get()
+            ->map(fn ($ad) => [
+                'id'          => $ad->id,
+                'title'       => $ad->title,
+                'description' => $ad->description,
+                'image'       => $ad->image,
+                'deleted_at'  => $ad->deleted_at->format('d.m.Y'),
+            ])->values();
 
-        return view('advertisements.trash', compact('ads'));
+        return Inertia::render('Advertisements/Trash', ['ads' => $ads]);
     }
 
     public function forceDelete($id)
     {
         $ad = Advertisement::onlyTrashed()->findOrFail($id);
         $this->authorize('forceDelete', $ad);
-
         $ad->forceDelete();
 
         return redirect()->route('advertisements.trash')->with('success', 'Advertisement permanently deleted.');
@@ -170,7 +190,6 @@ class AdvertisementController extends Controller
     {
         $ad = Advertisement::onlyTrashed()->findOrFail($id);
         $this->authorize('restore', $ad);
-
         $ad->restore();
 
         return redirect()->route('advertisements.trash')->with('success', 'Advertisement restored successfully.');
@@ -179,31 +198,73 @@ class AdvertisementController extends Controller
     public function byCategory(Request $request, string $parent, ?string $child = null)
     {
         $parentCategory = Category::where('slug', $parent)->firstOrFail();
-
-        if ($child) {
-            $category = Category::where('slug', $child)
-                ->where('parent_id', $parentCategory->id)
-                ->firstOrFail();
-        } else {
-            $category = $parentCategory;
-        }
+        $category = $child
+            ? Category::where('slug', $child)->where('parent_id', $parentCategory->id)->firstOrFail()
+            : $parentCategory;
 
         $location = $request->get('location');
-
         $ads = $category->advertisements()->with('user', 'category')
             ->when($location, fn ($q) => $q->where('location', 'like', '%' . $location . '%'))
             ->latest()
             ->paginate(20);
 
-        if ($request->ajax()) {
+        if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
             return response()->json([
-                'html'    => view('partials.ad-cards', compact('ads'))->render(),
+                'ads'     => $this->formatAds($ads),
                 'hasMore' => $ads->hasMorePages(),
             ]);
         }
 
-        $favoritedIds = Favorite::idsForUser(Auth::id());
+        return Inertia::render('Advertisements/ByCategory', [
+            'category'     => ['id' => $category->id, 'name' => $category->name, 'slug' => $category->slug],
+            'ads'          => $this->paginationData($ads),
+            'location'     => $location,
+            'favoritedIds' => Favorite::idsForUser(Auth::id()),
+        ]);
+    }
 
-        return view('advertisements.by-category', compact('category', 'ads', 'location', 'favoritedIds'));
+    // ─── Helpers ─────────────────────────────────────────────────────────────
+
+    private function formatAd($ad): array
+    {
+        return [
+            'id'           => $ad->id,
+            'slug'         => $ad->slug,
+            'title'        => $ad->title,
+            'description'  => $ad->description,
+            'price'        => $ad->price,
+            'vehicle_type' => $ad->vehicle_type,
+            'availability' => $ad->availability,
+            'payload'      => $ad->payload,
+            'route'        => $ad->route,
+            'image'        => $ad->image,
+            'phone'        => $ad->phone,
+            'location'     => $ad->location,
+            'user_id'      => $ad->user_id,
+            'category_id'  => $ad->category_id,
+            'created_at'   => $ad->created_at?->format('d.m.Y'),
+            'updated_at'   => $ad->updated_at?->format('d.m.Y'),
+            'category'     => $ad->relationLoaded('category') && $ad->category
+                ? ['id' => $ad->category->id, 'name' => $ad->category->name]
+                : null,
+            'user'         => $ad->relationLoaded('user') && $ad->user
+                ? ['id' => $ad->user->id, 'name' => $ad->user->name, 'slug' => $ad->user->slug]
+                : null,
+        ];
+    }
+
+    private function formatAds($paginator): array
+    {
+        return $paginator->map(fn ($ad) => $this->formatAd($ad))->values()->all();
+    }
+
+    private function paginationData($paginator): array
+    {
+        return [
+            'data'         => $this->formatAds($paginator),
+            'current_page' => $paginator->currentPage(),
+            'last_page'    => $paginator->lastPage(),
+            'total'        => $paginator->total(),
+        ];
     }
 }

@@ -32,7 +32,7 @@ class AdvertisementController extends Controller
             })
             ->when($location, fn ($q) => $q->where('location', 'like', '%' . $location . '%'))
             ->latest()
-            ->paginate(20);
+            ->paginate(21);
 
         if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
             return response()->json([
@@ -244,7 +244,7 @@ class AdvertisementController extends Controller
         $ads = $category->advertisements()->with('user', 'category')
             ->when($location, fn ($q) => $q->where('location', 'like', '%' . $location . '%'))
             ->latest()
-            ->paginate(20);
+            ->paginate(21);
 
         if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
             return response()->json([

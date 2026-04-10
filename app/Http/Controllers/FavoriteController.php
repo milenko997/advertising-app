@@ -16,7 +16,7 @@ class FavoriteController extends Controller
         $ads = Advertisement::whereIn('id', $favoritedIds)
             ->with('category')
             ->latest()
-            ->paginate(20);
+            ->paginate(21);
 
         if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
             return response()->json([

@@ -16,7 +16,7 @@ class UserController extends Controller
         $ads = $user->advertisements()
             ->with('category')
             ->latest()
-            ->paginate(20);
+            ->paginate(21);
 
         $formatAd = fn ($ad) => [
             'id'           => $ad->id,

@@ -98,6 +98,15 @@ class AdvertisementController extends Controller
     {
         $ad = Advertisement::with('user', 'category')->where('slug', $slug)->firstOrFail();
 
+        // Increment view counter once per session per ad, skip for the owner
+        $sessionKey = 'viewed_ad_' . $ad->id;
+        if (!Auth::check() || Auth::id() !== $ad->user_id) {
+            if (!session()->has($sessionKey)) {
+                $ad->increment('views');
+                session()->put($sessionKey, true);
+            }
+        }
+
         $isSaved = Auth::check()
             ? Auth::user()->favorites()->where('advertisement_id', $ad->id)->exists()
             : false;
@@ -278,6 +287,7 @@ class AdvertisementController extends Controller
             'image'        => $ad->image,
             'phone'        => $ad->phone,
             'location'     => $ad->location,
+            'views'        => $ad->views,
             'user_id'      => $ad->user_id,
             'category_id'  => $ad->category_id,
             'created_at'   => $ad->created_at?->format('d.m.Y'),

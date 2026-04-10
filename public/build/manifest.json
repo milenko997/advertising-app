@@ -1,10 +1,6 @@
 {
-  "_bootstrap-DIG1juhW.js": {
-    "file": "assets/bootstrap-DIG1juhW.js",
-    "name": "bootstrap"
-  },
   "resources/css/app.css": {
-    "file": "assets/app-B0v8ROkE.css",
+    "file": "assets/app-rkgQTsB8.css",
     "name": "app",
     "names": [
       "app.css"
@@ -13,24 +9,12 @@
     "isEntry": true
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-FMrqADU0.js",
+    "file": "assets/app-B4j6DSKk.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,
-    "imports": [
-      "_bootstrap-DIG1juhW.js"
-    ],
     "dynamicImports": [
-      "_bootstrap-DIG1juhW.js"
-    ]
-  },
-  "resources/js/blade.js": {
-    "file": "assets/blade-BdYKFcxO.js",
-    "name": "blade",
-    "src": "resources/js/blade.js",
-    "isEntry": true,
-    "imports": [
-      "_bootstrap-DIG1juhW.js"
+      "resources/js/app.jsx"
     ]
   }
 }

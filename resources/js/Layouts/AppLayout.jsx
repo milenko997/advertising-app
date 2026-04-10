@@ -1,5 +1,6 @@
 import { usePage } from '@inertiajs/react';
 import Navigation from '@/Components/Navigation';
+import Footer from '@/Components/Footer';
 
 export default function AppLayout({ children }) {
     const { flash } = usePage().props;
@@ -30,6 +31,7 @@ export default function AppLayout({ children }) {
             )}
 
             <main>{children}</main>
+            <Footer />
         </div>
     );
 }

@@ -52,6 +52,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::resource('/categories', CategoryController::class);
     Route::resource('/advertisements', AdminAdvertisementController::class)->except(['show', 'create', 'store']);
     Route::patch('/advertisements/{advertisement}/pin', [AdminAdvertisementController::class, 'togglePin'])->name('advertisements.pin');
+    Route::post('/advertisements/bulk-action', [AdminAdvertisementController::class, 'bulkAction'])->name('advertisements.bulk');
     Route::resource('/customers', AdminCustomerController::class);
     Route::get('/reports', [AdminReportController::class, 'index'])->name('reports.index');
     Route::patch('/reports/{report}/resolve', [AdminReportController::class, 'resolve'])->name('reports.resolve');

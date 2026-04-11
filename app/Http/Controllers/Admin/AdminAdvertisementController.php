@@ -102,4 +102,30 @@ class AdminAdvertisementController extends Controller
 
         return redirect()->route('admin.advertisements.index')->with('success', 'Advertisement deleted.');
     }
+
+    public function bulkAction(Request $request)
+    {
+        $request->validate([
+            'action' => 'required|in:delete,pin,unpin',
+            'ids'    => 'required|array|min:1',
+            'ids.*'  => 'integer|exists:advertisements,id',
+        ]);
+
+        $ads = Advertisement::whereIn('id', $request->ids);
+
+        match ($request->action) {
+            'delete' => $ads->get()->each->delete(),
+            'pin'    => $ads->update(['is_pinned' => true]),
+            'unpin'  => $ads->update(['is_pinned' => false]),
+        };
+
+        $count = count($request->ids);
+        $label = match ($request->action) {
+            'delete' => "Deleted {$count} advertisement(s).",
+            'pin'    => "Pinned {$count} advertisement(s).",
+            'unpin'  => "Unpinned {$count} advertisement(s).",
+        };
+
+        return back()->with('success', $label);
+    }
 }

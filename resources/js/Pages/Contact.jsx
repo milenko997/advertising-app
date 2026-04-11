@@ -1,0 +1,237 @@
+import { useForm } from '@inertiajs/react';
+import AppLayout from '@/Layouts/AppLayout';
+
+function InfoCard({ icon, label, value, href }) {
+    const content = (
+        <div className="flex items-start gap-4">
+            <span className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center shrink-0">
+                {icon}
+            </span>
+            <div>
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-0.5">{label}</p>
+                <p className="text-sm font-medium text-slate-800">{value}</p>
+            </div>
+        </div>
+    );
+
+    if (href) {
+        return <a href={href} className="block hover:opacity-80 transition-opacity">{content}</a>;
+    }
+    return <div>{content}</div>;
+}
+
+export default function Contact() {
+    const { data, setData, post, processing, errors, reset, wasSuccessful } = useForm({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+    });
+
+    const submit = (e) => {
+        e.preventDefault();
+        post('/contact', { onSuccess: () => reset() });
+    };
+
+    return (
+        <AppLayout>
+            {/* Hero */}
+            <div className="bg-slate-900 py-14">
+                <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/15 text-orange-400 text-xs font-semibold mb-4">
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        Get in Touch
+                    </span>
+                    <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Contact Us</h1>
+                    <p className="text-slate-400 text-base leading-relaxed">
+                        Have a question, spotted an issue, or want to learn more? We'd love to hear from you.
+                    </p>
+                </div>
+            </div>
+
+            {/* Content */}
+            <div className="py-14">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+                        {/* Left: Info */}
+                        <div className="lg:col-span-2 space-y-4">
+                            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-6">
+                                <InfoCard
+                                    label="Email"
+                                    value="info@adboard.rs"
+                                    href="mailto:info@adboard.rs"
+                                    icon={
+                                        <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                    }
+                                />
+                                <InfoCard
+                                    label="Phone"
+                                    value="+381 00 000 0000"
+                                    href="tel:+381000000000"
+                                    icon={
+                                        <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                        </svg>
+                                    }
+                                />
+                                <InfoCard
+                                    label="Location"
+                                    value="Belgrade, Serbia"
+                                    icon={
+                                        <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    }
+                                />
+                                <InfoCard
+                                    label="Working Hours"
+                                    value="Mon – Fri, 09:00 – 17:00"
+                                    icon={
+                                        <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    }
+                                />
+                            </div>
+
+                            <div className="bg-slate-900 rounded-2xl p-6">
+                                <p className="text-sm font-semibold text-white mb-1.5">Response time</p>
+                                <p className="text-sm text-slate-400 leading-relaxed">
+                                    We typically respond to all inquiries within <span className="text-orange-400 font-medium">1 business day</span>.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Right: Form */}
+                        <div className="lg:col-span-3">
+                            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-8">
+
+                                {wasSuccessful ? (
+                                    <div className="text-center py-10">
+                                        <span className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 mb-5">
+                                            <svg className="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        </span>
+                                        <h3 className="text-lg font-bold text-slate-900 mb-2">Message sent!</h3>
+                                        <p className="text-sm text-slate-500">Thank you for reaching out. We'll get back to you within 1 business day.</p>
+                                    </div>
+                                ) : (
+                                    <form onSubmit={submit} className="space-y-5">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                            {/* Name */}
+                                            <div>
+                                                <label className="block text-xs font-semibold text-slate-600 mb-1.5">
+                                                    Full Name <span className="text-red-400">*</span>
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    value={data.name}
+                                                    onChange={e => setData('name', e.target.value)}
+                                                    placeholder="Your name"
+                                                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
+                                                        errors.name ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
+                                                    }`}
+                                                />
+                                                {errors.name && <p className="mt-1.5 text-xs text-red-500">{errors.name}</p>}
+                                            </div>
+
+                                            {/* Email */}
+                                            <div>
+                                                <label className="block text-xs font-semibold text-slate-600 mb-1.5">
+                                                    Email Address <span className="text-red-400">*</span>
+                                                </label>
+                                                <input
+                                                    type="email"
+                                                    value={data.email}
+                                                    onChange={e => setData('email', e.target.value)}
+                                                    placeholder="you@example.com"
+                                                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
+                                                        errors.email ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
+                                                    }`}
+                                                />
+                                                {errors.email && <p className="mt-1.5 text-xs text-red-500">{errors.email}</p>}
+                                            </div>
+                                        </div>
+
+                                        {/* Subject */}
+                                        <div>
+                                            <label className="block text-xs font-semibold text-slate-600 mb-1.5">
+                                                Subject <span className="text-red-400">*</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                value={data.subject}
+                                                onChange={e => setData('subject', e.target.value)}
+                                                placeholder="What is your message about?"
+                                                className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
+                                                    errors.subject ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
+                                                }`}
+                                            />
+                                            {errors.subject && <p className="mt-1.5 text-xs text-red-500">{errors.subject}</p>}
+                                        </div>
+
+                                        {/* Message */}
+                                        <div>
+                                            <label className="block text-xs font-semibold text-slate-600 mb-1.5">
+                                                Message <span className="text-red-400">*</span>
+                                            </label>
+                                            <textarea
+                                                rows={6}
+                                                value={data.message}
+                                                onChange={e => setData('message', e.target.value)}
+                                                placeholder="Write your message here…"
+                                                className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/30 resize-none transition ${
+                                                    errors.message ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
+                                                }`}
+                                            />
+                                            <div className="flex items-center justify-between mt-1">
+                                                {errors.message
+                                                    ? <p className="text-xs text-red-500">{errors.message}</p>
+                                                    : <span />
+                                                }
+                                                <span className={`text-xs ${data.message.length > 2800 ? 'text-red-400' : 'text-slate-300'}`}>
+                                                    {data.message.length}/3000
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <button
+                                            type="submit"
+                                            disabled={processing}
+                                            className="w-full inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold px-6 py-3 rounded-xl transition-colors"
+                                        >
+                                            {processing ? (
+                                                <>
+                                                    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                                    </svg>
+                                                    Sending…
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                                    </svg>
+                                                    Send Message
+                                                </>
+                                            )}
+                                        </button>
+                                    </form>
+                                )}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </AppLayout>
+    );
+}

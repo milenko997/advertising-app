@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAdvertisementController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Admin\AdminCustomerController;
@@ -26,6 +27,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [AdvertisementController::class, 'publicIndex'])->name('home');
+
+Route::get('/contact',  [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/faq',            [FaqController::class, 'index'])->name('faq');
 Route::get('/terms',          [FaqController::class, 'terms'])->name('terms');

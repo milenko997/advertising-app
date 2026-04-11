@@ -159,6 +159,7 @@ export default function Footer() {
                         © {year} AdBoard. All rights reserved.
                     </p>
                     <div className="flex items-center gap-6">
+                        <Link href="/contact" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Contact</Link>
                         <Link href="/privacy-policy" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Privacy Policy</Link>
                         <Link href="/terms" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Terms of Use</Link>
                         <Link href="/faq" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">FAQ</Link>

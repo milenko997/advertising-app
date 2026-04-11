@@ -10,42 +10,42 @@ export default function AdCard({ ad, favoritedIds = [] }) {
     const isSaved = favoritedIds.includes(ad.id);
 
     return (
-        <div className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-indigo-200 hover:shadow-md transition-all duration-200 flex flex-col">
+        <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col border border-gray-100">
 
             {/* Image */}
             <div className="relative shrink-0">
                 <Link href={`/advertisements/${ad.slug}`} className="block">
                     {ad.image ? (
-                        <div className="aspect-[16/9] overflow-hidden bg-gray-100">
+                        <div className="aspect-[16/10] overflow-hidden bg-slate-100">
                             <img
                                 src={`/storage/${ad.image}`}
                                 alt={ad.title}
-                                className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                         </div>
                     ) : (
-                        <div className="aspect-[16/9] bg-gray-50 flex flex-col items-center justify-center gap-2">
-                            <svg className="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="aspect-[16/10] bg-slate-50 flex flex-col items-center justify-center gap-2">
+                            <svg className="w-12 h-12 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                                    d="M8 17l4 4 4-4m-4-5v9M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29" />
+                                    d="M3 7h18M3 12h18M3 17h18" />
                             </svg>
-                            <span className="text-xs text-gray-400">No image</span>
+                            <span className="text-xs text-slate-300 font-medium">No image</span>
                         </div>
                     )}
                 </Link>
 
-                {/* Availability badge over image */}
-                <div className="absolute top-2 left-2 flex flex-col gap-1">
-                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold ${
+                {/* Top-left badges */}
+                <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold backdrop-blur-sm ${
                         ad.availability === 'available'
-                            ? 'bg-emerald-500 text-white'
-                            : 'bg-amber-500 text-white'
+                            ? 'bg-emerald-500/90 text-white'
+                            : 'bg-orange-500/90 text-white'
                     }`}>
-                        <span className="w-1.5 h-1.5 rounded-full bg-white/70 inline-block" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-white/80 inline-block" />
                         {ad.availability === 'available' ? 'Available' : 'On Request'}
                     </span>
                     {ad.is_pinned && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold bg-amber-400 text-white">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-400/95 text-white backdrop-blur-sm">
                             <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
                             </svg>
@@ -55,64 +55,70 @@ export default function AdCard({ ad, favoritedIds = [] }) {
                 </div>
 
                 {/* Bookmark */}
-                <div className="absolute top-2 right-2">
+                <div className="absolute top-3 right-3">
                     <BookmarkButton adId={ad.id} initialSaved={isSaved} />
                 </div>
             </div>
 
             {/* Content */}
             <Link href={`/advertisements/${ad.slug}`} className="flex flex-col flex-1 p-4">
-                {/* Category + Vehicle type */}
-                <div className="flex items-center gap-2 mb-2 flex-wrap">
+
+                {/* Tags row */}
+                <div className="flex items-center gap-1.5 mb-3 flex-wrap">
                     {ad.vehicle_type && (
-                        <span className="px-2 py-0.5 bg-indigo-50 text-indigo-700 text-xs font-medium rounded">
+                        <span className="px-2.5 py-0.5 bg-orange-50 text-orange-600 text-xs font-semibold rounded-full border border-orange-100">
                             {VEHICLE_LABELS[ad.vehicle_type] || ad.vehicle_type}
                         </span>
                     )}
                     {ad.category?.name && (
-                        <span className="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs font-medium rounded">
+                        <span className="px-2.5 py-0.5 bg-slate-100 text-slate-500 text-xs font-medium rounded-full">
                             {ad.category.name}
                         </span>
                     )}
                 </div>
 
                 {/* Title */}
-                <h3 className="font-semibold text-gray-900 text-sm leading-snug mb-1.5 line-clamp-2 group-hover:text-indigo-700 transition-colors">
+                <h3 className="font-semibold text-slate-900 text-sm leading-snug mb-2 line-clamp-2 group-hover:text-orange-600 transition-colors duration-200">
                     {ad.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-xs text-gray-500 line-clamp-2 mb-3 leading-relaxed">
+                <p className="text-xs text-slate-400 line-clamp-2 mb-4 leading-relaxed">
                     {ad.description}
                 </p>
 
-                {/* Meta info */}
-                <div className="mt-auto space-y-1.5">
-
+                {/* Meta */}
+                <div className="mt-auto space-y-2">
                     {ad.payload && (
-                        <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                            <svg className="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                            <svg className="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                             </svg>
                             <span>{ad.payload}</span>
                         </div>
                     )}
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                        <div className="flex items-center gap-1.5 text-xs text-slate-400">
                             <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                            <span className="truncate">{ad.location}</span>
+                            <span className="truncate max-w-[120px]">{ad.location}</span>
                         </div>
-                        <span className="text-xs text-gray-400 shrink-0 ml-2">{ad.created_at}</span>
+                        <span className="text-xs text-slate-300 shrink-0">{ad.created_at}</span>
                     </div>
                 </div>
 
                 {/* Price */}
-                <div className="mt-3 pt-3 border-t border-gray-100">
-                    <span className={`font-bold text-base ${ad.price ? 'text-indigo-600' : 'text-gray-400 italic font-normal text-sm'}`}>
+                <div className="mt-3.5 pt-3.5 border-t border-slate-100 flex items-center justify-between">
+                    <span className={`font-bold text-base ${ad.price ? 'text-slate-900' : 'text-slate-300 font-normal text-sm italic'}`}>
                         {ad.price || 'Price on request'}
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-xs font-medium text-orange-500 group-hover:gap-2 transition-all duration-200">
+                        View
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
                     </span>
                 </div>
             </Link>

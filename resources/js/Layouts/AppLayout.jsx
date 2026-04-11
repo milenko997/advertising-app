@@ -6,7 +6,7 @@ export default function AppLayout({ children }) {
     const { flash } = usePage().props;
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-zinc-50">
             <Navigation />
 
             {flash?.success && (

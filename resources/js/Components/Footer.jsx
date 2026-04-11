@@ -8,10 +8,10 @@ export default function Footer() {
         <footer className="bg-slate-900 mt-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-10 mb-12">
 
                     {/* Brand */}
-                    <div className="lg:col-span-1">
+                    <div className="lg:col-span-2 sm:col-span-2">
                         <Link href="/" className="flex items-center gap-2.5 mb-4">
                             <span className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center shadow-sm">
                                 <svg className="text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{width:'18px',height:'18px'}}>
@@ -21,7 +21,7 @@ export default function Footer() {
                             </span>
                             <span className="text-base font-bold text-white tracking-tight">AdBoard</span>
                         </Link>
-                        <p className="text-sm text-slate-400 leading-relaxed">
+                        <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
                             The marketplace for transport and freight professionals in Serbia. Find vehicles, routes, and logistics partners.
                         </p>
                         {/* Social icons */}
@@ -111,6 +111,38 @@ export default function Footer() {
                         </div>
                     )}
 
+                    {/* Help & Legal */}
+                    <div>
+                        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Help & Legal</h3>
+                        <ul className="space-y-3">
+                            <li>
+                                <Link href="/contact" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                    Contact Us
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/faq" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                    FAQ
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/terms" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                    Terms of Use
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/privacy-policy" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                    Privacy Policy
+                                </Link>
+                            </li>
+                            <li>
+                                <a href="/sitemap.xml" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                    Sitemap
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
                     {/* Contact */}
                     <div>
                         <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Contact</h3>
@@ -151,6 +183,7 @@ export default function Footer() {
                             </li>
                         </ul>
                     </div>
+
                 </div>
 
                 {/* Bottom bar */}
@@ -158,14 +191,8 @@ export default function Footer() {
                     <p className="text-xs text-slate-500">
                         © {year} AdBoard. All rights reserved.
                     </p>
-                    <div className="flex items-center gap-6">
-                        <Link href="/contact" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Contact</Link>
-                        <Link href="/privacy-policy" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Privacy Policy</Link>
-                        <Link href="/terms" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Terms of Use</Link>
-                        <Link href="/faq" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">FAQ</Link>
-                        <a href="/sitemap.xml" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Sitemap</a>
-                    </div>
                 </div>
+
             </div>
         </footer>
     );

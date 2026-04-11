@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'isCustomer'])->group(function () {
     Route::get('/my-advertisements', [AdvertisementController::class, 'userIndex'])->name('advertisements.user');
     Route::get('/advertisements/create', [AdvertisementController::class, 'create'])->name('advertisements.create');
-    Route::post('/advertisements', [AdvertisementController::class, 'store'])->name('advertisements.store');
+    Route::post('/advertisements', [AdvertisementController::class, 'store'])->name('advertisements.store')->middleware('throttle:ad-creation');
     Route::get('/advertisements/edit/{slug}', [AdvertisementController::class, 'edit'])->name('advertisements.edit');
     Route::put('/advertisements/{slug}/update', [AdvertisementController::class, 'update'])->name('advertisements.update');
     Route::delete('/advertisements/{id}', [AdvertisementController::class, 'destroy'])->name('advertisements.destroy');

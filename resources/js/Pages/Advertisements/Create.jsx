@@ -1,5 +1,5 @@
-import { useForm } from '@inertiajs/react';
-import { Link } from '@inertiajs/react';
+import { useState, useRef } from 'react';
+import { useForm, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import ImageUpload from '@/Components/ImageUpload';
 
@@ -33,7 +33,25 @@ export default function Create({ categories }) {
         location: '',
         category_id: '',
         image: null,
+        images: [],
     });
+
+    const [imagePreviews, setImagePreviews] = useState([]);
+    const galleryInputRef = useRef();
+
+    const handleGalleryChange = (e) => {
+        const files = Array.from(e.target.files);
+        if (!files.length) return;
+        setData('images', [...data.images, ...files]);
+        const newPreviews = files.map(f => URL.createObjectURL(f));
+        setImagePreviews(prev => [...prev, ...newPreviews]);
+        e.target.value = '';
+    };
+
+    const removeGalleryImage = (index) => {
+        setData('images', data.images.filter((_, i) => i !== index));
+        setImagePreviews(prev => prev.filter((_, i) => i !== index));
+    };
 
     const submit = (e) => {
         e.preventDefault();
@@ -162,13 +180,55 @@ export default function Create({ categories }) {
                             </div>
 
                             <div className="border-t border-gray-100 my-6" />
-                            <SectionTitle>Photo</SectionTitle>
+                            <SectionTitle>Photos</SectionTitle>
 
-                            {/* Image */}
+                            {/* Cover image */}
+                            <p className="text-xs text-gray-500 mb-2">Cover photo (main image)</p>
                             <ImageUpload
                                 value={data.image}
                                 onChange={file => setData('image', file)}
                             />
+
+                            {/* Gallery images */}
+                            <div className="mt-5">
+                                <p className="text-xs text-gray-500 mb-2">Additional photos</p>
+                                {imagePreviews.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 mb-3">
+                                        {imagePreviews.map((src, i) => (
+                                            <div key={i} className="relative group">
+                                                <img src={src} alt="" className="w-24 h-20 object-cover rounded-lg border border-gray-200" />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeGalleryImage(i)}
+                                                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                                >
+                                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                <input
+                                    ref={galleryInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    multiple
+                                    onChange={handleGalleryChange}
+                                    className="hidden"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => galleryInputRef.current?.click()}
+                                    className="inline-flex items-center gap-1.5 px-3 py-2 border border-gray-300 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-50 transition"
+                                >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    Add photos
+                                </button>
+                            </div>
 
                             <div className="mt-6 pt-6 border-t border-gray-100 flex items-center gap-3">
                                 <button

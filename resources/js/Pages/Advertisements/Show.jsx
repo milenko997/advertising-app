@@ -3,6 +3,7 @@ import { Link, usePage, router } from '@inertiajs/react';
 import axios from 'axios';
 import AppLayout from '@/Layouts/AppLayout';
 import ShareButton from '@/Components/ShareButton';
+import ImageCarousel from '@/Components/ImageCarousel';
 
 const VEHICLE_LABELS = {
     truck: 'Truck', van: 'Van', pickup: 'Pickup', trailer: 'Trailer',
@@ -220,6 +221,19 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
     const canReview = auth?.user && !isOwner && !myReview;
     const [saved, setSaved] = useState(isSaved);
     const [bookmarkLoading, setBookmarkLoading] = useState(false);
+    const [carouselOpen, setCarouselOpen] = useState(false);
+    const [carouselIndex, setCarouselIndex] = useState(0);
+
+    // Combine primary image and gallery images into one array for carousel
+    const allImages = [
+        ...(ad.image ? [{ path: ad.image }] : []),
+        ...(ad.images ?? []),
+    ];
+
+    const openCarousel = (index) => {
+        setCarouselIndex(index);
+        setCarouselOpen(true);
+    };
 
     const toggleSave = async () => {
         if (bookmarkLoading) return;
@@ -260,14 +274,52 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                         {/* ── Left column ── */}
                         <div className="lg:col-span-2 space-y-6">
 
-                            {/* Image */}
-                            {ad.image ? (
-                                <div className="rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
-                                    <img
-                                        src={`/storage/${ad.image}`}
-                                        alt={ad.title}
-                                        className="w-full object-cover max-h-[480px]"
-                                    />
+                            {/* Image gallery */}
+                            {allImages.length > 0 ? (
+                                <div>
+                                    {/* Main image */}
+                                    <div
+                                        className="rounded-xl overflow-hidden border border-gray-200 bg-gray-50 cursor-zoom-in relative group"
+                                        onClick={() => openCarousel(0)}
+                                    >
+                                        <img
+                                            src={`/storage/${allImages[0].path}`}
+                                            alt={ad.title}
+                                            className="w-full object-cover max-h-[480px]"
+                                        />
+                                        {allImages.length > 1 && (
+                                            <div className="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full">
+                                                1 / {allImages.length}
+                                            </div>
+                                        )}
+                                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <div className="bg-black/30 rounded-full p-3">
+                                                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* Thumbnail strip */}
+                                    {allImages.length > 1 && (
+                                        <div className="flex gap-2 mt-2 overflow-x-auto pb-1">
+                                            {allImages.map((img, i) => (
+                                                <button
+                                                    key={i}
+                                                    onClick={() => openCarousel(i)}
+                                                    className={`shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition ${
+                                                        i === 0 ? 'border-indigo-500' : 'border-transparent hover:border-indigo-300'
+                                                    }`}
+                                                >
+                                                    <img
+                                                        src={`/storage/${img.path}`}
+                                                        alt={`Image ${i + 1}`}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             ) : (
                                 <div className="rounded-xl border border-gray-200 bg-gray-50 flex flex-col items-center justify-center gap-3 py-20">
@@ -277,6 +329,15 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                     </svg>
                                     <p className="text-sm text-gray-400">No image provided</p>
                                 </div>
+                            )}
+
+                            {/* Carousel modal */}
+                            {carouselOpen && allImages.length > 0 && (
+                                <ImageCarousel
+                                    images={allImages}
+                                    initialIndex={carouselIndex}
+                                    onClose={() => setCarouselOpen(false)}
+                                />
                             )}
 
                             {/* Title + badges */}

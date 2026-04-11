@@ -42,6 +42,7 @@ Route::middleware(['auth', 'isCustomer'])->group(function () {
     Route::get('/advertisements/trash', [AdvertisementController::class, 'trash'])->name('advertisements.trash');
     Route::delete('/advertisements/force-delete/{id}', [AdvertisementController::class, 'forceDelete'])->name('advertisements.forceDelete');
     Route::patch('/advertisements/{id}/restore', [AdvertisementController::class, 'restore'])->name('advertisements.restore');
+    Route::delete('/advertisement-images/{image}', [AdvertisementController::class, 'destroyImage'])->name('advertisement-images.destroy');
 });
 
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {

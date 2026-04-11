@@ -1,4 +1,5 @@
-import { useForm, Link } from '@inertiajs/react';
+import { useState, useRef } from 'react';
+import { useForm, Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import ImageUpload from '@/Components/ImageUpload';
 
@@ -20,7 +21,8 @@ function SectionTitle({ children }) {
 }
 
 export default function Edit({ ad, categories }) {
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
+        _method: 'PUT',
         title: ad.title ?? '',
         description: ad.description ?? '',
         vehicle_type: ad.vehicle_type ?? '',
@@ -33,11 +35,33 @@ export default function Edit({ ad, categories }) {
         category_id: ad.category_id ?? '',
         image: null,
         remove_image: '',
+        images: [],
     });
+
+    const [newPreviews, setNewPreviews] = useState([]);
+    const galleryInputRef = useRef();
+
+    const handleGalleryChange = (e) => {
+        const files = Array.from(e.target.files);
+        if (!files.length) return;
+        setData('images', [...data.images, ...files]);
+        setNewPreviews(prev => [...prev, ...files.map(f => URL.createObjectURL(f))]);
+        e.target.value = '';
+    };
+
+    const removeNewImage = (index) => {
+        setData('images', data.images.filter((_, i) => i !== index));
+        setNewPreviews(prev => prev.filter((_, i) => i !== index));
+    };
+
+    const deleteExistingImage = (imageId) => {
+        if (!confirm('Remove this image?')) return;
+        router.delete(`/advertisement-images/${imageId}`, { preserveScroll: true });
+    };
 
     const submit = (e) => {
         e.preventDefault();
-        put(`/advertisements/${ad.slug}/update`, { forceFormData: true });
+        post(`/advertisements/${ad.slug}/update`, { forceFormData: true });
     };
 
     return (
@@ -162,15 +186,84 @@ export default function Edit({ ad, categories }) {
                             </div>
 
                             <div className="border-t border-gray-100 my-6" />
-                            <SectionTitle>Photo</SectionTitle>
+                            <SectionTitle>Photos</SectionTitle>
 
-                            {/* Image */}
+                            {/* Cover image */}
+                            <p className="text-xs text-gray-500 mb-2">Cover photo (main image)</p>
                             <ImageUpload
                                 value={data.image}
                                 currentImage={ad.image}
                                 onChange={file => setData('image', file)}
                                 onRemove={() => setData('remove_image', '1')}
                             />
+
+                            {/* Existing gallery images */}
+                            {ad.images?.length > 0 && (
+                                <div className="mt-5">
+                                    <p className="text-xs text-gray-500 mb-2">Gallery photos</p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {ad.images.map((img) => (
+                                            <div key={img.id} className="relative group">
+                                                <img
+                                                    src={`/storage/${img.path}`}
+                                                    alt=""
+                                                    className="w-24 h-20 object-cover rounded-lg border border-gray-200"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => deleteExistingImage(img.id)}
+                                                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                                >
+                                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Add more gallery images */}
+                            <div className="mt-5">
+                                <p className="text-xs text-gray-500 mb-2">Add more photos</p>
+                                {newPreviews.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 mb-3">
+                                        {newPreviews.map((src, i) => (
+                                            <div key={i} className="relative group">
+                                                <img src={src} alt="" className="w-24 h-20 object-cover rounded-lg border border-gray-200" />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeNewImage(i)}
+                                                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                                >
+                                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                <input
+                                    ref={galleryInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    multiple
+                                    onChange={handleGalleryChange}
+                                    className="hidden"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => galleryInputRef.current?.click()}
+                                    className="inline-flex items-center gap-1.5 px-3 py-2 border border-gray-300 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-50 transition"
+                                >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    Add photos
+                                </button>
+                            </div>
 
                             <div className="mt-6 pt-6 border-t border-gray-100 flex items-center gap-3">
                                 <button

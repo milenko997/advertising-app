@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAdvertisementRequest;
 use App\Http\Requests\UpdateAdvertisementRequest;
 use App\Models\Advertisement;
+use App\Models\AdvertisementImage;
 use App\Models\Category;
 use App\Models\Favorite;
 use App\Models\Review;
@@ -75,7 +76,7 @@ class AdvertisementController extends Controller
             $imagePath = ImageService::store($request->file('image'));
         }
 
-        Advertisement::create([
+        $ad = Advertisement::create([
             'user_id'      => Auth::id(),
             'title'        => $request->title,
             'slug'         => SlugService::generate($request->title),
@@ -91,12 +92,21 @@ class AdvertisementController extends Controller
             'category_id'  => $request->category_id,
         ]);
 
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $i => $file) {
+                $ad->images()->create([
+                    'path'  => ImageService::store($file),
+                    'order' => $i,
+                ]);
+            }
+        }
+
         return redirect()->route('advertisements.user')->with('success', 'Advertisement created successfully.');
     }
 
     public function show($slug)
     {
-        $ad = Advertisement::with('user', 'category')->where('slug', $slug)->firstOrFail();
+        $ad = Advertisement::with('user', 'category', 'images')->where('slug', $slug)->firstOrFail();
 
         // Increment view counter once per session per ad, skip for the owner
         $sessionKey = 'viewed_ad_' . $ad->id;
@@ -156,7 +166,7 @@ class AdvertisementController extends Controller
 
     public function edit($slug)
     {
-        $ad = Advertisement::with('category')->where('slug', $slug)->firstOrFail();
+        $ad = Advertisement::with('category', 'images')->where('slug', $slug)->firstOrFail();
         $this->authorize('update', $ad);
 
         return Inertia::render('Advertisements/Edit', [
@@ -195,6 +205,16 @@ class AdvertisementController extends Controller
 
         $ad->save();
 
+        if ($request->hasFile('images')) {
+            $nextOrder = $ad->images()->max('order') + 1;
+            foreach ($request->file('images') as $i => $file) {
+                $ad->images()->create([
+                    'path'  => ImageService::store($file),
+                    'order' => $nextOrder + $i,
+                ]);
+            }
+        }
+
         return redirect()->route('advertisements.show', $ad->slug)->with('success', 'Advertisement updated successfully.');
     }
 
@@ -205,6 +225,15 @@ class AdvertisementController extends Controller
         $ad->delete();
 
         return redirect()->route('advertisements.user')->with('success', 'Advertisement deleted successfully.');
+    }
+
+    public function destroyImage(AdvertisementImage $image)
+    {
+        $this->authorize('update', $image->advertisement);
+        ImageService::delete($image->path);
+        $image->delete();
+
+        return back()->with('success', 'Image removed.');
     }
 
     public function trash()
@@ -298,6 +327,9 @@ class AdvertisementController extends Controller
             'user'         => $ad->relationLoaded('user') && $ad->user
                 ? ['id' => $ad->user->id, 'name' => $ad->user->name, 'slug' => $ad->user->slug, 'avatar' => $ad->user->avatar]
                 : null,
+            'images'       => $ad->relationLoaded('images')
+                ? $ad->images->map(fn ($img) => ['id' => $img->id, 'path' => $img->path, 'order' => $img->order])->values()->all()
+                : [],
         ];
     }
 

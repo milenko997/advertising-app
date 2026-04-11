@@ -41,4 +41,9 @@ class Advertisement extends Model
     {
         return $this->hasMany(Favorite::class);
     }
+
+    public function images()
+    {
+        return $this->hasMany(AdvertisementImage::class)->orderBy('order');
+    }
 }

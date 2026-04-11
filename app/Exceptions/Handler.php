@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +39,18 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        $response = parent::render($request, $e);
+
+        if (!$request->expectsJson() && in_array($response->getStatusCode(), [403, 404, 419, 429, 500, 503])) {
+            return Inertia::render('Error', ['status' => $response->getStatusCode()])
+                ->toResponse($request)
+                ->setStatusCode($response->getStatusCode());
+        }
+
+        return $response;
     }
 }

@@ -16,7 +16,7 @@ class IsCustomer
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->isCustomer()) {
+        if (auth()->check() && (auth()->user()->isCustomer() || auth()->user()->isAdmin())) {
             return $next($request);
         }
 

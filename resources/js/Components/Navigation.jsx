@@ -28,7 +28,7 @@ function MobileNavLink({ href, children }) {
 }
 
 export default function Navigation() {
-    const { auth } = usePage().props;
+    const { auth, pendingReportsCount } = usePage().props;
     const user = auth?.user;
     const [open, setOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -64,6 +64,21 @@ export default function Navigation() {
                                     <NavLink href="/admin/advertisements" active={currentPath.startsWith('/admin/advertisements')}>Advertisements</NavLink>
                                     <NavLink href="/admin/categories" active={currentPath.startsWith('/admin/categories')}>Categories</NavLink>
                                     <NavLink href="/admin/customers" active={currentPath.startsWith('/admin/customers')}>Customers</NavLink>
+                                    <Link
+                                        href="/admin/reports"
+                                        className={`relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                                            currentPath.startsWith('/admin/reports')
+                                                ? 'text-indigo-600 bg-indigo-50'
+                                                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                                        }`}
+                                    >
+                                        Reports
+                                        {pendingReportsCount > 0 && (
+                                            <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold bg-red-500 text-white rounded-full">
+                                                {pendingReportsCount > 9 ? '9+' : pendingReportsCount}
+                                            </span>
+                                        )}
+                                    </Link>
                                 </>
                             )}
 
@@ -178,6 +193,9 @@ export default function Navigation() {
                                 <MobileNavLink href="/admin/advertisements">Advertisements</MobileNavLink>
                                 <MobileNavLink href="/admin/categories">Categories</MobileNavLink>
                                 <MobileNavLink href="/admin/customers">Customers</MobileNavLink>
+                                <MobileNavLink href="/admin/reports">
+                                    Reports {pendingReportsCount > 0 && `(${pendingReportsCount})`}
+                                </MobileNavLink>
                             </>
                         )}
                         {user && !user.isAdmin && (

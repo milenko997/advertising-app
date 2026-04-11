@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\Admin\AdminAdvertisementController;
 use App\Http\Controllers\Admin\AdminCustomerController;
+use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -51,7 +53,12 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::resource('/advertisements', AdminAdvertisementController::class)->except(['show', 'create', 'store']);
     Route::patch('/advertisements/{advertisement}/pin', [AdminAdvertisementController::class, 'togglePin'])->name('advertisements.pin');
     Route::resource('/customers', AdminCustomerController::class);
+    Route::get('/reports', [AdminReportController::class, 'index'])->name('reports.index');
+    Route::patch('/reports/{report}/resolve', [AdminReportController::class, 'resolve'])->name('reports.resolve');
+    Route::delete('/reports/{report}', [AdminReportController::class, 'destroy'])->name('reports.destroy');
 });
+
+Route::post('/advertisements/{advertisement}/report', [ReportController::class, 'store'])->name('advertisements.report')->middleware('auth');
 
 Route::get('/advertisements/{slug}', [AdvertisementController::class, 'show'])->name('advertisements.show');
 Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show');

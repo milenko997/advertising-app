@@ -3,6 +3,7 @@ import { Link, usePage, router } from '@inertiajs/react';
 import axios from 'axios';
 import AppLayout from '@/Layouts/AppLayout';
 import ShareButton from '@/Components/ShareButton';
+import ReportButton from '@/Components/ReportButton';
 import ImageCarousel from '@/Components/ImageCarousel';
 
 const VEHICLE_LABELS = {
@@ -548,6 +549,11 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                             <ShareButton url={currentUrl} title={ad.title} fullWidth />
                                         </div>
                                     </div>
+                                    {!isOwner && (
+                                        <div className="flex justify-end mt-1">
+                                            <ReportButton advertisementId={ad.id} />
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Owner card */}

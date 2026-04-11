@@ -14,17 +14,37 @@ export const serbianCities = [
     { name: 'Palilula', region: 'Grad Beograd' },
     { name: 'Rakovica', region: 'Grad Beograd' },
     { name: 'Voždovac', region: 'Grad Beograd' },
+    { name: 'Čukarica', region: 'Grad Beograd' },
+    { name: 'Savski Venac', region: 'Grad Beograd' },
+    { name: 'Stari Grad', region: 'Grad Beograd' },
+    { name: 'Zvezdara', region: 'Grad Beograd' },
+    { name: 'Vračar', region: 'Grad Beograd' },
+    { name: 'Bežanijska Kosa', region: 'Grad Beograd' },
+    { name: 'Borča', region: 'Grad Beograd' },
+    { name: 'Ovča', region: 'Grad Beograd' },
+    { name: 'Železnik', region: 'Grad Beograd' },
+    { name: 'Umka', region: 'Grad Beograd' },
+    { name: 'Ripanj', region: 'Grad Beograd' },
+    { name: 'Ugrinovci', region: 'Grad Beograd' },
+    { name: 'Dobanovci', region: 'Grad Beograd' },
+    { name: 'Bečmen', region: 'Grad Beograd' },
 
     // Vojvodina – Južnobački okrug
     { name: 'Novi Sad', region: 'Južnobački okrug' },
     { name: 'Bačka Palanka', region: 'Južnobački okrug' },
-    { name: 'Bačka Topola', region: 'Severnobanatski okrug' },
     { name: 'Bečej', region: 'Južnobački okrug' },
     { name: 'Srbobran', region: 'Južnobački okrug' },
     { name: 'Temerin', region: 'Južnobački okrug' },
     { name: 'Titel', region: 'Južnobački okrug' },
     { name: 'Žabalj', region: 'Južnobački okrug' },
     { name: 'Vrbas', region: 'Južnobački okrug' },
+    { name: 'Petrovaradin', region: 'Južnobački okrug' },
+    { name: 'Futog', region: 'Južnobački okrug' },
+    { name: 'Veternik', region: 'Južnobački okrug' },
+    { name: 'Beočin', region: 'Južnobački okrug' },
+    { name: 'Čelarevo', region: 'Južnobački okrug' },
+    { name: 'Gajdobra', region: 'Južnobački okrug' },
+    { name: 'Nadalj', region: 'Južnobački okrug' },
 
     // Vojvodina – Severnobanatski okrug
     { name: 'Kikinda', region: 'Severnobanatski okrug' },
@@ -33,15 +53,26 @@ export const serbianCities = [
     { name: 'Novi Kneževac', region: 'Severnobanatski okrug' },
     { name: 'Senta', region: 'Severnobanatski okrug' },
     { name: 'Čoka', region: 'Severnobanatski okrug' },
+    { name: 'Mokrin', region: 'Severnobanatski okrug' },
+    { name: 'Padej', region: 'Severnobanatski okrug' },
 
     // Vojvodina – Severnobački okrug
     { name: 'Subotica', region: 'Severnobački okrug' },
-    { name: 'Sombor', region: 'Zapadnobački okrug' },
-    { name: 'Mali Iđoš', region: 'Severnobački okrug' },
     { name: 'Bačka Topola', region: 'Severnobački okrug' },
+    { name: 'Mali Iđoš', region: 'Severnobački okrug' },
+    { name: 'Palić', region: 'Severnobački okrug' },
+    { name: 'Bajmok', region: 'Severnobački okrug' },
+    { name: 'Tavankut', region: 'Severnobački okrug' },
+
+    // Vojvodina – Zapadnobački okrug
+    { name: 'Sombor', region: 'Zapadnobački okrug' },
     { name: 'Kula', region: 'Zapadnobački okrug' },
     { name: 'Odžaci', region: 'Zapadnobački okrug' },
     { name: 'Apatin', region: 'Zapadnobački okrug' },
+    { name: 'Bač', region: 'Zapadnobački okrug' },
+    { name: 'Crvenka', region: 'Zapadnobački okrug' },
+    { name: 'Sivac', region: 'Zapadnobački okrug' },
+    { name: 'Kruščić', region: 'Zapadnobački okrug' },
 
     // Vojvodina – Srednjebanatski okrug
     { name: 'Zrenjanin', region: 'Srednjebanatski okrug' },
@@ -49,6 +80,8 @@ export const serbianCities = [
     { name: 'Nova Crnja', region: 'Srednjebanatski okrug' },
     { name: 'Novi Bečej', region: 'Srednjebanatski okrug' },
     { name: 'Sečanj', region: 'Srednjebanatski okrug' },
+    { name: 'Melenci', region: 'Srednjebanatski okrug' },
+    { name: 'Lukićevo', region: 'Srednjebanatski okrug' },
 
     // Vojvodina – Južnobanatski okrug
     { name: 'Pančevo', region: 'Južnobanatski okrug' },
@@ -59,6 +92,10 @@ export const serbianCities = [
     { name: 'Kovačica', region: 'Južnobanatski okrug' },
     { name: 'Opovo', region: 'Južnobanatski okrug' },
     { name: 'Plandište', region: 'Južnobanatski okrug' },
+    { name: 'Starčevo', region: 'Južnobanatski okrug' },
+    { name: 'Banatsko Novo Selo', region: 'Južnobanatski okrug' },
+    { name: 'Jabuka', region: 'Južnobanatski okrug' },
+    { name: 'Dolovo', region: 'Južnobanatski okrug' },
 
     // Vojvodina – Sremski okrug
     { name: 'Sremska Mitrovica', region: 'Sremski okrug' },
@@ -69,27 +106,113 @@ export const serbianCities = [
     { name: 'Šid', region: 'Sremski okrug' },
     { name: 'Stara Pazova', region: 'Sremski okrug' },
     { name: 'Nova Pazova', region: 'Sremski okrug' },
+    { name: 'Sremska Kamenica', region: 'Sremski okrug' },
+    { name: 'Sremski Karlovci', region: 'Sremski okrug' },
+    { name: 'Šimanovci', region: 'Sremski okrug' },
+    { name: 'Laćarak', region: 'Sremski okrug' },
+    { name: 'Martinci', region: 'Sremski okrug' },
+    { name: 'Nikinci', region: 'Sremski okrug' },
+    { name: 'Bingula', region: 'Sremski okrug' },
+    { name: 'Erdevik', region: 'Sremski okrug' },
+    { name: 'Kukujevci', region: 'Sremski okrug' },
 
     // Mačvanski okrug
     { name: 'Šabac', region: 'Mačvanski okrug' },
     { name: 'Bogatić', region: 'Mačvanski okrug' },
     { name: 'Koceljeva', region: 'Mačvanski okrug' },
     { name: 'Loznica', region: 'Mačvanski okrug' },
-    { name: 'Ljig', region: 'Mačvanski okrug' },
     { name: 'Ljubovija', region: 'Mačvanski okrug' },
     { name: 'Vladimirci', region: 'Mačvanski okrug' },
+    { name: 'Drenovac', region: 'Mačvanski okrug' },
+    { name: 'Bela Reka', region: 'Mačvanski okrug' },
+    { name: 'Dublje', region: 'Mačvanski okrug' },
+    { name: 'Badovinci', region: 'Mačvanski okrug' },
 
     // Kolubarski okrug
     { name: 'Valjevo', region: 'Kolubarski okrug' },
     { name: 'Lajkovac', region: 'Kolubarski okrug' },
+    { name: 'Ljig', region: 'Kolubarski okrug' },
     { name: 'Mionica', region: 'Kolubarski okrug' },
     { name: 'Osečina', region: 'Kolubarski okrug' },
     { name: 'Ub', region: 'Kolubarski okrug' },
+    { name: 'Divčibare', region: 'Kolubarski okrug' },
+    { name: 'Brankovina', region: 'Kolubarski okrug' },
+
+    // Zlatiborski okrug
+    { name: 'Užice', region: 'Zlatiborski okrug' },
+    { name: 'Arilje', region: 'Zlatiborski okrug' },
+    { name: 'Bajina Bašta', region: 'Zlatiborski okrug' },
+    { name: 'Čajetina', region: 'Zlatiborski okrug' },
+    { name: 'Kosjerić', region: 'Zlatiborski okrug' },
+    { name: 'Nova Varoš', region: 'Zlatiborski okrug' },
+    { name: 'Priboj', region: 'Zlatiborski okrug' },
+    { name: 'Prijepolje', region: 'Zlatiborski okrug' },
+    { name: 'Zlatibor', region: 'Zlatiborski okrug' },
+    { name: 'Požega', region: 'Zlatiborski okrug' },
+    { name: 'Sevojno', region: 'Zlatiborski okrug' },
+    { name: 'Rogačica', region: 'Zlatiborski okrug' },
+    { name: 'Kokin Brod', region: 'Zlatiborski okrug' },
+    { name: 'Brodarevo', region: 'Zlatiborski okrug' },
+    { name: 'Milićevci', region: 'Zlatiborski okrug' },
+
+    // Moravički okrug
+    { name: 'Čačak', region: 'Moravički okrug' },
+    { name: 'Gornji Milanovac', region: 'Moravički okrug' },
+    { name: 'Ivanjica', region: 'Moravički okrug' },
+    { name: 'Lučani', region: 'Moravički okrug' },
+    { name: 'Mrčajevci', region: 'Moravički okrug' },
+    { name: 'Preljina', region: 'Moravički okrug' },
+    { name: 'Atenica', region: 'Moravički okrug' },
+
+    // Raški okrug
+    { name: 'Kraljevo', region: 'Raški okrug' },
+    { name: 'Novi Pazar', region: 'Raški okrug' },
+    { name: 'Raška', region: 'Raški okrug' },
+    { name: 'Tutin', region: 'Raški okrug' },
+    { name: 'Vrnjačka Banja', region: 'Raški okrug' },
+    { name: 'Sjenica', region: 'Raški okrug' },
+    { name: 'Ribnica', region: 'Raški okrug' },
+    { name: 'Ušće', region: 'Raški okrug' },
+    { name: 'Biljanovac', region: 'Raški okrug' },
+    { name: 'Leposavić', region: 'Raški okrug' },
+
+    // Rasinski okrug
+    { name: 'Kruševac', region: 'Rasinski okrug' },
+    { name: 'Aleksandrovac', region: 'Rasinski okrug' },
+    { name: 'Brus', region: 'Rasinski okrug' },
+    { name: 'Ćićevac', region: 'Rasinski okrug' },
+    { name: 'Trstenik', region: 'Rasinski okrug' },
+    { name: 'Varvarin', region: 'Rasinski okrug' },
+    { name: 'Vrba', region: 'Rasinski okrug' },
+    { name: 'Mačkovac', region: 'Rasinski okrug' },
+
+    // Šumadijski okrug
+    { name: 'Kragujevac', region: 'Šumadijski okrug' },
+    { name: 'Aranđelovac', region: 'Šumadijski okrug' },
+    { name: 'Batočina', region: 'Šumadijski okrug' },
+    { name: 'Knić', region: 'Šumadijski okrug' },
+    { name: 'Lapovo', region: 'Šumadijski okrug' },
+    { name: 'Rača', region: 'Šumadijski okrug' },
+    { name: 'Topola', region: 'Šumadijski okrug' },
+    { name: 'Bagrdan', region: 'Šumadijski okrug' },
+    { name: 'Markovac', region: 'Šumadijski okrug' },
+
+    // Pomoravski okrug
+    { name: 'Jagodina', region: 'Pomoravski okrug' },
+    { name: 'Ćuprija', region: 'Pomoravski okrug' },
+    { name: 'Despotovac', region: 'Pomoravski okrug' },
+    { name: 'Paraćin', region: 'Pomoravski okrug' },
+    { name: 'Rekovac', region: 'Pomoravski okrug' },
+    { name: 'Svilajnac', region: 'Pomoravski okrug' },
+    { name: 'Ćićevac', region: 'Pomoravski okrug' },
+    { name: 'Bukovče', region: 'Pomoravski okrug' },
 
     // Podunavski okrug
     { name: 'Smederevo', region: 'Podunavski okrug' },
     { name: 'Smederevska Palanka', region: 'Podunavski okrug' },
     { name: 'Velika Plana', region: 'Podunavski okrug' },
+    { name: 'Azanja', region: 'Podunavski okrug' },
+    { name: 'Drugovac', region: 'Podunavski okrug' },
 
     // Braničevski okrug
     { name: 'Požarevac', region: 'Braničevski okrug' },
@@ -100,33 +223,28 @@ export const serbianCities = [
     { name: 'Veliko Gradište', region: 'Braničevski okrug' },
     { name: 'Žabari', region: 'Braničevski okrug' },
     { name: 'Žagubica', region: 'Braničevski okrug' },
-
-    // Šumadijski okrug
-    { name: 'Kragujevac', region: 'Šumadijski okrug' },
-    { name: 'Aranđelovac', region: 'Šumadijski okrug' },
-    { name: 'Batočina', region: 'Šumadijski okrug' },
-    { name: 'Knić', region: 'Šumadijski okrug' },
-    { name: 'Lapovo', region: 'Šumadijski okrug' },
-    { name: 'Rača', region: 'Šumadijski okrug' },
-    { name: 'Topola', region: 'Šumadijski okrug' },
-
-    // Pomoravski okrug
-    { name: 'Jagodina', region: 'Pomoravski okrug' },
-    { name: 'Ćuprija', region: 'Pomoravski okrug' },
-    { name: 'Despotovac', region: 'Pomoravski okrug' },
-    { name: 'Paraćin', region: 'Pomoravski okrug' },
-    { name: 'Rekovac', region: 'Pomoravski okrug' },
-    { name: 'Svilajnac', region: 'Pomoravski okrug' },
+    { name: 'Kostolac', region: 'Braničevski okrug' },
+    { name: 'Ram', region: 'Braničevski okrug' },
+    { name: 'Kovina', region: 'Braničevski okrug' },
+    { name: 'Svilajnac', region: 'Braničevski okrug' },
 
     // Borski okrug
-    { name: 'Zaječar', region: 'Zaječarski okrug' },
     { name: 'Bor', region: 'Borski okrug' },
     { name: 'Kladovo', region: 'Borski okrug' },
     { name: 'Majdanpek', region: 'Borski okrug' },
     { name: 'Negotin', region: 'Borski okrug' },
+    { name: 'Metovnica', region: 'Borski okrug' },
+    { name: 'Slatina', region: 'Borski okrug' },
+    { name: 'Donji Milanovac', region: 'Borski okrug' },
+
+    // Zaječarski okrug
+    { name: 'Zaječar', region: 'Zaječarski okrug' },
     { name: 'Boljevac', region: 'Zaječarski okrug' },
     { name: 'Knjaževac', region: 'Zaječarski okrug' },
     { name: 'Sokobanja', region: 'Zaječarski okrug' },
+    { name: 'Rtanj', region: 'Zaječarski okrug' },
+    { name: 'Rgotina', region: 'Zaječarski okrug' },
+    { name: 'Gamzigrad', region: 'Zaječarski okrug' },
 
     // Nišavski okrug
     { name: 'Niš', region: 'Nišavski okrug' },
@@ -136,18 +254,26 @@ export const serbianCities = [
     { name: 'Merošina', region: 'Nišavski okrug' },
     { name: 'Ražanj', region: 'Nišavski okrug' },
     { name: 'Svrljig', region: 'Nišavski okrug' },
+    { name: 'Medoševac', region: 'Nišavski okrug' },
+    { name: 'Trupale', region: 'Nišavski okrug' },
+    { name: 'Pantelej', region: 'Nišavski okrug' },
+    { name: 'Niška Banja', region: 'Nišavski okrug' },
 
     // Toplički okrug
     { name: 'Prokuplje', region: 'Toplički okrug' },
     { name: 'Blace', region: 'Toplički okrug' },
     { name: 'Kuršumlija', region: 'Toplički okrug' },
     { name: 'Žitorađa', region: 'Toplički okrug' },
+    { name: 'Beloljin', region: 'Toplički okrug' },
+    { name: 'Đunis', region: 'Toplički okrug' },
 
     // Pirotski okrug
     { name: 'Pirot', region: 'Pirotski okrug' },
     { name: 'Babušnica', region: 'Pirotski okrug' },
     { name: 'Bela Palanka', region: 'Pirotski okrug' },
     { name: 'Dimitrovgrad', region: 'Pirotski okrug' },
+    { name: 'Temska', region: 'Pirotski okrug' },
+    { name: 'Sukovo', region: 'Pirotski okrug' },
 
     // Jablanički okrug
     { name: 'Leskovac', region: 'Jablanički okrug' },
@@ -156,6 +282,10 @@ export const serbianCities = [
     { name: 'Lebane', region: 'Jablanički okrug' },
     { name: 'Medveđa', region: 'Jablanički okrug' },
     { name: 'Vlasotince', region: 'Jablanički okrug' },
+    { name: 'Grdelica', region: 'Jablanički okrug' },
+    { name: 'Vučje', region: 'Jablanički okrug' },
+    { name: 'Predejane', region: 'Jablanički okrug' },
+    { name: 'Sijarinska Banja', region: 'Jablanički okrug' },
 
     // Pčinjski okrug
     { name: 'Vranje', region: 'Pčinjski okrug' },
@@ -165,41 +295,32 @@ export const serbianCities = [
     { name: 'Surdulica', region: 'Pčinjski okrug' },
     { name: 'Trgovište', region: 'Pčinjski okrug' },
     { name: 'Vladičin Han', region: 'Pčinjski okrug' },
+    { name: 'Vranjska Banja', region: 'Pčinjski okrug' },
+    { name: 'Bunuševac', region: 'Pčinjski okrug' },
+    { name: 'Miratovac', region: 'Pčinjski okrug' },
 
-    // Zlatibarski okrug
-    { name: 'Užice', region: 'Zlatibarski okrug' },
-    { name: 'Arilje', region: 'Zlatibarski okrug' },
-    { name: 'Bajina Bašta', region: 'Zlatibarski okrug' },
-    { name: 'Čajetina', region: 'Zlatibarski okrug' },
-    { name: 'Kosjerić', region: 'Zlatibarski okrug' },
-    { name: 'Nova Varoš', region: 'Zlatibarski okrug' },
-    { name: 'Priboj', region: 'Zlatibarski okrug' },
-    { name: 'Prijepolje', region: 'Zlatibarski okrug' },
-    { name: 'Sjenica', region: 'Raški okrug' },
+    // Mačvanski okrug – additional
+    { name: 'Mali Zvornik', region: 'Mačvanski okrug' },
+    { name: 'Krupanj', region: 'Mačvanski okrug' },
 
-    // Moravički okrug
-    { name: 'Čačak', region: 'Moravički okrug' },
-    { name: 'Gornji Milanovac', region: 'Moravički okrug' },
-    { name: 'Ivanjica', region: 'Moravički okrug' },
-    { name: 'Lučani', region: 'Moravički okrug' },
+    // Kosovski okrug (administrativno Srbija)
+    { name: 'Mitrovica', region: 'Kosovski okrug' },
+    { name: 'Zvečan', region: 'Kosovski okrug' },
+    { name: 'Zubin Potok', region: 'Kosovski okrug' },
 
-    // Raški okrug
-    { name: 'Kraljevo', region: 'Raški okrug' },
-    { name: 'Novi Pazar', region: 'Raški okrug' },
-    { name: 'Raška', region: 'Raški okrug' },
-    { name: 'Tutin', region: 'Raški okrug' },
+    // Banja – turistička mesta
     { name: 'Vrnjačka Banja', region: 'Raški okrug' },
-
-    // Rasinski okrug
-    { name: 'Kruševac', region: 'Rasinski okrug' },
-    { name: 'Aleksandrovac', region: 'Rasinski okrug' },
-    { name: 'Brus', region: 'Rasinski okrug' },
-    { name: 'Ćićevac', region: 'Rasinski okrug' },
-    { name: 'Trstenik', region: 'Rasinski okrug' },
-    { name: 'Varvarin', region: 'Rasinski okrug' },
-
-    // Zlatiborski / banjski
-    { name: 'Zlatibor', region: 'Zlatibarski okrug' },
+    { name: 'Sokobanja', region: 'Zaječarski okrug' },
+    { name: 'Banja Koviljača', region: 'Mačvanski okrug' },
+    { name: 'Prolom Banja', region: 'Toplički okrug' },
+    { name: 'Lukovska Banja', region: 'Toplički okrug' },
+    { name: 'Atomska Banja', region: 'Rasinski okrug' },
+    { name: 'Gamzigradska Banja', region: 'Zaječarski okrug' },
+    { name: 'Selters Banja', region: 'Moravički okrug' },
+    { name: 'Ovčar Banja', region: 'Moravički okrug' },
+    { name: 'Zlatibor', region: 'Zlatiborski okrug' },
     { name: 'Kopaonik', region: 'Raški okrug' },
+    { name: 'Tara', region: 'Zlatiborski okrug' },
     { name: 'Divčibare', region: 'Kolubarski okrug' },
+    { name: 'Stara planina', region: 'Pirotski okrug' },
 ];

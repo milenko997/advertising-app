@@ -185,7 +185,7 @@ export default function Edit({ ad, categories }) {
                                         value={data.location}
                                         onChange={val => setData('location', val)}
                                         className={inputClass}
-                                        placeholder="e.g. Belgrade"
+                                        placeholder="npr. Beograd"
                                     />
                                     {errors.location && <p className="mt-1 text-xs text-red-600">{errors.location}</p>}
                                 </div>

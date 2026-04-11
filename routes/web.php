@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAdvertisementController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -24,6 +25,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [AdvertisementController::class, 'publicIndex'])->name('home');
+
+Route::get('/sitemap.xml',               [SitemapController::class, 'index'])->name('sitemap.index');
+Route::get('/sitemap-static.xml',        [SitemapController::class, 'static'])->name('sitemap.static');
+Route::get('/sitemap-categories.xml',    [SitemapController::class, 'categories'])->name('sitemap.categories');
+Route::get('/sitemap-advertisements.xml', [SitemapController::class, 'advertisements'])->name('sitemap.advertisements');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');

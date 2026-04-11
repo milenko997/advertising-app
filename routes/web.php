@@ -49,7 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/favorites/{advertisement}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 });
 
-Route::middleware(['auth', 'isCustomer'])->group(function () {
+Route::middleware(['auth', 'verified', 'isCustomer'])->group(function () {
     Route::get('/my-advertisements', [AdvertisementController::class, 'userIndex'])->name('advertisements.user');
     Route::get('/advertisements/create', [AdvertisementController::class, 'create'])->name('advertisements.create');
     Route::post('/advertisements', [AdvertisementController::class, 'store'])->name('advertisements.store')->middleware('throttle:ad-creation');

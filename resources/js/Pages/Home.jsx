@@ -5,7 +5,7 @@ import AdCard from '@/Components/AdCard';
 import CategoryBar from '@/Components/CategoryBar';
 import axios from 'axios';
 
-export default function Home({ ads, search, location, favoritedIds }) {
+export default function Home({ ads, pinnedAds = [], search, location, favoritedIds }) {
     const [adList, setAdList] = useState(ads.data);
     const [currentPage, setCurrentPage] = useState(ads.current_page);
     const [hasMore, setHasMore] = useState(ads.current_page < ads.last_page);
@@ -48,6 +48,24 @@ export default function Home({ ads, search, location, favoritedIds }) {
 
             <div className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    {/* Pinned ads */}
+                    {pinnedAds.length > 0 && !search && (
+                        <div className="mb-8">
+                            <div className="flex items-center gap-2 mb-4">
+                                <svg className="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
+                                </svg>
+                                <span className="text-sm font-semibold text-gray-700">Featured</span>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                                {pinnedAds.map(ad => (
+                                    <AdCard key={ad.id} ad={ad} favoritedIds={favoritedIds} />
+                                ))}
+                            </div>
+                            <div className="mt-8 border-t border-gray-200" />
+                        </div>
+                    )}
 
                     {search && (
                         <p className="text-sm text-gray-500 mb-5">

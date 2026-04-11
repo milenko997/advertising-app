@@ -48,6 +48,7 @@ Route::middleware(['auth', 'isCustomer'])->group(function () {
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('/categories', CategoryController::class);
     Route::resource('/advertisements', AdminAdvertisementController::class)->except(['show', 'create', 'store']);
+    Route::patch('/advertisements/{advertisement}/pin', [AdminAdvertisementController::class, 'togglePin'])->name('advertisements.pin');
     Route::resource('/customers', AdminCustomerController::class);
 });
 

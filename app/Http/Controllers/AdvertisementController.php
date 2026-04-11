@@ -22,6 +22,19 @@ class AdvertisementController extends Controller
         $search   = $request->get('search');
         $location = $request->get('location');
 
+        $pinnedAds = [];
+        if (!$search && !$location) {
+            $pinnedAds = Advertisement::with('user', 'category')
+                ->where('is_pinned', true)
+                ->latest()
+                ->get()
+                ->map(fn ($ad) => $this->formatAd($ad))
+                ->values()
+                ->all();
+        }
+
+        $pinnedIds = collect($pinnedAds)->pluck('id')->all();
+
         $ads = Advertisement::with('user', 'category')
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
@@ -32,6 +45,7 @@ class AdvertisementController extends Controller
                 });
             })
             ->when($location, fn ($q) => $q->where('location', 'like', '%' . $location . '%'))
+            ->when(!empty($pinnedIds), fn ($q) => $q->whereNotIn('id', $pinnedIds))
             ->latest()
             ->paginate(21);
 
@@ -44,6 +58,7 @@ class AdvertisementController extends Controller
 
         return Inertia::render('Home', [
             'ads'          => $this->paginationData($ads),
+            'pinnedAds'    => $pinnedAds,
             'search'       => $search,
             'location'     => $location,
             'favoritedIds' => Favorite::idsForUser(Auth::id()),
@@ -317,6 +332,7 @@ class AdvertisementController extends Controller
             'phone'        => $ad->phone,
             'location'     => $ad->location,
             'views'        => $ad->views,
+            'is_pinned'    => (bool) $ad->is_pinned,
             'user_id'      => $ad->user_id,
             'category_id'  => $ad->category_id,
             'created_at'   => $ad->created_at?->format('d.m.Y'),

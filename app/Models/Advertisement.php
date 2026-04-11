@@ -25,6 +25,7 @@ class Advertisement extends Model
         'phone',
         'location',
         'category_id',
+        'is_pinned',
     ];
 
     public function user()

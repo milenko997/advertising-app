@@ -7,6 +7,10 @@ export default function AdminAdvertisementsIndex({ ads }) {
         router.delete(`/admin/advertisements/${id}`);
     };
 
+    const togglePin = (id) => {
+        router.patch(`/admin/advertisements/${id}/pin`);
+    };
+
     return (
         <AppLayout>
             <div className="py-8">
@@ -42,6 +46,20 @@ export default function AdminAdvertisementsIndex({ ads }) {
                                         <td className="px-6 py-4 text-sm text-gray-400">{ad.created_at}</td>
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
+                                                <button
+                                                    onClick={() => togglePin(ad.id)}
+                                                    title={ad.is_pinned ? 'Unpin' : 'Pin to top'}
+                                                    className={`px-3 py-1.5 text-sm font-medium rounded-lg transition inline-flex items-center gap-1 ${
+                                                        ad.is_pinned
+                                                            ? 'bg-amber-100 text-amber-700 border border-amber-300 hover:bg-amber-200'
+                                                            : 'border border-gray-300 text-gray-500 hover:bg-gray-50'
+                                                    }`}
+                                                >
+                                                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                                                        <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
+                                                    </svg>
+                                                    {ad.is_pinned ? 'Pinned' : 'Pin'}
+                                                </button>
                                                 <Link
                                                     href={`/admin/advertisements/${ad.id}/edit`}
                                                     className="px-3 py-1.5 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"

@@ -18,6 +18,7 @@ class AdminAdvertisementController extends Controller
             'title'       => $ad->title,
             'description' => $ad->description,
             'price'       => $ad->price,
+            'is_pinned'   => (bool) $ad->is_pinned,
             'created_at'  => $ad->created_at->format('d.m.Y'),
             'category'    => $ad->category ? ['name' => $ad->category->name] : null,
             'user'        => $ad->user ? ['name' => $ad->user->name] : null,
@@ -87,6 +88,13 @@ class AdminAdvertisementController extends Controller
         $advertisement->save();
 
         return redirect()->route('admin.advertisements.index')->with('success', 'Advertisement updated.');
+    }
+
+    public function togglePin(Advertisement $advertisement)
+    {
+        $advertisement->update(['is_pinned' => !$advertisement->is_pinned]);
+
+        return back()->with('success', $advertisement->is_pinned ? 'Advertisement pinned.' : 'Advertisement unpinned.');
     }
 
     public function destroy(Advertisement $advertisement)

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAdvertisementController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminReportController;
@@ -25,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [AdvertisementController::class, 'publicIndex'])->name('home');
+
+Route::get('/faq', [FaqController::class, 'index'])->name('faq');
 
 Route::get('/sitemap.xml',               [SitemapController::class, 'index'])->name('sitemap.index');
 Route::get('/sitemap-static.xml',        [SitemapController::class, 'static'])->name('sitemap.static');

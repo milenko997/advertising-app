@@ -18,7 +18,7 @@ class StoreAdvertisementRequest extends FormRequest
             'description'   => 'required|string|min:10|max:5000',
             'vehicle_type'  => 'required|in:truck,van,pickup,trailer,flatbed,refrigerator_truck,tanker,other',
             'payload'       => 'nullable|string|min:2|max:100',
-            'route'         => 'nullable|string|min:2|max:255',
+
             'availability'  => 'required|in:available,on_request',
             'price'         => 'nullable|string|max:100',
             'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
@@ -38,7 +38,7 @@ class StoreAdvertisementRequest extends FormRequest
             'description.max'   => 'The description may not exceed 5000 characters.',
             'vehicle_type.in'   => 'Please select a valid vehicle type.',
             'payload.min'       => 'Payload must be at least 2 characters (e.g. 10 tons).',
-            'route.min'         => 'Route must be at least 2 characters.',
+
             'phone.regex'       => 'Enter a valid phone number (digits, spaces, +, -, parentheses only).',
             'location.min'      => 'Location must be at least 2 characters.',
             'images.max'        => 'You may upload at most 10 gallery photos.',

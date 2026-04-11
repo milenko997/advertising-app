@@ -57,7 +57,7 @@ class AdminAdvertisementController extends Controller
             'description'  => 'required|string',
             'vehicle_type' => 'nullable|string',
             'payload'      => 'nullable|string|max:255',
-            'route'        => 'nullable|string|max:255',
+
             'availability' => 'required|in:available,on_request',
             'price'        => 'nullable|string|max:255',
             'phone'        => 'required|string|min:8|max:15',
@@ -70,7 +70,6 @@ class AdminAdvertisementController extends Controller
         $advertisement->description  = $request->description;
         $advertisement->vehicle_type = $request->vehicle_type;
         $advertisement->payload      = $request->payload;
-        $advertisement->route        = $request->route;
         $advertisement->availability = $request->availability;
         $advertisement->price        = $request->price;
         $advertisement->phone        = $request->phone;

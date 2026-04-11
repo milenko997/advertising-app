@@ -9,7 +9,7 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
         description: advertisement.description,
         vehicle_type: advertisement.vehicle_type ?? '',
         payload: advertisement.payload ?? '',
-        route: advertisement.route ?? '',
+
         availability: advertisement.availability ?? 'available',
         price: advertisement.price ?? '',
         phone: advertisement.phone ?? '',
@@ -108,17 +108,6 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
                                         className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                     />
                                 </div>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Route</label>
-                                <input
-                                    type="text"
-                                    value={data.route}
-                                    onChange={e => setData('route', e.target.value)}
-                                    placeholder="e.g. New York → Los Angeles"
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                />
                             </div>
 
                             <ImageUpload

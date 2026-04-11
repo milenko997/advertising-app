@@ -29,7 +29,7 @@ export default function Edit({ ad, categories }) {
         vehicle_type: ad.vehicle_type ?? '',
         availability: ad.availability ?? 'available',
         payload: ad.payload ?? '',
-        route: ad.route ?? '',
+
         price: ad.price ?? '',
         phone: ad.phone ?? '',
         location: ad.location ?? '',
@@ -141,18 +141,11 @@ export default function Edit({ ad, categories }) {
                                 </div>
                             </div>
 
-                            {/* Payload + Route */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <label className={labelClass}>Payload Capacity</label>
-                                    <input type="text" value={data.payload} onChange={e => setData('payload', e.target.value)} placeholder="e.g. 10 tons" className={inputClass} />
-                                    {errors.payload && <p className="mt-1 text-xs text-red-600">{errors.payload}</p>}
-                                </div>
-                                <div>
-                                    <label className={labelClass}>Area / Route</label>
-                                    <input type="text" value={data.route} onChange={e => setData('route', e.target.value)} placeholder="e.g. National, Belgrade–Novi Sad" className={inputClass} />
-                                    {errors.route && <p className="mt-1 text-xs text-red-600">{errors.route}</p>}
-                                </div>
+                            {/* Payload */}
+                            <div className="mb-4">
+                                <label className={labelClass}>Payload Capacity</label>
+                                <input type="text" value={data.payload} onChange={e => setData('payload', e.target.value)} placeholder="e.g. 10 tons" className={inputClass} />
+                                {errors.payload && <p className="mt-1 text-xs text-red-600">{errors.payload}</p>}
                             </div>
 
                             {/* Category */}

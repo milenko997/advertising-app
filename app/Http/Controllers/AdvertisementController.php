@@ -98,7 +98,7 @@ class AdvertisementController extends Controller
             'description'  => $request->description,
             'vehicle_type' => $request->vehicle_type,
             'payload'      => $request->payload,
-            'route'        => $request->route,
+
             'availability' => $request->availability,
             'price'        => $request->price,
             'image'        => $imagePath,
@@ -199,7 +199,6 @@ class AdvertisementController extends Controller
         $ad->description  = $request->description;
         $ad->vehicle_type = $request->vehicle_type;
         $ad->payload      = $request->payload;
-        $ad->route        = $request->route;
         $ad->availability = $request->availability;
         $ad->price        = $request->price;
         $ad->phone        = $request->phone;
@@ -327,7 +326,7 @@ class AdvertisementController extends Controller
             'vehicle_type' => $ad->vehicle_type,
             'availability' => $ad->availability,
             'payload'      => $ad->payload,
-            'route'        => $ad->route,
+
             'image'        => $ad->image,
             'phone'        => $ad->phone,
             'location'     => $ad->location,

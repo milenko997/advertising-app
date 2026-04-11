@@ -27,7 +27,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AdvertisementController::class, 'publicIndex'])->name('home');
 
-Route::get('/faq', [FaqController::class, 'index'])->name('faq');
+Route::get('/faq',            [FaqController::class, 'index'])->name('faq');
+Route::get('/terms',          [FaqController::class, 'terms'])->name('terms');
+Route::get('/privacy-policy', [FaqController::class, 'privacy'])->name('privacy');
 
 Route::get('/sitemap.xml',               [SitemapController::class, 'index'])->name('sitemap.index');
 Route::get('/sitemap-static.xml',        [SitemapController::class, 'static'])->name('sitemap.static');

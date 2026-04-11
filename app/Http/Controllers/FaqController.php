@@ -10,4 +10,14 @@ class FaqController extends Controller
     {
         return Inertia::render('Faq');
     }
+
+    public function terms()
+    {
+        return Inertia::render('Terms');
+    }
+
+    public function privacy()
+    {
+        return Inertia::render('Privacy');
+    }
 }

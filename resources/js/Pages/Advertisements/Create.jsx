@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { useForm, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import ImageUpload from '@/Components/ImageUpload';
+import LocationAutocomplete from '@/Components/LocationAutocomplete';
 
 const VEHICLE_TYPES = [
     ['truck', 'Truck'], ['van', 'Van'], ['pickup', 'Pickup'], ['trailer', 'Trailer'],
@@ -53,6 +54,10 @@ export default function Create({ categories }) {
         setImagePreviews(prev => prev.filter((_, i) => i !== index));
     };
 
+    const handlePhone = (e) => {
+        setData('phone', e.target.value.replace(/[^\d+\s\-().]/g, ''));
+    };
+
     const submit = (e) => {
         e.preventDefault();
         post('/advertisements', { forceFormData: true });
@@ -92,14 +97,16 @@ export default function Create({ categories }) {
                             {/* Title */}
                             <div className="mb-4">
                                 <label className={labelClass}>Title <span className="text-red-500">*</span></label>
-                                <input type="text" value={data.title} onChange={e => setData('title', e.target.value)} className={inputClass} placeholder="e.g. Mercedes Actros available for long-haul" />
+                                <input type="text" value={data.title} onChange={e => setData('title', e.target.value)} minLength={5} maxLength={255} className={inputClass} placeholder="e.g. Mercedes Actros available for long-haul" />
+                                <p className="mt-1 text-xs text-gray-400">{data.title.length}/255</p>
                                 {errors.title && <p className="mt-1 text-xs text-red-600">{errors.title}</p>}
                             </div>
 
                             {/* Description */}
                             <div className="mb-4">
-                                <label className={labelClass}>Description</label>
-                                <textarea rows={4} value={data.description} onChange={e => setData('description', e.target.value)} className={inputClass} placeholder="Describe your vehicle, services offered, availability, etc." />
+                                <label className={labelClass}>Description <span className="text-red-500">*</span></label>
+                                <textarea rows={4} value={data.description} onChange={e => setData('description', e.target.value)} minLength={10} maxLength={5000} className={inputClass} placeholder="Describe your vehicle, services offered, availability, etc." />
+                                <p className="mt-1 text-xs text-gray-400">{data.description.length}/5000</p>
                                 {errors.description && <p className="mt-1 text-xs text-red-600">{errors.description}</p>}
                             </div>
 
@@ -169,12 +176,18 @@ export default function Create({ categories }) {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                                 <div>
                                     <label className={labelClass}>Phone <span className="text-red-500">*</span></label>
-                                    <input type="text" value={data.phone} onChange={e => setData('phone', e.target.value)} maxLength={15} className={inputClass} />
+                                    <input type="tel" value={data.phone} onChange={handlePhone} maxLength={20} placeholder="+381 62 123 4567" className={inputClass} />
+                                    <p className="mt-1 text-xs text-gray-400">Digits, spaces, +, -, ( ) only</p>
                                     {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
                                 </div>
                                 <div>
                                     <label className={labelClass}>Location <span className="text-red-500">*</span></label>
-                                    <input type="text" value={data.location} onChange={e => setData('location', e.target.value)} className={inputClass} />
+                                    <LocationAutocomplete
+                                        value={data.location}
+                                        onChange={val => setData('location', val)}
+                                        className={inputClass}
+                                        placeholder="e.g. Belgrade"
+                                    />
                                     {errors.location && <p className="mt-1 text-xs text-red-600">{errors.location}</p>}
                                 </div>
                             </div>

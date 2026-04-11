@@ -28,10 +28,14 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         $request->validate([
-            'name'   => 'required|string|max:255',
-            'email'  => 'required|email|max:255|unique:users,email,' . $user->id,
-            'phone'  => 'nullable|string|min:6|max:20',
+            'name'   => 'required|string|min:2|max:255',
+            'email'  => 'required|email:rfc,dns|max:255|unique:users,email,' . $user->id,
+            'phone'  => ['nullable', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1900',
+        ], [
+            'name.min'    => 'Your name must be at least 2 characters.',
+            'email.email' => 'Please enter a valid email address.',
+            'phone.regex' => 'Enter a valid phone number (digits, spaces, +, -, parentheses only).',
         ]);
 
         $user->name  = $request->name;

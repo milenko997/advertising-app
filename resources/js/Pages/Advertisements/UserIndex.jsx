@@ -9,6 +9,10 @@ export default function UserIndex({ ads }) {
         router.delete(`/advertisements/${id}`);
     };
 
+    const handleRenew = (id) => {
+        router.patch(`/advertisements/${id}/renew`);
+    };
+
     return (
         <AppLayout>
             <div className="py-8">
@@ -89,6 +93,18 @@ export default function UserIndex({ ads }) {
                                                     {ad.price && <span className="text-xs font-semibold text-indigo-600">{ad.price}</span>}
                                                     {ad.category?.name && <span className="text-xs text-gray-400">{ad.category.name}</span>}
                                                     <span className="text-xs text-gray-400">{ad.created_at}</span>
+                                                    {ad.is_expired ? (
+                                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold bg-red-100 text-red-600">
+                                                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                            </svg>
+                                                            Expired
+                                                        </span>
+                                                    ) : ad.expires_at && (
+                                                        <span className="text-xs text-gray-400">
+                                                            Expires {ad.expires_at}
+                                                        </span>
+                                                    )}
                                                     <span className="inline-flex items-center gap-1 text-xs text-gray-400">
                                                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -101,6 +117,14 @@ export default function UserIndex({ ads }) {
 
                                             {/* Actions */}
                                             <div className="flex items-center gap-2 shrink-0">
+                                                {ad.is_expired && (
+                                                    <button
+                                                        onClick={() => handleRenew(ad.id)}
+                                                        className="px-3 py-1.5 border border-emerald-300 rounded-lg text-xs font-medium text-emerald-700 hover:bg-emerald-50 transition"
+                                                    >
+                                                        Renew
+                                                    </button>
+                                                )}
                                                 <Link
                                                     href={`/advertisements/edit/${ad.slug}`}
                                                     className="px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-medium text-gray-700 hover:bg-gray-50 transition"

@@ -25,6 +25,7 @@ class AdvertisementController extends Controller
         $pinnedAds = [];
         if (!$search && !$location) {
             $pinnedAds = Advertisement::with('user', 'category')
+                ->active()
                 ->where('is_pinned', true)
                 ->latest()
                 ->get()
@@ -36,6 +37,7 @@ class AdvertisementController extends Controller
         $pinnedIds = collect($pinnedAds)->pluck('id')->all();
 
         $ads = Advertisement::with('user', 'category')
+            ->active()
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('title', 'like', '%' . $search . '%')
@@ -70,7 +72,8 @@ class AdvertisementController extends Controller
         $ads = Advertisement::with('category')
             ->where('user_id', Auth::id())
             ->latest()
-            ->get();
+            ->get()
+            ->sortByDesc(fn ($ad) => $ad->isExpired() ? 0 : 1);
 
         return Inertia::render('Advertisements/UserIndex', [
             'ads' => $ads->map(fn ($ad) => $this->formatAd($ad))->values(),
@@ -294,6 +297,7 @@ class AdvertisementController extends Controller
 
         $location = $request->get('location');
         $ads = $category->advertisements()->with('user', 'category')
+            ->active()
             ->when($location, fn ($q) => $q->where('location', 'like', '%' . $location . '%'))
             ->latest()
             ->paginate(21);
@@ -311,6 +315,17 @@ class AdvertisementController extends Controller
             'location'     => $location,
             'favoritedIds' => Favorite::idsForUser(Auth::id()),
         ]);
+    }
+
+    public function renew($id)
+    {
+        $ad = Advertisement::withTrashed()->findOrFail($id);
+        $this->authorize('update', $ad);
+
+        $ad->expires_at = now()->addDays(Advertisement::EXPIRY_DAYS);
+        $ad->save();
+
+        return back()->with('success', 'Ad renewed for another ' . Advertisement::EXPIRY_DAYS . ' days.');
     }
 
     // ─── Helpers ─────────────────────────────────────────────────────────────
@@ -332,6 +347,8 @@ class AdvertisementController extends Controller
             'location'     => $ad->location,
             'views'        => $ad->views,
             'is_pinned'    => (bool) $ad->is_pinned,
+            'expires_at'   => $ad->expires_at?->format('d.m.Y'),
+            'is_expired'   => $ad->isExpired(),
             'user_id'      => $ad->user_id,
             'category_id'  => $ad->category_id,
             'created_at'   => $ad->created_at?->format('d.m.Y'),

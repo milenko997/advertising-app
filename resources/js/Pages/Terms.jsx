@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 function Section({ title, children }) {
@@ -16,6 +16,11 @@ function Section({ title, children }) {
 export default function Terms() {
     return (
         <AppLayout>
+            <Head>
+                <title>Terms of Use — AdBoard</title>
+                <meta name="description" content="Read AdBoard's Terms of Use covering account registration, ad posting rules, prohibited content, and your rights as a user." />
+            </Head>
+
             {/* Hero */}
             <div className="bg-slate-900 py-14">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

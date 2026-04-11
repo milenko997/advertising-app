@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 const faqs = [
@@ -137,6 +138,11 @@ function FaqItem({ q, a }) {
 export default function Faq() {
     return (
         <AppLayout>
+            <Head>
+                <title>FAQ — AdBoard</title>
+                <meta name="description" content="Frequently asked questions about AdBoard — how to post ads, search for vehicles, renew listings, and more." />
+            </Head>
+
             {/* Hero */}
             <div className="bg-slate-900 py-14">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

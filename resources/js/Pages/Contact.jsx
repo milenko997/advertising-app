@@ -1,4 +1,4 @@
-import { useForm } from '@inertiajs/react';
+import { useForm, Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 function InfoCard({ icon, label, value, href }) {
@@ -35,6 +35,11 @@ export default function Contact() {
 
     return (
         <AppLayout>
+            <Head>
+                <title>Contact Us — AdBoard</title>
+                <meta name="description" content="Get in touch with the AdBoard team. We're happy to help with any questions about our transport and freight marketplace." />
+            </Head>
+
             {/* Hero */}
             <div className="bg-slate-900 py-14">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { router } from '@inertiajs/react';
+import { router, Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import AdCard from '@/Components/AdCard';
 import CategoryBar from '@/Components/CategoryBar';
@@ -37,6 +37,14 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
 
     return (
         <AppLayout>
+            <Head>
+                <title>AdBoard — Transport & Freight Marketplace in Serbia</title>
+                <meta name="description" content="Browse trucks, vans, trailers, and logistics services across Serbia. Find transport professionals or post your own ad on AdBoard." />
+                <meta property="og:type"        content="website" />
+                <meta property="og:site_name"   content="AdBoard" />
+                <meta property="og:title"       content="AdBoard — Transport & Freight Marketplace in Serbia" />
+                <meta property="og:description" content="Browse trucks, vans, trailers, and logistics services across Serbia. Find transport professionals or post your own ad on AdBoard." />
+            </Head>
             <CategoryBar
                 search={searchValue}
                 location={locationValue}

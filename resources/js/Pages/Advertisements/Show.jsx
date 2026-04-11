@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, usePage, router } from '@inertiajs/react';
+import { Link, usePage, router, Head } from '@inertiajs/react';
 import axios from 'axios';
 import AppLayout from '@/Layouts/AppLayout';
 import ShareButton from '@/Components/ShareButton';
@@ -257,8 +257,36 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
     const dateLabel = ad.created_at !== ad.updated_at ? 'Updated' : 'Posted';
     const dateValue = ad.created_at !== ad.updated_at ? ad.updated_at : ad.created_at;
 
+    const pageTitle   = `${ad.title} — AdBoard`;
+    const description = ad.description
+        ? ad.description.replace(/\s+/g, ' ').trim().slice(0, 160)
+        : `${ad.title} — available on AdBoard, the marketplace for transport and freight professionals in Serbia.`;
+    const imageUrl    = ad.image
+        ? `${window.location.origin}/storage/${ad.image}`
+        : `${window.location.origin}/og-default.png`;
+    const pageUrl     = window.location.href;
+
     return (
         <AppLayout>
+            <Head>
+                <title>{pageTitle}</title>
+                <meta name="description" content={description} />
+
+                {/* Open Graph */}
+                <meta property="og:type"        content="product" />
+                <meta property="og:site_name"   content="AdBoard" />
+                <meta property="og:title"       content={pageTitle} />
+                <meta property="og:description" content={description} />
+                <meta property="og:image"       content={imageUrl} />
+                <meta property="og:url"         content={pageUrl} />
+
+                {/* Twitter / WhatsApp */}
+                <meta name="twitter:card"        content="summary_large_image" />
+                <meta name="twitter:title"       content={pageTitle} />
+                <meta name="twitter:description" content={description} />
+                <meta name="twitter:image"       content={imageUrl} />
+            </Head>
+
             <div className="py-8">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 

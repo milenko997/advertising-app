@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 function Section({ title, children }) {
@@ -16,6 +16,11 @@ function Section({ title, children }) {
 export default function Privacy() {
     return (
         <AppLayout>
+            <Head>
+                <title>Privacy Policy — AdBoard</title>
+                <meta name="description" content="Learn how AdBoard collects, uses, and protects your personal data in compliance with Serbian data protection law." />
+            </Head>
+
             {/* Hero */}
             <div className="bg-slate-900 py-14">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

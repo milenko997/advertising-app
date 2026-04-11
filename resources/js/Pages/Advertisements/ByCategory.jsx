@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { router } from '@inertiajs/react';
+import { router, Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import AdCard from '@/Components/AdCard';
 import CategoryBar from '@/Components/CategoryBar';
@@ -35,6 +35,14 @@ export default function ByCategory({ category, ads, location, favoritedIds }) {
 
     return (
         <AppLayout>
+            <Head>
+                <title>{`${category.name} Ads — AdBoard`}</title>
+                <meta name="description" content={`Browse ${category.name} advertisements on AdBoard — Serbia's marketplace for transport and freight professionals.`} />
+                <meta property="og:title"       content={`${category.name} Ads — AdBoard`} />
+                <meta property="og:description" content={`Browse ${category.name} advertisements on AdBoard — Serbia's marketplace for transport and freight professionals.`} />
+                <meta property="og:type"        content="website" />
+                <meta property="og:site_name"   content="AdBoard" />
+            </Head>
             <CategoryBar
                 currentParent={category.slug}
                 location={locationValue}

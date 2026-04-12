@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
+import axios from 'axios';
 
 const TYPE_COLORS = {
     wrong_category: 'bg-blue-50 text-blue-700',
@@ -8,17 +10,44 @@ const TYPE_COLORS = {
     ignore_user:    'bg-purple-50 text-purple-700',
 };
 
-export default function AdminReportsIndex({ reports }) {
-    const pending  = reports.filter(r => !r.resolved);
-    const resolved = reports.filter(r => r.resolved);
+export default function AdminReportsIndex({ reports: initialReports }) {
+    const [reportList, setReportList] = useState(initialReports.data);
+    const [currentPage, setCurrentPage] = useState(initialReports.current_page);
+    const [hasMore, setHasMore] = useState(initialReports.current_page < initialReports.last_page);
+    const [loading, setLoading] = useState(false);
+
+    const pending  = reportList.filter(r => !r.resolved);
+    const resolved = reportList.filter(r => r.resolved);
 
     const toggleResolve = (id) => {
-        router.patch(`/admin/reports/${id}/resolve`, {}, { preserveScroll: true });
+        router.patch(`/admin/reports/${id}/resolve`, {}, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setReportList(prev => prev.map(r => r.id === id ? { ...r, resolved: !r.resolved } : r));
+            },
+        });
     };
 
     const destroy = (id) => {
         if (!confirm('Delete this report?')) return;
-        router.delete(`/admin/reports/${id}`, { preserveScroll: true });
+        router.delete(`/admin/reports/${id}`, {
+            preserveScroll: true,
+            onSuccess: () => setReportList(prev => prev.filter(r => r.id !== id)),
+        });
+    };
+
+    const loadMore = async () => {
+        if (loading || !hasMore) return;
+        setLoading(true);
+        const nextPage = currentPage + 1;
+        try {
+            const { data } = await axios.get(`/admin/reports?page=${nextPage}`);
+            setReportList(prev => [...prev, ...data.reports]);
+            setHasMore(data.hasMore);
+            setCurrentPage(nextPage);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const ReportRow = ({ report }) => (
@@ -148,6 +177,24 @@ export default function AdminReportsIndex({ reports }) {
                                     {resolved.map(r => <ReportRow key={r.id} report={r} />)}
                                 </tbody>
                             </table>
+                        </div>
+                    )}
+
+                    {hasMore && (
+                        <div className="text-center">
+                            <button
+                                onClick={loadMore}
+                                disabled={loading}
+                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-indigo-300 transition disabled:opacity-50"
+                            >
+                                {loading && (
+                                    <svg className="w-4 h-4 animate-spin text-indigo-600" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                    </svg>
+                                )}
+                                {loading ? 'Loading…' : 'Load More'}
+                            </button>
                         </div>
                     )}
 

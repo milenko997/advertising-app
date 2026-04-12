@@ -10,9 +10,11 @@ use Inertia\Inertia;
 
 class AdminCustomerController extends Controller
 {
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        $customers = User::where('role', 'customer')->get()->map(fn ($u) => [
+        $paginator = User::where('role', 'customer')->latest()->paginate(20);
+
+        $customers = $paginator->getCollection()->map(fn ($u) => [
             'id'         => $u->id,
             'slug'       => $u->slug,
             'name'       => $u->name,
@@ -21,7 +23,21 @@ class AdminCustomerController extends Controller
             'created_at' => $u->created_at->format('d.m.Y'),
         ])->values();
 
-        return Inertia::render('Admin/Customers/Index', compact('customers'));
+        if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
+            return response()->json([
+                'customers' => $customers,
+                'hasMore'   => $paginator->hasMorePages(),
+            ]);
+        }
+
+        return Inertia::render('Admin/Customers/Index', [
+            'customers' => [
+                'data'         => $customers,
+                'current_page' => $paginator->currentPage(),
+                'last_page'    => $paginator->lastPage(),
+                'total'        => $paginator->total(),
+            ],
+        ]);
     }
 
     public function create()

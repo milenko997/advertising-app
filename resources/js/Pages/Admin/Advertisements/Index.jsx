@@ -1,18 +1,23 @@
 import { useState } from 'react';
 import { Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
+import axios from 'axios';
 
-export default function AdminAdvertisementsIndex({ ads }) {
+export default function AdminAdvertisementsIndex({ ads: initialAds }) {
+    const [adList, setAdList] = useState(initialAds.data);
+    const [currentPage, setCurrentPage] = useState(initialAds.current_page);
+    const [hasMore, setHasMore] = useState(initialAds.current_page < initialAds.last_page);
+    const [loading, setLoading] = useState(false);
     const [selected, setSelected] = useState(new Set());
 
-    const allSelected = ads.length > 0 && selected.size === ads.length;
+    const allSelected = adList.length > 0 && selected.size === adList.length;
     const someSelected = selected.size > 0;
 
     const toggleAll = () => {
         if (allSelected) {
             setSelected(new Set());
         } else {
-            setSelected(new Set(ads.map(a => a.id)));
+            setSelected(new Set(adList.map(a => a.id)));
         }
     };
 
@@ -27,12 +32,20 @@ export default function AdminAdvertisementsIndex({ ads }) {
     const destroy = (id) => {
         if (!confirm('Are you sure?')) return;
         router.delete(`/admin/advertisements/${id}`, {
-            onSuccess: () => setSelected(prev => { const n = new Set(prev); n.delete(id); return n; }),
+            onSuccess: () => {
+                setSelected(prev => { const n = new Set(prev); n.delete(id); return n; });
+                setAdList(prev => prev.filter(a => a.id !== id));
+            },
         });
     };
 
     const togglePin = (id) => {
-        router.patch(`/admin/advertisements/${id}/pin`);
+        router.patch(`/admin/advertisements/${id}/pin`, {}, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setAdList(prev => prev.map(a => a.id === id ? { ...a, is_pinned: !a.is_pinned } : a));
+            },
+        });
     };
 
     const bulkAction = (action) => {
@@ -40,8 +53,29 @@ export default function AdminAdvertisementsIndex({ ads }) {
         if (action === 'delete' && !confirm(`Delete ${ids.length} selected ad(s)?`)) return;
         router.post('/admin/advertisements/bulk-action', { action, ids }, {
             preserveScroll: true,
-            onSuccess: () => setSelected(new Set()),
+            onSuccess: () => {
+                if (action === 'delete') {
+                    setAdList(prev => prev.filter(a => !ids.includes(a.id)));
+                } else {
+                    setAdList(prev => prev.map(a => ids.includes(a.id) ? { ...a, is_pinned: action === 'pin' } : a));
+                }
+                setSelected(new Set());
+            },
         });
+    };
+
+    const loadMore = async () => {
+        if (loading || !hasMore) return;
+        setLoading(true);
+        const nextPage = currentPage + 1;
+        try {
+            const { data } = await axios.get(`/admin/advertisements?page=${nextPage}`);
+            setAdList(prev => [...prev, ...data.ads]);
+            setHasMore(data.hasMore);
+            setCurrentPage(nextPage);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -111,13 +145,13 @@ export default function AdminAdvertisementsIndex({ ads }) {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
-                                {ads.length === 0 ? (
+                                {adList.length === 0 ? (
                                     <tr>
                                         <td colSpan={7} className="px-6 py-16 text-center text-gray-500">
                                             No advertisements found.
                                         </td>
                                     </tr>
-                                ) : ads.map(ad => (
+                                ) : adList.map(ad => (
                                     <tr
                                         key={ad.id}
                                         className={`hover:bg-gray-50 transition-colors ${selected.has(ad.id) ? 'bg-indigo-50' : ''}`}
@@ -173,6 +207,24 @@ export default function AdminAdvertisementsIndex({ ads }) {
                             </tbody>
                         </table>
                     </div>
+
+                    {hasMore && (
+                        <div className="mt-6 text-center">
+                            <button
+                                onClick={loadMore}
+                                disabled={loading}
+                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-indigo-300 transition disabled:opacity-50"
+                            >
+                                {loading && (
+                                    <svg className="w-4 h-4 animate-spin text-indigo-600" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                    </svg>
+                                )}
+                                {loading ? 'Loading…' : 'Load More'}
+                            </button>
+                        </div>
+                    )}
 
                 </div>
             </div>

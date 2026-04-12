@@ -67,16 +67,30 @@ class AdvertisementController extends Controller
         ]);
     }
 
-    public function userIndex()
+    public function userIndex(Request $request)
     {
-        $ads = Advertisement::with('category')
+        $paginator = Advertisement::with('category')
             ->where('user_id', Auth::id())
+            ->orderByRaw("CASE WHEN expires_at IS NULL OR expires_at > datetime('now') THEN 0 ELSE 1 END")
             ->latest()
-            ->get()
-            ->sortByDesc(fn ($ad) => $ad->isExpired() ? 0 : 1);
+            ->paginate(20);
+
+        $ads = $paginator->getCollection()->map(fn ($ad) => $this->formatAd($ad))->values();
+
+        if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
+            return response()->json([
+                'ads'     => $ads,
+                'hasMore' => $paginator->hasMorePages(),
+            ]);
+        }
 
         return Inertia::render('Advertisements/UserIndex', [
-            'ads' => $ads->map(fn ($ad) => $this->formatAd($ad))->values(),
+            'ads' => [
+                'data'         => $ads,
+                'current_page' => $paginator->currentPage(),
+                'last_page'    => $paginator->lastPage(),
+                'total'        => $paginator->total(),
+            ],
         ]);
     }
 
@@ -251,21 +265,36 @@ class AdvertisementController extends Controller
         return back()->with('success', 'Image removed.');
     }
 
-    public function trash()
+    public function trash(Request $request)
     {
-        $ads = Advertisement::onlyTrashed()
+        $paginator = Advertisement::onlyTrashed()
             ->where('user_id', Auth::id())
             ->latest()
-            ->get()
-            ->map(fn ($ad) => [
-                'id'          => $ad->id,
-                'title'       => $ad->title,
-                'description' => $ad->description,
-                'image'       => $ad->image,
-                'deleted_at'  => $ad->deleted_at->format('d.m.Y'),
-            ])->values();
+            ->paginate(20);
 
-        return Inertia::render('Advertisements/Trash', ['ads' => $ads]);
+        $ads = $paginator->getCollection()->map(fn ($ad) => [
+            'id'          => $ad->id,
+            'title'       => $ad->title,
+            'description' => $ad->description,
+            'image'       => $ad->image,
+            'deleted_at'  => $ad->deleted_at->format('d.m.Y'),
+        ])->values();
+
+        if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
+            return response()->json([
+                'ads'     => $ads,
+                'hasMore' => $paginator->hasMorePages(),
+            ]);
+        }
+
+        return Inertia::render('Advertisements/Trash', [
+            'ads' => [
+                'data'         => $ads,
+                'current_page' => $paginator->currentPage(),
+                'last_page'    => $paginator->lastPage(),
+                'total'        => $paginator->total(),
+            ],
+        ]);
     }
 
     public function forceDelete($id)

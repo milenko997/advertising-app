@@ -1,10 +1,33 @@
+import { useState } from 'react';
 import { Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
+import axios from 'axios';
 
-export default function CustomersIndex({ customers }) {
+export default function CustomersIndex({ customers: initialCustomers }) {
+    const [customerList, setCustomerList] = useState(initialCustomers.data);
+    const [currentPage, setCurrentPage] = useState(initialCustomers.current_page);
+    const [hasMore, setHasMore] = useState(initialCustomers.current_page < initialCustomers.last_page);
+    const [loading, setLoading] = useState(false);
+
     const destroy = (slug) => {
         if (!confirm('Are you sure?')) return;
-        router.delete(`/admin/customers/${slug}`);
+        router.delete(`/admin/customers/${slug}`, {
+            onSuccess: () => setCustomerList(prev => prev.filter(c => c.slug !== slug)),
+        });
+    };
+
+    const loadMore = async () => {
+        if (loading || !hasMore) return;
+        setLoading(true);
+        const nextPage = currentPage + 1;
+        try {
+            const { data } = await axios.get(`/admin/customers?page=${nextPage}`);
+            setCustomerList(prev => [...prev, ...data.customers]);
+            setHasMore(data.hasMore);
+            setCurrentPage(nextPage);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -23,13 +46,13 @@ export default function CustomersIndex({ customers }) {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
-                                {customers.length === 0 ? (
+                                {customerList.length === 0 ? (
                                     <tr>
                                         <td colSpan={5} className="px-6 py-16 text-center text-gray-500">
                                             No customers found.
                                         </td>
                                     </tr>
-                                ) : customers.map(customer => (
+                                ) : customerList.map(customer => (
                                     <tr key={customer.id} className="hover:bg-gray-50 transition-colors">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
@@ -71,6 +94,24 @@ export default function CustomersIndex({ customers }) {
                             </tbody>
                         </table>
                     </div>
+
+                    {hasMore && (
+                        <div className="mt-6 text-center">
+                            <button
+                                onClick={loadMore}
+                                disabled={loading}
+                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-indigo-300 transition disabled:opacity-50"
+                            >
+                                {loading && (
+                                    <svg className="w-4 h-4 animate-spin text-indigo-600" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                    </svg>
+                                )}
+                                {loading ? 'Loading…' : 'Load More'}
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </AppLayout>

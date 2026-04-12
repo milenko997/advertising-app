@@ -11,9 +11,11 @@ use Inertia\Inertia;
 
 class AdminAdvertisementController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $ads = Advertisement::with('category', 'user')->latest()->get()->map(fn ($ad) => [
+        $paginator = Advertisement::with('category', 'user')->latest()->paginate(20);
+
+        $ads = $paginator->getCollection()->map(fn ($ad) => [
             'id'          => $ad->id,
             'title'       => $ad->title,
             'description' => $ad->description,
@@ -24,7 +26,21 @@ class AdminAdvertisementController extends Controller
             'user'        => $ad->user ? ['name' => $ad->user->name] : null,
         ])->values();
 
-        return Inertia::render('Admin/Advertisements/Index', compact('ads'));
+        if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
+            return response()->json([
+                'ads'     => $ads,
+                'hasMore' => $paginator->hasMorePages(),
+            ]);
+        }
+
+        return Inertia::render('Admin/Advertisements/Index', [
+            'ads' => [
+                'data'         => $ads,
+                'current_page' => $paginator->currentPage(),
+                'last_page'    => $paginator->lastPage(),
+                'total'        => $paginator->total(),
+            ],
+        ]);
     }
 
     public function edit(Advertisement $advertisement)

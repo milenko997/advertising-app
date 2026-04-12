@@ -15,9 +15,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::with('parent')->get()->map(fn ($c) => [
+        $paginator = Category::with('parent')->paginate(20);
+
+        $categories = $paginator->getCollection()->map(fn ($c) => [
             'id'          => $c->id,
             'name'        => $c->name,
             'slug'        => $c->slug,
@@ -25,7 +27,21 @@ class CategoryController extends Controller
             'parent_name' => $c->parent?->name,
         ])->values();
 
-        return Inertia::render('Admin/Categories/Index', compact('categories'));
+        if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
+            return response()->json([
+                'categories' => $categories,
+                'hasMore'    => $paginator->hasMorePages(),
+            ]);
+        }
+
+        return Inertia::render('Admin/Categories/Index', [
+            'categories' => [
+                'data'         => $categories,
+                'current_page' => $paginator->currentPage(),
+                'last_page'    => $paginator->lastPage(),
+                'total'        => $paginator->total(),
+            ],
+        ]);
     }
 
     /**

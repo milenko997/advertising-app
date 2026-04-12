@@ -36,7 +36,6 @@ class AdminAdvertisementController extends Controller
                 'id'           => $advertisement->id,
                 'title'        => $advertisement->title,
                 'description'  => $advertisement->description,
-                'vehicle_type' => $advertisement->vehicle_type,
                 'payload'      => $advertisement->payload,
                 'route'        => $advertisement->route,
                 'availability' => $advertisement->availability,
@@ -55,7 +54,6 @@ class AdminAdvertisementController extends Controller
         $request->validate([
             'title'        => 'required|string|max:255',
             'description'  => 'required|string',
-            'vehicle_type' => 'nullable|string',
             'payload'      => 'nullable|string|max:255',
 
             'availability' => 'required|in:available,on_request',
@@ -68,7 +66,6 @@ class AdminAdvertisementController extends Controller
 
         $advertisement->title        = $request->title;
         $advertisement->description  = $request->description;
-        $advertisement->vehicle_type = $request->vehicle_type;
         $advertisement->payload      = $request->payload;
         $advertisement->availability = $request->availability;
         $advertisement->price        = $request->price;

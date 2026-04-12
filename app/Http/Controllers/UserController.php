@@ -24,7 +24,6 @@ class UserController extends Controller
             'title'        => $ad->title,
             'description'  => $ad->description,
             'price'        => $ad->price,
-            'vehicle_type' => $ad->vehicle_type,
             'availability' => $ad->availability,
             'payload'      => $ad->payload,
             'route'        => $ad->route,

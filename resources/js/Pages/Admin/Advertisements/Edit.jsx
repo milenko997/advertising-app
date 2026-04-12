@@ -7,7 +7,6 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
         _method: 'PUT',
         title: advertisement.title,
         description: advertisement.description,
-        vehicle_type: advertisement.vehicle_type ?? '',
         payload: advertisement.payload ?? '',
 
         availability: advertisement.availability ?? 'available',
@@ -53,38 +52,17 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
                                 {errors.description && <p className="mt-1 text-xs text-red-600">{errors.description}</p>}
                             </div>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Vehicle Type</label>
-                                    <select
-                                        value={data.vehicle_type}
-                                        onChange={e => setData('vehicle_type', e.target.value)}
-                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                    >
-                                        <option value="">Select type</option>
-                                        <option value="truck">Truck</option>
-                                        <option value="van">Van</option>
-                                        <option value="pickup">Pickup</option>
-                                        <option value="trailer">Trailer</option>
-                                        <option value="flatbed">Flatbed</option>
-                                        <option value="refrigerator_truck">Refrigerator Truck</option>
-                                        <option value="tanker">Tanker</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                    {errors.vehicle_type && <p className="mt-1 text-xs text-red-600">{errors.vehicle_type}</p>}
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Availability</label>
-                                    <select
-                                        value={data.availability}
-                                        onChange={e => setData('availability', e.target.value)}
-                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                    >
-                                        <option value="available">Available</option>
-                                        <option value="on_request">On Request</option>
-                                    </select>
-                                    {errors.availability && <p className="mt-1 text-xs text-red-600">{errors.availability}</p>}
-                                </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Availability</label>
+                                <select
+                                    value={data.availability}
+                                    onChange={e => setData('availability', e.target.value)}
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                >
+                                    <option value="available">Available</option>
+                                    <option value="on_request">On Request</option>
+                                </select>
+                                {errors.availability && <p className="mt-1 text-xs text-red-600">{errors.availability}</p>}
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -1,11 +1,6 @@
 import { Link } from '@inertiajs/react';
 import BookmarkButton from '@/Components/BookmarkButton';
 
-const VEHICLE_LABELS = {
-    truck: 'Truck', van: 'Van', pickup: 'Pickup', trailer: 'Trailer',
-    flatbed: 'Flatbed', refrigerator_truck: 'Refrigerator Truck', tanker: 'Tanker', other: 'Other',
-};
-
 export default function AdCard({ ad, favoritedIds = [] }) {
     const isSaved = favoritedIds.includes(ad.id);
 
@@ -65,13 +60,8 @@ export default function AdCard({ ad, favoritedIds = [] }) {
 
                 {/* Tags row */}
                 <div className="flex items-center gap-1.5 mb-3 flex-wrap">
-                    {ad.vehicle_type && (
-                        <span className="px-2.5 py-0.5 bg-orange-50 text-orange-600 text-xs font-semibold rounded-full border border-orange-100">
-                            {VEHICLE_LABELS[ad.vehicle_type] || ad.vehicle_type}
-                        </span>
-                    )}
                     {ad.category?.name && (
-                        <span className="px-2.5 py-0.5 bg-slate-100 text-slate-500 text-xs font-medium rounded-full">
+                        <span className="px-2.5 py-0.5 bg-orange-50 text-orange-600 text-xs font-semibold rounded-full border border-orange-100">
                             {ad.category.name}
                         </span>
                     )}

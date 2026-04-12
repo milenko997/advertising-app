@@ -6,10 +6,6 @@ import ShareButton from '@/Components/ShareButton';
 import ReportButton from '@/Components/ReportButton';
 import ImageCarousel from '@/Components/ImageCarousel';
 
-const VEHICLE_LABELS = {
-    truck: 'Truck', van: 'Van', pickup: 'Pickup', trailer: 'Trailer',
-    flatbed: 'Flatbed', refrigerator_truck: 'Refrigerator Truck', tanker: 'Tanker', other: 'Other',
-};
 
 function SpecRow({ icon, label, value }) {
     if (!value) return null;
@@ -372,13 +368,8 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                             {/* Title + badges */}
                             <div>
                                 <div className="flex flex-wrap items-center gap-2 mb-3">
-                                    {ad.vehicle_type && (
-                                        <span className="px-2.5 py-0.5 bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-md">
-                                            {VEHICLE_LABELS[ad.vehicle_type] || ad.vehicle_type}
-                                        </span>
-                                    )}
                                     {ad.category?.name && (
-                                        <span className="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-xs font-semibold rounded-md">
+                                        <span className="px-2.5 py-0.5 bg-orange-50 text-orange-600 text-xs font-semibold rounded-md">
                                             {ad.category.name}
                                         </span>
                                     )}
@@ -413,11 +404,6 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                             {/* Specs */}
                             <div className="bg-white rounded-xl border border-gray-200 p-6">
                                 <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Details</h2>
-                                <SpecRow
-                                    icon={<svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8M8 12h8M8 17h4" /></svg>}
-                                    label="Vehicle Type"
-                                    value={VEHICLE_LABELS[ad.vehicle_type] || ad.vehicle_type}
-                                />
                                 <SpecRow
                                     icon={<svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>}
                                     label="Payload Capacity"

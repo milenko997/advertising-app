@@ -99,7 +99,6 @@ class AdvertisementController extends Controller
             'title'        => $request->title,
             'slug'         => SlugService::generate($request->title),
             'description'  => $request->description,
-            'vehicle_type' => $request->vehicle_type,
             'payload'      => $request->payload,
 
             'availability' => $request->availability,
@@ -200,7 +199,6 @@ class AdvertisementController extends Controller
 
         $ad->title        = $request->title;
         $ad->description  = $request->description;
-        $ad->vehicle_type = $request->vehicle_type;
         $ad->payload      = $request->payload;
         $ad->availability = $request->availability;
         $ad->price        = $request->price;
@@ -338,7 +336,6 @@ class AdvertisementController extends Controller
             'title'        => $ad->title,
             'description'  => $ad->description,
             'price'        => $ad->price,
-            'vehicle_type' => $ad->vehicle_type,
             'availability' => $ad->availability,
             'payload'      => $ad->payload,
 

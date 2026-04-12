@@ -16,7 +16,6 @@ class StoreAdvertisementRequest extends FormRequest
         return [
             'title'         => 'required|string|min:5|max:255',
             'description'   => 'required|string|min:10|max:5000',
-            'vehicle_type'  => 'required|in:truck,van,pickup,trailer,flatbed,refrigerator_truck,tanker,other',
             'payload'       => 'nullable|string|min:2|max:100',
 
             'availability'  => 'required|in:available,on_request',
@@ -36,7 +35,6 @@ class StoreAdvertisementRequest extends FormRequest
             'title.min'         => 'The title must be at least 5 characters.',
             'description.min'   => 'The description must be at least 10 characters.',
             'description.max'   => 'The description may not exceed 5000 characters.',
-            'vehicle_type.in'   => 'Please select a valid vehicle type.',
             'payload.min'       => 'Payload must be at least 2 characters (e.g. 10 tons).',
 
             'phone.regex'       => 'Enter a valid phone number (digits, spaces, +, -, parentheses only).',

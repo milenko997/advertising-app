@@ -19,7 +19,6 @@ class Advertisement extends Model
         'slug',
         'description',
         'price',
-        'vehicle_type',
         'payload',
         'availability',
         'image',

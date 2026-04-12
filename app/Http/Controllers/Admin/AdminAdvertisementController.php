@@ -45,7 +45,8 @@ class AdminAdvertisementController extends Controller
 
     public function edit(Advertisement $advertisement)
     {
-        $categories = Category::orderBy('name')->get(['id', 'name']);
+        $advertisement->load('images');
+        $categories = Category::orderBy('name')->get(['id', 'name', 'parent_id']);
 
         return Inertia::render('Admin/Advertisements/Edit', [
             'advertisement' => [
@@ -53,13 +54,17 @@ class AdminAdvertisementController extends Controller
                 'title'        => $advertisement->title,
                 'description'  => $advertisement->description,
                 'payload'      => $advertisement->payload,
-                'route'        => $advertisement->route,
                 'availability' => $advertisement->availability,
                 'price'        => $advertisement->price,
                 'phone'        => $advertisement->phone,
                 'location'     => $advertisement->location,
                 'category_id'  => $advertisement->category_id,
                 'image'        => $advertisement->image,
+                'images'       => $advertisement->images->map(fn ($img) => [
+                    'id'    => $img->id,
+                    'path'  => $img->path,
+                    'order' => $img->order,
+                ])->values(),
             ],
             'categories' => $categories,
         ]);
@@ -71,13 +76,13 @@ class AdminAdvertisementController extends Controller
             'title'        => 'required|string|max:255',
             'description'  => 'required|string',
             'payload'      => 'nullable|string|max:255',
-
             'availability' => 'required|in:available,on_request',
             'price'        => 'nullable|string|max:255',
             'phone'        => 'required|string|min:8|max:15',
             'location'     => 'required|string',
             'category_id'  => 'required|exists:categories,id',
             'image'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'images.*'     => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
         $advertisement->title        = $request->title;
@@ -92,12 +97,22 @@ class AdminAdvertisementController extends Controller
         if ($request->hasFile('image')) {
             ImageService::delete($advertisement->image);
             $advertisement->image = ImageService::store($request->file('image'));
-        } elseif ($request->input('remove_image')) {
+        } elseif ($request->input('remove_image') == '1') {
             ImageService::delete($advertisement->image);
             $advertisement->image = null;
         }
 
         $advertisement->save();
+
+        if ($request->hasFile('images')) {
+            $nextOrder = $advertisement->images()->max('order') + 1;
+            foreach ($request->file('images') as $i => $file) {
+                $advertisement->images()->create([
+                    'path'  => ImageService::store($file),
+                    'order' => $nextOrder + $i,
+                ]);
+            }
+        }
 
         return redirect()->route('admin.advertisements.index')->with('success', 'Advertisement updated.');
     }

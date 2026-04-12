@@ -3,13 +3,14 @@ import { useForm, Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import ImageUpload from '@/Components/ImageUpload';
 import LocationAutocomplete from '@/Components/LocationAutocomplete';
+import CategoryPicker from '@/Components/CategoryPicker';
 
 const inputClass = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent';
 const labelClass = 'block text-sm font-medium text-gray-700 mb-1';
 
 function SectionTitle({ children }) {
     return (
-        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">
+        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4 mt-6 first:mt-0">
             {children}
         </h3>
     );
@@ -26,7 +27,7 @@ export default function Edit({ ad, categories }) {
         price: ad.price ?? '',
         phone: ad.phone ?? '',
         location: ad.location ?? '',
-        category_id: ad.category_id ?? '',
+        category_id: ad.category_id ? String(ad.category_id) : '',
         image: null,
         remove_image: '',
         images: [],
@@ -132,12 +133,11 @@ export default function Edit({ ad, categories }) {
                             {/* Category */}
                             <div className="mb-4">
                                 <label className={labelClass}>Category <span className="text-red-500">*</span></label>
-                                <select value={data.category_id} onChange={e => setData('category_id', e.target.value)} className={inputClass}>
-                                    <option value="">Select category</option>
-                                    {categories.map(cat => (
-                                        <option key={cat.id} value={cat.id}>{cat.name}</option>
-                                    ))}
-                                </select>
+                                <CategoryPicker
+                                    categories={categories}
+                                    value={data.category_id}
+                                    onChange={id => setData('category_id', id)}
+                                />
                                 {errors.category_id && <p className="mt-1 text-xs text-red-600">{errors.category_id}</p>}
                             </div>
 
@@ -156,7 +156,7 @@ export default function Edit({ ad, categories }) {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                                 <div>
                                     <label className={labelClass}>Phone <span className="text-red-500">*</span></label>
-                                    <input type="tel" value={data.phone} onChange={handlePhone} maxLength={20} placeholder="+381 62 123 4567" className={inputClass} />
+                                    <input type="tel" value={data.phone} onChange={handlePhone} maxLength={15} placeholder="+381 62 123 4567" className={inputClass} />
                                     <p className="mt-1 text-xs text-gray-400">Digits, spaces, +, -, ( ) only</p>
                                     {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
                                 </div>

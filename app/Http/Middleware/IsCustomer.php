@@ -27,9 +27,6 @@ class IsCustomer
         }
 
         if ($user->isCustomer()) {
-            if (!$user->hasVerifiedEmail()) {
-                return redirect()->route('verification.notice');
-            }
             return $next($request);
         }
 

@@ -94,7 +94,7 @@ export default function Navigation() {
 
                     {/* Right: User menu */}
                     <div className="hidden sm:flex items-center gap-3">
-                        {user && !user.isAdmin && (
+                        {user && (
                             <Link
                                 href="/advertisements/create"
                                 className="inline-flex items-center gap-1.5 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm"
@@ -201,10 +201,12 @@ export default function Navigation() {
                         {user && !user.isAdmin && (
                             <>
                                 <MobileNavLink href="/my-advertisements">My Ads</MobileNavLink>
-                                <MobileNavLink href="/advertisements/create">Post Ad</MobileNavLink>
                                 <MobileNavLink href="/favorites">Saved</MobileNavLink>
                                 <MobileNavLink href="/advertisements/trash">Trash</MobileNavLink>
                             </>
+                        )}
+                        {user && (
+                            <MobileNavLink href="/advertisements/create">Post Ad</MobileNavLink>
                         )}
                     </div>
                     {user ? (

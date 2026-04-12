@@ -16,7 +16,20 @@ class IsCustomer
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && (auth()->user()->isCustomer() || auth()->user()->isAdmin())) {
+        if (!auth()->check()) {
+            abort(403);
+        }
+
+        $user = auth()->user();
+
+        if ($user->isAdmin()) {
+            return $next($request);
+        }
+
+        if ($user->isCustomer()) {
+            if (!$user->hasVerifiedEmail()) {
+                return redirect()->route('verification.notice');
+            }
             return $next($request);
         }
 

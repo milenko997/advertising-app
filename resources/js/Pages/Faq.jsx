@@ -4,103 +4,103 @@ import AppLayout from '@/Layouts/AppLayout';
 
 const faqs = [
     {
-        category: 'Getting Started',
+        category: 'Početak',
         items: [
             {
-                q: 'What is AdBoard?',
-                a: 'AdBoard is a marketplace for transport and freight professionals in Serbia. You can post and browse advertisements for trucks, vans, trailers, and other commercial vehicles, as well as find logistics partners and freight opportunities.',
+                q: 'Šta je AdBoard?',
+                a: 'AdBoard je marketplace za profesionalce iz oblasti transporta i teretnih usluga u Srbiji. Možete postavljati i pregledati oglase za kamione, kombije, prikolice i druga komercijalna vozila, kao i pronalaziti logističke partnere i prilike za prevoz tereta.',
             },
             {
-                q: 'Do I need an account to browse ads?',
-                a: 'No. Anyone can browse all active advertisements without registering. An account is only required to post ads, save favorites, or contact advertisers.',
+                q: 'Da li mi je potreban nalog da bih pregledao oglase?',
+                a: 'Ne. Svako može pregledati sve aktivne oglase bez registracije. Nalog je potreban samo za postavljanje oglasa, čuvanje omiljenih ili kontaktiranje oglašivača.',
             },
             {
-                q: 'How do I create an account?',
-                a: 'Click "Register" in the top-right corner and fill in your name, email, and password. Registration is free and takes less than a minute.',
+                q: 'Kako da kreiram nalog?',
+                a: 'Kliknite na "Registracija" u gornjem desnom uglu i unesite svoje ime, email i lozinku. Registracija je besplatna i traje manje od minut.',
             },
         ],
     },
     {
-        category: 'Posting Ads',
+        category: 'Postavljanje oglasa',
         items: [
             {
-                q: 'How do I post an advertisement?',
-                a: 'Once logged in, click the orange "Post Ad" button in the navigation bar. Fill in the details about your vehicle or service — title, description, category, location, price, and contact phone — then submit.',
+                q: 'Kako da postavim oglas?',
+                a: 'Nakon prijave, kliknite na narandžasto dugme "Postavi oglas" u navigacionoj traci. Popunite detalje o vašem vozilu ili usluzi — naslov, opis, kategoriju, lokaciju, cenu i kontakt telefon — a zatim potvrdite.',
             },
             {
-                q: 'How many ads can I post?',
-                a: 'To prevent spam, new users can post up to 5 ads per hour. If you need to post more, please contact us and we can adjust your limit.',
+                q: 'Koliko oglasa mogu da postavim?',
+                a: 'Kako bismo sprečili spam, novi korisnici mogu postaviti do 5 oglasa po satu. Ukoliko vam je potrebno više, kontaktirajte nas i možemo prilagoditi vaš limit.',
             },
             {
-                q: 'How many images can I upload per ad?',
-                a: 'You can upload up to 10 images per advertisement. Supported formats are JPEG, PNG, GIF, and JPG. Maximum file size is 10 MB per image.',
+                q: 'Koliko slika mogu da otpremim po oglasu?',
+                a: 'Možete otpremiti do 10 slika po oglasu. Podržani formati su JPEG, PNG, GIF i JPG. Maksimalna veličina fajla je 10 MB po slici.',
             },
             {
-                q: 'How long does an ad stay active?',
-                a: 'Ads are active for 60 days from the date of posting. After expiration, the ad is hidden from public listings. You can renew any expired ad from your "My Ads" page to make it active for another 60 days.',
+                q: 'Koliko dugo oglas ostaje aktivan?',
+                a: 'Oglasi su aktivni 60 dana od datuma postavljanja. Nakon isteka, oglas se skriva iz javnih listinga. Možete obnoviti bilo koji istekli oglas sa stranice "Moji oglasi" kako bi bio aktivan još 60 dana.',
             },
             {
-                q: 'Can I edit my ad after posting?',
-                a: 'Yes. Go to "My Ads", find the ad you want to update, and click "Edit". You can change all fields including images at any time while the ad is active.',
+                q: 'Mogu li da izmenim oglas nakon postavljanja?',
+                a: 'Da. Idite na "Moji oglasi", pronađite oglas koji želite da ažurirate i kliknite "Izmeni". Možete menjati sva polja uključujući slike u bilo kom trenutku dok je oglas aktivan.',
             },
             {
-                q: 'How do I delete an ad?',
-                a: 'From "My Ads", click the delete button on the ad you want to remove. Deleted ads are moved to the Trash and can be restored within 30 days, after which they are permanently deleted.',
+                q: 'Kako da obrišem oglas?',
+                a: 'U "Moji oglasi", kliknite dugme za brisanje na oglasu koji želite da uklonite. Obrisani oglasi se premeštaju u Otpad i mogu se vratiti u roku od 30 dana, nakon čega se trajno brišu.',
             },
         ],
     },
     {
-        category: 'Searching & Browsing',
+        category: 'Pretraga i pregledanje',
         items: [
             {
-                q: 'How do I search for a specific vehicle or service?',
-                a: 'Use the search bar at the top of the homepage to search by keyword. You can also filter by location or browse by category using the category bar.',
+                q: 'Kako da pretražim određeno vozilo ili uslugu?',
+                a: 'Koristite traku za pretragu na vrhu početne stranice za pretragu po ključnoj reči. Možete i filtrirati po lokaciji ili pregledati po kategoriji koristeći traku sa kategorijama.',
             },
             {
-                q: 'What does "On Request" mean on an ad?',
-                a: '"On Request" means the vehicle or service is not immediately available, but the owner will confirm availability if you contact them. "Available" means it is ready right now.',
+                q: 'Šta znači "Na upit" na oglasu?',
+                a: '"Na upit" znači da vozilo ili usluga nisu odmah dostupni, ali će vlasnik potvrditi dostupnost ukoliko ga kontaktirate. "Dostupno" znači da je odmah raspoloživo.',
             },
             {
-                q: 'What are Featured ads?',
-                a: 'Featured (pinned) ads are highlighted at the top of the homepage by our admin team. They are typically verified, high-quality listings.',
+                q: 'Šta su istaknuti oglasi?',
+                a: 'Istaknuti (prikačeni) oglasi su naglašeni na vrhu početne stranice od strane naše admin ekipe. Obično su to verifikovani, kvalitetni oglasi.',
             },
             {
-                q: 'Can I save ads to view later?',
-                a: 'Yes. Click the bookmark icon on any ad card to save it. All saved ads can be found under "Saved" in the navigation menu.',
+                q: 'Mogu li da sačuvam oglase za kasniji pregled?',
+                a: 'Da. Kliknite na ikonu označivača na bilo kojoj kartici oglasa da biste je sačuvali. Svi sačuvani oglasi se nalaze pod "Sačuvani" u navigacionom meniju.',
             },
         ],
     },
     {
-        category: 'Reporting & Safety',
+        category: 'Prijave i bezbednost',
         items: [
             {
-                q: 'What should I do if I find a suspicious or fake ad?',
-                a: 'Click the "Report" button on the ad detail page and select the reason: wrong category, duplicate/spam, against rules, or to block ads from that user. Our team will review the report promptly.',
+                q: 'Šta da uradim ako pronađem sumnjiv ili lažan oglas?',
+                a: 'Kliknite na dugme "Prijavi" na stranici sa detaljima oglasa i izaberite razlog: pogrešna kategorija, duplikat/spam, protiv pravila ili blokiranje oglasa od tog korisnika. Naš tim će pregledati prijavu odmah.',
             },
             {
-                q: 'What kinds of ads are not allowed?',
-                a: 'Ads that are misleading, duplicate listings, content unrelated to transport and freight, ads with false pricing, or anything violating Serbian law are not permitted and will be removed.',
+                q: 'Koje vrste oglasa nisu dozvoljene?',
+                a: 'Oglasi koji su obmanjujući, duplikat listinzi, sadržaj koji nije u vezi sa transportom i teretom, oglasi sa lažnim cenama ili bilo šta što krši srpsko zakonodavstvo nisu dozvoljeni i biće uklonjeni.',
             },
             {
-                q: 'Is my personal information safe?',
-                a: 'We only display the information you choose to include in your ad (such as a contact phone number). Your email address is never shown publicly. Read our Privacy Policy for full details.',
+                q: 'Da li su moji lični podaci bezbedni?',
+                a: 'Prikazujemo samo informacije koje odaberete da uključite u vaš oglas (kao što je kontakt telefon). Vaša email adresa nikada nije javno vidljiva. Pročitajte našu Politiku privatnosti za sve detalje.',
             },
         ],
     },
     {
-        category: 'Account & Profile',
+        category: 'Nalog i profil',
         items: [
             {
-                q: 'How do I change my password?',
-                a: 'Go to your profile page (click your name in the top-right corner → My Profile) and scroll to the "Change Password" section.',
+                q: 'Kako da promenim lozinku?',
+                a: 'Idite na stranicu vašeg profila (kliknite na vaše ime u gornjem desnom uglu → Moj profil) i skrolujte do odeljka "Promena lozinke".',
             },
             {
-                q: 'Can I change my email address?',
-                a: 'Yes. On your profile page you can update your name, email, phone number, and profile photo.',
+                q: 'Mogu li da promenim email adresu?',
+                a: 'Da. Na stranici profila možete ažurirati ime, email, broj telefona i profilnu fotografiju.',
             },
             {
-                q: 'How do I delete my account?',
-                a: 'Please contact us at info@adboard.rs to request account deletion. We will remove all your data within 30 days.',
+                q: 'Kako da obrišem nalog?',
+                a: 'Kontaktirajte nas na info@adboard.rs da biste zatražili brisanje naloga. Uklonićemo sve vaše podatke u roku od 30 dana.',
             },
         ],
     },
@@ -139,8 +139,8 @@ export default function Faq() {
     return (
         <AppLayout>
             <Head>
-                <title>FAQ — AdBoard</title>
-                <meta name="description" content="Frequently asked questions about AdBoard — how to post ads, search for vehicles, renew listings, and more." />
+                <title>Česta pitanja — AdBoard</title>
+                <meta name="description" content="Često postavljana pitanja o AdBoard-u — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
             </Head>
 
             {/* Hero */}
@@ -150,15 +150,15 @@ export default function Faq() {
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Help Center
+                        Centar za pomoć
                     </span>
                     <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                        Frequently Asked Questions
+                        Često postavljana pitanja
                     </h1>
                     <p className="text-slate-400 text-base leading-relaxed">
-                        Everything you need to know about using AdBoard. Can't find what you're looking for?{' '}
+                        Sve što treba da znate o korišćenju AdBoard-a. Ne možete pronaći ono što tražite?{' '}
                         <a href="mailto:info@adboard.rs" className="text-orange-400 hover:text-orange-300 underline underline-offset-2 transition-colors">
-                            Contact us
+                            Kontaktirajte nas
                         </a>.
                     </p>
                 </div>
@@ -188,8 +188,8 @@ export default function Faq() {
 
                     {/* CTA */}
                     <div className="bg-slate-900 rounded-2xl p-8 text-center">
-                        <h3 className="text-lg font-bold text-white mb-2">Still have questions?</h3>
-                        <p className="text-slate-400 text-sm mb-5">Our team is happy to help you with anything not covered above.</p>
+                        <h3 className="text-lg font-bold text-white mb-2">Imate još pitanja?</h3>
+                        <p className="text-slate-400 text-sm mb-5">Naš tim je tu da vam pomogne sa svim što nije pokriveno gore.</p>
                         <a
                             href="mailto:info@adboard.rs"
                             className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors"
@@ -197,7 +197,7 @@ export default function Faq() {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
-                            Send us an email
+                            Pošaljite nam email
                         </a>
                     </div>
                 </div>

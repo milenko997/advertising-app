@@ -4,35 +4,35 @@ import Footer from '@/Components/Footer';
 
 const errors = {
     403: {
-        title: 'Access Denied',
-        description: "You don't have permission to view this page.",
+        title: 'Pristup odbijen',
+        description: 'Nemate dozvolu za pregled ove stranice.',
     },
     404: {
-        title: 'Page Not Found',
-        description: "The page you're looking for doesn't exist or has been moved.",
+        title: 'Stranica nije pronađena',
+        description: 'Stranica koju tražite ne postoji ili je premeštena.',
     },
     419: {
-        title: 'Session Expired',
-        description: 'Your session has expired. Please refresh and try again.',
+        title: 'Sesija je istekla',
+        description: 'Vaša sesija je istekla. Molimo osvežite stranicu i pokušajte ponovo.',
     },
     429: {
-        title: 'Too Many Requests',
-        description: "You've made too many requests. Please wait a moment and try again.",
+        title: 'Previše zahteva',
+        description: 'Poslali ste previše zahteva. Molimo sačekajte trenutak i pokušajte ponovo.',
     },
     500: {
-        title: 'Server Error',
-        description: 'Something went wrong on our end. Please try again later.',
+        title: 'Greška servera',
+        description: 'Nešto je pošlo po zlu na našoj strani. Molimo pokušajte ponovo kasnije.',
     },
     503: {
-        title: 'Service Unavailable',
-        description: 'The service is temporarily unavailable. Please try again later.',
+        title: 'Usluga nedostupna',
+        description: 'Usluga je privremeno nedostupna. Molimo pokušajte ponovo kasnije.',
     },
 };
 
 export default function Error({ status }) {
     const { title, description } = errors[status] ?? {
-        title: 'An Error Occurred',
-        description: 'An unexpected error occurred. Please try again.',
+        title: 'Došlo je do greške',
+        description: 'Došlo je do neočekivane greške. Molimo pokušajte ponovo.',
     };
 
     return (
@@ -48,7 +48,7 @@ export default function Error({ status }) {
                         href="/"
                         className="mt-8 inline-block px-6 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition"
                     >
-                        Back to Home
+                        Nazad na početnu
                     </Link>
                 </div>
             </main>

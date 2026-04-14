@@ -10,7 +10,7 @@ export default function CustomersIndex({ customers: initialCustomers }) {
     const [loading, setLoading] = useState(false);
 
     const destroy = (slug) => {
-        if (!confirm('Are you sure?')) return;
+        if (!confirm('Da li ste sigurni?')) return;
         router.delete(`/admin/customers/${slug}`, {
             onSuccess: () => setCustomerList(prev => prev.filter(c => c.slug !== slug)),
         });
@@ -31,17 +31,17 @@ export default function CustomersIndex({ customers: initialCustomers }) {
     };
 
     return (
-        <AppLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Customers</h2>}>
+        <AppLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Korisnici</h2>}>
             <div className="py-8">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Ime</th>
                                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Email</th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Role</th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Joined</th>
+                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Uloga</th>
+                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Registrovan</th>
                                     <th className="px-6 py-3" />
                                 </tr>
                             </thead>
@@ -49,7 +49,7 @@ export default function CustomersIndex({ customers: initialCustomers }) {
                                 {customerList.length === 0 ? (
                                     <tr>
                                         <td colSpan={5} className="px-6 py-16 text-center text-gray-500">
-                                            No customers found.
+                                            Nema korisnika.
                                         </td>
                                     </tr>
                                 ) : customerList.map(customer => (
@@ -79,13 +79,13 @@ export default function CustomersIndex({ customers: initialCustomers }) {
                                                     href={`/admin/customers/${customer.slug}/edit`}
                                                     className="px-3 py-1.5 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
                                                 >
-                                                    Edit
+                                                    Izmeni
                                                 </Link>
                                                 <button
                                                     onClick={() => destroy(customer.slug)}
                                                     className="px-3 py-1.5 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
                                                 >
-                                                    Delete
+                                                    Obriši
                                                 </button>
                                             </div>
                                         </td>
@@ -108,7 +108,7 @@ export default function CustomersIndex({ customers: initialCustomers }) {
                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                     </svg>
                                 )}
-                                {loading ? 'Loading…' : 'Load More'}
+                                {loading ? 'Učitavanje…' : 'Učitaj još'}
                             </button>
                         </div>
                     )}

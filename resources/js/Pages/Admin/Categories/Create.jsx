@@ -19,7 +19,7 @@ export default function CategoriesCreate({ categories }) {
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                         <form onSubmit={submit} className="space-y-5">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Naziv</label>
                                 <input
                                     type="text"
                                     value={data.name}
@@ -31,13 +31,13 @@ export default function CategoriesCreate({ categories }) {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Parent Category</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Nadkategorija</label>
                                 <select
                                     value={data.parent_id}
                                     onChange={e => setData('parent_id', e.target.value)}
                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                 >
-                                    <option value="">None (top-level)</option>
+                                    <option value="">Nema (najviši nivo)</option>
                                     {categories.map(cat => (
                                         <option key={cat.id} value={cat.id}>{cat.name}</option>
                                     ))}
@@ -51,10 +51,10 @@ export default function CategoriesCreate({ categories }) {
                                     disabled={processing}
                                     className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
                                 >
-                                    Create
+                                    Kreiraj
                                 </button>
                                 <Link href="/admin/categories" className="text-sm text-gray-500 hover:text-gray-700">
-                                    Cancel
+                                    Otkaži
                                 </Link>
                             </div>
                         </form>

@@ -22,7 +22,7 @@ export default function Footer() {
                             <span className="text-base font-bold text-white tracking-tight">AdBoard</span>
                         </Link>
                         <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
-                            The marketplace for transport and freight professionals in Serbia. Find vehicles, routes, and logistics partners.
+                            Oglasnik za transport i logistiku u Srbiji. Pronađite vozila, rute i logističke partnere.
                         </p>
                         {/* Social icons */}
                         <div className="flex items-center gap-3 mt-5">
@@ -49,28 +49,28 @@ export default function Footer() {
 
                     {/* Platform links */}
                     <div>
-                        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Platform</h3>
+                        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Platforma</h3>
                         <ul className="space-y-3">
                             <li>
                                 <Link href="/" className="text-sm text-slate-400 hover:text-white transition-colors">
-                                    Browse Ads
+                                    Pretraži oglase
                                 </Link>
                             </li>
                             {auth?.user && !auth.user.isAdmin && (
                                 <>
                                     <li>
                                         <Link href="/advertisements/create" className="text-sm text-slate-400 hover:text-white transition-colors">
-                                            Post an Ad
+                                            Postavi oglas
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href="/my-advertisements" className="text-sm text-slate-400 hover:text-white transition-colors">
-                                            My Ads
+                                            Moji oglasi
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href="/favorites" className="text-sm text-slate-400 hover:text-white transition-colors">
-                                            Saved Ads
+                                            Sačuvani oglasi
                                         </Link>
                                     </li>
                                 </>
@@ -79,12 +79,12 @@ export default function Footer() {
                                 <>
                                     <li>
                                         <Link href="/register" className="text-sm text-slate-400 hover:text-white transition-colors">
-                                            Create Account
+                                            Napravi nalog
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href="/login" className="text-sm text-slate-400 hover:text-white transition-colors">
-                                            Sign In
+                                            Prijavi se
                                         </Link>
                                     </li>
                                 </>
@@ -95,7 +95,7 @@ export default function Footer() {
                     {/* Categories */}
                     {categories?.length > 0 && (
                         <div>
-                            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Categories</h3>
+                            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Kategorije</h3>
                             <ul className="space-y-3">
                                 {categories.slice(0, 6).map(cat => (
                                     <li key={cat.id}>
@@ -113,31 +113,31 @@ export default function Footer() {
 
                     {/* Help & Legal */}
                     <div>
-                        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Help & Legal</h3>
+                        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Pomoć i pravila</h3>
                         <ul className="space-y-3">
                             <li>
                                 <Link href="/contact" className="text-sm text-slate-400 hover:text-white transition-colors">
-                                    Contact Us
+                                    Kontakt
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/faq" className="text-sm text-slate-400 hover:text-white transition-colors">
-                                    FAQ
+                                    Česta pitanja
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/terms" className="text-sm text-slate-400 hover:text-white transition-colors">
-                                    Terms of Use
+                                    Uslovi korišćenja
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/privacy-policy" className="text-sm text-slate-400 hover:text-white transition-colors">
-                                    Privacy Policy
+                                    Politika privatnosti
                                 </Link>
                             </li>
                             <li>
                                 <a href="/sitemap.xml" className="text-sm text-slate-400 hover:text-white transition-colors">
-                                    Sitemap
+                                    Mapa sajta
                                 </a>
                             </li>
                         </ul>
@@ -145,7 +145,7 @@ export default function Footer() {
 
                     {/* Contact */}
                     <div>
-                        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Contact</h3>
+                        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Kontakt</h3>
                         <ul className="space-y-3">
                             <li>
                                 <a href="mailto:info@adboard.rs" className="flex items-center gap-2.5 text-sm text-slate-400 hover:text-white transition-colors group">
@@ -178,7 +178,7 @@ export default function Footer() {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
                                     </span>
-                                    Belgrade, Serbia
+                                    Beograd, Srbija
                                 </span>
                             </li>
                         </ul>
@@ -189,7 +189,7 @@ export default function Footer() {
                 {/* Bottom bar */}
                 <div className="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-xs text-slate-500">
-                        © {year} AdBoard. All rights reserved.
+                        © {year} AdBoard. Sva prava zadržana.
                     </p>
                 </div>
 

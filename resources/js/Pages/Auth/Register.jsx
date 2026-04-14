@@ -16,11 +16,11 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <h1 className="text-xl font-semibold text-gray-900 mb-6">Create an account</h1>
+            <h1 className="text-xl font-semibold text-gray-900 mb-6">Kreirajte nalog</h1>
 
             <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Full name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Ime i prezime</label>
                     <input
                         type="text"
                         value={data.name}
@@ -32,7 +32,7 @@ export default function Register() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
                     <input
                         type="email"
                         value={data.email}
@@ -44,7 +44,7 @@ export default function Register() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Lozinka</label>
                     <input
                         type="password"
                         value={data.password}
@@ -56,7 +56,7 @@ export default function Register() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Confirm password</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Potvrda lozinke</label>
                     <input
                         type="password"
                         value={data.password_confirmation}
@@ -68,14 +68,14 @@ export default function Register() {
 
                 <div className="flex items-center justify-between pt-1">
                     <Link href="/login" className="text-sm text-gray-500 hover:text-indigo-600">
-                        Already registered?
+                        Već imate nalog?
                     </Link>
                     <button
                         type="submit"
                         disabled={processing}
                         className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
                     >
-                        Register
+                        Registruj se
                     </button>
                 </div>
             </form>

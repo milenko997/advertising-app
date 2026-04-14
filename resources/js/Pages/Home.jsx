@@ -64,7 +64,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                 <svg className="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
                                 </svg>
-                                <span className="text-sm font-semibold text-gray-700">Featured</span>
+                                <span className="text-sm font-semibold text-gray-700">Istaknuti oglasi</span>
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                                 {pinnedAds.map(ad => (
@@ -77,7 +77,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
 
                     {search && (
                         <p className="text-sm text-gray-500 mb-5">
-                            <span className="font-semibold text-gray-700">{ads.total}</span> result(s) for "
+                            <span className="font-semibold text-gray-700">{ads.total}</span> rezultat(a) za "
                             <span className="text-indigo-600">{search}</span>"
                         </p>
                     )}
@@ -89,7 +89,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                             </svg>
                             <p className="text-gray-500">
-                                {search ? `No results for "${search}".` : 'No advertisements yet.'}
+                                {search ? `Nema rezultata za "${search}".` : 'Još nema oglasa.'}
                             </p>
                         </div>
                     ) : (
@@ -113,7 +113,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                             </svg>
                                         )}
-                                        {loading ? 'Loading…' : 'Load More'}
+                                        {loading ? 'Učitavanje…' : 'Učitaj još'}
                                     </button>
                                 </div>
                             )}

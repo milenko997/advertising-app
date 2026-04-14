@@ -17,8 +17,8 @@ export default function Terms() {
     return (
         <AppLayout>
             <Head>
-                <title>Terms of Use — AdBoard</title>
-                <meta name="description" content="Read AdBoard's Terms of Use covering account registration, ad posting rules, prohibited content, and your rights as a user." />
+                <title>Uslovi korišćenja — AdBoard</title>
+                <meta name="description" content="Pročitajte AdBoard uslove korišćenja koji pokrivaju registraciju naloga, pravila postavljanja oglasa, zabranjeni sadržaj i vaša prava kao korisnika." />
             </Head>
 
             {/* Hero */}
@@ -28,10 +28,10 @@ export default function Terms() {
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        Legal
+                        Pravno
                     </span>
-                    <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Terms of Use</h1>
-                    <p className="text-slate-400 text-sm">Last updated: April 2026</p>
+                    <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Uslovi korišćenja</h1>
+                    <p className="text-slate-400 text-sm">Poslednje ažuriranje: April 2026</p>
                 </div>
             </div>
 
@@ -41,110 +41,110 @@ export default function Terms() {
                     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm px-8 py-10">
 
                         <p className="text-sm text-slate-500 leading-relaxed mb-10">
-                            Welcome to <strong className="text-slate-700">AdBoard</strong>. By accessing or using our platform, you agree to be bound by these Terms of Use. Please read them carefully before using the service. If you do not agree to these terms, please do not use AdBoard.
+                            Dobrodošli na <strong className="text-slate-700">AdBoard</strong>. Pristupanjem ili korišćenjem naše platforme, slažete se da budete vezani ovim Uslovima korišćenja. Molimo vas da ih pažljivo pročitate pre korišćenja usluge. Ukoliko se ne slažete sa ovim uslovima, molimo vas da ne koristite AdBoard.
                         </p>
 
-                        <Section title="1. Acceptance of Terms">
+                        <Section title="1. Prihvatanje uslova">
                             <p>
-                                By registering an account, posting an advertisement, or simply browsing AdBoard, you acknowledge that you have read, understood, and agree to comply with these Terms of Use, as well as all applicable laws and regulations of the Republic of Serbia.
+                                Registracijom naloga, postavljanjem oglasa ili jednostavnim pregledanjem AdBoard-a, potvrđujete da ste pročitali, razumeli i slažete se da poštujete ove Uslove korišćenja, kao i sve primenjive zakone i propise Republike Srbije.
                             </p>
                             <p>
-                                We reserve the right to modify these terms at any time. Continued use of the platform after changes are published constitutes acceptance of the revised terms.
-                            </p>
-                        </Section>
-
-                        <Section title="2. Eligibility">
-                            <p>
-                                You must be at least 18 years of age to create an account or post advertisements on AdBoard. By using the platform, you represent and warrant that you meet this requirement.
-                            </p>
-                            <p>
-                                If you are using AdBoard on behalf of a business or legal entity, you represent that you have the authority to bind that entity to these terms.
+                                Zadržavamo pravo da u bilo kom trenutku izmenimo ove uslove. Nastavak korišćenja platforme nakon objave izmena smatra se prihvatanjem izmenjenih uslova.
                             </p>
                         </Section>
 
-                        <Section title="3. User Accounts">
+                        <Section title="2. Prihvatljivost">
                             <p>
-                                You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. Notify us immediately at <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a> if you suspect unauthorized use.
+                                Morate imati najmanje 18 godina da biste kreirali nalog ili postavljali oglase na AdBoard-u. Korišćenjem platforme, izjavljujete i garantujete da ispunjavate ovaj uslov.
                             </p>
                             <p>
-                                You may not share your account with others, create multiple accounts, or use another person's account without permission. We reserve the right to suspend or terminate accounts that violate these terms.
+                                Ukoliko koristite AdBoard u ime preduzeća ili pravnog lica, izjavljujete da imate ovlašćenje da obavežete to lice ovim uslovima.
                             </p>
                         </Section>
 
-                        <Section title="4. Posting Advertisements">
+                        <Section title="3. Korisnički nalozi">
                             <p>
-                                You may post advertisements for transport-related vehicles and services. By submitting an ad, you confirm that:
+                                Odgovorni ste za čuvanje poverljivosti podataka za pristup nalogu i za sve aktivnosti koje se odvijaju na vašem nalogu. Odmah nas obavestite na <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a> ukoliko posumnjate u neovlašćeno korišćenje.
+                            </p>
+                            <p>
+                                Ne smete deliti nalog sa drugima, kreirati više naloga niti koristiti tuđi nalog bez dozvole. Zadržavamo pravo da suspendujemo ili ukinemo naloge koji krše ove uslove.
+                            </p>
+                        </Section>
+
+                        <Section title="4. Postavljanje oglasa">
+                            <p>
+                                Možete postavljati oglase za vozila i usluge iz oblasti transporta. Podnošenjem oglasa potvrđujete da:
                             </p>
                             <ul className="list-disc list-inside space-y-1.5 pl-2">
-                                <li>The information is accurate, truthful, and not misleading.</li>
-                                <li>You own or have the legal right to advertise the listed vehicle or service.</li>
-                                <li>The content does not violate any applicable laws or third-party rights.</li>
-                                <li>Images uploaded are your own or you have the right to use them.</li>
+                                <li>Informacije su tačne, istinite i ne obmanjujuće.</li>
+                                <li>Posedujete ili imate zakonsko pravo da oglašavate navedeno vozilo ili uslugu.</li>
+                                <li>Sadržaj ne krši primenjive zakone niti prava trećih lica.</li>
+                                <li>Otpremljene slike su vaše ili imate pravo da ih koristite.</li>
                             </ul>
                             <p>
-                                Advertisements are active for <strong className="text-slate-700">60 days</strong> from the date of posting. Expired ads can be renewed from your "My Ads" page.
+                                Oglasi su aktivni <strong className="text-slate-700">60 dana</strong> od datuma postavljanja. Istekli oglasi mogu se obnoviti sa stranice "Moji oglasi".
                             </p>
                         </Section>
 
-                        <Section title="5. Prohibited Content">
-                            <p>The following types of content are strictly prohibited on AdBoard:</p>
+                        <Section title="5. Zabranjeni sadržaj">
+                            <p>Sledeće vrste sadržaja su strogo zabranjene na AdBoard-u:</p>
                             <ul className="list-disc list-inside space-y-1.5 pl-2">
-                                <li>False, misleading, or fraudulent advertisements.</li>
-                                <li>Duplicate or spam listings.</li>
-                                <li>Content unrelated to transport, freight, or logistics.</li>
-                                <li>Illegal goods, services, or activities.</li>
-                                <li>Offensive, discriminatory, or harassing content.</li>
-                                <li>Any content that violates intellectual property rights.</li>
+                                <li>Lažni, obmanjujući ili prevarni oglasi.</li>
+                                <li>Duplikat ili spam listinzi.</li>
+                                <li>Sadržaj koji nije u vezi sa transportom, teretom ili logistikom.</li>
+                                <li>Nezakonita roba, usluge ili aktivnosti.</li>
+                                <li>Uvredljiv, diskriminatorski ili uznemiravajući sadržaj.</li>
+                                <li>Bilo koji sadržaj koji krši prava intelektualne svojine.</li>
                             </ul>
                             <p>
-                                We reserve the right to remove any content that violates these rules without prior notice and to suspend or ban the responsible account.
+                                Zadržavamo pravo da bez prethodne najave uklonimo bilo koji sadržaj koji krši ova pravila i suspendujemo ili zabranimo odgovorni nalog.
                             </p>
                         </Section>
 
-                        <Section title="6. Intellectual Property">
+                        <Section title="6. Intelektualna svojina">
                             <p>
-                                All content on AdBoard that is not user-generated — including the logo, design, code, and text — is owned by AdBoard and protected by copyright law. You may not reproduce, distribute, or create derivative works without our written consent.
+                                Sav sadržaj na AdBoard-u koji nije generisan od strane korisnika — uključujući logo, dizajn, kod i tekst — vlasništvo je AdBoard-a i zaštićen je autorskim pravom. Ne smete ga reprodukovati, distribuirati niti kreirati izvedena dela bez našeg pisanog pristanka.
                             </p>
                             <p>
-                                By posting content on AdBoard, you grant us a non-exclusive, royalty-free license to display, distribute, and promote that content within the platform.
-                            </p>
-                        </Section>
-
-                        <Section title="7. Limitation of Liability">
-                            <p>
-                                AdBoard acts as a neutral platform connecting buyers and sellers. We do not verify the accuracy of advertisements, guarantee the quality of vehicles or services listed, or mediate transactions between users.
-                            </p>
-                            <p>
-                                To the fullest extent permitted by law, AdBoard shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use or inability to use our platform, or from transactions made between users.
+                                Postavljanjem sadržaja na AdBoard, dajete nam neekskluzivnu, besplatnu licencu za prikazivanje, distribuciju i promociju tog sadržaja unutar platforme.
                             </p>
                         </Section>
 
-                        <Section title="8. Rate Limiting & Fair Use">
+                        <Section title="7. Ograničenje odgovornosti">
                             <p>
-                                To maintain platform quality, users are limited to posting <strong className="text-slate-700">5 advertisements per hour</strong>. Automated posting, scraping, or any use of bots is strictly prohibited.
+                                AdBoard deluje kao neutralna platforma koja povezuje kupce i prodavce. Ne proveravamo tačnost oglasa, ne garantujemo kvalitet navedenih vozila ili usluga niti posredujemo u transakcijama između korisnika.
+                            </p>
+                            <p>
+                                U najvećoj meri dozvoljenoj zakonom, AdBoard neće biti odgovoran za bilo kakvu direktnu, indirektnu, slučajnu ili posledičnu štetu nastalu usled korišćenja ili nemogućnosti korišćenja naše platforme, ili iz transakcija između korisnika.
                             </p>
                         </Section>
 
-                        <Section title="9. Termination">
+                        <Section title="8. Ograničenje brzine i pravično korišćenje">
                             <p>
-                                We reserve the right to suspend or permanently terminate your account at our discretion if we believe you have violated these terms, engaged in fraudulent activity, or harmed other users of the platform.
-                            </p>
-                            <p>
-                                You may delete your account at any time by contacting us at <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a>.
+                                Radi održavanja kvaliteta platforme, korisnici su ograničeni na postavljanje <strong className="text-slate-700">5 oglasa po satu</strong>. Automatizovano postavljanje, scraping ili bilo kakvo korišćenje botova je strogo zabranjeno.
                             </p>
                         </Section>
 
-                        <Section title="10. Governing Law">
+                        <Section title="9. Prestanak">
                             <p>
-                                These terms are governed by and construed in accordance with the laws of the Republic of Serbia. Any disputes shall be resolved in the courts of Belgrade, Serbia.
+                                Zadržavamo pravo da po sopstvenom nahođenju suspendujemo ili trajno ukinemo vaš nalog ukoliko smatramo da ste prekršili ove uslove, bavili se prevarnim aktivnostima ili naškodili drugim korisnicima platforme.
+                            </p>
+                            <p>
+                                Možete obrisati nalog u bilo kom trenutku kontaktiranjem na <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a>.
+                            </p>
+                        </Section>
+
+                        <Section title="10. Merodavno pravo">
+                            <p>
+                                Ovi uslovi su regulisani i tumače se u skladu sa zakonima Republike Srbije. Svi sporovi će biti rešavani pred sudovima u Beogradu, Srbija.
                             </p>
                         </Section>
 
                         <div className="mt-10 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-400">
-                            <span>Questions? <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a></span>
+                            <span>Pitanja? <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a></span>
                             <div className="flex items-center gap-4">
-                                <Link href="/privacy-policy" className="hover:text-slate-600 transition-colors">Privacy Policy</Link>
-                                <Link href="/faq" className="hover:text-slate-600 transition-colors">FAQ</Link>
+                                <Link href="/privacy-policy" className="hover:text-slate-600 transition-colors">Politika privatnosti</Link>
+                                <Link href="/faq" className="hover:text-slate-600 transition-colors">Česta pitanja</Link>
                             </div>
                         </div>
                     </div>

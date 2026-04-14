@@ -11,9 +11,9 @@ export default function ForgotPassword({ status }) {
 
     return (
         <GuestLayout>
-            <h1 className="text-xl font-semibold text-gray-900 mb-2">Forgot your password?</h1>
+            <h1 className="text-xl font-semibold text-gray-900 mb-2">Zaboravili ste lozinku?</h1>
             <p className="text-sm text-gray-500 mb-6">
-                Enter your email and we'll send you a reset link.
+                Unesite email i poslaćemo vam link za resetovanje lozinke.
             </p>
 
             {status && (
@@ -24,7 +24,7 @@ export default function ForgotPassword({ status }) {
 
             <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
                     <input
                         type="email"
                         value={data.email}
@@ -37,14 +37,14 @@ export default function ForgotPassword({ status }) {
 
                 <div className="flex items-center justify-between pt-1">
                     <Link href="/login" className="text-sm text-gray-500 hover:text-indigo-600">
-                        Back to login
+                        Nazad na prijavu
                     </Link>
                     <button
                         type="submit"
                         disabled={processing}
                         className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
                     >
-                        Send reset link
+                        Pošalji link
                     </button>
                 </div>
             </form>

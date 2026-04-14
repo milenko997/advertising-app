@@ -3,7 +3,7 @@ import { Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
 
-const AVAILABILITY_LABEL = { available: 'Available', on_request: 'On Request' };
+const AVAILABILITY_LABEL = { available: 'Dostupno', on_request: 'Na upit' };
 
 export default function UserIndex({ ads: initialAds }) {
     const [adList, setAdList] = useState(initialAds.data);
@@ -12,7 +12,7 @@ export default function UserIndex({ ads: initialAds }) {
     const [loading, setLoading] = useState(false);
 
     const handleDelete = (id) => {
-        if (!confirm('Move this ad to trash?')) return;
+        if (!confirm('Premesti oglas u otpad?')) return;
         router.delete(`/advertisements/${id}`, {
             onSuccess: () => setAdList(prev => prev.filter(a => a.id !== id)),
         });
@@ -49,8 +49,8 @@ export default function UserIndex({ ads: initialAds }) {
                     {/* Page header */}
                     <div className="flex items-center justify-between mb-6">
                         <div>
-                            <h1 className="text-2xl font-bold text-gray-900">My Ads</h1>
-                            <p className="text-sm text-gray-500 mt-0.5">{initialAds.total} advertisement{initialAds.total !== 1 ? 's' : ''}</p>
+                            <h1 className="text-2xl font-bold text-gray-900">Moji oglasi</h1>
+                            <p className="text-sm text-gray-500 mt-0.5">{initialAds.total} oglas{initialAds.total === 1 ? '' : initialAds.total >= 2 && initialAds.total <= 4 ? 'a' : 'a'}</p>
                         </div>
                         <Link
                             href="/advertisements/create"
@@ -59,7 +59,7 @@ export default function UserIndex({ ads: initialAds }) {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                             </svg>
-                            Post Ad
+                            Postavi oglas
                         </Link>
                     </div>
 
@@ -69,12 +69,12 @@ export default function UserIndex({ ads: initialAds }) {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                             </svg>
-                            <p className="text-gray-500 mb-4">You have no advertisements yet.</p>
+                            <p className="text-gray-500 mb-4">Još nemate oglasa.</p>
                             <Link
                                 href="/advertisements/create"
                                 className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition"
                             >
-                                Post your first ad
+                                Postavi prvi oglas
                             </Link>
                         </div>
                     ) : (
@@ -127,11 +127,11 @@ export default function UserIndex({ ads: initialAds }) {
                                                                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                                 </svg>
-                                                                Expired
+                                                                Isteklo
                                                             </span>
                                                         ) : ad.expires_at && (
                                                             <span className="text-xs text-gray-400">
-                                                                Expires {ad.expires_at}
+                                                                Ističe {ad.expires_at}
                                                             </span>
                                                         )}
                                                         <span className="inline-flex items-center gap-1 text-xs text-gray-400">
@@ -151,20 +151,20 @@ export default function UserIndex({ ads: initialAds }) {
                                                             onClick={() => handleRenew(ad.id)}
                                                             className="px-3 py-1.5 border border-emerald-300 rounded-lg text-xs font-medium text-emerald-700 hover:bg-emerald-50 transition"
                                                         >
-                                                            Renew
+                                                            Obnovi
                                                         </button>
                                                     )}
                                                     <Link
                                                         href={`/advertisements/edit/${ad.slug}`}
                                                         className="px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-medium text-gray-700 hover:bg-gray-50 transition"
                                                     >
-                                                        Edit
+                                                        Izmeni
                                                     </Link>
                                                     <button
                                                         onClick={() => handleDelete(ad.id)}
                                                         className="px-3 py-1.5 border border-red-200 rounded-lg text-xs font-medium text-red-600 hover:bg-red-50 transition"
                                                     >
-                                                        Delete
+                                                        Obriši
                                                     </button>
                                                 </div>
                                             </div>
@@ -186,7 +186,7 @@ export default function UserIndex({ ads: initialAds }) {
                                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                             </svg>
                                         )}
-                                        {loading ? 'Loading…' : 'Load More'}
+                                        {loading ? 'Učitavanje…' : 'Učitaj još'}
                                     </button>
                                 </div>
                             )}

@@ -29,7 +29,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
     };
 
     const destroy = (id) => {
-        if (!confirm('Delete this report?')) return;
+        if (!confirm('Obrisati ovu prijavu?')) return;
         router.delete(`/admin/reports/${id}`, {
             preserveScroll: true,
             onSuccess: () => setReportList(prev => prev.filter(r => r.id !== id)),
@@ -75,7 +75,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                         {report.advertisement.title}
                     </Link>
                 ) : (
-                    <span className="text-sm text-gray-400 italic">Ad deleted</span>
+                    <span className="text-sm text-gray-400 italic">Oglas obrisan</span>
                 )}
             </td>
             <td className="px-4 py-3 text-sm text-gray-600">
@@ -94,13 +94,13 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                 : 'border-emerald-300 text-emerald-700 hover:bg-emerald-50'
                         }`}
                     >
-                        {report.resolved ? 'Re-open' : 'Resolve'}
+                        {report.resolved ? 'Ponovo otvori' : 'Reši'}
                     </button>
                     <button
                         onClick={() => destroy(report.id)}
                         className="px-3 py-1.5 text-xs font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
                     >
-                        Delete
+                        Obriši
                     </button>
                 </div>
             </td>
@@ -114,9 +114,9 @@ export default function AdminReportsIndex({ reports: initialReports }) {
 
                     <div className="flex items-center justify-between">
                         <div>
-                            <h1 className="text-2xl font-bold text-gray-900">Reports</h1>
+                            <h1 className="text-2xl font-bold text-gray-900">Prijave</h1>
                             <p className="text-sm text-gray-500 mt-0.5">
-                                {pending.length} pending · {resolved.length} resolved
+                                {pending.length} na čekanju · {resolved.length} rešenih
                             </p>
                         </div>
                     </div>
@@ -125,7 +125,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                         <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-red-500 inline-block" />
-                            <h2 className="text-sm font-semibold text-gray-700">Pending</h2>
+                            <h2 className="text-sm font-semibold text-gray-700">Na čekanju</h2>
                             {pending.length > 0 && (
                                 <span className="ml-1 px-2 py-0.5 text-xs font-bold bg-red-100 text-red-600 rounded-full">
                                     {pending.length}
@@ -136,10 +136,10 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                             <thead className="bg-gray-50">
                                 <tr>
                                     <th className="px-4 py-2.5 w-8" />
-                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</th>
-                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Ad</th>
-                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Reported by</th>
-                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Tip</th>
+                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Oglas</th>
+                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Prijavio</th>
+                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Datum</th>
                                     <th className="px-4 py-2.5" />
                                 </tr>
                             </thead>
@@ -147,7 +147,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                 {pending.length === 0 ? (
                                     <tr>
                                         <td colSpan={6} className="px-4 py-10 text-center text-sm text-gray-400">
-                                            No pending reports.
+                                            Nema prijava na čekanju.
                                         </td>
                                     </tr>
                                 ) : pending.map(r => <ReportRow key={r.id} report={r} />)}
@@ -160,16 +160,16 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                             <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
                                 <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
-                                <h2 className="text-sm font-semibold text-gray-700">Resolved</h2>
+                                <h2 className="text-sm font-semibold text-gray-700">Rešene</h2>
                             </div>
                             <table className="min-w-full divide-y divide-gray-100">
                                 <thead className="bg-gray-50">
                                     <tr>
                                         <th className="px-4 py-2.5 w-8" />
-                                        <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</th>
-                                        <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Ad</th>
-                                        <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Reported by</th>
-                                        <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
+                                        <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Tip</th>
+                                        <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Oglas</th>
+                                        <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Prijavio</th>
+                                        <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Datum</th>
                                         <th className="px-4 py-2.5" />
                                     </tr>
                                 </thead>
@@ -193,7 +193,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                     </svg>
                                 )}
-                                {loading ? 'Loading…' : 'Load More'}
+                                {loading ? 'Učitavanje…' : 'Učitaj još'}
                             </button>
                         </div>
                     )}

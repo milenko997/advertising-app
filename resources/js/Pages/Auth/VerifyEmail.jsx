@@ -27,9 +27,9 @@ export default function VerifyEmail({ status }) {
                 </span>
             </div>
 
-            <h1 className="text-xl font-bold text-slate-900 text-center mb-2">Check your inbox</h1>
+            <h1 className="text-xl font-bold text-slate-900 text-center mb-2">Proverite inbox</h1>
             <p className="text-sm text-slate-500 text-center leading-relaxed mb-6">
-                We sent a verification link to your email address. Click the link to activate your account.
+                Poslali smo link za verifikaciju na vašu email adresu. Kliknite na link da aktivirate nalog.
             </p>
 
             {justSent && (
@@ -37,7 +37,7 @@ export default function VerifyEmail({ status }) {
                     <svg className="w-4 h-4 shrink-0 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    A new verification link has been sent.
+                    Novi link za verifikaciju je poslat.
                 </div>
             )}
 
@@ -47,20 +47,20 @@ export default function VerifyEmail({ status }) {
                     disabled={processing}
                     className="w-full py-2.5 bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition-colors"
                 >
-                    {processing ? 'Sending…' : 'Resend verification email'}
+                    {processing ? 'Slanje…' : 'Pošalji ponovo'}
                 </button>
             </form>
 
             <p className="text-xs text-slate-400 text-center mt-4">
-                Wrong account?{' '}
+                Pogrešan nalog?{' '}
                 <button
                     type="button"
                     onClick={() => router.post('/logout')}
                     className="text-orange-500 hover:underline"
                 >
-                    Log out
+                    Odjavite se
                 </button>
-                {' '}and register with the correct email.
+                {' '}i registrujte se sa ispravnim emailom.
             </p>
         </GuestLayout>
     );

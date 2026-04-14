@@ -56,7 +56,7 @@ export default function ByCategory({ category, ads, location, favoritedIds }) {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {adList.length === 0 ? (
                         <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
-                            <p className="text-gray-500">No advertisements found in this category.</p>
+                            <p className="text-gray-500">Nema oglasa u ovoj kategoriji.</p>
                         </div>
                     ) : (
                         <>
@@ -79,7 +79,7 @@ export default function ByCategory({ category, ads, location, favoritedIds }) {
                                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                             </svg>
                                         )}
-                                        {loading ? 'Loading…' : 'Load More'}
+                                        {loading ? 'Učitavanje…' : 'Učitaj još'}
                                     </button>
                                 </div>
                             )}

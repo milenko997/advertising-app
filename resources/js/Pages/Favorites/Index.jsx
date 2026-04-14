@@ -32,9 +32,9 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds 
 
                     {/* Page header */}
                     <div className="mb-6">
-                        <h1 className="text-2xl font-bold text-gray-900">Saved Ads</h1>
+                        <h1 className="text-2xl font-bold text-gray-900">Sačuvani oglasi</h1>
                         {adList.length > 0 && (
-                            <p className="text-sm text-gray-500 mt-0.5">{ads.total} saved advertisement{ads.total !== 1 ? 's' : ''}</p>
+                            <p className="text-sm text-gray-500 mt-0.5">{ads.total} sačuvan{ads.total === 1 ? '' : 'ih'} oglas{ads.total === 1 ? '' : 'a'}</p>
                         )}
                     </div>
 
@@ -44,10 +44,10 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds 
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                                     d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                             </svg>
-                            <p className="text-gray-500 font-medium mb-1">No saved ads yet.</p>
-                            <p className="text-sm text-gray-400 mb-4">Bookmark ads you're interested in to find them quickly.</p>
+                            <p className="text-gray-500 font-medium mb-1">Nemate sačuvanih oglasa.</p>
+                            <p className="text-sm text-gray-400 mb-4">Sačuvajte oglase koji vas zanimaju da biste ih lako pronašli.</p>
                             <Link href="/" className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition">
-                                Browse ads
+                                Pretraži oglase
                             </Link>
                         </div>
                     ) : (
@@ -71,7 +71,7 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds 
                                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                             </svg>
                                         )}
-                                        {loading ? 'Loading…' : 'Load More'}
+                                        {loading ? 'Učitavanje…' : 'Učitaj još'}
                                     </button>
                                 </div>
                             )}

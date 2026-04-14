@@ -36,8 +36,8 @@ export default function Contact() {
     return (
         <AppLayout>
             <Head>
-                <title>Contact Us — AdBoard</title>
-                <meta name="description" content="Get in touch with the AdBoard team. We're happy to help with any questions about our transport and freight marketplace." />
+                <title>Kontakt — AdBoard</title>
+                <meta name="description" content="Stupite u kontakt sa AdBoard timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
             </Head>
 
             {/* Hero */}
@@ -47,11 +47,11 @@ export default function Contact() {
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
-                        Get in Touch
+                        Kontaktirajte nas
                     </span>
-                    <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Contact Us</h1>
+                    <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Kontakt</h1>
                     <p className="text-slate-400 text-base leading-relaxed">
-                        Have a question, spotted an issue, or want to learn more? We'd love to hear from you.
+                        Imate pitanje, primetili ste problem ili želite da saznate više? Rado ćemo vas čuti.
                     </p>
                 </div>
             </div>
@@ -75,7 +75,7 @@ export default function Contact() {
                                     }
                                 />
                                 <InfoCard
-                                    label="Phone"
+                                    label="Telefon"
                                     value="+381 00 000 0000"
                                     href="tel:+381000000000"
                                     icon={
@@ -85,8 +85,8 @@ export default function Contact() {
                                     }
                                 />
                                 <InfoCard
-                                    label="Location"
-                                    value="Belgrade, Serbia"
+                                    label="Lokacija"
+                                    value="Beograd, Srbija"
                                     icon={
                                         <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -95,8 +95,8 @@ export default function Contact() {
                                     }
                                 />
                                 <InfoCard
-                                    label="Working Hours"
-                                    value="Mon – Fri, 09:00 – 17:00"
+                                    label="Radno vreme"
+                                    value="Pon – Pet, 09:00 – 17:00"
                                     icon={
                                         <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -106,9 +106,9 @@ export default function Contact() {
                             </div>
 
                             <div className="bg-slate-900 rounded-2xl p-6">
-                                <p className="text-sm font-semibold text-white mb-1.5">Response time</p>
+                                <p className="text-sm font-semibold text-white mb-1.5">Vreme odgovora</p>
                                 <p className="text-sm text-slate-400 leading-relaxed">
-                                    We typically respond to all inquiries within <span className="text-orange-400 font-medium">1 business day</span>.
+                                    Obično odgovaramo na sve upite u roku od <span className="text-orange-400 font-medium">1 radnog dana</span>.
                                 </p>
                             </div>
                         </div>
@@ -124,8 +124,8 @@ export default function Contact() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                             </svg>
                                         </span>
-                                        <h3 className="text-lg font-bold text-slate-900 mb-2">Message sent!</h3>
-                                        <p className="text-sm text-slate-500">Thank you for reaching out. We'll get back to you within 1 business day.</p>
+                                        <h3 className="text-lg font-bold text-slate-900 mb-2">Poruka poslata!</h3>
+                                        <p className="text-sm text-slate-500">Hvala vam što ste nas kontaktirali. Odgovorićemo vam u roku od 1 radnog dana.</p>
                                     </div>
                                 ) : (
                                     <form onSubmit={submit} className="space-y-5">
@@ -133,13 +133,13 @@ export default function Contact() {
                                             {/* Name */}
                                             <div>
                                                 <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                                                    Full Name <span className="text-red-400">*</span>
+                                                    Ime i prezime <span className="text-red-400">*</span>
                                                 </label>
                                                 <input
                                                     type="text"
                                                     value={data.name}
                                                     onChange={e => setData('name', e.target.value)}
-                                                    placeholder="Your name"
+                                                    placeholder="Vaše ime"
                                                     className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
                                                         errors.name ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
                                                     }`}
@@ -150,13 +150,13 @@ export default function Contact() {
                                             {/* Email */}
                                             <div>
                                                 <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                                                    Email Address <span className="text-red-400">*</span>
+                                                    Email adresa <span className="text-red-400">*</span>
                                                 </label>
                                                 <input
                                                     type="email"
                                                     value={data.email}
                                                     onChange={e => setData('email', e.target.value)}
-                                                    placeholder="you@example.com"
+                                                    placeholder="vas@primer.com"
                                                     className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
                                                         errors.email ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
                                                     }`}
@@ -168,13 +168,13 @@ export default function Contact() {
                                         {/* Subject */}
                                         <div>
                                             <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                                                Subject <span className="text-red-400">*</span>
+                                                Predmet <span className="text-red-400">*</span>
                                             </label>
                                             <input
                                                 type="text"
                                                 value={data.subject}
                                                 onChange={e => setData('subject', e.target.value)}
-                                                placeholder="What is your message about?"
+                                                placeholder="O čemu je vaša poruka?"
                                                 className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
                                                     errors.subject ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
                                                 }`}
@@ -185,13 +185,13 @@ export default function Contact() {
                                         {/* Message */}
                                         <div>
                                             <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                                                Message <span className="text-red-400">*</span>
+                                                Poruka <span className="text-red-400">*</span>
                                             </label>
                                             <textarea
                                                 rows={6}
                                                 value={data.message}
                                                 onChange={e => setData('message', e.target.value)}
-                                                placeholder="Write your message here…"
+                                                placeholder="Napišite vašu poruku ovde…"
                                                 className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/30 resize-none transition ${
                                                     errors.message ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
                                                 }`}
@@ -218,14 +218,14 @@ export default function Contact() {
                                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                                     </svg>
-                                                    Sending…
+                                                    Slanje…
                                                 </>
                                             ) : (
                                                 <>
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                                     </svg>
-                                                    Send Message
+                                                    Pošalji poruku
                                                 </>
                                             )}
                                         </button>

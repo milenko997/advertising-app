@@ -24,7 +24,7 @@ export default function AdCard({ ad, favoritedIds = [] }) {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                                     d="M3 7h18M3 12h18M3 17h18" />
                             </svg>
-                            <span className="text-xs text-slate-300 font-medium">No image</span>
+                            <span className="text-xs text-slate-300 font-medium">Bez slike</span>
                         </div>
                     )}
                 </Link>
@@ -37,14 +37,14 @@ export default function AdCard({ ad, favoritedIds = [] }) {
                             : 'bg-orange-500/90 text-white'
                     }`}>
                         <span className="w-1.5 h-1.5 rounded-full bg-white/80 inline-block" />
-                        {ad.availability === 'available' ? 'Available' : 'On Request'}
+                        {ad.availability === 'available' ? 'Dostupno' : 'Na upit'}
                     </span>
                     {ad.is_pinned && (
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-400/95 text-white backdrop-blur-sm">
                             <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
                             </svg>
-                            Featured
+                            Istaknuto
                         </span>
                     )}
                 </div>
@@ -102,10 +102,10 @@ export default function AdCard({ ad, favoritedIds = [] }) {
                 {/* Price */}
                 <div className="mt-3.5 pt-3.5 border-t border-slate-100 flex items-center justify-between">
                     <span className={`font-bold text-base ${ad.price ? 'text-slate-900' : 'text-slate-300 font-normal text-sm italic'}`}>
-                        {ad.price || 'Price on request'}
+                        {ad.price || 'Cena na upit'}
                     </span>
                     <span className="inline-flex items-center gap-1 text-xs font-medium text-orange-500 group-hover:gap-2 transition-all duration-200">
-                        View
+                        Pogledaj
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>

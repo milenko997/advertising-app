@@ -16,11 +16,11 @@ export default function ResetPassword({ token, email }) {
 
     return (
         <GuestLayout>
-            <h1 className="text-xl font-semibold text-gray-900 mb-6">Reset your password</h1>
+            <h1 className="text-xl font-semibold text-gray-900 mb-6">Resetujte lozinku</h1>
 
             <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
                     <input
                         type="email"
                         value={data.email}
@@ -32,7 +32,7 @@ export default function ResetPassword({ token, email }) {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">New password</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Nova lozinka</label>
                     <input
                         type="password"
                         value={data.password}
@@ -44,7 +44,7 @@ export default function ResetPassword({ token, email }) {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Confirm new password</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Potvrda nove lozinke</label>
                     <input
                         type="password"
                         value={data.password_confirmation}
@@ -60,7 +60,7 @@ export default function ResetPassword({ token, email }) {
                         disabled={processing}
                         className="w-full px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
                     >
-                        Reset password
+                        Resetuj lozinku
                     </button>
                 </div>
             </form>

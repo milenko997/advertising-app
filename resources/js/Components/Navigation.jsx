@@ -57,13 +57,13 @@ export default function Navigation() {
                         </Link>
 
                         <div className="hidden sm:flex items-center gap-0.5">
-                            <NavLink href="/" active={currentPath === '/'}>Browse</NavLink>
+                            <NavLink href="/" active={currentPath === '/'}>Oglasi</NavLink>
 
                             {user && user.isAdmin && (
                                 <>
-                                    <NavLink href="/admin/advertisements" active={currentPath.startsWith('/admin/advertisements')}>Advertisements</NavLink>
-                                    <NavLink href="/admin/categories" active={currentPath.startsWith('/admin/categories')}>Categories</NavLink>
-                                    <NavLink href="/admin/customers" active={currentPath.startsWith('/admin/customers')}>Customers</NavLink>
+                                    <NavLink href="/admin/advertisements" active={currentPath.startsWith('/admin/advertisements')}>Oglasi</NavLink>
+                                    <NavLink href="/admin/categories" active={currentPath.startsWith('/admin/categories')}>Kategorije</NavLink>
+                                    <NavLink href="/admin/customers" active={currentPath.startsWith('/admin/customers')}>Korisnici</NavLink>
                                     <Link
                                         href="/admin/reports"
                                         className={`relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
@@ -72,7 +72,7 @@ export default function Navigation() {
                                                 : 'text-slate-300 hover:text-white hover:bg-white/10'
                                         }`}
                                     >
-                                        Reports
+                                        Prijave
                                         {pendingReportsCount > 0 && (
                                             <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold bg-orange-500 text-white rounded-full">
                                                 {pendingReportsCount > 9 ? '9+' : pendingReportsCount}
@@ -84,9 +84,9 @@ export default function Navigation() {
 
                             {user && !user.isAdmin && (
                                 <>
-                                    <NavLink href="/my-advertisements" active={currentPath === '/my-advertisements'}>My Ads</NavLink>
-                                    <NavLink href="/favorites" active={currentPath === '/favorites'}>Saved</NavLink>
-                                    <NavLink href="/advertisements/trash" active={currentPath === '/advertisements/trash'}>Trash</NavLink>
+                                    <NavLink href="/my-advertisements" active={currentPath === '/my-advertisements'}>Moji oglasi</NavLink>
+                                    <NavLink href="/favorites" active={currentPath === '/favorites'}>Sačuvani</NavLink>
+                                    <NavLink href="/advertisements/trash" active={currentPath === '/advertisements/trash'}>Obrisani</NavLink>
                                 </>
                             )}
                         </div>
@@ -102,7 +102,7 @@ export default function Navigation() {
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                 </svg>
-                                Post Ad
+                                Postavi oglas
                             </Link>
                         )}
                         {user ? (
@@ -137,14 +137,14 @@ export default function Navigation() {
                                                 className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                                                 onClick={() => setDropdownOpen(false)}
                                             >
-                                                My Profile
+                                                Moj profil
                                             </Link>
                                             <div className="border-t border-gray-100 my-1" />
                                             <button
                                                 onClick={logout}
                                                 className="w-full text-left block px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
                                             >
-                                                Log Out
+                                                Odjavi se
                                             </button>
                                         </div>
                                     </>
@@ -153,13 +153,13 @@ export default function Navigation() {
                         ) : (
                             <div className="flex items-center gap-3">
                                 <Link href="/login" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-                                    Log in
+                                    Prijava
                                 </Link>
                                 <Link
                                     href="/register"
                                     className="text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition-colors shadow-sm"
                                 >
-                                    Register
+                                    Registracija
                                 </Link>
                             </div>
                         )}
@@ -187,26 +187,26 @@ export default function Navigation() {
             {open && (
                 <div className="sm:hidden border-t border-slate-800 bg-slate-900">
                     <div className="px-4 py-3 space-y-0.5">
-                        <MobileNavLink href="/">Browse</MobileNavLink>
+                        <MobileNavLink href="/">Oglasi</MobileNavLink>
                         {user && user.isAdmin && (
                             <>
-                                <MobileNavLink href="/admin/advertisements">Advertisements</MobileNavLink>
-                                <MobileNavLink href="/admin/categories">Categories</MobileNavLink>
-                                <MobileNavLink href="/admin/customers">Customers</MobileNavLink>
+                                <MobileNavLink href="/admin/advertisements">Oglasi</MobileNavLink>
+                                <MobileNavLink href="/admin/categories">Kategorije</MobileNavLink>
+                                <MobileNavLink href="/admin/customers">Korisnici</MobileNavLink>
                                 <MobileNavLink href="/admin/reports">
-                                    Reports {pendingReportsCount > 0 && `(${pendingReportsCount})`}
+                                    Prijave {pendingReportsCount > 0 && `(${pendingReportsCount})`}
                                 </MobileNavLink>
                             </>
                         )}
                         {user && !user.isAdmin && (
                             <>
-                                <MobileNavLink href="/my-advertisements">My Ads</MobileNavLink>
-                                <MobileNavLink href="/favorites">Saved</MobileNavLink>
-                                <MobileNavLink href="/advertisements/trash">Trash</MobileNavLink>
+                                <MobileNavLink href="/my-advertisements">Moji oglasi</MobileNavLink>
+                                <MobileNavLink href="/favorites">Sačuvani</MobileNavLink>
+                                <MobileNavLink href="/advertisements/trash">Obrisani</MobileNavLink>
                             </>
                         )}
                         {user && (
-                            <MobileNavLink href="/advertisements/create">Post Ad</MobileNavLink>
+                            <MobileNavLink href="/advertisements/create">Postavi oglas</MobileNavLink>
                         )}
                     </div>
                     {user ? (
@@ -225,22 +225,22 @@ export default function Navigation() {
                                 </div>
                             </div>
                             <div className="space-y-0.5">
-                                <MobileNavLink href="/profile">My Profile</MobileNavLink>
+                                <MobileNavLink href="/profile">Moj profil</MobileNavLink>
                                 <button
                                     onClick={logout}
                                     className="block w-full text-left px-3 py-2.5 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-white/5 rounded-md transition-colors"
                                 >
-                                    Log Out
+                                    Odjavi se
                                 </button>
                             </div>
                         </div>
                     ) : (
                         <div className="px-4 py-3 border-t border-slate-800 flex gap-3">
                             <Link href="/login" className="flex-1 text-center py-2 text-sm font-medium text-slate-300 border border-slate-700 rounded-lg hover:bg-white/5 transition-colors">
-                                Log in
+                                Prijava
                             </Link>
                             <Link href="/register" className="flex-1 text-center py-2 text-sm font-semibold bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
-                                Register
+                                Registracija
                             </Link>
                         </div>
                     )}

@@ -60,13 +60,13 @@ function ReviewCard({ review, authUserId }) {
     const [error, setError] = useState('');
 
     const handleDelete = () => {
-        if (!confirm('Delete your review?')) return;
+        if (!confirm('Obrisati recenziju?')) return;
         router.delete(`/reviews/${review.id}`);
     };
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        if (!rating) { setError('Please select a star rating.'); return; }
+        if (!rating) { setError('Molimo odaberite ocenu zvezdicama.'); return; }
         setError('');
         setSubmitting(true);
         router.put(`/reviews/${review.id}`, { rating, comment }, {
@@ -150,14 +150,14 @@ function ReviewCard({ review, authUserId }) {
                             disabled={submitting}
                             className="px-4 py-1.5 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition disabled:opacity-50"
                         >
-                            {submitting ? 'Saving…' : 'Save'}
+                            {submitting ? 'Čuvanje…' : 'Sačuvaj'}
                         </button>
                         <button
                             type="button"
                             onClick={() => { setEditing(false); setRating(review.rating); setComment(review.comment ?? ''); setError(''); }}
                             className="px-4 py-1.5 text-sm text-gray-500 hover:text-gray-700 transition"
                         >
-                            Cancel
+                            Otkaži
                         </button>
                     </div>
                 </form>
@@ -178,7 +178,7 @@ function ReviewForm({ userSlug }) {
 
     const submit = (e) => {
         e.preventDefault();
-        if (!rating) { setError('Please select a star rating.'); return; }
+        if (!rating) { setError('Molimo odaberite ocenu zvezdicama.'); return; }
         setError('');
         setSubmitting(true);
         router.post(`/user/${userSlug}/reviews`, { rating, comment }, {
@@ -188,7 +188,7 @@ function ReviewForm({ userSlug }) {
 
     return (
         <form onSubmit={submit} className="mt-4 pt-4 border-t border-gray-100">
-            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Leave a Review</h4>
+            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Ostavite recenziju</h4>
             <div className="mb-3">
                 <StarRating value={rating} onChange={setRating} />
                 {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
@@ -198,7 +198,7 @@ function ReviewForm({ userSlug }) {
                 value={comment}
                 onChange={e => setComment(e.target.value)}
                 maxLength={1000}
-                placeholder="Share your experience… (optional)"
+                placeholder="Podelite vaše iskustvo… (opciono)"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none mb-3"
             />
             <button
@@ -206,7 +206,7 @@ function ReviewForm({ userSlug }) {
                 disabled={submitting}
                 className="px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition disabled:opacity-50"
             >
-                {submitting ? 'Submitting…' : 'Submit Review'}
+                {submitting ? 'Slanje…' : 'Pošalji recenziju'}
             </button>
         </form>
     );
@@ -246,11 +246,11 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
     const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
     const handleDelete = () => {
-        if (!confirm('Move this ad to trash?')) return;
+        if (!confirm('Premesti oglas u otpad?')) return;
         router.delete(`/advertisements/${ad.id}`);
     };
 
-    const dateLabel = ad.created_at !== ad.updated_at ? 'Updated' : 'Posted';
+    const dateLabel = ad.created_at !== ad.updated_at ? 'Ažurirano' : 'Objavljeno';
     const dateValue = ad.created_at !== ad.updated_at ? ad.updated_at : ad.created_at;
 
     const pageTitle   = `${ad.title} — AdBoard`;
@@ -291,7 +291,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
-                        Back to listings
+                        Nazad na oglase
                     </Link>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -352,7 +352,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                                             d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                     </svg>
-                                    <p className="text-sm text-gray-400">No image provided</p>
+                                    <p className="text-sm text-gray-400">Nema fotografije</p>
                                 </div>
                             )}
 
@@ -378,7 +378,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                             ? 'bg-emerald-50 text-emerald-700'
                                             : 'bg-amber-50 text-amber-700'
                                     }`}>
-                                        {ad.availability === 'available' ? 'Available' : 'On Request'}
+                                        {ad.availability === 'available' ? 'Dostupno' : 'Na upit'}
                                     </span>
                                 </div>
                                 <h1 className="text-2xl font-bold text-gray-900 leading-snug">{ad.title}</h1>
@@ -390,33 +390,33 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                         </svg>
-                                        {ad.views} {ad.views === 1 ? 'view' : 'views'}
+                                        {ad.views} {ad.views === 1 ? 'pregled' : 'pregleda'}
                                     </span>
                                 </div>
                             </div>
 
                             {/* Description */}
                             <div className="bg-white rounded-xl border border-gray-200 p-6">
-                                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Description</h2>
+                                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Opis</h2>
                                 <p className="text-gray-700 leading-relaxed whitespace-pre-line">{ad.description}</p>
                             </div>
 
                             {/* Specs */}
                             <div className="bg-white rounded-xl border border-gray-200 p-6">
-                                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Details</h2>
+                                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Detalji</h2>
                                 <SpecRow
                                     icon={<svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>}
-                                    label="Payload Capacity"
+                                    label="Nosivost"
                                     value={ad.payload}
                                 />
                                 <SpecRow
                                     icon={<svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>}
-                                    label="Location"
+                                    label="Lokacija"
                                     value={ad.location}
                                 />
                                 <SpecRow
                                     icon={<svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>}
-                                    label="Category"
+                                    label="Kategorija"
                                     value={ad.category?.name}
                                 />
                             </div>
@@ -427,13 +427,13 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                     {/* Header */}
                                     <div className="flex items-center justify-between mb-1">
                                         <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                                            Seller Reviews
+                                            Recenzije prodavca
                                         </h2>
                                         <Link
                                             href={`/user/${ad.user.slug}#reviews`}
                                             className="text-xs text-indigo-600 hover:underline"
                                         >
-                                            View profile
+                                            Pogledaj profil
                                         </Link>
                                     </div>
 
@@ -443,7 +443,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                             <StarRating value={Math.round(avgRating)} readOnly />
                                             <span className="text-sm font-bold text-gray-700">{avgRating}</span>
                                             <span className="text-sm text-gray-400">
-                                                ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})
+                                                ({reviews.length} {reviews.length === 1 ? 'recenzija' : 'recenzija'})
                                             </span>
                                         </div>
                                     )}
@@ -463,7 +463,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                     {/* Own review summary */}
                                     {myReview && (
                                         <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3 mb-4">
-                                            <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1.5">Your Review</p>
+                                            <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1.5">Vaša recenzija</p>
                                             <StarRating value={myReview.rating} readOnly />
                                             {myReview.comment && (
                                                 <p className="text-sm text-indigo-700 mt-1.5">{myReview.comment}</p>
@@ -473,7 +473,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
 
                                     {/* Reviews list */}
                                     {reviews.length === 0 && !canReview && !auth?.user ? (
-                                        <p className="text-sm text-gray-400">No reviews yet.</p>
+                                        <p className="text-sm text-gray-400">Još nema recenzija.</p>
                                     ) : reviews.length > 0 ? (
                                         <div>
                                             {reviews.map(review => (
@@ -485,7 +485,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                             ))}
                                         </div>
                                     ) : (
-                                        <p className="text-sm text-gray-400">No reviews yet. Be the first!</p>
+                                        <p className="text-sm text-gray-400">Još nema recenzija. Budite prvi!</p>
                                     )}
 
                                     {/* Review form for eligible logged-in users */}
@@ -494,12 +494,12 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                     {/* Guest CTA */}
                                     {!auth?.user && (
                                         <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between gap-4">
-                                            <p className="text-sm text-gray-500">Log in to leave a review for this seller.</p>
+                                            <p className="text-sm text-gray-500">Prijavite se da biste ostavili recenziju ovog prodavca.</p>
                                             <Link
                                                 href={`/user/${ad.user.slug}/review-login`}
                                                 className="shrink-0 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition"
                                             >
-                                                Log in to Review
+                                                Prijavi se
                                             </Link>
                                         </div>
                                     )}
@@ -514,11 +514,11 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                 {/* Price card */}
                                 <div className="bg-white rounded-xl border border-gray-200 p-6">
                                     <div className="mb-4">
-                                        <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">Price</p>
+                                        <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">Cena</p>
                                         {ad.price ? (
                                             <p className="text-3xl font-bold text-indigo-600">{ad.price}</p>
                                         ) : (
-                                            <p className="text-lg text-gray-400 italic font-normal">Price on request</p>
+                                            <p className="text-lg text-gray-400 italic font-normal">Cena na upit</p>
                                         )}
                                     </div>
 
@@ -556,7 +556,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                                                     </svg>
                                                 )}
-                                                {saved ? 'Saved' : 'Save'}
+                                                {saved ? 'Sačuvano' : 'Sačuvaj'}
                                             </button>
                                         )}
                                         <div className={auth?.user ? 'flex-1' : 'w-full'}>
@@ -573,7 +573,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                 {/* Owner card */}
                                 {ad.user && (
                                     <div className="bg-white rounded-xl border border-gray-200 p-5">
-                                        <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3">Posted by</p>
+                                        <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3">Objavio</p>
                                         <Link href={`/user/${ad.user.slug}`} className="flex items-center gap-3 group">
                                             <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
                                                 {ad.user.avatar ? (
@@ -595,7 +595,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                                     </div>
                                                 )}
                                                 {avgRating === null && (
-                                                    <p className="text-xs text-gray-400">View profile</p>
+                                                    <p className="text-xs text-gray-400">Pogledaj profil</p>
                                                 )}
                                             </div>
                                             <svg className="w-4 h-4 text-gray-300 ml-auto group-hover:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -608,7 +608,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                 {/* Owner actions */}
                                 {isOwner && (
                                     <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-2">
-                                        <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3">Manage</p>
+                                        <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3">Upravljanje</p>
                                         <Link
                                             href={`/advertisements/edit/${ad.slug}`}
                                             className="flex items-center justify-center gap-2 w-full py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
@@ -616,7 +616,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                             </svg>
-                                            Edit Ad
+                                            Izmeni oglas
                                         </Link>
                                         <button
                                             onClick={handleDelete}
@@ -625,7 +625,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
-                                            Delete Ad
+                                            Obriši oglas
                                         </button>
                                     </div>
                                 )}

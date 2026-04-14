@@ -17,8 +17,8 @@ export default function Privacy() {
     return (
         <AppLayout>
             <Head>
-                <title>Privacy Policy — AdBoard</title>
-                <meta name="description" content="Learn how AdBoard collects, uses, and protects your personal data in compliance with Serbian data protection law." />
+                <title>Politika privatnosti — AdBoard</title>
+                <meta name="description" content="Saznajte kako AdBoard prikuplja, koristi i štiti vaše lične podatke u skladu sa srpskim zakonom o zaštiti podataka." />
             </Head>
 
             {/* Hero */}
@@ -28,10 +28,10 @@ export default function Privacy() {
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                         </svg>
-                        Legal
+                        Pravno
                     </span>
-                    <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Privacy Policy</h1>
-                    <p className="text-slate-400 text-sm">Last updated: April 2026</p>
+                    <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Politika privatnosti</h1>
+                    <p className="text-slate-400 text-sm">Poslednje ažuriranje: April 2026</p>
                 </div>
             </div>
 
@@ -41,152 +41,152 @@ export default function Privacy() {
                     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm px-8 py-10">
 
                         <p className="text-sm text-slate-500 leading-relaxed mb-10">
-                            At <strong className="text-slate-700">AdBoard</strong>, your privacy matters to us. This Privacy Policy explains what personal data we collect, how we use it, and what rights you have regarding your data. By using AdBoard, you consent to the practices described in this policy.
+                            U <strong className="text-slate-700">AdBoard</strong>-u, vaša privatnost nam je važna. Ova Politika privatnosti objašnjava koje lične podatke prikupljamo, kako ih koristimo i koja prava imate u pogledu vaših podataka. Korišćenjem AdBoard-a, pristajete na prakse opisane u ovoj politici.
                         </p>
 
-                        <Section title="1. Who We Are">
+                        <Section title="1. Ko smo mi">
                             <p>
-                                AdBoard is an online marketplace for transport and freight professionals based in Belgrade, Serbia. For any privacy-related questions, you can reach us at <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a>.
+                                AdBoard je online marketplace za profesionalce iz oblasti transporta i teretnih usluga sa sedištem u Beogradu, Srbija. Za sva pitanja u vezi sa privatnošću, možete nas kontaktirati na <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a>.
                             </p>
                         </Section>
 
-                        <Section title="2. Data We Collect">
-                            <p>We collect the following categories of personal data:</p>
+                        <Section title="2. Podaci koje prikupljamo">
+                            <p>Prikupljamo sledeće kategorije ličnih podataka:</p>
 
                             <div className="rounded-xl border border-slate-100 overflow-hidden">
                                 <table className="w-full text-xs">
                                     <thead className="bg-slate-50">
                                         <tr>
-                                            <th className="text-left px-4 py-2.5 font-semibold text-slate-600">Data type</th>
-                                            <th className="text-left px-4 py-2.5 font-semibold text-slate-600">Examples</th>
-                                            <th className="text-left px-4 py-2.5 font-semibold text-slate-600">Purpose</th>
+                                            <th className="text-left px-4 py-2.5 font-semibold text-slate-600">Tip podataka</th>
+                                            <th className="text-left px-4 py-2.5 font-semibold text-slate-600">Primeri</th>
+                                            <th className="text-left px-4 py-2.5 font-semibold text-slate-600">Svrha</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">
                                         <tr>
-                                            <td className="px-4 py-2.5 font-medium text-slate-700">Account info</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Name, email, password (hashed)</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Authentication, account management</td>
+                                            <td className="px-4 py-2.5 font-medium text-slate-700">Podaci o nalogu</td>
+                                            <td className="px-4 py-2.5 text-slate-500">Ime, email, lozinka (hešovana)</td>
+                                            <td className="px-4 py-2.5 text-slate-500">Autentifikacija, upravljanje nalogom</td>
                                         </tr>
                                         <tr>
-                                            <td className="px-4 py-2.5 font-medium text-slate-700">Profile data</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Phone number, avatar photo</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Displayed on your public profile</td>
+                                            <td className="px-4 py-2.5 font-medium text-slate-700">Podaci profila</td>
+                                            <td className="px-4 py-2.5 text-slate-500">Broj telefona, profilna fotografija</td>
+                                            <td className="px-4 py-2.5 text-slate-500">Prikazuje se na vašem javnom profilu</td>
                                         </tr>
                                         <tr>
-                                            <td className="px-4 py-2.5 font-medium text-slate-700">Ad content</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Title, description, location, images, contact phone</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Publishing your advertisements</td>
+                                            <td className="px-4 py-2.5 font-medium text-slate-700">Sadržaj oglasa</td>
+                                            <td className="px-4 py-2.5 text-slate-500">Naslov, opis, lokacija, slike, kontakt telefon</td>
+                                            <td className="px-4 py-2.5 text-slate-500">Objavljivanje vaših oglasa</td>
                                         </tr>
                                         <tr>
-                                            <td className="px-4 py-2.5 font-medium text-slate-700">Usage data</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Pages visited, ad view counts, IP address</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Analytics, fraud prevention</td>
+                                            <td className="px-4 py-2.5 font-medium text-slate-700">Podaci o korišćenju</td>
+                                            <td className="px-4 py-2.5 text-slate-500">Posećene stranice, broj pregleda oglasa, IP adresa</td>
+                                            <td className="px-4 py-2.5 text-slate-500">Analitika, sprečavanje prevara</td>
                                         </tr>
                                         <tr>
-                                            <td className="px-4 py-2.5 font-medium text-slate-700">Technical data</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Browser type, device, session cookies</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Platform functionality, security</td>
+                                            <td className="px-4 py-2.5 font-medium text-slate-700">Tehnički podaci</td>
+                                            <td className="px-4 py-2.5 text-slate-500">Tip pretraživača, uređaj, kolačići sesije</td>
+                                            <td className="px-4 py-2.5 text-slate-500">Funkcionalnost platforme, bezbednost</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </Section>
 
-                        <Section title="3. How We Use Your Data">
-                            <p>We use the data we collect to:</p>
+                        <Section title="3. Kako koristimo vaše podatke">
+                            <p>Koristimo prikupljene podatke da bismo:</p>
                             <ul className="list-disc list-inside space-y-1.5 pl-2">
-                                <li>Operate and maintain the AdBoard platform.</li>
-                                <li>Create and manage your account.</li>
-                                <li>Publish and display your advertisements to other users.</li>
-                                <li>Process reports and moderate content.</li>
-                                <li>Send transactional emails (account confirmation, password reset).</li>
-                                <li>Detect and prevent fraud, spam, and abuse.</li>
-                                <li>Improve the platform through aggregated analytics.</li>
+                                <li>Upravljali i održavali AdBoard platformu.</li>
+                                <li>Kreirali i upravljali vašim nalogom.</li>
+                                <li>Objavljivali i prikazivali vaše oglase drugim korisnicima.</li>
+                                <li>Obrađivali prijave i moderirali sadržaj.</li>
+                                <li>Slali transakcione emailove (potvrda naloga, resetovanje lozinke).</li>
+                                <li>Otkrivali i sprečavali prevare, spam i zloupotrebu.</li>
+                                <li>Unapređivali platformu kroz agregiranu analitiku.</li>
                             </ul>
                             <p>
-                                We do <strong className="text-slate-700">not</strong> sell your personal data to third parties. We do not use your data for targeted advertising.
+                                Mi <strong className="text-slate-700">ne</strong> prodajemo vaše lične podatke trećim stranama. Ne koristimo vaše podatke za ciljano oglašavanje.
                             </p>
                         </Section>
 
-                        <Section title="4. What Is Publicly Visible">
-                            <p>The following information is publicly visible to all visitors of AdBoard:</p>
+                        <Section title="4. Šta je javno vidljivo">
+                            <p>Sledeće informacije su javno vidljive svim posetiocima AdBoard-a:</p>
                             <ul className="list-disc list-inside space-y-1.5 pl-2">
-                                <li>Your display name and avatar (if set).</li>
-                                <li>Your published advertisements (title, description, images, location, price, contact phone).</li>
-                                <li>Your public profile page including reviews received.</li>
+                                <li>Vaše prikazno ime i avatar (ako je postavljeno).</li>
+                                <li>Vaši objavljeni oglasi (naslov, opis, slike, lokacija, cena, kontakt telefon).</li>
+                                <li>Vaša javna stranica profila uključujući primljene recenzije.</li>
                             </ul>
                             <p>
-                                Your <strong className="text-slate-700">email address</strong> is never shown publicly. It is used only for account authentication and system notifications.
+                                Vaša <strong className="text-slate-700">email adresa</strong> nikada nije javno prikazana. Koristi se isključivo za autentifikaciju naloga i sistemska obaveštenja.
                             </p>
                         </Section>
 
-                        <Section title="5. Cookies">
+                        <Section title="5. Kolačići">
                             <p>
-                                AdBoard uses cookies to keep you logged in (session cookie) and to protect forms against cross-site request forgery (CSRF cookie). These are essential cookies required for the platform to function — no tracking or advertising cookies are used.
+                                AdBoard koristi kolačiće da vas drži prijavljenim (kolačić sesije) i da zaštiti forme od falsifikovanja međustraničnih zahteva (CSRF kolačić). Ovo su neophodni kolačići potrebni za funkcionisanje platforme — ne koriste se kolačići za praćenje niti za oglašavanje.
                             </p>
                             <p>
-                                You can disable cookies in your browser settings, but doing so will prevent you from logging in or using most features of AdBoard.
-                            </p>
-                        </Section>
-
-                        <Section title="6. Data Retention">
-                            <p>
-                                We retain your personal data for as long as your account is active. If you delete your account, your personal data (name, email, phone) will be erased within <strong className="text-slate-700">30 days</strong>. Your published advertisements will also be removed.
-                            </p>
-                            <p>
-                                Anonymized usage data (view counts, aggregate statistics) may be retained indefinitely as it cannot be linked back to any individual.
+                                Možete onemogućiti kolačiće u podešavanjima pretraživača, ali to će vas sprečiti da se prijavite ili koristite većinu funkcija AdBoard-a.
                             </p>
                         </Section>
 
-                        <Section title="7. Data Security">
+                        <Section title="6. Čuvanje podataka">
                             <p>
-                                We implement reasonable technical and organizational measures to protect your data, including:
+                                Čuvamo vaše lične podatke sve dok je vaš nalog aktivan. Ukoliko obrišete nalog, vaši lični podaci (ime, email, telefon) biće izbrisani u roku od <strong className="text-slate-700">30 dana</strong>. Vaši objavljeni oglasi će takođe biti uklonjeni.
+                            </p>
+                            <p>
+                                Anonimizovani podaci o korišćenju (broj pregleda, agregatne statistike) mogu se čuvati neograničeno jer se ne mogu povezati sa pojedincem.
+                            </p>
+                        </Section>
+
+                        <Section title="7. Bezbednost podataka">
+                            <p>
+                                Primenjujemo razumne tehničke i organizacione mere za zaštitu vaših podataka, uključujući:
                             </p>
                             <ul className="list-disc list-inside space-y-1.5 pl-2">
-                                <li>Passwords stored using bcrypt hashing — never in plain text.</li>
-                                <li>HTTPS encryption for all data in transit.</li>
-                                <li>CSRF protection on all forms.</li>
-                                <li>Rate limiting to prevent brute-force attacks.</li>
+                                <li>Lozinke čuvane bcrypt hešovanjem — nikada u čistom tekstu.</li>
+                                <li>HTTPS enkripcija za sve podatke u prenosu.</li>
+                                <li>CSRF zaštita na svim formama.</li>
+                                <li>Ograničenje brzine za sprečavanje brute-force napada.</li>
                             </ul>
                             <p>
-                                No system is completely secure. If you believe your account has been compromised, please contact us immediately.
+                                Nijedan sistem nije potpuno bezbedan. Ukoliko smatrate da je vaš nalog kompromitovan, kontaktirajte nas odmah.
                             </p>
                         </Section>
 
-                        <Section title="8. Your Rights">
+                        <Section title="8. Vaša prava">
                             <p>
-                                Under applicable data protection law, you have the following rights regarding your personal data:
+                                Prema primenjivom zakonu o zaštiti podataka, imate sledeća prava u pogledu vaših ličnih podataka:
                             </p>
                             <ul className="list-disc list-inside space-y-1.5 pl-2">
-                                <li><strong className="text-slate-700">Access</strong> — request a copy of the data we hold about you.</li>
-                                <li><strong className="text-slate-700">Correction</strong> — update inaccurate data via your profile page.</li>
-                                <li><strong className="text-slate-700">Deletion</strong> — request that we delete your account and personal data.</li>
-                                <li><strong className="text-slate-700">Portability</strong> — request your data in a structured, machine-readable format.</li>
-                                <li><strong className="text-slate-700">Objection</strong> — object to certain processing activities.</li>
+                                <li><strong className="text-slate-700">Pristup</strong> — zatražite kopiju podataka koje čuvamo o vama.</li>
+                                <li><strong className="text-slate-700">Ispravka</strong> — ažurirajte netačne podatke putem stranice profila.</li>
+                                <li><strong className="text-slate-700">Brisanje</strong> — zatražite da obrišemo vaš nalog i lične podatke.</li>
+                                <li><strong className="text-slate-700">Prenosivost</strong> — zatražite vaše podatke u strukturiranom, mašinski čitljivom formatu.</li>
+                                <li><strong className="text-slate-700">Prigovor</strong> — uložite prigovor na određene aktivnosti obrade.</li>
                             </ul>
                             <p>
-                                To exercise any of these rights, email us at <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a>. We will respond within 30 days.
+                                Da biste ostvarili bilo koje od ovih prava, pišite nam na <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a>. Odgovorićemo u roku od 30 dana.
                             </p>
                         </Section>
 
-                        <Section title="9. Third-Party Services">
+                        <Section title="9. Usluge trećih strana">
                             <p>
-                                AdBoard does not share your data with third-party analytics, advertising, or tracking services. The platform is self-hosted and does not load external scripts from Google, Facebook, or similar providers.
+                                AdBoard ne deli vaše podatke sa analitičkim, reklamnim ili uslugama praćenja trećih strana. Platforma je samostalno hostovana i ne učitava eksterne skripte od Google-a, Facebook-a ili sličnih provajdera.
                             </p>
                         </Section>
 
-                        <Section title="10. Changes to This Policy">
+                        <Section title="10. Izmene ove politike">
                             <p>
-                                We may update this Privacy Policy periodically. When we do, we will revise the "Last updated" date at the top of this page. We encourage you to review this policy regularly.
+                                Možemo periodično ažurirati ovu Politiku privatnosti. Kada to učinimo, revidiraćemo datum "Poslednjeg ažuriranja" na vrhu ove stranice. Preporučujemo vam da redovno pregledavate ovu politiku.
                             </p>
                         </Section>
 
                         <div className="mt-10 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-400">
-                            <span>Questions? <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a></span>
+                            <span>Pitanja? <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a></span>
                             <div className="flex items-center gap-4">
-                                <Link href="/terms" className="hover:text-slate-600 transition-colors">Terms of Use</Link>
-                                <Link href="/faq" className="hover:text-slate-600 transition-colors">FAQ</Link>
+                                <Link href="/terms" className="hover:text-slate-600 transition-colors">Uslovi korišćenja</Link>
+                                <Link href="/faq" className="hover:text-slate-600 transition-colors">Česta pitanja</Link>
                             </div>
                         </div>
                     </div>

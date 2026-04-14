@@ -15,7 +15,7 @@ export default function Login({ status }) {
 
     return (
         <GuestLayout>
-            <h1 className="text-xl font-semibold text-gray-900 mb-6">Log in to your account</h1>
+            <h1 className="text-xl font-semibold text-gray-900 mb-6">Prijavite se na nalog</h1>
 
             {status && (
                 <div className="mb-4 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-3">
@@ -25,7 +25,7 @@ export default function Login({ status }) {
 
             <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
                     <input
                         type="email"
                         value={data.email}
@@ -37,7 +37,7 @@ export default function Login({ status }) {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Lozinka</label>
                     <input
                         type="password"
                         value={data.password}
@@ -56,27 +56,27 @@ export default function Login({ status }) {
                         onChange={e => setData('remember', e.target.checked)}
                         className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                     />
-                    <label htmlFor="remember" className="ml-2 text-sm text-gray-600">Remember me</label>
+                    <label htmlFor="remember" className="ml-2 text-sm text-gray-600">Zapamti me</label>
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
                     <Link href="/forgot-password" className="text-sm text-gray-500 hover:text-indigo-600">
-                        Forgot password?
+                        Zaboravili ste lozinku?
                     </Link>
                     <button
                         type="submit"
                         disabled={processing}
                         className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
                     >
-                        Log in
+                        Prijavi se
                     </button>
                 </div>
             </form>
 
             <p className="mt-6 text-center text-sm text-gray-500">
-                No account?{' '}
+                Nemate nalog?{' '}
                 <Link href="/register" className="text-indigo-600 hover:underline font-medium">
-                    Register
+                    Registrujte se
                 </Link>
             </p>
         </GuestLayout>

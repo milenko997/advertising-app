@@ -16,7 +16,7 @@ export default function Trash({ ads: initialAds }) {
     };
 
     const forceDelete = (id) => {
-        if (!confirm('This cannot be undone. Are you sure?')) return;
+        if (!confirm('Ovo se ne može poništiti. Da li ste sigurni?')) return;
         router.delete(`/advertisements/force-delete/${id}`, {
             onSuccess: () => setAdList(prev => prev.filter(a => a.id !== id)),
         });
@@ -42,8 +42,8 @@ export default function Trash({ ads: initialAds }) {
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     <div className="mb-6">
-                        <h1 className="text-2xl font-bold text-gray-900">Trash</h1>
-                        <p className="text-sm text-gray-500 mt-0.5">Deleted ads are permanently removed after 30 days.</p>
+                        <h1 className="text-2xl font-bold text-gray-900">Obrisani oglasi</h1>
+                        <p className="text-sm text-gray-500 mt-0.5">Obrisani oglasi se trajno uklanjaju nakon 30 dana.</p>
                     </div>
                     {adList.length === 0 ? (
                         <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
@@ -51,7 +51,7 @@ export default function Trash({ ads: initialAds }) {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
-                            <p className="text-gray-500">Your trash is empty.</p>
+                            <p className="text-gray-500">Otpad je prazan.</p>
                         </div>
                     ) : (
                         <>
@@ -78,20 +78,20 @@ export default function Trash({ ads: initialAds }) {
                                                 <div className="min-w-0">
                                                     <p className="font-semibold text-gray-700">{ad.title}</p>
                                                     <p className="text-sm text-gray-400 mt-0.5 truncate">{ad.description}</p>
-                                                    <p className="text-xs text-red-500 mt-2">Deleted: {ad.deleted_at}</p>
+                                                    <p className="text-xs text-red-500 mt-2">Obrisano: {ad.deleted_at}</p>
                                                 </div>
                                                 <div className="flex items-center gap-2 shrink-0">
                                                     <button
                                                         onClick={() => restore(ad.id)}
                                                         className="px-3 py-1.5 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
                                                     >
-                                                        Restore
+                                                        Vrati
                                                     </button>
                                                     <button
                                                         onClick={() => forceDelete(ad.id)}
                                                         className="px-3 py-1.5 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
                                                     >
-                                                        Delete Forever
+                                                        Trajno obriši
                                                     </button>
                                                 </div>
                                             </div>
@@ -113,7 +113,7 @@ export default function Trash({ ads: initialAds }) {
                                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                             </svg>
                                         )}
-                                        {loading ? 'Loading…' : 'Load More'}
+                                        {loading ? 'Učitavanje…' : 'Učitaj još'}
                                     </button>
                                 </div>
                             )}

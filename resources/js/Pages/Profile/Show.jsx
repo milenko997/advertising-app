@@ -54,17 +54,17 @@ export default function ProfileShow({ user }) {
             <div className="py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
                     <div className="mb-2">
-                        <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
-                        <p className="text-sm text-gray-500 mt-0.5">Manage your account information and security settings.</p>
+                        <h1 className="text-2xl font-bold text-gray-900">Moj profil</h1>
+                        <p className="text-sm text-gray-500 mt-0.5">Upravljajte podacima naloga i bezbednosnim podešavanjima.</p>
                     </div>
 
                     {/* Profile Information */}
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                        <h3 className="text-base font-semibold text-gray-900 mb-5">Profile Information</h3>
+                        <h3 className="text-base font-semibold text-gray-900 mb-5">Podaci profila</h3>
 
                         {recentlySuccessful && (
                             <div className="mb-4 bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 text-sm">
-                                Profile updated successfully.
+                                Profil je uspešno ažuriran.
                             </div>
                         )}
 
@@ -91,7 +91,7 @@ export default function ProfileShow({ user }) {
                                         <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                                         </svg>
-                                        Upload photo
+                                        Otpremi sliku
                                         <AvatarInput onFile={handleAvatarChange} />
                                     </label>
                                     {(user.avatar || previewUrl) && (
@@ -103,16 +103,16 @@ export default function ProfileShow({ user }) {
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
-                                            Remove photo
+                                            Ukloni sliku
                                         </button>
                                     )}
-                                    <p className="text-xs text-gray-400">JPEG, PNG, GIF — max 4 MB</p>
+                                    <p className="text-xs text-gray-400">JPEG, PNG, GIF — maks. 4 MB</p>
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Full name</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Ime i prezime</label>
                                     <input
                                         type="text"
                                         value={data.name}
@@ -123,7 +123,7 @@ export default function ProfileShow({ user }) {
                                     {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
                                     <input
                                         type="email"
                                         value={data.email}
@@ -136,7 +136,7 @@ export default function ProfileShow({ user }) {
                             </div>
 
                             <div className="mb-5">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Phone number</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Broj telefona</label>
                                 <input
                                     type="tel"
                                     value={data.phone}
@@ -145,7 +145,7 @@ export default function ProfileShow({ user }) {
                                     maxLength={20}
                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                 />
-                                <p className="mt-1 text-xs text-gray-400">Digits, spaces, +, -, ( ) only</p>
+                                <p className="mt-1 text-xs text-gray-400">Samo cifre, razmaci, +, -, ( )</p>
                                 {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
                             </div>
 
@@ -154,24 +154,24 @@ export default function ProfileShow({ user }) {
                                 disabled={processing}
                                 className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
                             >
-                                Save changes
+                                Sačuvaj izmene
                             </button>
                         </form>
                     </div>
 
                     {/* Change Password */}
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                        <h3 className="text-base font-semibold text-gray-900 mb-5">Change Password</h3>
+                        <h3 className="text-base font-semibold text-gray-900 mb-5">Promena lozinke</h3>
 
                         {pwSuccess && (
                             <div className="mb-4 bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 text-sm">
-                                Password changed successfully.
+                                Lozinka je uspešno promenjena.
                             </div>
                         )}
 
                         <form onSubmit={submitPassword} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Current password</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Trenutna lozinka</label>
                                 <input
                                     type="password"
                                     value={pwData.current_password}
@@ -182,7 +182,7 @@ export default function ProfileShow({ user }) {
                                 {pwErrors.current_password && <p className="mt-1 text-xs text-red-600">{pwErrors.current_password}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">New password</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Nova lozinka</label>
                                 <input
                                     type="password"
                                     value={pwData.password}
@@ -193,7 +193,7 @@ export default function ProfileShow({ user }) {
                                 {pwErrors.password && <p className="mt-1 text-xs text-red-600">{pwErrors.password}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Confirm new password</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Potvrda nove lozinke</label>
                                 <input
                                     type="password"
                                     value={pwData.password_confirmation}
@@ -207,7 +207,7 @@ export default function ProfileShow({ user }) {
                                 disabled={pwProcessing}
                                 className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
                             >
-                                Change password
+                                Promeni lozinku
                             </button>
                         </form>
                     </div>

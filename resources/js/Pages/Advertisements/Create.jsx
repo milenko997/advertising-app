@@ -68,10 +68,10 @@ export default function Create({ categories }) {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
-                            My Ads
+                            Moji oglasi
                         </Link>
-                        <h1 className="text-2xl font-bold text-gray-900">Post an Advertisement</h1>
-                        <p className="text-sm text-gray-500 mt-1">Fill in the details below to list your vehicle or transport service.</p>
+                        <h1 className="text-2xl font-bold text-gray-900">Postavi oglas</h1>
+                        <p className="text-sm text-gray-500 mt-1">Popunite podatke ispod da biste oglasili vozilo ili transportnu uslugu.</p>
                     </div>
 
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
@@ -86,47 +86,47 @@ export default function Create({ categories }) {
 
                         <form onSubmit={submit} encType="multipart/form-data">
 
-                            <SectionTitle>Basic Info</SectionTitle>
+                            <SectionTitle>Osnovni podaci</SectionTitle>
 
                             {/* Title */}
                             <div className="mb-4">
-                                <label className={labelClass}>Title <span className="text-red-500">*</span></label>
-                                <input type="text" value={data.title} onChange={e => setData('title', e.target.value)} minLength={5} maxLength={255} className={inputClass} placeholder="e.g. Mercedes Actros available for long-haul" />
+                                <label className={labelClass}>Naslov <span className="text-red-500">*</span></label>
+                                <input type="text" value={data.title} onChange={e => setData('title', e.target.value)} minLength={5} maxLength={255} className={inputClass} placeholder="npr. Mercedes Actros dostupan za dugopruge" />
                                 <p className="mt-1 text-xs text-gray-400">{data.title.length}/255</p>
                                 {errors.title && <p className="mt-1 text-xs text-red-600">{errors.title}</p>}
                             </div>
 
                             {/* Description */}
                             <div className="mb-4">
-                                <label className={labelClass}>Description <span className="text-red-500">*</span></label>
-                                <textarea rows={4} value={data.description} onChange={e => setData('description', e.target.value)} minLength={10} maxLength={5000} className={inputClass} placeholder="Describe your vehicle, services offered, availability, etc." />
+                                <label className={labelClass}>Opis <span className="text-red-500">*</span></label>
+                                <textarea rows={4} value={data.description} onChange={e => setData('description', e.target.value)} minLength={10} maxLength={5000} className={inputClass} placeholder="Opišite vozilo, usluge, dostupnost, itd." />
                                 <p className="mt-1 text-xs text-gray-400">{data.description.length}/5000</p>
                                 {errors.description && <p className="mt-1 text-xs text-red-600">{errors.description}</p>}
                             </div>
 
                             <div className="border-t border-gray-100 my-6" />
-                            <SectionTitle>Vehicle Details</SectionTitle>
+                            <SectionTitle>Detalji vozila</SectionTitle>
 
                             {/* Availability */}
                             <div className="mb-4">
-                                <label className={labelClass}>Availability <span className="text-red-500">*</span></label>
+                                <label className={labelClass}>Dostupnost <span className="text-red-500">*</span></label>
                                 <select value={data.availability} onChange={e => setData('availability', e.target.value)} className={inputClass}>
-                                    <option value="available">Available</option>
-                                    <option value="on_request">On Request</option>
+                                    <option value="available">Dostupno</option>
+                                    <option value="on_request">Na upit</option>
                                 </select>
                                 {errors.availability && <p className="mt-1 text-xs text-red-600">{errors.availability}</p>}
                             </div>
 
                             {/* Payload */}
                             <div className="mb-4">
-                                <label className={labelClass}>Payload Capacity</label>
-                                <input type="text" value={data.payload} onChange={e => setData('payload', e.target.value)} placeholder="e.g. 10 tons" className={inputClass} />
+                                <label className={labelClass}>Nosivost</label>
+                                <input type="text" value={data.payload} onChange={e => setData('payload', e.target.value)} placeholder="npr. 10 tona" className={inputClass} />
                                 {errors.payload && <p className="mt-1 text-xs text-red-600">{errors.payload}</p>}
                             </div>
 
                             {/* Category */}
                             <div className="mb-4">
-                                <label className={labelClass}>Category <span className="text-red-500">*</span></label>
+                                <label className={labelClass}>Kategorija <span className="text-red-500">*</span></label>
                                 <CategoryPicker
                                     categories={categories}
                                     value={data.category_id}
@@ -136,26 +136,26 @@ export default function Create({ categories }) {
                             </div>
 
                             <div className="border-t border-gray-100 my-6" />
-                            <SectionTitle>Pricing & Contact</SectionTitle>
+                            <SectionTitle>Cena i kontakt</SectionTitle>
 
                             {/* Price */}
                             <div className="mb-4">
-                                <label className={labelClass}>Price</label>
-                                <input type="text" value={data.price} onChange={e => setData('price', e.target.value)} placeholder="e.g. 0.5 EUR/km, 50 EUR/h" className={inputClass} />
-                                <p className="mt-1 text-xs text-gray-400">Leave empty to show "Price on request"</p>
+                                <label className={labelClass}>Cena</label>
+                                <input type="text" value={data.price} onChange={e => setData('price', e.target.value)} placeholder="npr. 0.5 EUR/km, 50 EUR/h" className={inputClass} />
+                                <p className="mt-1 text-xs text-gray-400">Ostavite prazno za prikaz "Cena na upit"</p>
                                 {errors.price && <p className="mt-1 text-xs text-red-600">{errors.price}</p>}
                             </div>
 
                             {/* Phone + Location */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                                 <div>
-                                    <label className={labelClass}>Phone <span className="text-red-500">*</span></label>
+                                    <label className={labelClass}>Telefon <span className="text-red-500">*</span></label>
                                     <input type="tel" value={data.phone} onChange={handlePhone} maxLength={15} placeholder="+381 62 123 4567" className={inputClass} />
-                                    <p className="mt-1 text-xs text-gray-400">Digits, spaces, +, -, ( ) only</p>
+                                    <p className="mt-1 text-xs text-gray-400">Samo cifre, razmaci, +, -, ( )</p>
                                     {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
                                 </div>
                                 <div>
-                                    <label className={labelClass}>Location <span className="text-red-500">*</span></label>
+                                    <label className={labelClass}>Lokacija <span className="text-red-500">*</span></label>
                                     <LocationAutocomplete
                                         value={data.location}
                                         onChange={val => setData('location', val)}
@@ -167,10 +167,10 @@ export default function Create({ categories }) {
                             </div>
 
                             <div className="border-t border-gray-100 my-6" />
-                            <SectionTitle>Photos</SectionTitle>
+                            <SectionTitle>Fotografije</SectionTitle>
 
                             {/* Cover image */}
-                            <p className="text-xs text-gray-500 mb-2">Cover photo (main image)</p>
+                            <p className="text-xs text-gray-500 mb-2">Naslovna fotografija (glavna slika)</p>
                             <ImageUpload
                                 value={data.image}
                                 onChange={file => setData('image', file)}
@@ -178,7 +178,7 @@ export default function Create({ categories }) {
 
                             {/* Gallery images */}
                             <div className="mt-5">
-                                <p className="text-xs text-gray-500 mb-2">Additional photos</p>
+                                <p className="text-xs text-gray-500 mb-2">Dodatne fotografije</p>
                                 {imagePreviews.length > 0 && (
                                     <div className="flex flex-wrap gap-2 mb-3">
                                         {imagePreviews.map((src, i) => (
@@ -213,7 +213,7 @@ export default function Create({ categories }) {
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                     </svg>
-                                    Add photos
+                                    Dodaj fotografije
                                 </button>
                             </div>
 
@@ -223,10 +223,10 @@ export default function Create({ categories }) {
                                     disabled={processing}
                                     className="px-6 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition disabled:opacity-50"
                                 >
-                                    {processing ? 'Posting…' : 'Post Ad'}
+                                    {processing ? 'Postavljanje…' : 'Postavi oglas'}
                                 </button>
                                 <Link href="/my-advertisements" className="text-sm text-gray-500 hover:text-gray-700">
-                                    Cancel
+                                    Otkaži
                                 </Link>
                             </div>
                         </form>

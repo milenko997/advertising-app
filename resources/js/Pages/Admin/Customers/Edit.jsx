@@ -20,7 +20,7 @@ export default function CustomersEdit({ customer }) {
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                         <form onSubmit={submit} className="space-y-5">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Ime</label>
                                 <input
                                     type="text"
                                     value={data.name}
@@ -32,7 +32,7 @@ export default function CustomersEdit({ customer }) {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
                                 <input
                                     type="email"
                                     value={data.email}
@@ -44,13 +44,13 @@ export default function CustomersEdit({ customer }) {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Uloga</label>
                                 <select
                                     value={data.role}
                                     onChange={e => setData('role', e.target.value)}
                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                 >
-                                    <option value="customer">Customer</option>
+                                    <option value="customer">Korisnik</option>
                                     <option value="admin">Admin</option>
                                 </select>
                                 {errors.role && <p className="mt-1 text-xs text-red-600">{errors.role}</p>}
@@ -62,10 +62,10 @@ export default function CustomersEdit({ customer }) {
                                     disabled={processing}
                                     className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
                                 >
-                                    Save Changes
+                                    Sačuvaj izmene
                                 </button>
                                 <Link href="/admin/customers" className="text-sm text-gray-500 hover:text-gray-700">
-                                    Cancel
+                                    Otkaži
                                 </Link>
                             </div>
                         </form>

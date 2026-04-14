@@ -36,10 +36,10 @@ export default function ByCategory({ category, ads, location, favoritedIds }) {
     return (
         <AppLayout>
             <Head>
-                <title>{`${category.name} Ads — AdBoard`}</title>
-                <meta name="description" content={`Browse ${category.name} advertisements on AdBoard — Serbia's marketplace for transport and freight professionals.`} />
-                <meta property="og:title"       content={`${category.name} Ads — AdBoard`} />
-                <meta property="og:description" content={`Browse ${category.name} advertisements on AdBoard — Serbia's marketplace for transport and freight professionals.`} />
+                <title>{`${category.name} — AdBoard`}</title>
+                <meta name="description" content={`Pregledajte oglase u kategoriji ${category.name} na AdBoard-u — srpskom marketplaceu za transport i teretne usluge.`} />
+                <meta property="og:title"       content={`${category.name} — AdBoard`} />
+                <meta property="og:description" content={`Pregledajte oglase u kategoriji ${category.name} na AdBoard-u — srpskom marketplaceu za transport i teretne usluge.`} />
                 <meta property="og:type"        content="website" />
                 <meta property="og:site_name"   content="AdBoard" />
             </Head>
@@ -54,6 +54,7 @@ export default function ByCategory({ category, ads, location, favoritedIds }) {
 
             <div className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h1 className="text-2xl font-bold text-gray-900 mb-6">{category.name}</h1>
                     {adList.length === 0 ? (
                         <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
                             <p className="text-gray-500">Nema oglasa u ovoj kategoriji.</p>

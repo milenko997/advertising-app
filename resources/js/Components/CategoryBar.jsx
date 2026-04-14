@@ -55,7 +55,7 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                                                 onClick={() => setOpenId(null)}
                                                 className="block px-4 py-2 text-sm text-gray-600 hover:bg-indigo-50 font-medium"
                                             >
-                                                All {cat.name}
+                                                {cat.name}
                                             </Link>
                                             <div className="border-t border-gray-100 my-1" />
                                             {cat.children.map(child => (

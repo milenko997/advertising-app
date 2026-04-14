@@ -26,7 +26,7 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                             !currentParent ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:text-indigo-600'
                         }`}
                     >
-                        All
+                        Sve kategorije
                     </Link>
 
                     {categories.map(cat => (

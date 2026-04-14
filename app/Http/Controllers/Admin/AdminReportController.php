@@ -51,13 +51,13 @@ class AdminReportController extends Controller
     {
         $report->update(['resolved' => !$report->resolved]);
 
-        return back()->with('success', $report->resolved ? 'Report marked as resolved.' : 'Report re-opened.');
+        return back()->with('success', $report->resolved ? 'Prijava je označena kao rešena.' : 'Prijava je ponovo otvorena.');
     }
 
     public function destroy(Report $report)
     {
         $report->delete();
 
-        return back()->with('success', 'Report deleted.');
+        return back()->with('success', 'Prijava je obrisana.');
     }
 }

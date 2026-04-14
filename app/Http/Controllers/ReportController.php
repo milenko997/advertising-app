@@ -17,7 +17,7 @@ class ReportController extends Controller
 
         // Prevent owner from reporting their own ad
         if ($advertisement->user_id === Auth::id()) {
-            return back()->withErrors(['type' => 'You cannot report your own ad.']);
+            return back()->withErrors(['type' => 'Ne možete prijaviti sopstveni oglas.']);
         }
 
         Report::updateOrCreate(
@@ -29,6 +29,6 @@ class ReportController extends Controller
             ['resolved' => false]
         );
 
-        return back()->with('success', 'Thank you. Your report has been submitted.');
+        return back()->with('success', 'Hvala vam. Vaša prijava je podneta.');
     }
 }

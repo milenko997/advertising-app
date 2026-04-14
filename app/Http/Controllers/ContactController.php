@@ -24,6 +24,6 @@ class ContactController extends Controller
 
         ContactMessage::create($request->only('name', 'email', 'subject', 'message'));
 
-        return back()->with('success', 'Your message has been sent. We will get back to you shortly.');
+        return back()->with('success', 'Vaša poruka je poslata. Javićemo vam se uskoro.');
     }
 }

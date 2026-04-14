@@ -20,11 +20,11 @@ class ReviewController extends Controller
     public function store(Request $request, User $user)
     {
         if (auth()->id() === $user->id) {
-            return back()->with('error', 'You cannot review yourself.');
+            return back()->with('error', 'Ne možete ostaviti recenziju sebi.');
         }
 
         if (Review::where('reviewer_id', auth()->id())->where('reviewed_user_id', $user->id)->exists()) {
-            return back()->with('error', 'You have already reviewed this user.');
+            return back()->with('error', 'Već ste ostavili recenziju ovom korisniku.');
         }
 
         $validated = $request->validate([
@@ -39,7 +39,7 @@ class ReviewController extends Controller
             'comment'          => $validated['comment'] ?? null,
         ]);
 
-        return back()->with('success', 'Review submitted.');
+        return back()->with('success', 'Recenzija je dodata.');
     }
 
     public function update(Request $request, Review $review)
@@ -58,7 +58,7 @@ class ReviewController extends Controller
             'comment' => $validated['comment'] ?? null,
         ]);
 
-        return back()->with('success', 'Review updated.');
+        return back()->with('success', 'Recenzija je ažurirana.');
     }
 
     public function destroy(Review $review)
@@ -69,6 +69,6 @@ class ReviewController extends Controller
 
         $review->delete();
 
-        return back()->with('success', 'Review deleted.');
+        return back()->with('success', 'Recenzija je obrisana.');
     }
 }

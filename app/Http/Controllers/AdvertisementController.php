@@ -132,7 +132,7 @@ class AdvertisementController extends Controller
             }
         }
 
-        return redirect()->route('advertisements.user')->with('success', 'Advertisement created successfully.');
+        return redirect()->route('advertisements.user')->with('success', 'Oglas je uspešno kreiran.');
     }
 
     public function show($slug)
@@ -244,7 +244,7 @@ class AdvertisementController extends Controller
             }
         }
 
-        return redirect()->route('advertisements.show', $ad->slug)->with('success', 'Advertisement updated successfully.');
+        return redirect()->route('advertisements.show', $ad->slug)->with('success', 'Oglas je uspešno ažuriran.');
     }
 
     public function destroy($id)
@@ -253,7 +253,7 @@ class AdvertisementController extends Controller
         $this->authorize('delete', $ad);
         $ad->delete();
 
-        return redirect()->route('advertisements.user')->with('success', 'Advertisement deleted successfully.');
+        return redirect()->route('advertisements.user')->with('success', 'Oglas je uspešno obrisan.');
     }
 
     public function destroyImage(AdvertisementImage $image)
@@ -262,7 +262,7 @@ class AdvertisementController extends Controller
         ImageService::delete($image->path);
         $image->delete();
 
-        return back()->with('success', 'Image removed.');
+        return back()->with('success', 'Slika je uklonjena.');
     }
 
     public function trash(Request $request)
@@ -303,7 +303,7 @@ class AdvertisementController extends Controller
         $this->authorize('forceDelete', $ad);
         $ad->forceDelete();
 
-        return redirect()->route('advertisements.trash')->with('success', 'Advertisement permanently deleted.');
+        return redirect()->route('advertisements.trash')->with('success', 'Oglas je trajno obrisan.');
     }
 
     public function restore($id)
@@ -312,7 +312,7 @@ class AdvertisementController extends Controller
         $this->authorize('restore', $ad);
         $ad->restore();
 
-        return redirect()->route('advertisements.trash')->with('success', 'Advertisement restored successfully.');
+        return redirect()->route('advertisements.trash')->with('success', 'Oglas je uspešno vraćen.');
     }
 
     public function byCategory(Request $request, string $parent, ?string $child = null)
@@ -352,7 +352,7 @@ class AdvertisementController extends Controller
         $ad->expires_at = now()->addDays(Advertisement::EXPIRY_DAYS);
         $ad->save();
 
-        return back()->with('success', 'Ad renewed for another ' . Advertisement::EXPIRY_DAYS . ' days.');
+        return back()->with('success', 'Oglas je obnovljen na još ' . Advertisement::EXPIRY_DAYS . ' dana.');
     }
 
     // ─── Helpers ─────────────────────────────────────────────────────────────

@@ -33,9 +33,9 @@ class ProfileController extends Controller
             'phone'  => ['nullable', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1900',
         ], [
-            'name.min'    => 'Your name must be at least 2 characters.',
-            'email.email' => 'Please enter a valid email address.',
-            'phone.regex' => 'Enter a valid phone number (digits, spaces, +, -, parentheses only).',
+            'name.min'    => 'Ime mora imati najmanje 2 karaktera.',
+            'email.email' => 'Unesite ispravnu email adresu.',
+            'phone.regex' => 'Unesite ispravan broj telefona (cifre, razmaci, +, -, zagrade).',
         ]);
 
         $user->name  = $request->name;
@@ -54,7 +54,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return back()->with('success', 'Profile updated successfully.');
+        return back()->with('success', 'Profil je uspešno ažuriran.');
     }
 
     public function updatePassword(Request $request)
@@ -67,11 +67,11 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         if (!Hash::check($request->current_password, $user->password)) {
-            return back()->withErrors(['current_password' => 'The current password is incorrect.'])->withInput();
+            return back()->withErrors(['current_password' => 'Trenutna lozinka nije ispravna.'])->withInput();
         }
 
         $user->update(['password' => Hash::make($request->password)]);
 
-        return back()->with('password_success', 'Password changed successfully.');
+        return back()->with('password_success', 'Lozinka je uspešno promenjena.');
     }
 }

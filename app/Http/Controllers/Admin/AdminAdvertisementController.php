@@ -114,21 +114,21 @@ class AdminAdvertisementController extends Controller
             }
         }
 
-        return redirect()->route('admin.advertisements.index')->with('success', 'Advertisement updated.');
+        return redirect()->route('admin.advertisements.index')->with('success', 'Oglas je ažuriran.');
     }
 
     public function togglePin(Advertisement $advertisement)
     {
         $advertisement->update(['is_pinned' => !$advertisement->is_pinned]);
 
-        return back()->with('success', $advertisement->is_pinned ? 'Advertisement pinned.' : 'Advertisement unpinned.');
+        return back()->with('success', $advertisement->is_pinned ? 'Oglas je prikačen.' : 'Oglas je otkačen.');
     }
 
     public function destroy(Advertisement $advertisement)
     {
         $advertisement->delete();
 
-        return redirect()->route('admin.advertisements.index')->with('success', 'Advertisement deleted.');
+        return redirect()->route('admin.advertisements.index')->with('success', 'Oglas je obrisan.');
     }
 
     public function bulkAction(Request $request)
@@ -149,9 +149,9 @@ class AdminAdvertisementController extends Controller
 
         $count = count($request->ids);
         $label = match ($request->action) {
-            'delete' => "Deleted {$count} advertisement(s).",
-            'pin'    => "Pinned {$count} advertisement(s).",
-            'unpin'  => "Unpinned {$count} advertisement(s).",
+            'delete' => "Obrisano {$count} oglasa.",
+            'pin'    => "Prikačeno {$count} oglasa.",
+            'unpin'  => "Otkačeno {$count} oglasa.",
         };
 
         return back()->with('success', $label);

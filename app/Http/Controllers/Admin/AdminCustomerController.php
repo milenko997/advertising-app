@@ -72,14 +72,14 @@ class AdminCustomerController extends Controller
     {
         $customer->update($request->only(['name', 'email', 'role']));
 
-        return redirect()->route('admin.customers.index')->with('success', 'Customer updated successfully');
+        return redirect()->route('admin.customers.index')->with('success', 'Korisnik je uspešno ažuriran.');
     }
 
     public function destroy(User $customer): RedirectResponse
     {
         $customer->delete();
 
-        return redirect()->route('admin.customers.index')->with('success', 'Customer deleted successfully');
+        return redirect()->route('admin.customers.index')->with('success', 'Korisnik je uspešno obrisan.');
     }
 
     public function restore($id): RedirectResponse
@@ -95,9 +95,9 @@ class AdminCustomerController extends Controller
                 }
             }
 
-            return redirect()->back()->with('success', 'User and their advertisements restored successfully.');
+            return redirect()->back()->with('success', 'Korisnik i njegovi oglasi su uspešno vraćeni.');
         }
 
-        return redirect()->back()->with('info', 'User is not deleted.');
+        return redirect()->back()->with('info', 'Korisnik nije obrisan.');
     }
 }

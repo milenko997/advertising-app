@@ -57,7 +57,7 @@ export default function Navigation() {
                         </Link>
 
                         <div className="hidden sm:flex items-center gap-0.5">
-                            <NavLink href="/" active={currentPath === '/'}>Oglasi</NavLink>
+                            <NavLink href="/" active={currentPath === '/'}>Početna</NavLink>
 
                             {user && user.isAdmin && (
                                 <>

@@ -81,7 +81,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
     return (
         <AppLayout>
             <div className="py-8">
-                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     {/* Bulk toolbar */}
                     {someSelected && (
@@ -136,11 +136,11 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
                                             className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
                                         />
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Naslov</th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Kategorija</th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Korisnik</th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Cena</th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Datum</th>
+                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider w-48">Naslov</th>
+                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Kategorija</th>
+                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Korisnik</th>
+                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Cena</th>
+                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Datum</th>
                                     <th className="px-6 py-3" />
                                 </tr>
                             </thead>
@@ -164,14 +164,14 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
                                                 className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
                                             />
                                         </td>
-                                        <td className="px-6 py-4">
-                                            <p className="font-medium text-gray-900 text-sm">{ad.title}</p>
-                                            <p className="text-xs text-gray-400 mt-0.5 truncate max-w-xs">{ad.description}</p>
+                                        <td className="px-4 py-4 w-48">
+                                            <p className="font-medium text-gray-900 text-sm truncate max-w-[11rem]">{ad.title}</p>
+                                            <p className="text-xs text-gray-400 mt-0.5 truncate max-w-[11rem]">{ad.description}</p>
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">{ad.category?.name}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">{ad.user?.name}</td>
-                                        <td className="px-6 py-4 text-sm font-semibold text-indigo-600">{ad.price || '—'}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-400">{ad.created_at}</td>
+                                        <td className="px-4 py-4 text-sm text-gray-600">{ad.category?.name}</td>
+                                        <td className="px-4 py-4 text-sm text-gray-600">{ad.user?.name}</td>
+                                        <td className="px-4 py-4 text-sm font-semibold text-indigo-600 whitespace-nowrap">{ad.price || '—'}</td>
+                                        <td className="px-4 py-4 text-sm text-gray-400 whitespace-nowrap">{ad.created_at}</td>
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 <button

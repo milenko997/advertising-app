@@ -28,7 +28,7 @@ function MobileNavLink({ href, children }) {
 }
 
 export default function Navigation() {
-    const { auth, pendingReportsCount } = usePage().props;
+    const { auth, pendingReportsCount, unreadMessagesCount } = usePage().props;
     const user = auth?.user;
     const [open, setOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -76,6 +76,21 @@ export default function Navigation() {
                                         {pendingReportsCount > 0 && (
                                             <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold bg-orange-500 text-white rounded-full">
                                                 {pendingReportsCount > 9 ? '9+' : pendingReportsCount}
+                                            </span>
+                                        )}
+                                    </Link>
+                                    <Link
+                                        href="/admin/messages"
+                                        className={`relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                                            currentPath.startsWith('/admin/messages')
+                                                ? 'text-white bg-white/10'
+                                                : 'text-slate-300 hover:text-white hover:bg-white/10'
+                                        }`}
+                                    >
+                                        Poruke
+                                        {unreadMessagesCount > 0 && (
+                                            <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold bg-orange-500 text-white rounded-full">
+                                                {unreadMessagesCount > 9 ? '9+' : unreadMessagesCount}
                                             </span>
                                         )}
                                     </Link>
@@ -195,6 +210,9 @@ export default function Navigation() {
                                 <MobileNavLink href="/admin/customers">Korisnici</MobileNavLink>
                                 <MobileNavLink href="/admin/reports">
                                     Prijave {pendingReportsCount > 0 && `(${pendingReportsCount})`}
+                                </MobileNavLink>
+                                <MobileNavLink href="/admin/messages">
+                                    Poruke {unreadMessagesCount > 0 && `(${unreadMessagesCount})`}
                                 </MobileNavLink>
                             </>
                         )}

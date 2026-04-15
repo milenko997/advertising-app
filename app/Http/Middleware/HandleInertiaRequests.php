@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Category;
+use App\Models\ContactMessage;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -37,6 +38,9 @@ class HandleInertiaRequests extends Middleware
             ],
             'pendingReportsCount' => $user?->isAdmin()
                 ? Report::where('resolved', false)->count()
+                : 0,
+            'unreadMessagesCount' => $user?->isAdmin()
+                ? ContactMessage::where('read', false)->count()
                 : 0,
             'categories' => Category::with('children')
                 ->whereNull('parent_id')

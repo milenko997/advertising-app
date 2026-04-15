@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAdvertisementController;
+use App\Http\Controllers\Admin\AdminContactController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\SitemapController;
@@ -72,6 +73,9 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::get('/reports', [AdminReportController::class, 'index'])->name('reports.index');
     Route::patch('/reports/{report}/resolve', [AdminReportController::class, 'resolve'])->name('reports.resolve');
     Route::delete('/reports/{report}', [AdminReportController::class, 'destroy'])->name('reports.destroy');
+    Route::get('/messages', [AdminContactController::class, 'index'])->name('messages.index');
+    Route::patch('/messages/{message}/read', [AdminContactController::class, 'markRead'])->name('messages.read');
+    Route::delete('/messages/{message}', [AdminContactController::class, 'destroy'])->name('messages.destroy');
 });
 
 Route::post('/advertisements/{advertisement}/report', [ReportController::class, 'store'])->name('advertisements.report')->middleware('auth');

@@ -97,7 +97,7 @@ class AdvertisementController extends Controller
     public function create()
     {
         return Inertia::render('Advertisements/Create', [
-            'categories' => Category::orderBy('name')->get(['id', 'name', 'parent_id']),
+            'categories' => Category::orderBy('name')->get(['id', 'name', 'slug', 'parent_id']),
         ]);
     }
 
@@ -202,7 +202,7 @@ class AdvertisementController extends Controller
 
         return Inertia::render('Advertisements/Edit', [
             'ad'         => $this->formatAd($ad),
-            'categories' => Category::orderBy('name')->get(['id', 'name', 'parent_id']),
+            'categories' => Category::orderBy('name')->get(['id', 'name', 'slug', 'parent_id']),
         ]);
     }
 

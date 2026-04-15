@@ -8,6 +8,69 @@ import CategoryPicker from '@/Components/CategoryPicker';
 const inputClass = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent';
 const labelClass = 'block text-sm font-medium text-gray-700 mb-1';
 
+const PAYLOAD_CONFIG = {
+    'kombi-panel-van':                        { label: 'Nosivost',              placeholder: 'npr. 800 kg, 1.2 t' },
+    'pickup-vozila':                          { label: 'Nosivost',              placeholder: 'npr. 500 kg, 1 t' },
+    'mali-dostavni-kamioni':                  { label: 'Nosivost',              placeholder: 'npr. 1.5 t, 3.5 t' },
+    'hladnjace-mali-kombi':                   { label: 'Nosivost',              placeholder: 'npr. 800 kg, 1.5 t' },
+    'kamioni-sanducari':                      { label: 'Nosivost',              placeholder: 'npr. 5 t, 10 t' },
+    'kamioni-sa-ceradom-tenda':               { label: 'Nosivost',              placeholder: 'npr. 22 t, 24 t' },
+    'kamioni-sa-hladnjacom-srednji':          { label: 'Nosivost',              placeholder: 'npr. 10 t, 15 t' },
+    'kamioni-kiperi-srednji':                 { label: 'Nosivost',              placeholder: 'npr. 10 t, 15 t' },
+    'kamioni-sa-dizalicom-kran':              { label: 'Nosivost dizalice',     placeholder: 'npr. 8 t, 15 t' },
+    'sleperi-tegljac-poluprikolica':          { label: 'Nosivost',              placeholder: 'npr. 24 t, 26 t' },
+    'kamioni-sa-prikolicom':                  { label: 'Nosivost',              placeholder: 'npr. 30 t, 40 t' },
+    'cisterne-gorivo-gas-hemikalije':         { label: 'Zapremina cisterne',    placeholder: 'npr. 20.000 l, 30.000 l' },
+    'auto-transporter-za-vozila':             { label: 'Kapacitet',             placeholder: 'npr. 6 vozila, 8 vozila' },
+    'hladnjace-veliki-kamioni':               { label: 'Nosivost',              placeholder: 'npr. 18 t, 22 t' },
+    'kiperi-teski-gradevinski':               { label: 'Nosivost',              placeholder: 'npr. 25 t, 40 t' },
+    'silosi-za-rasute-materijale':            { label: 'Zapremina silosa',      placeholder: 'npr. 60 m³, 90 m³' },
+    'hladnjace-temperaturni-rezim':           { label: 'Nosivost',              placeholder: 'npr. 18 t, 22 t' },
+    'cisterne':                               { label: 'Zapremina cisterne',    placeholder: 'npr. 20.000 l, 30.000 l' },
+    'kiperi':                                 { label: 'Nosivost',              placeholder: 'npr. 20 t, 30 t' },
+    'vozila-za-prevoz-stoke':                 { label: 'Kapacitet',             placeholder: 'npr. 20 goveda, 100 svinja' },
+    'vozila-za-prevoz-gradevinskog-materijala': { label: 'Nosivost',            placeholder: 'npr. 20 t, 30 t' },
+    'vozila-za-opasan-teret-adr':             { label: 'Nosivost',              placeholder: 'npr. 20 t, 22 t' },
+    'slep-sluzba-vucna-vozila':               { label: 'Maks. masa vozila',     placeholder: 'npr. do 3.5 t, do 7.5 t' },
+    'platforme-pauk-vozila':                  { label: 'Nosivost platforme',    placeholder: 'npr. 10 t, 20 t' },
+    'pokretne-radionice':                     { label: 'Nosivost',              placeholder: 'npr. 3.5 t' },
+    'gradska-dostava-mali-kombi':             { label: 'Nosivost',              placeholder: 'npr. 800 kg, 1.2 t' },
+    'ekspres-dostava':                        { label: 'Nosivost',              placeholder: 'npr. 500 kg, 1 t' },
+    'kurirska-vozila':                        { label: 'Nosivost',              placeholder: 'npr. 200 kg, 500 kg' },
+    'last-mile-delivery-vozila':              { label: 'Nosivost',              placeholder: 'npr. 200 kg, 500 kg' },
+    'elektricna-dostavna-vozila':             { label: 'Nosivost',              placeholder: 'npr. 500 kg, 1 t' },
+    'bageri':                                 { label: 'Zapremina kašike',      placeholder: 'npr. 0.5 m³, 1.2 m³' },
+    'mini-bageri':                            { label: 'Zapremina kašike',      placeholder: 'npr. 0.1 m³, 0.2 m³' },
+    'utovarivaci':                            { label: 'Zapremina kašike',      placeholder: 'npr. 1 m³, 2 m³' },
+    'buldozeri':                              { label: 'Kapacitet sečiva',      placeholder: 'npr. 3.5 m³, 5 m³' },
+    'valjci':                                 { label: 'Radna težina',          placeholder: 'npr. 8 t, 12 t' },
+    'kamioni-kiperi-gradevinski':             { label: 'Nosivost',              placeholder: 'npr. 15 t, 25 t' },
+    'mikseri-beton':                          { label: 'Zapremina miksera',     placeholder: 'npr. 6 m³, 8 m³' },
+    'dizalice-kranovi':                       { label: 'Nosivost dizalice',     placeholder: 'npr. 25 t, 80 t' },
+    'traktori-sa-prikolicom':                 { label: 'Nosivost prikolice',    placeholder: 'npr. 5 t, 10 t' },
+    'prikolice-za-zitarice':                  { label: 'Zapremina',             placeholder: 'npr. 20 t ili 40 m³' },
+    'cisterne-za-vodu-dubrivo':               { label: 'Zapremina cisterne',    placeholder: 'npr. 5.000 l, 10.000 l' },
+    'specijalni-transport-za-poljoprivredu':  { label: 'Nosivost',              placeholder: 'npr. 10 t' },
+    'teretni-vagoni':                         { label: 'Nosivost',              placeholder: 'npr. 60 t, 80 t' },
+    'cisterne-zeleznicke':                    { label: 'Zapremina cisterne',    placeholder: 'npr. 60.000 l, 80.000 l' },
+    'kontejnerski-vagoni':                    { label: 'Kapacitet',             placeholder: "npr. 2×20' ili 1×40'" },
+    'teretni-brodovi':                        { label: 'Nosivost (DWT)',         placeholder: 'npr. 5.000 DWT, 50.000 DWT' },
+    'tankeri':                                { label: 'Zapremina',             placeholder: 'npr. 50.000 DWT' },
+    'kontejnerski-brodovi':                   { label: 'Kapacitet (TEU)',        placeholder: 'npr. 500 TEU, 2.000 TEU' },
+    'barze':                                  { label: 'Nosivost',              placeholder: 'npr. 500 t, 2.000 t' },
+    'cargo-avioni':                           { label: 'Nosivost',              placeholder: 'npr. 20 t, 60 t' },
+    'kurirski-avioni':                        { label: 'Nosivost',              placeholder: 'npr. 1 t, 5 t' },
+};
+
+const DEFAULT_PAYLOAD = { label: 'Nosivost', placeholder: 'npr. 10 tona' };
+
+function getPayloadConfig(categoryId, categories) {
+    if (!categoryId) return DEFAULT_PAYLOAD;
+    const id = parseInt(categoryId);
+    const found = categories.find(c => c.id === id);
+    return (found && PAYLOAD_CONFIG[found.slug]) ? PAYLOAD_CONFIG[found.slug] : DEFAULT_PAYLOAD;
+}
+
 function SectionTitle({ children }) {
     return (
         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4 mt-6 first:mt-0">
@@ -124,11 +187,16 @@ export default function Edit({ ad, categories }) {
                             </div>
 
                             {/* Payload */}
-                            <div className="mb-4">
-                                <label className={labelClass}>Nosivost</label>
-                                <input type="text" value={data.payload} onChange={e => setData('payload', e.target.value)} placeholder="npr. 10 tona" className={inputClass} />
-                                {errors.payload && <p className="mt-1 text-xs text-red-600">{errors.payload}</p>}
-                            </div>
+                            {(() => {
+                                const pc = getPayloadConfig(data.category_id, categories);
+                                return (
+                                    <div className="mb-4">
+                                        <label className={labelClass}>{pc.label}</label>
+                                        <input type="text" value={data.payload} onChange={e => setData('payload', e.target.value)} placeholder={pc.placeholder} className={inputClass} />
+                                        {errors.payload && <p className="mt-1 text-xs text-red-600">{errors.payload}</p>}
+                                    </div>
+                                );
+                            })()}
 
                             {/* Category */}
                             <div className="mb-4">

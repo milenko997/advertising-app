@@ -71,7 +71,7 @@ class AdvertisementController extends Controller
     {
         $paginator = Advertisement::with('category')
             ->where('user_id', Auth::id())
-            ->orderByRaw("CASE WHEN expires_at IS NULL OR expires_at > now() THEN 0 ELSE 1 END")
+            ->orderByRaw("CASE WHEN expires_at IS NULL OR expires_at > datetime('now') THEN 0 ELSE 1 END")
             ->latest()
             ->paginate(20);
 

@@ -46,7 +46,7 @@ class AdminAdvertisementController extends Controller
     public function edit(Advertisement $advertisement)
     {
         $advertisement->load('images');
-        $categories = Category::orderBy('name')->get(['id', 'name', 'parent_id']);
+        $categories = Category::orderBy('name')->get(['id', 'name', 'slug', 'parent_id']);
 
         return Inertia::render('Admin/Advertisements/Edit', [
             'advertisement' => [

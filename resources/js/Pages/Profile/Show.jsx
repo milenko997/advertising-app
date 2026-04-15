@@ -16,6 +16,7 @@ export default function ProfileShow({ user }) {
     const [previewUrl, setPreviewUrl] = useState(
         user.avatar ? `/storage/${user.avatar}` : null
     );
+    const [avatarError, setAvatarError] = useState(null);
 
     const { data: pwData, setData: setPwData, post: postPw, processing: pwProcessing, errors: pwErrors, recentlySuccessful: pwSuccess } = useForm({
         _method: 'PUT',
@@ -92,7 +93,7 @@ export default function ProfileShow({ user }) {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                                         </svg>
                                         Otpremi sliku
-                                        <AvatarInput onFile={handleAvatarChange} />
+                                        <AvatarInput onFile={handleAvatarChange} onError={setAvatarError} />
                                     </label>
                                     {(user.avatar || previewUrl) && (
                                         <button
@@ -106,7 +107,8 @@ export default function ProfileShow({ user }) {
                                             Ukloni sliku
                                         </button>
                                     )}
-                                    <p className="text-xs text-gray-400">JPEG, PNG, GIF — maks. 4 MB</p>
+                                    <p className="text-xs text-gray-400">JPEG, PNG, GIF, WEBP — maks. 4 MB</p>
+                                    {avatarError && <p className="text-xs text-red-600">{avatarError}</p>}
                                 </div>
                             </div>
 
@@ -218,7 +220,7 @@ export default function ProfileShow({ user }) {
     );
 }
 
-function AvatarInput({ onFile }) {
+function AvatarInput({ onFile, onError }) {
     const compress = (file) =>
         new Promise((resolve) => {
             const reader = new FileReader();
@@ -244,9 +246,17 @@ function AvatarInput({ onFile }) {
             reader.readAsDataURL(file);
         });
 
+    const ALLOWED = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
     const handle = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
+        if (!ALLOWED.includes(file.type)) {
+            onError('Nepodržan format slike. Dozvoljeni formati: JPEG, PNG, GIF, WEBP.');
+            e.target.value = '';
+            return;
+        }
+        onError(null);
         const ready = file.size > 1.8 * 1024 * 1024 ? await compress(file) : file;
         onFile(ready);
         e.target.value = '';

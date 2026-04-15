@@ -116,6 +116,11 @@ export default function Footer() {
                         <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Pomoć i pravila</h3>
                         <ul className="space-y-3">
                             <li>
+                                <Link href="/about" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                    O nama
+                                </Link>
+                            </li>
+                            <li>
                                 <Link href="/contact" className="text-sm text-slate-400 hover:text-white transition-colors">
                                     Kontakt
                                 </Link>

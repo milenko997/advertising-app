@@ -37,6 +37,7 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 Route::get('/faq',            [FaqController::class, 'index'])->name('faq');
 Route::get('/terms',          [FaqController::class, 'terms'])->name('terms');
 Route::get('/privacy-policy', [FaqController::class, 'privacy'])->name('privacy');
+Route::get('/about',          [FaqController::class, 'about'])->name('about');
 
 Route::get('/sitemap.xml',               [SitemapController::class, 'index'])->name('sitemap.index');
 Route::get('/sitemap-static.xml',        [SitemapController::class, 'static'])->name('sitemap.static');

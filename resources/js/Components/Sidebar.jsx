@@ -70,8 +70,7 @@ export default function Sidebar({ currentParent, currentChild }) {
                                                     : 'text-gray-500 hover:text-indigo-600'
                                             }`}
                                         >
-                                            <span className="w-1 h-1 rounded-full bg-current shrink-0" />
-                                            Sve u {cat.name}
+                                            {cat.name}
                                         </Link>
                                         {cat.children.map(child => (
                                             <Link
@@ -83,8 +82,7 @@ export default function Sidebar({ currentParent, currentChild }) {
                                                         : 'text-gray-500 hover:text-indigo-600'
                                                 }`}
                                             >
-                                                <span className="w-1 h-1 rounded-full bg-current shrink-0" />
-                                                {child.name}
+                                                    {child.name}
                                             </Link>
                                         ))}
                                     </div>

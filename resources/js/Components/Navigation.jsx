@@ -28,7 +28,7 @@ function MobileNavLink({ href, children }) {
 }
 
 export default function Navigation() {
-    const { auth, pendingReportsCount, unreadMessagesCount } = usePage().props;
+    const { auth, pendingReportsCount, unreadMessagesCount, unreadFeedbackCount } = usePage().props;
     const user = auth?.user;
     const [open, setOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -91,6 +91,21 @@ export default function Navigation() {
                                         {unreadMessagesCount > 0 && (
                                             <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold bg-orange-500 text-white rounded-full">
                                                 {unreadMessagesCount > 9 ? '9+' : unreadMessagesCount}
+                                            </span>
+                                        )}
+                                    </Link>
+                                    <Link
+                                        href="/admin/feedbacks"
+                                        className={`relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                                            currentPath.startsWith('/admin/feedbacks')
+                                                ? 'text-white bg-white/10'
+                                                : 'text-slate-300 hover:text-white hover:bg-white/10'
+                                        }`}
+                                    >
+                                        Feedback
+                                        {unreadFeedbackCount > 0 && (
+                                            <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold bg-orange-500 text-white rounded-full">
+                                                {unreadFeedbackCount > 9 ? '9+' : unreadFeedbackCount}
                                             </span>
                                         )}
                                     </Link>
@@ -213,6 +228,9 @@ export default function Navigation() {
                                 </MobileNavLink>
                                 <MobileNavLink href="/admin/messages">
                                     Poruke {unreadMessagesCount > 0 && `(${unreadMessagesCount})`}
+                                </MobileNavLink>
+                                <MobileNavLink href="/admin/feedbacks">
+                                    Feedback {unreadFeedbackCount > 0 && `(${unreadFeedbackCount})`}
                                 </MobileNavLink>
                             </>
                         )}

@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\AdminAdvertisementController;
 use App\Http\Controllers\Admin\AdminContactController;
+use App\Http\Controllers\Admin\AdminFeedbackController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Admin\AdminCustomerController;
@@ -76,9 +78,13 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::get('/messages', [AdminContactController::class, 'index'])->name('messages.index');
     Route::patch('/messages/{message}/read', [AdminContactController::class, 'markRead'])->name('messages.read');
     Route::delete('/messages/{message}', [AdminContactController::class, 'destroy'])->name('messages.destroy');
+    Route::get('/feedbacks', [AdminFeedbackController::class, 'index'])->name('feedbacks.index');
+    Route::patch('/feedbacks/{feedback}/read', [AdminFeedbackController::class, 'markRead'])->name('feedbacks.read');
+    Route::delete('/feedbacks/{feedback}', [AdminFeedbackController::class, 'destroy'])->name('feedbacks.destroy');
 });
 
 Route::post('/advertisements/{advertisement}/report', [ReportController::class, 'store'])->name('advertisements.report')->middleware('auth');
+Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 
 Route::get('/advertisements/{slug}', [AdvertisementController::class, 'show'])->name('advertisements.show');
 Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show');

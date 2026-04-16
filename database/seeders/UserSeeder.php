@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         // ── Admin (keep as-is) ─────────────────────────────────────────
-        User::create([
+        User::forceCreate([
             'name'     => 'Milenko Ilic',
             'email'    => 'milenko.ilic997@gmail.com',
             'password' => Hash::make('123456789'),
@@ -98,7 +98,7 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($users as $u) {
-            User::create([
+            User::forceCreate([
                 'name'     => $u['name'],
                 'email'    => $u['email'],
                 'password' => Hash::make('123456789'),

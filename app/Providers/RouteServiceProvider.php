@@ -67,5 +67,13 @@ class RouteServiceProvider extends ServiceProvider
                 ]);
             });
         });
+
+        RateLimiter::for('contact', function (Request $request) {
+            return Limit::perHour(5)->by($request->ip());
+        });
+
+        RateLimiter::for('feedback', function (Request $request) {
+            return Limit::perHour(10)->by($request->ip());
+        });
     }
 }

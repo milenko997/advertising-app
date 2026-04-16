@@ -20,7 +20,6 @@ class AdminCustomerController extends Controller
             'slug'       => $u->slug,
             'name'       => $u->name,
             'email'      => $u->email,
-            'role'       => $u->role,
             'avatar'     => $u->avatar,
             'created_at' => $u->created_at->format('d.m.Y'),
         ])->values();
@@ -72,7 +71,8 @@ class AdminCustomerController extends Controller
 
     public function update(UpdateCustomerRequest $request, User $customer): RedirectResponse
     {
-        $customer->update($request->only(['name', 'email', 'role']));
+        $customer->update($request->only(['name', 'email']));
+        $customer->forceFill(['role' => $request->validated('role')])->save();
 
         $customer->notify(new ProfileUpdatedByAdminNotification());
 

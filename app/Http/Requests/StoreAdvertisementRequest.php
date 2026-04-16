@@ -8,7 +8,7 @@ class StoreAdvertisementRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()?->isCustomer() ?? false;
     }
 
     public function rules(): array

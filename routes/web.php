@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [AdvertisementController::class, 'publicIndex'])->name('home');
 
 Route::get('/kontakt',  [ContactController::class, 'index'])->name('contact');
-Route::post('/kontakt', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/kontakt', [ContactController::class, 'store'])->name('contact.store')->middleware('throttle:contact');
 
 Route::get('/cesta-pitanja',      [FaqController::class, 'index'])->name('faq');
 Route::get('/uslovi-koriscenja',  [FaqController::class, 'terms'])->name('terms');
@@ -93,7 +93,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
 });
 
 Route::post('/oglasi/{advertisement}/prijavi', [ReportController::class, 'store'])->name('advertisements.report')->middleware('auth');
-Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
+Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store')->middleware('throttle:feedback');
 
 Route::get('/oglas/{slug}', [AdvertisementController::class, 'show'])->name('advertisements.show');
 Route::get('/korisnik/{user}', [UserController::class, 'show'])->name('user.show');

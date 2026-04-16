@@ -113,7 +113,7 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
 
     const deleteExistingImage = (imageId) => {
         if (!confirm('Ukloniti ovu sliku?')) return;
-        router.delete(`/advertisement-images/${imageId}`, { preserveScroll: true });
+        router.delete(`/slike-oglasa/${imageId}`, { preserveScroll: true });
     };
 
     const handlePhone = (e) => {
@@ -122,7 +122,7 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(`/admin/advertisements/${advertisement.id}`, { forceFormData: true });
+        post(`/admin/oglasi/${advertisement.id}`, { forceFormData: true });
     };
 
     return (
@@ -131,7 +131,7 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     <div className="mb-6">
-                        <Link href="/admin/advertisements" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 transition-colors mb-3">
+                        <Link href="/admin/oglasi" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 transition-colors mb-3">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
@@ -315,7 +315,7 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
                                 >
                                     {processing ? 'Čuvanje…' : 'Sačuvaj izmene'}
                                 </button>
-                                <Link href="/admin/advertisements" className="text-sm text-gray-500 hover:text-gray-700">
+                                <Link href="/admin/oglasi" className="text-sm text-gray-500 hover:text-gray-700">
                                     Otkaži
                                 </Link>
                             </div>

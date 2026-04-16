@@ -6,7 +6,7 @@ export default function AdminFeedbacksIndex({ feedbacks: initialFeedbacks }) {
     const [list, setList] = useState(initialFeedbacks.data);
 
     const markRead = (id) => {
-        router.patch(`/admin/feedbacks/${id}/read`, {}, {
+        router.patch(`/admin/utisci/${id}/read`, {}, {
             preserveScroll: true,
             onSuccess: () => setList(prev => prev.map(f => f.id === id ? { ...f, read: true } : f)),
         });
@@ -14,7 +14,7 @@ export default function AdminFeedbacksIndex({ feedbacks: initialFeedbacks }) {
 
     const destroy = (id) => {
         if (!confirm('Obrisati ovu povratnu informaciju?')) return;
-        router.delete(`/admin/feedbacks/${id}`, {
+        router.delete(`/admin/utisci/${id}`, {
             preserveScroll: true,
             onSuccess: () => setList(prev => prev.filter(f => f.id !== id)),
         });

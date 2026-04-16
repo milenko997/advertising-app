@@ -16,7 +16,7 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds 
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/favorites?page=${nextPage}`);
+            const { data } = await axios.get(`/sacuvani?page=${nextPage}`);
             setAdList(prev => [...prev, ...data.ads]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);

@@ -185,8 +185,8 @@ export default function Privacy() {
                         <div className="mt-10 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-400">
                             <span>Pitanja? <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a></span>
                             <div className="flex items-center gap-4">
-                                <Link href="/terms" className="hover:text-slate-600 transition-colors">Uslovi korišćenja</Link>
-                                <Link href="/faq" className="hover:text-slate-600 transition-colors">Česta pitanja</Link>
+                                <Link href="/uslovi-koriscenja" className="hover:text-slate-600 transition-colors">Uslovi korišćenja</Link>
+                                <Link href="/cesta-pitanja" className="hover:text-slate-600 transition-colors">Česta pitanja</Link>
                             </div>
                         </div>
                     </div>

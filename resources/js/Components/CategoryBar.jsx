@@ -53,7 +53,7 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                                     {openId === cat.id && (
                                         <div className="absolute left-0 top-full mt-1 z-50 bg-white border border-gray-200 rounded-xl shadow-lg py-1 min-w-max">
                                             <Link
-                                                href={`/category/${cat.slug}`}
+                                                href={`/kategorija/${cat.slug}`}
                                                 onClick={() => setOpenId(null)}
                                                 className="block px-4 py-2 text-sm text-gray-600 hover:bg-indigo-50 font-medium"
                                             >
@@ -63,7 +63,7 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                                             {cat.children.map(child => (
                                                 <Link
                                                     key={child.id}
-                                                    href={`/category/${cat.slug}/${child.slug}`}
+                                                    href={`/kategorija/${cat.slug}/${child.slug}`}
                                                     onClick={() => setOpenId(null)}
                                                     className={`block px-4 py-2 text-sm hover:bg-indigo-50 ${
                                                         currentChild === child.slug
@@ -79,7 +79,7 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                                 </>
                             ) : (
                                 <Link
-                                    href={`/category/${cat.slug}`}
+                                    href={`/kategorija/${cat.slug}`}
                                     className={`block px-3.5 py-1.5 text-sm rounded-full font-medium transition-colors ${
                                         currentParent === cat.slug
                                             ? 'bg-indigo-600 text-white'

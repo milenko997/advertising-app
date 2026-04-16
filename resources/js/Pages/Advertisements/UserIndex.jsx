@@ -13,13 +13,13 @@ export default function UserIndex({ ads: initialAds }) {
 
     const handleDelete = (id) => {
         if (!confirm('Premesti oglas u otpad?')) return;
-        router.delete(`/advertisements/${id}`, {
+        router.delete(`/oglasi/${id}`, {
             onSuccess: () => setAdList(prev => prev.filter(a => a.id !== id)),
         });
     };
 
     const handleRenew = (id) => {
-        router.patch(`/advertisements/${id}/renew`, {}, {
+        router.patch(`/oglasi/${id}/obnovi`, {}, {
             preserveScroll: true,
             onSuccess: () => {
                 setAdList(prev => prev.map(a => a.id === id ? { ...a, is_expired: false } : a));
@@ -32,7 +32,7 @@ export default function UserIndex({ ads: initialAds }) {
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/my-advertisements?page=${nextPage}`);
+            const { data } = await axios.get(`/moji-oglasi?page=${nextPage}`);
             setAdList(prev => [...prev, ...data.ads]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);
@@ -53,7 +53,7 @@ export default function UserIndex({ ads: initialAds }) {
                             <p className="text-sm text-gray-500 mt-0.5">{initialAds.total} oglas{initialAds.total === 1 ? '' : initialAds.total >= 2 && initialAds.total <= 4 ? 'a' : 'a'}</p>
                         </div>
                         <Link
-                            href="/advertisements/create"
+                            href="/postavi-oglas"
                             className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,7 +71,7 @@ export default function UserIndex({ ads: initialAds }) {
                             </svg>
                             <p className="text-gray-500 mb-4">Još nemate oglasa.</p>
                             <Link
-                                href="/advertisements/create"
+                                href="/postavi-oglas"
                                 className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition"
                             >
                                 Postavi prvi oglas
@@ -103,7 +103,7 @@ export default function UserIndex({ ads: initialAds }) {
                                             <div className="flex items-start justify-between gap-4">
                                                 <div className="min-w-0 flex-1">
                                                     <Link
-                                                        href={`/advertisements/${ad.slug}`}
+                                                        href={`/oglas/${ad.slug}`}
                                                         className="font-semibold text-gray-900 hover:text-indigo-600 transition-colors line-clamp-1"
                                                     >
                                                         {ad.title}
@@ -155,7 +155,7 @@ export default function UserIndex({ ads: initialAds }) {
                                                         </button>
                                                     )}
                                                     <Link
-                                                        href={`/advertisements/edit/${ad.slug}`}
+                                                        href={`/oglasi/uredi/${ad.slug}`}
                                                         className="px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-medium text-gray-700 hover:bg-gray-50 transition"
                                                     >
                                                         Izmeni

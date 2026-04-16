@@ -11,7 +11,7 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
 
         const msg = messageList.find(m => m.id === id);
         if (msg && !msg.read) {
-            router.patch(`/admin/messages/${id}/read`, {}, {
+            router.patch(`/admin/poruke/${id}/read`, {}, {
                 preserveScroll: true,
                 onSuccess: () => {
                     setMessageList(prev => prev.map(m => m.id === id ? { ...m, read: true } : m));
@@ -22,7 +22,7 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
 
     const destroy = (id) => {
         if (!confirm('Da li ste sigurni da želite da obrišete ovu poruku?')) return;
-        router.delete(`/admin/messages/${id}`, {
+        router.delete(`/admin/poruke/${id}`, {
             preserveScroll: true,
             onSuccess: () => setMessageList(prev => prev.filter(m => m.id !== id)),
         });

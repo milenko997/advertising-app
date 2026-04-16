@@ -20,7 +20,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
     const resolved = reportList.filter(r => r.resolved);
 
     const toggleResolve = (id) => {
-        router.patch(`/admin/reports/${id}/resolve`, {}, {
+        router.patch(`/admin/prijave/${id}/resolve`, {}, {
             preserveScroll: true,
             onSuccess: () => {
                 setReportList(prev => prev.map(r => r.id === id ? { ...r, resolved: !r.resolved } : r));
@@ -30,7 +30,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
 
     const destroy = (id) => {
         if (!confirm('Obrisati ovu prijavu?')) return;
-        router.delete(`/admin/reports/${id}`, {
+        router.delete(`/admin/prijave/${id}`, {
             preserveScroll: true,
             onSuccess: () => setReportList(prev => prev.filter(r => r.id !== id)),
         });
@@ -41,7 +41,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/admin/reports?page=${nextPage}`);
+            const { data } = await axios.get(`/admin/prijave?page=${nextPage}`);
             setReportList(prev => [...prev, ...data.reports]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);
@@ -68,7 +68,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
             <td className="px-4 py-3">
                 {report.advertisement ? (
                     <Link
-                        href={`/advertisements/${report.advertisement.slug}`}
+                        href={`/oglas/${report.advertisement.slug}`}
                         className="text-sm font-medium text-indigo-600 hover:underline line-clamp-1"
                         target="_blank"
                     >

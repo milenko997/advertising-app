@@ -59,17 +59,17 @@ export default function Footer() {
                             {auth?.user && !auth.user.isAdmin && (
                                 <>
                                     <li>
-                                        <Link href="/advertisements/create" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                        <Link href="/postavi-oglas" className="text-sm text-slate-400 hover:text-white transition-colors">
                                             Postavi oglas
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/my-advertisements" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                        <Link href="/moji-oglasi" className="text-sm text-slate-400 hover:text-white transition-colors">
                                             Moji oglasi
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/favorites" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                        <Link href="/sacuvani" className="text-sm text-slate-400 hover:text-white transition-colors">
                                             Sačuvani oglasi
                                         </Link>
                                     </li>
@@ -100,7 +100,7 @@ export default function Footer() {
                                 {categories.slice(0, 6).map(cat => (
                                     <li key={cat.id}>
                                         <Link
-                                            href={`/category/${cat.slug}`}
+                                            href={`/kategorija/${cat.slug}`}
                                             className="text-sm text-slate-400 hover:text-white transition-colors"
                                         >
                                             {cat.name}
@@ -116,27 +116,27 @@ export default function Footer() {
                         <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Pomoć i pravila</h3>
                         <ul className="space-y-3">
                             <li>
-                                <Link href="/about" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                <Link href="/o-nama" className="text-sm text-slate-400 hover:text-white transition-colors">
                                     O nama
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/contact" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                <Link href="/kontakt" className="text-sm text-slate-400 hover:text-white transition-colors">
                                     Kontakt
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/faq" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                <Link href="/cesta-pitanja" className="text-sm text-slate-400 hover:text-white transition-colors">
                                     Česta pitanja
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/terms" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                <Link href="/uslovi-koriscenja" className="text-sm text-slate-400 hover:text-white transition-colors">
                                     Uslovi korišćenja
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/privacy-policy" className="text-sm text-slate-400 hover:text-white transition-colors">
+                                <Link href="/politika-privatnosti" className="text-sm text-slate-400 hover:text-white transition-colors">
                                     Politika privatnosti
                                 </Link>
                             </li>

@@ -42,12 +42,12 @@ export default function ProfileShow({ user }) {
 
     const submitProfile = (e) => {
         e.preventDefault();
-        post('/profile');
+        post('/profil');
     };
 
     const submitPassword = (e) => {
         e.preventDefault();
-        postPw('/profile/password');
+        postPw('/profil/lozinka');
     };
 
     return (

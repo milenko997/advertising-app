@@ -63,7 +63,7 @@ export default function Sidebar({ currentParent, currentChild }) {
                                 {openIds.has(cat.id) && (
                                     <div className="mb-1">
                                         <Link
-                                            href={`/category/${cat.slug}`}
+                                            href={`/kategorija/${cat.slug}`}
                                             className={`flex items-center gap-1.5 pl-8 pr-4 py-1.5 text-sm transition-colors ${
                                                 currentParent === cat.slug && !currentChild
                                                     ? 'text-indigo-600 font-semibold'
@@ -75,7 +75,7 @@ export default function Sidebar({ currentParent, currentChild }) {
                                         {cat.children.map(child => (
                                             <Link
                                                 key={child.id}
-                                                href={`/category/${cat.slug}/${child.slug}`}
+                                                href={`/kategorija/${cat.slug}/${child.slug}`}
                                                 className={`flex items-center gap-1.5 pl-8 pr-4 py-1.5 text-sm transition-colors ${
                                                     currentChild === child.slug
                                                         ? 'text-indigo-600 font-semibold'
@@ -90,7 +90,7 @@ export default function Sidebar({ currentParent, currentChild }) {
                             </>
                         ) : (
                             <Link
-                                href={`/category/${cat.slug}`}
+                                href={`/kategorija/${cat.slug}`}
                                 className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${
                                     currentParent === cat.slug
                                         ? 'text-indigo-600 bg-indigo-50'

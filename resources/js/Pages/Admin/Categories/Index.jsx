@@ -11,7 +11,7 @@ export default function CategoriesIndex({ categories: initialCategories }) {
 
     const destroy = (slug) => {
         if (!confirm('Da li ste sigurni?')) return;
-        router.delete(`/admin/categories/${slug}`, {
+        router.delete(`/admin/kategorije/${slug}`, {
             onSuccess: () => setCategoryList(prev => prev.filter(c => c.slug !== slug)),
         });
     };
@@ -21,7 +21,7 @@ export default function CategoriesIndex({ categories: initialCategories }) {
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/admin/categories?page=${nextPage}`);
+            const { data } = await axios.get(`/admin/kategorije?page=${nextPage}`);
             setCategoryList(prev => [...prev, ...data.categories]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);
@@ -35,7 +35,7 @@ export default function CategoriesIndex({ categories: initialCategories }) {
             <div className="flex items-center justify-between">
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">Kategorije</h2>
                 <Link
-                    href="/admin/categories/create"
+                    href="/admin/kategorije/create"
                     className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition"
                 >
                     + Dodaj kategoriju
@@ -69,7 +69,7 @@ export default function CategoriesIndex({ categories: initialCategories }) {
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 <Link
-                                                    href={`/admin/categories/${cat.slug}/edit`}
+                                                    href={`/admin/kategorije/${cat.slug}/edit`}
                                                     className="px-3 py-1.5 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
                                                 >
                                                     Izmeni

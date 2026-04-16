@@ -117,7 +117,7 @@ export default function Create({ categories }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post('/advertisements', { forceFormData: true });
+        post('/oglasi', { forceFormData: true });
     };
 
     return (
@@ -127,7 +127,7 @@ export default function Create({ categories }) {
 
                     {/* Page header */}
                     <div className="mb-6">
-                        <Link href="/my-advertisements" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 transition-colors mb-3">
+                        <Link href="/moji-oglasi" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 transition-colors mb-3">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
@@ -293,7 +293,7 @@ export default function Create({ categories }) {
                                 >
                                     {processing ? 'Postavljanje…' : 'Postavi oglas'}
                                 </button>
-                                <Link href="/my-advertisements" className="text-sm text-gray-500 hover:text-gray-700">
+                                <Link href="/moji-oglasi" className="text-sm text-gray-500 hover:text-gray-700">
                                     Otkaži
                                 </Link>
                             </div>

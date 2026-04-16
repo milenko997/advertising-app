@@ -9,7 +9,7 @@ export default function AdCard({ ad, favoritedIds = [] }) {
 
             {/* Image */}
             <div className="relative shrink-0">
-                <Link href={`/advertisements/${ad.slug}`} className="block">
+                <Link href={`/oglas/${ad.slug}`} className="block">
                     {ad.image ? (
                         <div className="aspect-[16/10] overflow-hidden bg-slate-100">
                             <img
@@ -56,7 +56,7 @@ export default function AdCard({ ad, favoritedIds = [] }) {
             </div>
 
             {/* Content */}
-            <Link href={`/advertisements/${ad.slug}`} className="flex flex-col flex-1 p-4">
+            <Link href={`/oglas/${ad.slug}`} className="flex flex-col flex-1 p-4">
 
                 {/* Tags row */}
                 <div className="flex items-center gap-1.5 mb-3 flex-wrap">

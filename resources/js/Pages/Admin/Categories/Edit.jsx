@@ -9,7 +9,7 @@ export default function CategoriesEdit({ category, categories }) {
 
     const submit = (e) => {
         e.preventDefault();
-        put(`/admin/categories/${category.slug}`);
+        put(`/admin/kategorije/${category.slug}`);
     };
 
     return (
@@ -53,7 +53,7 @@ export default function CategoriesEdit({ category, categories }) {
                                 >
                                     Sačuvaj izmene
                                 </button>
-                                <Link href="/admin/categories" className="text-sm text-gray-500 hover:text-gray-700">
+                                <Link href="/admin/kategorije" className="text-sm text-gray-500 hover:text-gray-700">
                                     Otkaži
                                 </Link>
                             </div>

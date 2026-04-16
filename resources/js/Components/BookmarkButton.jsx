@@ -15,7 +15,7 @@ export default function BookmarkButton({ adId, initialSaved, className = '' }) {
         if (loading) return;
         setLoading(true);
         try {
-            const { data } = await axios.post(`/favorites/${adId}`);
+            const { data } = await axios.post(`/sacuvani/${adId}`);
             setSaved(data.saved);
         } finally {
             setLoading(false);

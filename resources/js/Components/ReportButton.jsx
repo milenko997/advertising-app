@@ -27,7 +27,7 @@ export default function ReportButton({ advertisementId }) {
     if (!auth?.user) return null;
 
     const submit = (type) => {
-        router.post(`/advertisements/${advertisementId}/report`, { type }, {
+        router.post(`/oglasi/${advertisementId}/prijavi`, { type }, {
             preserveScroll: true,
             onSuccess: () => { setSubmitted(true); setOpen(false); },
         });

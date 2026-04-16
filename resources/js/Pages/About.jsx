@@ -145,7 +145,7 @@ export default function About() {
                             Napravi nalog
                         </Link>
                         <Link
-                            href="/contact"
+                            href="/kontakt"
                             className="px-6 py-2.5 border border-indigo-400 text-white font-semibold text-sm rounded-lg hover:bg-indigo-700 transition-colors"
                         >
                             Kontaktirajte nas

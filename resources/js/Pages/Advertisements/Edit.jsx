@@ -114,7 +114,7 @@ export default function Edit({ ad, categories }) {
 
     const deleteExistingImage = (imageId) => {
         if (!confirm('Remove this image?')) return;
-        router.delete(`/advertisement-images/${imageId}`, { preserveScroll: true });
+        router.delete(`/slike-oglasa/${imageId}`, { preserveScroll: true });
     };
 
     const handlePhone = (e) => {
@@ -123,7 +123,7 @@ export default function Edit({ ad, categories }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(`/advertisements/${ad.slug}/update`, { forceFormData: true });
+        post(`/oglasi/${ad.slug}/azuriraj`, { forceFormData: true });
     };
 
     return (
@@ -133,7 +133,7 @@ export default function Edit({ ad, categories }) {
 
                     {/* Page header */}
                     <div className="mb-6">
-                        <Link href={`/advertisements/${ad.slug}`} className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 transition-colors mb-3">
+                        <Link href={`/oglas/${ad.slug}`} className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 transition-colors mb-3">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
@@ -328,7 +328,7 @@ export default function Edit({ ad, categories }) {
                                 >
                                     {processing ? 'Čuvanje…' : 'Sačuvaj izmene'}
                                 </button>
-                                <Link href={`/advertisements/${ad.slug}`} className="text-sm text-gray-500 hover:text-gray-700">
+                                <Link href={`/oglas/${ad.slug}`} className="text-sm text-gray-500 hover:text-gray-700">
                                     Otkaži
                                 </Link>
                             </div>

@@ -9,7 +9,7 @@ export default function CategoriesCreate({ categories }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post('/admin/categories');
+        post('/admin/kategorije');
     };
 
     return (
@@ -53,7 +53,7 @@ export default function CategoriesCreate({ categories }) {
                                 >
                                     Kreiraj
                                 </button>
-                                <Link href="/admin/categories" className="text-sm text-gray-500 hover:text-gray-700">
+                                <Link href="/admin/kategorije" className="text-sm text-gray-500 hover:text-gray-700">
                                     Otkaži
                                 </Link>
                             </div>

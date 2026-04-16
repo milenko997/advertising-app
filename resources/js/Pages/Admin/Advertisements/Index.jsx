@@ -31,7 +31,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
 
     const destroy = (id) => {
         if (!confirm('Da li ste sigurni?')) return;
-        router.delete(`/admin/advertisements/${id}`, {
+        router.delete(`/admin/oglasi/${id}`, {
             onSuccess: () => {
                 setSelected(prev => { const n = new Set(prev); n.delete(id); return n; });
                 setAdList(prev => prev.filter(a => a.id !== id));
@@ -40,7 +40,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
     };
 
     const togglePin = (id) => {
-        router.patch(`/admin/advertisements/${id}/pin`, {}, {
+        router.patch(`/admin/oglasi/${id}/pin`, {}, {
             preserveScroll: true,
             onSuccess: () => {
                 setAdList(prev => prev.map(a => a.id === id ? { ...a, is_pinned: !a.is_pinned } : a));
@@ -51,7 +51,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
     const bulkAction = (action) => {
         const ids = [...selected];
         if (action === 'delete' && !confirm(`Obrisati ${ids.length} izabrani oglas(e)?`)) return;
-        router.post('/admin/advertisements/bulk-action', { action, ids }, {
+        router.post('/admin/oglasi/bulk-action', { action, ids }, {
             preserveScroll: true,
             onSuccess: () => {
                 if (action === 'delete') {
@@ -69,7 +69,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/admin/advertisements?page=${nextPage}`);
+            const { data } = await axios.get(`/admin/oglasi?page=${nextPage}`);
             setAdList(prev => [...prev, ...data.ads]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);
@@ -189,7 +189,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
                                                     {ad.is_pinned ? 'Prikačeno' : 'Prikači'}
                                                 </button>
                                                 <Link
-                                                    href={`/admin/advertisements/${ad.id}/edit`}
+                                                    href={`/admin/oglasi/${ad.id}/edit`}
                                                     className="px-3 py-1.5 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
                                                 >
                                                     Izmeni

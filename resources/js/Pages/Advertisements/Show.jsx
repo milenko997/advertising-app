@@ -236,7 +236,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
         if (bookmarkLoading) return;
         setBookmarkLoading(true);
         try {
-            const { data } = await axios.post(`/favorites/${ad.id}`);
+            const { data } = await axios.post(`/sacuvani/${ad.id}`);
             setSaved(data.saved);
         } finally {
             setBookmarkLoading(false);
@@ -247,7 +247,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
 
     const handleDelete = () => {
         if (!confirm('Premesti oglas u otpad?')) return;
-        router.delete(`/advertisements/${ad.id}`);
+        router.delete(`/oglasi/${ad.id}`);
     };
 
     const dateLabel = ad.created_at !== ad.updated_at ? 'Ažurirano' : 'Objavljeno';
@@ -610,7 +610,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                     <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-2">
                                         <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3">Upravljanje</p>
                                         <Link
-                                            href={`/advertisements/edit/${ad.slug}`}
+                                            href={`/oglasi/uredi/${ad.slug}`}
                                             className="flex items-center justify-center gap-2 w-full py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
                                         >
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

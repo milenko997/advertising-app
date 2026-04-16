@@ -10,14 +10,14 @@ export default function Trash({ ads: initialAds }) {
     const [loading, setLoading] = useState(false);
 
     const restore = (id) => {
-        router.patch(`/advertisements/${id}/restore`, {}, {
+        router.patch(`/oglasi/${id}/vrati`, {}, {
             onSuccess: () => setAdList(prev => prev.filter(a => a.id !== id)),
         });
     };
 
     const forceDelete = (id) => {
         if (!confirm('Ovo se ne može poništiti. Da li ste sigurni?')) return;
-        router.delete(`/advertisements/force-delete/${id}`, {
+        router.delete(`/oglasi/trajno-brisi/${id}`, {
             onSuccess: () => setAdList(prev => prev.filter(a => a.id !== id)),
         });
     };
@@ -27,7 +27,7 @@ export default function Trash({ ads: initialAds }) {
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/advertisements/trash?page=${nextPage}`);
+            const { data } = await axios.get(`/obrisani-oglasi?page=${nextPage}`);
             setAdList(prev => [...prev, ...data.ads]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);

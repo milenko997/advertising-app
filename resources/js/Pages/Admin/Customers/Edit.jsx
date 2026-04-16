@@ -10,7 +10,7 @@ export default function CustomersEdit({ customer }) {
 
     const submit = (e) => {
         e.preventDefault();
-        put(`/admin/customers/${customer.slug}`);
+        put(`/admin/korisnici/${customer.slug}`);
     };
 
     return (
@@ -64,7 +64,7 @@ export default function CustomersEdit({ customer }) {
                                 >
                                     Sačuvaj izmene
                                 </button>
-                                <Link href="/admin/customers" className="text-sm text-gray-500 hover:text-gray-700">
+                                <Link href="/admin/korisnici" className="text-sm text-gray-500 hover:text-gray-700">
                                     Otkaži
                                 </Link>
                             </div>

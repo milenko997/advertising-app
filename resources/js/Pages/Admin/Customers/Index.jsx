@@ -11,7 +11,7 @@ export default function CustomersIndex({ customers: initialCustomers }) {
 
     const destroy = (slug) => {
         if (!confirm('Da li ste sigurni?')) return;
-        router.delete(`/admin/customers/${slug}`, {
+        router.delete(`/admin/korisnici/${slug}`, {
             onSuccess: () => setCustomerList(prev => prev.filter(c => c.slug !== slug)),
         });
     };
@@ -21,7 +21,7 @@ export default function CustomersIndex({ customers: initialCustomers }) {
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/admin/customers?page=${nextPage}`);
+            const { data } = await axios.get(`/admin/korisnici?page=${nextPage}`);
             setCustomerList(prev => [...prev, ...data.customers]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);
@@ -76,7 +76,7 @@ export default function CustomersIndex({ customers: initialCustomers }) {
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 <Link
-                                                    href={`/admin/customers/${customer.slug}/edit`}
+                                                    href={`/admin/korisnici/${customer.slug}/edit`}
                                                     className="px-3 py-1.5 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
                                                 >
                                                     Izmeni

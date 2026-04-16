@@ -30,7 +30,7 @@ export default function Contact() {
 
     const submit = (e) => {
         e.preventDefault();
-        post('/contact', { onSuccess: () => reset() });
+        post('/kontakt', { onSuccess: () => reset() });
     };
 
     return (

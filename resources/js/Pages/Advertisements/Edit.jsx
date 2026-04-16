@@ -5,7 +5,7 @@ import ImageUpload from '@/Components/ImageUpload';
 import LocationAutocomplete from '@/Components/LocationAutocomplete';
 import CategoryPicker from '@/Components/CategoryPicker';
 
-const inputClass = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent';
+const inputClass = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent';
 const labelClass = 'block text-sm font-medium text-gray-700 mb-1';
 
 const PAYLOAD_CONFIG = {
@@ -133,7 +133,7 @@ export default function Edit({ ad, categories }) {
 
                     {/* Page header */}
                     <div className="mb-6">
-                        <Link href={`/oglas/${ad.slug}`} className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 transition-colors mb-3">
+                        <Link href={`/oglas/${ad.slug}`} className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-orange-600 transition-colors mb-3">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
@@ -324,7 +324,7 @@ export default function Edit({ ad, categories }) {
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="px-6 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition disabled:opacity-50"
+                                    className="px-6 py-2.5 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition disabled:opacity-50"
                                 >
                                     {processing ? 'Čuvanje…' : 'Sačuvaj izmene'}
                                 </button>

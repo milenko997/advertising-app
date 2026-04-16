@@ -80,8 +80,8 @@ export default function ProfileShow({ user }) {
                                             className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
                                         />
                                     ) : (
-                                        <div className="w-20 h-20 rounded-full bg-indigo-100 flex items-center justify-center border-2 border-gray-200">
-                                            <span className="text-3xl font-bold text-indigo-600">
+                                        <div className="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center border-2 border-gray-200">
+                                            <span className="text-3xl font-bold text-orange-600">
                                                 {user.name.charAt(0).toUpperCase()}
                                             </span>
                                         </div>
@@ -120,7 +120,7 @@ export default function ProfileShow({ user }) {
                                         value={data.name}
                                         onChange={e => setData('name', e.target.value)}
                                         required
-                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                                     />
                                     {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
                                 </div>
@@ -131,7 +131,7 @@ export default function ProfileShow({ user }) {
                                         value={data.email}
                                         onChange={e => setData('email', e.target.value)}
                                         required
-                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                                     />
                                     {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
                                 </div>
@@ -145,7 +145,7 @@ export default function ProfileShow({ user }) {
                                     onChange={handlePhone}
                                     placeholder="+381 62 123 4567"
                                     maxLength={20}
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                                 />
                                 <p className="mt-1 text-xs text-gray-400">Samo cifre, razmaci, +, -, ( )</p>
                                 {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
@@ -154,7 +154,7 @@ export default function ProfileShow({ user }) {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
+                                className="px-5 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 disabled:opacity-50 transition"
                             >
                                 Sačuvaj izmene
                             </button>
@@ -179,7 +179,7 @@ export default function ProfileShow({ user }) {
                                     value={pwData.current_password}
                                     onChange={e => setPwData('current_password', e.target.value)}
                                     required autoComplete="current-password"
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                                 />
                                 {pwErrors.current_password && <p className="mt-1 text-xs text-red-600">{pwErrors.current_password}</p>}
                             </div>
@@ -190,7 +190,7 @@ export default function ProfileShow({ user }) {
                                     value={pwData.password}
                                     onChange={e => setPwData('password', e.target.value)}
                                     required autoComplete="new-password" minLength={8}
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                                 />
                                 {pwErrors.password && <p className="mt-1 text-xs text-red-600">{pwErrors.password}</p>}
                             </div>
@@ -201,13 +201,13 @@ export default function ProfileShow({ user }) {
                                     value={pwData.password_confirmation}
                                     onChange={e => setPwData('password_confirmation', e.target.value)}
                                     required autoComplete="new-password"
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                                 />
                             </div>
                             <button
                                 type="submit"
                                 disabled={pwProcessing}
-                                className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
+                                className="px-5 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 disabled:opacity-50 transition"
                             >
                                 Promeni lozinku
                             </button>

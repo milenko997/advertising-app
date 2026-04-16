@@ -11,7 +11,7 @@ function SpecRow({ icon, label, value }) {
     if (!value) return null;
     return (
         <div className="flex items-start gap-3 py-3 border-b border-gray-100 last:border-0">
-            <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0 mt-0.5">
+            <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center shrink-0 mt-0.5">
                 {icon}
             </div>
             <div>
@@ -79,7 +79,7 @@ function ReviewCard({ review, authUserId }) {
         <div className="flex flex-col gap-3 py-4 border-b border-gray-100 last:border-0">
             <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
                         {review.reviewer.avatar ? (
                             <img
                                 src={`/storage/${review.reviewer.avatar}`}
@@ -87,7 +87,7 @@ function ReviewCard({ review, authUserId }) {
                                 className="w-8 h-8 rounded-full object-cover"
                             />
                         ) : (
-                            <span className="text-indigo-600 font-bold text-xs">
+                            <span className="text-orange-600 font-bold text-xs">
                                 {review.reviewer.name.charAt(0).toUpperCase()}
                             </span>
                         )}
@@ -95,7 +95,7 @@ function ReviewCard({ review, authUserId }) {
                     <div>
                         <Link
                             href={`/korisnik/${review.reviewer.slug}`}
-                            className="text-sm font-semibold text-gray-800 hover:text-indigo-600 transition-colors"
+                            className="text-sm font-semibold text-gray-800 hover:text-orange-600 transition-colors"
                         >
                             {review.reviewer.name}
                         </Link>
@@ -108,7 +108,7 @@ function ReviewCard({ review, authUserId }) {
                         <>
                             <button
                                 onClick={() => setEditing(true)}
-                                className="text-gray-300 hover:text-indigo-500 transition-colors"
+                                className="text-gray-300 hover:text-orange-500 transition-colors"
                                 title="Izmeni recenziju"
                             >
                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,13 +142,13 @@ function ReviewCard({ review, authUserId }) {
                         value={comment}
                         onChange={e => setComment(e.target.value)}
                         maxLength={1000}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
                     />
                     <div className="flex items-center gap-2">
                         <button
                             type="submit"
                             disabled={submitting}
-                            className="px-4 py-1.5 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition disabled:opacity-50"
+                            className="px-4 py-1.5 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition disabled:opacity-50"
                         >
                             {submitting ? 'Čuvanje…' : 'Sačuvaj'}
                         </button>
@@ -199,12 +199,12 @@ function ReviewForm({ userSlug }) {
                 onChange={e => setComment(e.target.value)}
                 maxLength={1000}
                 placeholder="Podelite vaše iskustvo… (opciono)"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none mb-3"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none mb-3"
             />
             <button
                 type="submit"
                 disabled={submitting}
-                className="px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition disabled:opacity-50"
+                className="px-4 py-2 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition disabled:opacity-50"
             >
                 {submitting ? 'Slanje…' : 'Pošalji recenziju'}
             </button>
@@ -287,7 +287,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     {/* Back link */}
-                    <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 transition-colors mb-6">
+                    <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-orange-600 transition-colors mb-6">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
@@ -333,7 +333,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                                     key={i}
                                                     onClick={() => openCarousel(i)}
                                                     className={`shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition ${
-                                                        i === 0 ? 'border-indigo-500' : 'border-transparent hover:border-indigo-300'
+                                                        i === 0 ? 'border-orange-500' : 'border-transparent hover:border-orange-300'
                                                     }`}
                                                 >
                                                     <img
@@ -405,17 +405,17 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                             <div id="section-ad-specs" className="bg-white rounded-xl border border-gray-200 p-6">
                                 <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Detalji</h2>
                                 <SpecRow
-                                    icon={<svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>}
+                                    icon={<svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>}
                                     label="Nosivost"
                                     value={ad.payload}
                                 />
                                 <SpecRow
-                                    icon={<svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>}
+                                    icon={<svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>}
                                     label="Lokacija"
                                     value={ad.location}
                                 />
                                 <SpecRow
-                                    icon={<svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>}
+                                    icon={<svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>}
                                     label="Kategorija"
                                     value={ad.category?.name}
                                 />
@@ -431,7 +431,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                         </h2>
                                         <Link
                                             href={`/korisnik/${ad.user.slug}#recenzije`}
-                                            className="text-xs text-indigo-600 hover:underline"
+                                            className="text-xs text-orange-600 hover:underline"
                                         >
                                             Pogledaj profil
                                         </Link>
@@ -462,11 +462,11 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
 
                                     {/* Own review summary */}
                                     {myReview && (
-                                        <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3 mb-4">
-                                            <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1.5">Vaša recenzija</p>
+                                        <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4">
+                                            <p className="text-xs font-semibold text-orange-500 uppercase tracking-wide mb-1.5">Vaša recenzija</p>
                                             <StarRating value={myReview.rating} readOnly />
                                             {myReview.comment && (
-                                                <p className="text-sm text-indigo-700 mt-1.5">{myReview.comment}</p>
+                                                <p className="text-sm text-orange-700 mt-1.5">{myReview.comment}</p>
                                             )}
                                         </div>
                                     )}
@@ -497,7 +497,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                             <p className="text-sm text-gray-500">Prijavite se da biste ostavili recenziju ovog prodavca.</p>
                                             <Link
                                                 href={`/korisnik/${ad.user.slug}/recenzija-prijava`}
-                                                className="shrink-0 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition"
+                                                className="shrink-0 px-4 py-2 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition"
                                             >
                                                 Prijavi se
                                             </Link>
@@ -516,7 +516,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                     <div className="mb-4">
                                         <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">Cena</p>
                                         {ad.price ? (
-                                            <p className="text-3xl font-bold text-indigo-600">{ad.price}</p>
+                                            <p className="text-3xl font-bold text-orange-600">{ad.price}</p>
                                         ) : (
                                             <p className="text-lg text-gray-400 italic font-normal">Cena na upit</p>
                                         )}
@@ -526,7 +526,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                     {ad.phone && (
                                         <a
                                             href={`tel:${ad.phone}`}
-                                            className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors text-sm"
+                                            className="flex items-center justify-center gap-2 w-full py-3 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors text-sm"
                                         >
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -543,12 +543,12 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                                 disabled={bookmarkLoading}
                                                 className={`flex-1 flex items-center justify-center gap-2 py-2.5 border rounded-lg text-sm font-medium transition disabled:opacity-50 ${
                                                     saved
-                                                        ? 'border-indigo-300 bg-indigo-50 text-indigo-700 hover:bg-indigo-100'
+                                                        ? 'border-orange-300 bg-orange-50 text-orange-700 hover:bg-orange-100'
                                                         : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'
                                                 }`}
                                             >
                                                 {saved ? (
-                                                    <svg className="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 24 24">
+                                                    <svg className="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
                                                         <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                                                     </svg>
                                                 ) : (
@@ -575,17 +575,17 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                     <div className="bg-white rounded-xl border border-gray-200 p-5">
                                         <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3">Objavio</p>
                                         <Link href={`/korisnik/${ad.user.slug}`} className="flex items-center gap-3 group">
-                                            <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
+                                            <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
                                                 {ad.user.avatar ? (
                                                     <img src={`/storage/${ad.user.avatar}`} alt={ad.user.name} className="w-10 h-10 rounded-full object-cover" />
                                                 ) : (
-                                                    <span className="text-indigo-600 font-bold text-sm">
+                                                    <span className="text-orange-600 font-bold text-sm">
                                                         {ad.user.name?.charAt(0)?.toUpperCase()}
                                                     </span>
                                                 )}
                                             </div>
                                             <div>
-                                                <p className="text-sm font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
+                                                <p className="text-sm font-semibold text-gray-800 group-hover:text-orange-600 transition-colors">
                                                     {ad.user.name}
                                                 </p>
                                                 {avgRating !== null && (
@@ -598,7 +598,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                                     <p className="text-xs text-gray-400">Pogledaj profil</p>
                                                 )}
                                             </div>
-                                            <svg className="w-4 h-4 text-gray-300 ml-auto group-hover:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg className="w-4 h-4 text-gray-300 ml-auto group-hover:text-orange-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                             </svg>
                                         </Link>

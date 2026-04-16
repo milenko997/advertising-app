@@ -47,8 +47,8 @@ export default function About() {
                             AdBoard je nastao s ciljem da to promeni. Pružamo centralnu tačku gde profesionalci iz transporta mogu da se predstave, a korisnici lako pronađu pravo vozilo ili uslugu — bez posrednika i bez komplikacija.
                         </p>
                     </div>
-                    <div className="bg-indigo-50 rounded-2xl p-8 flex items-center justify-center">
-                        <svg className="w-24 h-24 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="bg-orange-50 rounded-2xl p-8 flex items-center justify-center">
+                        <svg className="w-24 h-24 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.2}
                                 d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                         </svg>
@@ -66,7 +66,7 @@ export default function About() {
                             { value: '24/7',   label: 'Dostupnost platforme' },
                         ].map(stat => (
                             <div key={stat.label} className="text-center">
-                                <p className="text-3xl font-bold text-indigo-600 mb-1">{stat.value}</p>
+                                <p className="text-3xl font-bold text-orange-600 mb-1">{stat.value}</p>
                                 <p className="text-sm text-gray-500">{stat.label}</p>
                             </div>
                         ))}
@@ -104,8 +104,8 @@ export default function About() {
                             },
                         ].map(item => (
                             <div key={item.title} className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-                                <div className="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center mb-4">
-                                    <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center mb-4">
+                                    <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         {item.icon}
                                     </svg>
                                 </div>
@@ -127,7 +127,7 @@ export default function About() {
                             { step: '04', title: 'Obnovite po potrebi', desc: 'Kada oglas istekne, jednim klikom ga obnavljate na još 60 dana.' },
                         ].map((item, i) => (
                             <div key={i} className="flex gap-5 bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                                <span className="text-2xl font-bold text-indigo-200 shrink-0 w-10 text-right">{item.step}</span>
+                                <span className="text-2xl font-bold text-orange-200 shrink-0 w-10 text-right">{item.step}</span>
                                 <div>
                                     <h3 className="font-semibold text-gray-900 mb-1">{item.title}</h3>
                                     <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
@@ -138,21 +138,21 @@ export default function About() {
                 </section>
 
                 {/* CTA */}
-                <section id="section-about-cta" className="bg-indigo-600 rounded-2xl p-10 text-center">
+                <section id="section-about-cta" className="bg-orange-600 rounded-2xl p-10 text-center">
                     <h2 className="text-2xl font-bold text-white mb-3">Pridružite se AdBoard zajednici</h2>
-                    <p className="text-indigo-200 mb-7 max-w-xl mx-auto">
+                    <p className="text-orange-200 mb-7 max-w-xl mx-auto">
                         Registracija je besplatna. Postavite oglas danas i dosegnite klijente širom Srbije.
                     </p>
                     <div className="flex items-center justify-center gap-4 flex-wrap">
                         <Link
                             href="/register"
-                            className="px-6 py-2.5 bg-white text-indigo-600 font-semibold text-sm rounded-lg hover:bg-indigo-50 transition-colors"
+                            className="px-6 py-2.5 bg-white text-orange-600 font-semibold text-sm rounded-lg hover:bg-orange-50 transition-colors"
                         >
                             Napravi nalog
                         </Link>
                         <Link
                             href="/kontakt"
-                            className="px-6 py-2.5 border border-indigo-400 text-white font-semibold text-sm rounded-lg hover:bg-indigo-700 transition-colors"
+                            className="px-6 py-2.5 border border-orange-400 text-white font-semibold text-sm rounded-lg hover:bg-orange-700 transition-colors"
                         >
                             Kontaktirajte nas
                         </Link>

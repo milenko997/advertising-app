@@ -24,8 +24,8 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                         href="/"
                         className={`px-3.5 py-1.5 text-sm rounded-full font-medium transition-colors ${
                             !currentParent
-                                ? 'bg-indigo-600 text-white'
-                                : 'text-gray-500 hover:text-indigo-600 hover:bg-indigo-50'
+                                ? 'bg-orange-600 text-white'
+                                : 'text-gray-500 hover:text-orange-600 hover:bg-orange-50'
                         }`}
                     >
                         Sve kategorije
@@ -39,8 +39,8 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                                         onClick={() => setOpenId(openId === cat.id ? null : cat.id)}
                                         className={`flex items-center gap-1 px-3.5 py-1.5 text-sm rounded-full font-medium transition-colors ${
                                             currentParent === cat.slug
-                                                ? 'bg-indigo-600 text-white'
-                                                : 'text-gray-500 hover:text-indigo-600 hover:bg-indigo-50'
+                                                ? 'bg-orange-600 text-white'
+                                                : 'text-gray-500 hover:text-orange-600 hover:bg-orange-50'
                                         }`}
                                     >
                                         {cat.name}
@@ -55,7 +55,7 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                                             <Link
                                                 href={`/kategorija/${cat.slug}`}
                                                 onClick={() => setOpenId(null)}
-                                                className="block px-4 py-2 text-sm text-gray-600 hover:bg-indigo-50 font-medium"
+                                                className="block px-4 py-2 text-sm text-gray-600 hover:bg-orange-50 font-medium"
                                             >
                                                 {cat.name} — sve
                                             </Link>
@@ -65,9 +65,9 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                                                     key={child.id}
                                                     href={`/kategorija/${cat.slug}/${child.slug}`}
                                                     onClick={() => setOpenId(null)}
-                                                    className={`block px-4 py-2 text-sm hover:bg-indigo-50 ${
+                                                    className={`block px-4 py-2 text-sm hover:bg-orange-50 ${
                                                         currentChild === child.slug
-                                                            ? 'text-indigo-600 font-semibold'
+                                                            ? 'text-orange-600 font-semibold'
                                                             : 'text-gray-700'
                                                     }`}
                                                 >
@@ -82,8 +82,8 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                                     href={`/kategorija/${cat.slug}`}
                                     className={`block px-3.5 py-1.5 text-sm rounded-full font-medium transition-colors ${
                                         currentParent === cat.slug
-                                            ? 'bg-indigo-600 text-white'
-                                            : 'text-gray-500 hover:text-indigo-600 hover:bg-indigo-50'
+                                            ? 'bg-orange-600 text-white'
+                                            : 'text-gray-500 hover:text-orange-600 hover:bg-orange-50'
                                     }`}
                                 >
                                     {cat.name}
@@ -107,7 +107,7 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                             value={search ?? ''}
                             onChange={e => onSearch && onSearch(e.target.value, 'search')}
                             placeholder="Pretraži oglase…"
-                            className="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                            className="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                         />
                     </div>
 
@@ -121,13 +121,13 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                             value={location ?? ''}
                             onChange={e => onSearch && onSearch(e.target.value, 'location')}
                             placeholder="Lokacija…"
-                            className="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                            className="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                         />
                     </div>
 
                     <button
                         type="submit"
-                        className="shrink-0 bg-indigo-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+                        className="shrink-0 bg-orange-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors"
                     >
                         Pretraži
                     </button>

@@ -46,7 +46,7 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds 
                             </svg>
                             <p className="text-gray-500 font-medium mb-1">Nemate sačuvanih oglasa.</p>
                             <p className="text-sm text-gray-400 mb-4">Sačuvajte oglase koji vas zanimaju da biste ih lako pronašli.</p>
-                            <Link href="/" className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition">
+                            <Link href="/" className="inline-flex items-center gap-1.5 px-4 py-2 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition">
                                 Pretraži oglase
                             </Link>
                         </div>
@@ -63,10 +63,10 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds 
                                     <button
                                         onClick={loadMore}
                                         disabled={loading}
-                                        className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-indigo-300 transition disabled:opacity-50"
+                                        className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
                                     >
                                         {loading && (
-                                            <svg className="w-4 h-4 animate-spin text-indigo-600" fill="none" viewBox="0 0 24 24">
+                                            <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">
                                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                             </svg>

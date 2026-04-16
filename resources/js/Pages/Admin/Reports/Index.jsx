@@ -57,7 +57,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                     type="checkbox"
                     checked={report.resolved}
                     onChange={() => toggleResolve(report.id)}
-                    className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+                    className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
                 />
             </td>
             <td className="px-4 py-3">
@@ -69,7 +69,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                 {report.advertisement ? (
                     <Link
                         href={`/oglas/${report.advertisement.slug}`}
-                        className="text-sm font-medium text-indigo-600 hover:underline line-clamp-1"
+                        className="text-sm font-medium text-orange-600 hover:underline line-clamp-1"
                         target="_blank"
                     >
                         {report.advertisement.title}
@@ -185,10 +185,10 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                             <button
                                 onClick={loadMore}
                                 disabled={loading}
-                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-indigo-300 transition disabled:opacity-50"
+                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
                             >
                                 {loading && (
-                                    <svg className="w-4 h-4 animate-spin text-indigo-600" fill="none" viewBox="0 0 24 24">
+                                    <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">
                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                     </svg>

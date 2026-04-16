@@ -3,7 +3,7 @@ import AppLayout from '@/Layouts/AppLayout';
 
 function StatCard({ label, value, sub, color = 'indigo', icon }) {
     const colors = {
-        indigo: 'bg-indigo-50 text-indigo-600',
+        indigo: 'bg-orange-50 text-orange-600',
         orange: 'bg-orange-50 text-orange-600',
         green:  'bg-green-50  text-green-600',
         red:    'bg-red-50    text-red-600',
@@ -29,7 +29,7 @@ function InboxCard({ label, count, href, color }) {
     const colors = {
         red:    'text-red-600 bg-red-50',
         orange: 'text-orange-600 bg-orange-50',
-        indigo: 'text-indigo-600 bg-indigo-50',
+        indigo: 'text-orange-600 bg-orange-50',
     };
 
     return (
@@ -55,7 +55,7 @@ function MiniBar({ data }) {
                 <div
                     key={i}
                     title={`${d.date}: ${d.count}`}
-                    className="flex-1 bg-indigo-400 rounded-sm opacity-70 hover:opacity-100 transition-opacity"
+                    className="flex-1 bg-orange-400 rounded-sm opacity-70 hover:opacity-100 transition-opacity"
                     style={{ height: `${Math.max((d.count / max) * 100, d.count > 0 ? 4 : 0)}%` }}
                 />
             ))}
@@ -176,7 +176,7 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                                                 </div>
                                                 <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                                                     <div
-                                                        className="h-full bg-indigo-400 rounded-full"
+                                                        className="h-full bg-orange-400 rounded-full"
                                                         style={{ width: `${(cat.count / maxCount) * 100}%` }}
                                                     />
                                                 </div>
@@ -191,7 +191,7 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                         <div id="section-dashboard-recent-ads" className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 sm:p-5">
                             <div className="flex items-center justify-between mb-4">
                                 <h2 className="text-sm font-semibold text-gray-800">Najnoviji oglasi</h2>
-                                <Link href="/admin/oglasi" className="text-xs text-indigo-600 hover:text-indigo-700">Svi →</Link>
+                                <Link href="/admin/oglasi" className="text-xs text-orange-600 hover:text-orange-700">Svi →</Link>
                             </div>
                             {recentAds.length === 0 ? (
                                 <p className="text-sm text-gray-400">Nema oglasa.</p>
@@ -201,7 +201,7 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                                         <div key={ad.id} className="py-2.5 first:pt-0 last:pb-0">
                                             <Link
                                                 href={`/oglas/${ad.slug}`}
-                                                className="text-sm font-medium text-gray-800 hover:text-indigo-600 transition-colors line-clamp-1"
+                                                className="text-sm font-medium text-gray-800 hover:text-orange-600 transition-colors line-clamp-1"
                                             >
                                                 {ad.is_pinned && (
                                                     <span className="inline-block mr-1 text-orange-500 text-xs">📌</span>
@@ -210,7 +210,7 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                                             </Link>
                                             <div className="flex items-center gap-1.5 mt-0.5">
                                                 {ad.user_name && (
-                                                    <Link href={`/korisnik/${ad.user_slug}`} className="text-xs text-gray-400 hover:text-indigo-500 transition-colors truncate">
+                                                    <Link href={`/korisnik/${ad.user_slug}`} className="text-xs text-gray-400 hover:text-orange-500 transition-colors truncate">
                                                         {ad.user_name}
                                                     </Link>
                                                 )}
@@ -227,7 +227,7 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                         <div id="section-dashboard-recent-users" className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 sm:p-5 md:col-span-2 lg:col-span-1">
                             <div className="flex items-center justify-between mb-4">
                                 <h2 className="text-sm font-semibold text-gray-800">Novi korisnici</h2>
-                                <Link href="/admin/korisnici" className="text-xs text-indigo-600 hover:text-indigo-700">Svi →</Link>
+                                <Link href="/admin/korisnici" className="text-xs text-orange-600 hover:text-orange-700">Svi →</Link>
                             </div>
                             {recentUsers.length === 0 ? (
                                 <p className="text-sm text-gray-400">Nema korisnika.</p>
@@ -242,14 +242,14 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                                                     className="w-8 h-8 rounded-full object-cover shrink-0"
                                                 />
                                             ) : (
-                                                <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold shrink-0">
+                                                <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-xs font-bold shrink-0">
                                                     {u.name.charAt(0).toUpperCase()}
                                                 </div>
                                             )}
                                             <div className="min-w-0 flex-1">
                                                 <Link
                                                     href={`/korisnik/${u.slug}`}
-                                                    className="text-sm font-medium text-gray-800 hover:text-indigo-600 transition-colors truncate block"
+                                                    className="text-sm font-medium text-gray-800 hover:text-orange-600 transition-colors truncate block"
                                                 >
                                                     {u.name}
                                                 </Link>

@@ -53,7 +53,7 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
                                 <div
                                     key={msg.id}
                                     className={`bg-white rounded-xl border shadow-sm overflow-hidden transition-colors ${
-                                        msg.read ? 'border-gray-200' : 'border-indigo-200'
+                                        msg.read ? 'border-gray-200' : 'border-orange-200'
                                     }`}
                                 >
                                     {/* Header row */}
@@ -62,7 +62,7 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
                                         className="w-full text-left flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors"
                                     >
                                         {/* Unread dot */}
-                                        <span className={`w-2 h-2 rounded-full shrink-0 ${msg.read ? 'bg-transparent' : 'bg-indigo-500'}`} />
+                                        <span className={`w-2 h-2 rounded-full shrink-0 ${msg.read ? 'bg-transparent' : 'bg-orange-500'}`} />
 
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-3">
@@ -95,7 +95,7 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
                                             <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
                                                 <a
                                                     href={`mailto:${msg.email}?subject=Re: ${encodeURIComponent(msg.subject)}`}
-                                                    className="inline-flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+                                                    className="inline-flex items-center gap-1.5 text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors"
                                                 >
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />

@@ -63,7 +63,7 @@ export default function CustomersIndex({ customers: initialCustomers }) {
                                                         className="w-8 h-8 rounded-full object-cover shrink-0"
                                                     />
                                                 ) : (
-                                                    <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-semibold shrink-0">
+                                                    <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-sm font-semibold shrink-0">
                                                         {customer.name.charAt(0).toUpperCase()}
                                                     </div>
                                                 )}
@@ -74,7 +74,7 @@ export default function CustomersIndex({ customers: initialCustomers }) {
                                         <td className="px-6 py-4">
                                             <span className={`inline-flex px-2 py-0.5 text-xs font-medium rounded-full ${
                                                 customer.role === 'admin'
-                                                    ? 'bg-indigo-100 text-indigo-700'
+                                                    ? 'bg-orange-100 text-orange-700'
                                                     : 'bg-gray-100 text-gray-600'
                                             }`}>
                                                 {customer.role === 'admin' ? 'Admin' : 'Korisnik'}
@@ -108,10 +108,10 @@ export default function CustomersIndex({ customers: initialCustomers }) {
                             <button
                                 onClick={loadMore}
                                 disabled={loading}
-                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-indigo-300 transition disabled:opacity-50"
+                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
                             >
                                 {loading && (
-                                    <svg className="w-4 h-4 animate-spin text-indigo-600" fill="none" viewBox="0 0 24 24">
+                                    <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">
                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                     </svg>

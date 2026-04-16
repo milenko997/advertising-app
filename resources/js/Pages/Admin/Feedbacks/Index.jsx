@@ -30,8 +30,8 @@ export default function AdminFeedbacksIndex({ feedbacks: initialFeedbacks }) {
                     <div className="flex items-center justify-between mb-6">
                         <h1 className="text-xl font-bold text-gray-900">Povratne informacije</h1>
                         {unreadCount > 0 && (
-                            <span className="inline-flex items-center gap-1.5 text-sm text-indigo-600 font-medium">
-                                <span className="w-2 h-2 rounded-full bg-indigo-500 inline-block" />
+                            <span className="inline-flex items-center gap-1.5 text-sm text-orange-600 font-medium">
+                                <span className="w-2 h-2 rounded-full bg-orange-500 inline-block" />
                                 {unreadCount} nepročitanih
                             </span>
                         )}
@@ -51,14 +51,14 @@ export default function AdminFeedbacksIndex({ feedbacks: initialFeedbacks }) {
                                 <div
                                     key={fb.id}
                                     className={`bg-white rounded-xl border shadow-sm p-5 transition-colors ${
-                                        fb.read ? 'border-gray-200' : 'border-indigo-200'
+                                        fb.read ? 'border-gray-200' : 'border-orange-200'
                                     }`}
                                 >
                                     {/* Meta row */}
                                     <div className="flex items-start justify-between gap-4 mb-3">
                                         <div className="flex items-center gap-2.5">
                                             {!fb.read && (
-                                                <span className="w-2 h-2 rounded-full bg-indigo-500 shrink-0 mt-0.5" />
+                                                <span className="w-2 h-2 rounded-full bg-orange-500 shrink-0 mt-0.5" />
                                             )}
                                             <div>
                                                 {fb.user ? (
@@ -67,7 +67,7 @@ export default function AdminFeedbacksIndex({ feedbacks: initialFeedbacks }) {
                                                     <span className="text-sm text-gray-400 italic">Anonimni korisnik</span>
                                                 )}
                                                 {fb.email && (
-                                                    <p className="text-xs text-indigo-500 mt-0.5">{fb.email}</p>
+                                                    <p className="text-xs text-orange-500 mt-0.5">{fb.email}</p>
                                                 )}
                                                 {fb.page && (
                                                     <p className="text-xs text-gray-400 mt-0.5">{fb.page}</p>
@@ -85,7 +85,7 @@ export default function AdminFeedbacksIndex({ feedbacks: initialFeedbacks }) {
                                         {!fb.read && (
                                             <button
                                                 onClick={() => markRead(fb.id)}
-                                                className="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+                                                className="text-xs font-medium text-orange-600 hover:text-orange-700 transition-colors"
                                             >
                                                 Označi kao pročitano
                                             </button>

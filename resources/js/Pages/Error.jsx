@@ -41,12 +41,12 @@ export default function Error({ status }) {
 
             <main className="flex-1 flex items-center justify-center px-4 py-24">
                 <div className="text-center">
-                    <p className="text-8xl font-extrabold text-indigo-600">{status}</p>
+                    <p className="text-8xl font-extrabold text-orange-600">{status}</p>
                     <h1 className="mt-4 text-2xl font-bold text-gray-900">{title}</h1>
                     <p className="mt-2 text-gray-500 max-w-sm mx-auto">{description}</p>
                     <Link
                         href="/"
-                        className="mt-8 inline-block px-6 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition"
+                        className="mt-8 inline-block px-6 py-2.5 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 transition"
                     >
                         Nazad na početnu
                     </Link>

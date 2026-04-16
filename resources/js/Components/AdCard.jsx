@@ -68,9 +68,16 @@ export default function AdCard({ ad, favoritedIds = [] }) {
                 </div>
 
                 {/* Title */}
-                <h3 className="font-semibold text-slate-900 text-sm leading-snug mb-2 line-clamp-2 group-hover:text-orange-600 transition-colors duration-200">
+                <h3 className="font-semibold text-slate-900 text-sm leading-snug mb-1.5 line-clamp-2 group-hover:text-orange-600 transition-colors duration-200">
                     {ad.title}
                 </h3>
+
+                {/* Price — moved up for faster scanning */}
+                <div className="mb-2">
+                    <span className={`font-bold text-base ${ad.price ? 'text-slate-900' : 'text-slate-300 font-normal text-sm italic'}`}>
+                        {ad.price || 'Cena na upit'}
+                    </span>
+                </div>
 
                 {/* Description */}
                 <p className="text-xs text-slate-400 line-clamp-2 mb-4 leading-relaxed">
@@ -99,11 +106,8 @@ export default function AdCard({ ad, favoritedIds = [] }) {
                     </div>
                 </div>
 
-                {/* Price */}
-                <div className="mt-3.5 pt-3.5 border-t border-slate-100 flex items-center justify-between">
-                    <span className={`font-bold text-base ${ad.price ? 'text-slate-900' : 'text-slate-300 font-normal text-sm italic'}`}>
-                        {ad.price || 'Cena na upit'}
-                    </span>
+                {/* Footer row */}
+                <div className="mt-3.5 pt-3.5 border-t border-slate-100 flex items-center justify-end">
                     <span className="inline-flex items-center gap-1 text-xs font-medium text-orange-500 group-hover:gap-2 transition-all duration-200">
                         Pogledaj
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

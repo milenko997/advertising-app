@@ -31,7 +31,7 @@ export default function Login({ status }) {
                         value={data.email}
                         onChange={e => setData('email', e.target.value)}
                         required autoFocus
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     />
                     {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
                 </div>
@@ -43,7 +43,7 @@ export default function Login({ status }) {
                         value={data.password}
                         onChange={e => setData('password', e.target.value)}
                         required autoComplete="current-password"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     />
                     {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
                 </div>
@@ -54,19 +54,19 @@ export default function Login({ status }) {
                         type="checkbox"
                         checked={data.remember}
                         onChange={e => setData('remember', e.target.checked)}
-                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        className="rounded border-gray-300 text-orange-600 focus:ring-orange-500"
                     />
                     <label htmlFor="remember" className="ml-2 text-sm text-gray-600">Zapamti me</label>
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
-                    <Link href="/forgot-password" className="text-sm text-gray-500 hover:text-indigo-600">
+                    <Link href="/forgot-password" className="text-sm text-gray-500 hover:text-orange-600">
                         Zaboravili ste lozinku?
                     </Link>
                     <button
                         type="submit"
                         disabled={processing}
-                        className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
+                        className="px-5 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 disabled:opacity-50 transition"
                     >
                         Prijavi se
                     </button>
@@ -75,7 +75,7 @@ export default function Login({ status }) {
 
             <p className="mt-6 text-center text-sm text-gray-500">
                 Nemate nalog?{' '}
-                <Link href="/register" className="text-indigo-600 hover:underline font-medium">
+                <Link href="/register" className="text-orange-600 hover:underline font-medium">
                     Registrujte se
                 </Link>
             </p>

@@ -75,12 +75,12 @@ export default function ByCategory({ category, ads, location, favoritedIds }) {
                                             value={locationValue}
                                             onChange={e => setLocationValue(e.target.value)}
                                             placeholder="Lokacija…"
-                                            className="border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm w-40 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                            className="border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm w-40 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                         />
                                     </div>
                                     <button
                                         type="submit"
-                                        className="shrink-0 bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+                                        className="shrink-0 bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors"
                                     >
                                         Pretraži
                                     </button>
@@ -116,10 +116,10 @@ export default function ByCategory({ category, ads, location, favoritedIds }) {
                                             <button
                                                 onClick={loadMore}
                                                 disabled={loading}
-                                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-indigo-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
                                             >
                                                 {loading && (
-                                                    <svg className="w-4 h-4 animate-spin text-indigo-600" fill="none" viewBox="0 0 24 24">
+                                                    <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">
                                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                                     </svg>

@@ -5,8 +5,8 @@ import axios from 'axios';
 
 const TYPE_CONFIG = {
     ad_expiring:              { icon: 'clock',   color: 'text-amber-500',  bg: 'bg-amber-50' },
-    new_review:               { icon: 'star',    color: 'text-indigo-500', bg: 'bg-indigo-50' },
-    review_updated:           { icon: 'edit',    color: 'text-indigo-500', bg: 'bg-indigo-50' },
+    new_review:               { icon: 'star',    color: 'text-orange-500', bg: 'bg-orange-50' },
+    review_updated:           { icon: 'edit',    color: 'text-orange-500', bg: 'bg-orange-50' },
     review_deleted:           { icon: 'trash',   color: 'text-gray-500',   bg: 'bg-gray-50' },
     ad_updated_by_admin:      { icon: 'edit',    color: 'text-blue-500',   bg: 'bg-blue-50' },
     ad_deleted_by_admin:      { icon: 'trash',   color: 'text-red-500',    bg: 'bg-red-50' },
@@ -110,7 +110,7 @@ export default function NotificationsIndex({ notifications: initialData }) {
                         {unreadCount > 0 && (
                             <button
                                 onClick={markAllRead}
-                                className="text-sm text-indigo-600 hover:text-indigo-700 font-medium transition-colors"
+                                className="text-sm text-orange-600 hover:text-orange-700 font-medium transition-colors"
                             >
                                 Označi sve kao pročitano
                             </button>
@@ -131,7 +131,7 @@ export default function NotificationsIndex({ notifications: initialData }) {
                                     key={n.id}
                                     className={`flex gap-4 bg-white border rounded-xl p-4 transition-all ${
                                         !n.read_at
-                                            ? 'border-indigo-200 shadow-sm'
+                                            ? 'border-orange-200 shadow-sm'
                                             : 'border-gray-100'
                                     }`}
                                 >
@@ -146,7 +146,7 @@ export default function NotificationsIndex({ notifications: initialData }) {
                                                 <p className="text-sm text-gray-500 mt-0.5">{n.data.message}</p>
                                             </div>
                                             {!n.read_at && (
-                                                <span className="w-2 h-2 rounded-full bg-indigo-500 shrink-0 mt-1.5" />
+                                                <span className="w-2 h-2 rounded-full bg-orange-500 shrink-0 mt-1.5" />
                                             )}
                                         </div>
                                         <div className="flex items-center gap-3 mt-2">
@@ -155,7 +155,7 @@ export default function NotificationsIndex({ notifications: initialData }) {
                                                 <Link
                                                     href={n.data.url}
                                                     onClick={() => !n.read_at && markRead(n.id)}
-                                                    className="text-xs text-indigo-600 hover:text-indigo-700 font-medium"
+                                                    className="text-xs text-orange-600 hover:text-orange-700 font-medium"
                                                 >
                                                     Pogledaj →
                                                 </Link>
@@ -186,10 +186,10 @@ export default function NotificationsIndex({ notifications: initialData }) {
                             <button
                                 onClick={loadMore}
                                 disabled={loading}
-                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-indigo-300 transition disabled:opacity-50"
+                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
                             >
                                 {loading && (
-                                    <svg className="w-4 h-4 animate-spin text-indigo-600" fill="none" viewBox="0 0 24 24">
+                                    <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">
                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                     </svg>

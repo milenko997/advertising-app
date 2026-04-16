@@ -26,7 +26,7 @@ export default function CustomersEdit({ customer }) {
                                     value={data.name}
                                     onChange={e => setData('name', e.target.value)}
                                     required
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                 />
                                 {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
                             </div>
@@ -38,7 +38,7 @@ export default function CustomersEdit({ customer }) {
                                     value={data.email}
                                     onChange={e => setData('email', e.target.value)}
                                     required
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                 />
                                 {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
                             </div>
@@ -48,7 +48,7 @@ export default function CustomersEdit({ customer }) {
                                 <select
                                     value={data.role}
                                     onChange={e => setData('role', e.target.value)}
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                 >
                                     <option value="customer">Korisnik</option>
                                     <option value="admin">Admin</option>
@@ -60,7 +60,7 @@ export default function CustomersEdit({ customer }) {
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
+                                    className="px-5 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 disabled:opacity-50 transition"
                                 >
                                     Sačuvaj izmene
                                 </button>

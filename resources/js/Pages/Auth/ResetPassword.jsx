@@ -26,7 +26,7 @@ export default function ResetPassword({ token, email }) {
                         value={data.email}
                         onChange={e => setData('email', e.target.value)}
                         required autoFocus
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     />
                     {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
                 </div>
@@ -38,7 +38,7 @@ export default function ResetPassword({ token, email }) {
                         value={data.password}
                         onChange={e => setData('password', e.target.value)}
                         required autoComplete="new-password"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     />
                     {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
                 </div>
@@ -50,7 +50,7 @@ export default function ResetPassword({ token, email }) {
                         value={data.password_confirmation}
                         onChange={e => setData('password_confirmation', e.target.value)}
                         required autoComplete="new-password"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     />
                 </div>
 
@@ -58,7 +58,7 @@ export default function ResetPassword({ token, email }) {
                     <button
                         type="submit"
                         disabled={processing}
-                        className="w-full px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
+                        className="w-full px-5 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 disabled:opacity-50 transition"
                     >
                         Resetuj lozinku
                     </button>

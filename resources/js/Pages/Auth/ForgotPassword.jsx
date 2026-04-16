@@ -30,19 +30,19 @@ export default function ForgotPassword({ status }) {
                         value={data.email}
                         onChange={e => setData('email', e.target.value)}
                         required autoFocus
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     />
                     {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
-                    <Link href="/login" className="text-sm text-gray-500 hover:text-indigo-600">
+                    <Link href="/login" className="text-sm text-gray-500 hover:text-orange-600">
                         Nazad na prijavu
                     </Link>
                     <button
                         type="submit"
                         disabled={processing}
-                        className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
+                        className="px-5 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 disabled:opacity-50 transition"
                     >
                         Pošalji link
                     </button>

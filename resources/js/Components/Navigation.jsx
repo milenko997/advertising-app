@@ -192,7 +192,7 @@ export default function Navigation() {
                                             {unreadNotificationsCount > 0 && (
                                                 <button
                                                     onClick={() => { router.post('/obaveštenja/procitaj-sve', {}, { preserveScroll: true }); setBellOpen(false); }}
-                                                    className="text-xs text-indigo-600 hover:text-indigo-700"
+                                                    className="text-xs text-orange-600 hover:text-orange-700"
                                                 >
                                                     Označi sve
                                                 </button>
@@ -205,9 +205,9 @@ export default function Navigation() {
                                             ) : recentNotifications.map(n => (
                                                 <div
                                                     key={n.id}
-                                                    className={`flex gap-3 px-4 py-3 hover:bg-gray-50 transition-colors ${!n.read_at ? 'bg-indigo-50/40' : ''}`}
+                                                    className={`flex gap-3 px-4 py-3 hover:bg-gray-50 transition-colors ${!n.read_at ? 'bg-orange-50/40' : ''}`}
                                                 >
-                                                    <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${!n.read_at ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-500'}`}>
+                                                    <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${!n.read_at ? 'bg-orange-100 text-orange-600' : 'bg-gray-100 text-gray-500'}`}>
                                                         <NotifIcon type={n.data.type} />
                                                     </span>
                                                     <div className="flex-1 min-w-0">
@@ -215,7 +215,7 @@ export default function Navigation() {
                                                         <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{n.data.message}</p>
                                                         <p className="text-[11px] text-gray-400 mt-1">{n.created_at}</p>
                                                     </div>
-                                                    {!n.read_at && <span className="w-2 h-2 bg-indigo-500 rounded-full shrink-0 mt-1.5" />}
+                                                    {!n.read_at && <span className="w-2 h-2 bg-orange-500 rounded-full shrink-0 mt-1.5" />}
                                                 </div>
                                             ))}
                                         </div>
@@ -224,7 +224,7 @@ export default function Navigation() {
                                             <Link
                                                 href="/obaveštenja"
                                                 onClick={() => setBellOpen(false)}
-                                                className="block text-center text-sm text-indigo-600 hover:text-indigo-700 font-medium"
+                                                className="block text-center text-sm text-orange-600 hover:text-orange-700 font-medium"
                                             >
                                                 Vidi sva obaveštenja
                                             </Link>

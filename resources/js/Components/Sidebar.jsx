@@ -28,8 +28,8 @@ export default function Sidebar({ currentParent, currentChild }) {
                 href="/"
                 className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${
                     !currentParent
-                        ? 'text-indigo-600 bg-indigo-50'
-                        : 'text-gray-600 hover:text-indigo-600 hover:bg-gray-50'
+                        ? 'text-orange-600 bg-orange-50'
+                        : 'text-gray-600 hover:text-orange-600 hover:bg-gray-50'
                 }`}
             >
                 <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,8 +47,8 @@ export default function Sidebar({ currentParent, currentChild }) {
                                     onClick={() => toggle(cat.id)}
                                     className={`w-full text-left flex items-center justify-between gap-2 px-4 py-2 text-sm font-medium transition-colors ${
                                         currentParent === cat.slug
-                                            ? 'text-indigo-600 bg-indigo-50'
-                                            : 'text-gray-600 hover:text-indigo-600 hover:bg-gray-50'
+                                            ? 'text-orange-600 bg-orange-50'
+                                            : 'text-gray-600 hover:text-orange-600 hover:bg-gray-50'
                                     }`}
                                 >
                                     <span>{cat.name}</span>
@@ -66,8 +66,8 @@ export default function Sidebar({ currentParent, currentChild }) {
                                             href={`/kategorija/${cat.slug}`}
                                             className={`flex items-center gap-1.5 pl-8 pr-4 py-1.5 text-sm transition-colors ${
                                                 currentParent === cat.slug && !currentChild
-                                                    ? 'text-indigo-600 font-semibold'
-                                                    : 'text-gray-500 hover:text-indigo-600'
+                                                    ? 'text-orange-600 font-semibold'
+                                                    : 'text-gray-500 hover:text-orange-600'
                                             }`}
                                         >
                                             {cat.name}
@@ -78,8 +78,8 @@ export default function Sidebar({ currentParent, currentChild }) {
                                                 href={`/kategorija/${cat.slug}/${child.slug}`}
                                                 className={`flex items-center gap-1.5 pl-8 pr-4 py-1.5 text-sm transition-colors ${
                                                     currentChild === child.slug
-                                                        ? 'text-indigo-600 font-semibold'
-                                                        : 'text-gray-500 hover:text-indigo-600'
+                                                        ? 'text-orange-600 font-semibold'
+                                                        : 'text-gray-500 hover:text-orange-600'
                                                 }`}
                                             >
                                                     {child.name}
@@ -93,8 +93,8 @@ export default function Sidebar({ currentParent, currentChild }) {
                                 href={`/kategorija/${cat.slug}`}
                                 className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${
                                     currentParent === cat.slug
-                                        ? 'text-indigo-600 bg-indigo-50'
-                                        : 'text-gray-600 hover:text-indigo-600 hover:bg-gray-50'
+                                        ? 'text-orange-600 bg-orange-50'
+                                        : 'text-gray-600 hover:text-orange-600 hover:bg-gray-50'
                                 }`}
                             >
                                 {cat.name}

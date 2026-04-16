@@ -75,7 +75,7 @@ export default function LocationAutocomplete({ value, onChange, className, place
                         <li
                             key={city.name + city.region}
                             onMouseDown={() => select(city)}
-                            className="px-3 py-2 text-sm cursor-pointer hover:bg-indigo-50 transition-colors"
+                            className="px-3 py-2 text-sm cursor-pointer hover:bg-orange-50 transition-colors"
                         >
                             <p className="font-medium text-gray-800">{city.name}</p>
                             <p className="text-xs text-gray-400">{city.region}</p>

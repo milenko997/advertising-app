@@ -61,7 +61,7 @@ function ReviewCard({ review, authUserId }) {
 
     const handleDelete = () => {
         if (!confirm('Obrisati recenziju?')) return;
-        router.delete(`/reviews/${review.id}`);
+        router.delete(`/recenzije/${review.id}`);
     };
 
     const handleUpdate = (e) => {
@@ -69,7 +69,7 @@ function ReviewCard({ review, authUserId }) {
         if (!rating) { setError('Molimo odaberite ocenu zvezdicama.'); return; }
         setError('');
         setSubmitting(true);
-        router.put(`/reviews/${review.id}`, { rating, comment }, {
+        router.put(`/recenzije/${review.id}`, { rating, comment }, {
             onSuccess: () => setEditing(false),
             onFinish: () => setSubmitting(false),
         });
@@ -94,7 +94,7 @@ function ReviewCard({ review, authUserId }) {
                     </div>
                     <div>
                         <Link
-                            href={`/user/${review.reviewer.slug}`}
+                            href={`/korisnik/${review.reviewer.slug}`}
                             className="text-sm font-semibold text-gray-800 hover:text-indigo-600 transition-colors"
                         >
                             {review.reviewer.name}
@@ -181,7 +181,7 @@ function ReviewForm({ userSlug }) {
         if (!rating) { setError('Molimo odaberite ocenu zvezdicama.'); return; }
         setError('');
         setSubmitting(true);
-        router.post(`/user/${userSlug}/reviews`, { rating, comment }, {
+        router.post(`/korisnik/${userSlug}/recenzije`, { rating, comment }, {
             onFinish: () => setSubmitting(false),
         });
     };
@@ -430,7 +430,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                             Recenzije prodavca
                                         </h2>
                                         <Link
-                                            href={`/user/${ad.user.slug}#reviews`}
+                                            href={`/korisnik/${ad.user.slug}#reviews`}
                                             className="text-xs text-indigo-600 hover:underline"
                                         >
                                             Pogledaj profil
@@ -496,7 +496,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                         <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between gap-4">
                                             <p className="text-sm text-gray-500">Prijavite se da biste ostavili recenziju ovog prodavca.</p>
                                             <Link
-                                                href={`/user/${ad.user.slug}/review-login`}
+                                                href={`/korisnik/${ad.user.slug}/recenzija-prijava`}
                                                 className="shrink-0 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition"
                                             >
                                                 Prijavi se
@@ -574,7 +574,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                 {ad.user && (
                                     <div className="bg-white rounded-xl border border-gray-200 p-5">
                                         <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3">Objavio</p>
-                                        <Link href={`/user/${ad.user.slug}`} className="flex items-center gap-3 group">
+                                        <Link href={`/korisnik/${ad.user.slug}`} className="flex items-center gap-3 group">
                                             <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
                                                 {ad.user.avatar ? (
                                                     <img src={`/storage/${ad.user.avatar}`} alt={ad.user.name} className="w-10 h-10 rounded-full object-cover" />

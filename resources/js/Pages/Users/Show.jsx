@@ -43,7 +43,7 @@ function ReviewCard({ review, authUserId }) {
 
     const handleDelete = () => {
         if (!confirm('Delete your review?')) return;
-        router.delete(`/reviews/${review.id}`);
+        router.delete(`/recenzije/${review.id}`);
     };
 
     const handleUpdate = (e) => {
@@ -51,7 +51,7 @@ function ReviewCard({ review, authUserId }) {
         if (!rating) { setError('Please select a star rating.'); return; }
         setError('');
         setSubmitting(true);
-        router.put(`/reviews/${review.id}`, { rating, comment }, {
+        router.put(`/recenzije/${review.id}`, { rating, comment }, {
             onSuccess: () => setEditing(false),
             onFinish: () => setSubmitting(false),
         });
@@ -76,7 +76,7 @@ function ReviewCard({ review, authUserId }) {
                     </div>
                     <div>
                         <Link
-                            href={`/user/${review.reviewer.slug}`}
+                            href={`/korisnik/${review.reviewer.slug}`}
                             className="text-sm font-semibold text-gray-800 hover:text-indigo-600 transition-colors"
                         >
                             {review.reviewer.name}
@@ -164,7 +164,7 @@ function ReviewForm({ userSlug }) {
         if (!rating) { setError('Please select a star rating.'); return; }
         setError('');
         setSubmitting(true);
-        router.post(`/user/${userSlug}/reviews`, { rating, comment }, {
+        router.post(`/korisnik/${userSlug}/recenzije`, { rating, comment }, {
             onFinish: () => setSubmitting(false),
         });
     };
@@ -221,7 +221,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/user/${user.slug}?page=${nextPage}`);
+            const { data } = await axios.get(`/korisnik/${user.slug}?page=${nextPage}`);
             setAdList(prev => [...prev, ...data.ads]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);
@@ -321,7 +321,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                         <div className="rounded-xl border border-gray-200 p-5 text-center">
                                             <p className="text-sm text-gray-500 mb-3">Log in to leave a review</p>
                                             <Link
-                                                href={`/user/${user.slug}/review-login`}
+                                                href={`/korisnik/${user.slug}/recenzija-prijava`}
                                                 className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition"
                                             >
                                                 Log in to Review

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\User;
+use App\Notifications\ProfileUpdatedByAdminNotification;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
@@ -72,6 +73,8 @@ class AdminCustomerController extends Controller
     public function update(UpdateCustomerRequest $request, User $customer): RedirectResponse
     {
         $customer->update($request->only(['name', 'email', 'role']));
+
+        $customer->notify(new ProfileUpdatedByAdminNotification());
 
         return redirect()->route('admin.korisnici.index')->with('success', 'Korisnik je uspešno ažuriran.');
     }

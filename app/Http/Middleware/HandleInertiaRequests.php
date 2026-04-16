@@ -46,6 +46,17 @@ class HandleInertiaRequests extends Middleware
             'unreadFeedbackCount' => $user?->isAdmin()
                 ? Feedback::where('read', false)->count()
                 : 0,
+            'unreadNotificationsCount' => $user && !$user->isAdmin()
+                ? $user->unreadNotifications()->count()
+                : 0,
+            'recentNotifications' => $user && !$user->isAdmin()
+                ? $user->notifications()->latest()->take(5)->get()->map(fn ($n) => [
+                    'id'         => $n->id,
+                    'data'       => $n->data,
+                    'read_at'    => $n->read_at?->format('d.m.Y H:i'),
+                    'created_at' => $n->created_at->diffForHumans(),
+                ])->values()
+                : [],
             'categories' => Category::with('children')
                 ->whereNull('parent_id')
                 ->orderBy('name')

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement;
 use App\Models\Category;
+use App\Notifications\AdDeletedByAdminNotification;
+use App\Notifications\AdUpdatedByAdminNotification;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -104,6 +106,10 @@ class AdminAdvertisementController extends Controller
 
         $advertisement->save();
 
+        if ($advertisement->user) {
+            $advertisement->user->notify(new AdUpdatedByAdminNotification($advertisement));
+        }
+
         if ($request->hasFile('images')) {
             $nextOrder = $advertisement->images()->max('order') + 1;
             foreach ($request->file('images') as $i => $file) {
@@ -126,7 +132,14 @@ class AdminAdvertisementController extends Controller
 
     public function destroy(Advertisement $advertisement)
     {
+        $owner = $advertisement->user;
+        $title = $advertisement->title;
+
         $advertisement->delete();
+
+        if ($owner) {
+            $owner->notify(new AdDeletedByAdminNotification($title));
+        }
 
         return redirect()->route('admin.oglasi.index')->with('success', 'Oglas je obrisan.');
     }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, usePage, router } from '@inertiajs/react';
 
 function NavLink({ href, active, children }) {
@@ -27,11 +27,41 @@ function MobileNavLink({ href, children }) {
     );
 }
 
+const NOTIF_ICONS = {
+    ad_expiring:              'clock',
+    new_review:               'star',
+    review_updated:           'edit',
+    review_deleted:           'trash',
+    ad_updated_by_admin:      'edit',
+    ad_deleted_by_admin:      'trash',
+    profile_updated_by_admin: 'user',
+};
+
+function NotifIcon({ type }) {
+    const icon = NOTIF_ICONS[type] ?? 'bell';
+    if (icon === 'clock') return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
+    if (icon === 'star') return <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>;
+    if (icon === 'edit') return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>;
+    if (icon === 'trash') return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>;
+    if (icon === 'user') return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>;
+    return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>;
+}
+
 export default function Navigation() {
-    const { auth, pendingReportsCount, unreadMessagesCount, unreadFeedbackCount } = usePage().props;
+    const { auth, pendingReportsCount, unreadMessagesCount, unreadFeedbackCount, unreadNotificationsCount, recentNotifications } = usePage().props;
     const user = auth?.user;
     const [open, setOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [bellOpen, setBellOpen] = useState(false);
+    const bellRef = useRef(null);
+
+    useEffect(() => {
+        const handler = (e) => {
+            if (bellRef.current && !bellRef.current.contains(e.target)) setBellOpen(false);
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
 
     const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
 
@@ -124,7 +154,7 @@ export default function Navigation() {
 
                     {/* Right: User menu */}
                     <div className="hidden sm:flex items-center gap-3">
-                        {user && (
+                        {user && !user.isAdmin && (
                             <Link
                                 href="/postavi-oglas"
                                 className="inline-flex items-center gap-1.5 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm"
@@ -134,6 +164,73 @@ export default function Navigation() {
                                 </svg>
                                 Postavi oglas
                             </Link>
+                        )}
+
+                        {/* Bell */}
+                        {user && !user.isAdmin && (
+                            <div className="relative" ref={bellRef}>
+                                <button
+                                    onClick={() => setBellOpen(!bellOpen)}
+                                    className="relative p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-white/10"
+                                    aria-label="Obaveštenja"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                    </svg>
+                                    {unreadNotificationsCount > 0 && (
+                                        <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                                            {unreadNotificationsCount > 9 ? '9+' : unreadNotificationsCount}
+                                        </span>
+                                    )}
+                                </button>
+
+                                {bellOpen && (
+                                    <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl border border-gray-200 shadow-xl z-30">
+                                        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+                                            <span className="text-sm font-semibold text-gray-900">Obaveštenja</span>
+                                            {unreadNotificationsCount > 0 && (
+                                                <button
+                                                    onClick={() => { router.post('/obaveštenja/procitaj-sve', {}, { preserveScroll: true }); setBellOpen(false); }}
+                                                    className="text-xs text-indigo-600 hover:text-indigo-700"
+                                                >
+                                                    Označi sve
+                                                </button>
+                                            )}
+                                        </div>
+
+                                        <div className="max-h-80 overflow-y-auto divide-y divide-gray-50">
+                                            {recentNotifications.length === 0 ? (
+                                                <p className="text-sm text-gray-400 text-center py-8">Nema obaveštenja</p>
+                                            ) : recentNotifications.map(n => (
+                                                <div
+                                                    key={n.id}
+                                                    className={`flex gap-3 px-4 py-3 hover:bg-gray-50 transition-colors ${!n.read_at ? 'bg-indigo-50/40' : ''}`}
+                                                >
+                                                    <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${!n.read_at ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-500'}`}>
+                                                        <NotifIcon type={n.data.type} />
+                                                    </span>
+                                                    <div className="flex-1 min-w-0">
+                                                        <p className="text-xs font-semibold text-gray-800 leading-tight">{n.data.title}</p>
+                                                        <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{n.data.message}</p>
+                                                        <p className="text-[11px] text-gray-400 mt-1">{n.created_at}</p>
+                                                    </div>
+                                                    {!n.read_at && <span className="w-2 h-2 bg-indigo-500 rounded-full shrink-0 mt-1.5" />}
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <div className="px-4 py-3 border-t border-gray-100">
+                                            <Link
+                                                href="/obaveštenja"
+                                                onClick={() => setBellOpen(false)}
+                                                className="block text-center text-sm text-indigo-600 hover:text-indigo-700 font-medium"
+                                            >
+                                                Vidi sva obaveštenja
+                                            </Link>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         )}
                         {user ? (
                             <div className="relative">
@@ -239,9 +336,12 @@ export default function Navigation() {
                                 <MobileNavLink href="/moji-oglasi">Moji oglasi</MobileNavLink>
                                 <MobileNavLink href="/sacuvani">Sačuvani</MobileNavLink>
                                 <MobileNavLink href="/obrisani-oglasi">Obrisani</MobileNavLink>
+                                <MobileNavLink href="/obaveštenja">
+                                    Obaveštenja {unreadNotificationsCount > 0 && `(${unreadNotificationsCount})`}
+                                </MobileNavLink>
                             </>
                         )}
-                        {user && (
+                        {user && !user.isAdmin && (
                             <MobileNavLink href="/postavi-oglas">Postavi oglas</MobileNavLink>
                         )}
                     </div>

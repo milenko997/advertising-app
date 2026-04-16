@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Review;
 use App\Models\User;
+use App\Notifications\NewReviewNotification;
+use App\Notifications\ReviewDeletedNotification;
+use App\Notifications\ReviewUpdatedNotification;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -39,6 +42,8 @@ class ReviewController extends Controller
             'comment'          => $validated['comment'] ?? null,
         ]);
 
+        $user->notify(new NewReviewNotification(auth()->user(), $validated['rating']));
+
         return back()->with('success', 'Recenzija je dodata.');
     }
 
@@ -53,10 +58,16 @@ class ReviewController extends Controller
             'comment' => 'nullable|string|max:1000',
         ]);
 
+        $reviewedUser = $review->reviewedUser;
+
         $review->update([
             'rating'  => $validated['rating'],
             'comment' => $validated['comment'] ?? null,
         ]);
+
+        if ($reviewedUser) {
+            $reviewedUser->notify(new ReviewUpdatedNotification(auth()->user(), $validated['rating']));
+        }
 
         return back()->with('success', 'Recenzija je ažurirana.');
     }
@@ -67,7 +78,14 @@ class ReviewController extends Controller
             abort(403);
         }
 
+        $reviewedUser = $review->reviewedUser;
+        $reviewer = auth()->user();
+
         $review->delete();
+
+        if ($reviewedUser) {
+            $reviewedUser->notify(new ReviewDeletedNotification($reviewer));
+        }
 
         return back()->with('success', 'Recenzija je obrisana.');
     }

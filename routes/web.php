@@ -68,11 +68,11 @@ Route::middleware(['auth', 'isCustomer'])->group(function () {
 });
 
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('/kategorije', CategoryController::class);
-    Route::resource('/oglasi', AdminAdvertisementController::class)->except(['show', 'create', 'store']);
+    Route::resource('/kategorije', CategoryController::class)->parameters(['kategorije' => 'category']);
+    Route::resource('/oglasi', AdminAdvertisementController::class)->except(['show', 'create', 'store'])->parameters(['oglasi' => 'advertisement']);
     Route::patch('/oglasi/{advertisement}/pin', [AdminAdvertisementController::class, 'togglePin'])->name('advertisements.pin');
     Route::post('/oglasi/bulk-action', [AdminAdvertisementController::class, 'bulkAction'])->name('advertisements.bulk');
-    Route::resource('/korisnici', AdminCustomerController::class);
+    Route::resource('/korisnici', AdminCustomerController::class)->parameters(['korisnici' => 'customer']);
     Route::get('/prijave', [AdminReportController::class, 'index'])->name('reports.index');
     Route::patch('/prijave/{report}/resolve', [AdminReportController::class, 'resolve'])->name('reports.resolve');
     Route::delete('/prijave/{report}', [AdminReportController::class, 'destroy'])->name('reports.destroy');

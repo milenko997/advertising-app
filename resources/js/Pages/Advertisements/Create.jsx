@@ -162,7 +162,7 @@ export default function Create({ categories }) {
                             {/* Description */}
                             <div className="mb-4">
                                 <label className={labelClass}>Opis <span className="text-red-500">*</span></label>
-                                <textarea rows={4} value={data.description} onChange={e => setData('description', e.target.value)} minLength={10} maxLength={5000} className={inputClass} placeholder="Opišite vozilo, usluge, dostupnost, itd." />
+                                <textarea rows={8} value={data.description} onChange={e => setData('description', e.target.value)} minLength={10} maxLength={5000} className={inputClass} placeholder="Opišite vozilo, usluge, dostupnost, itd." />
                                 <p className="mt-1 text-xs text-gray-400">{data.description.length}/5000</p>
                                 {errors.description && <p className="mt-1 text-xs text-red-600">{errors.description}</p>}
                             </div>

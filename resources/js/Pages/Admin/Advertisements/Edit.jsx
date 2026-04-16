@@ -163,7 +163,7 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
 
                             <div className="mb-4">
                                 <label className={labelClass}>Opis <span className="text-red-500">*</span></label>
-                                <textarea rows={4} value={data.description} onChange={e => setData('description', e.target.value)} required className={inputClass} />
+                                <textarea rows={8} value={data.description} onChange={e => setData('description', e.target.value)} required className={inputClass} />
                                 {errors.description && <p className="mt-1 text-xs text-red-600">{errors.description}</p>}
                             </div>
 

@@ -71,7 +71,7 @@ class CategoryController extends Controller
 
         Category::create($validatedData);
 
-        return redirect()->route('admin.categories.index')->with('success', 'Kategorija je uspešno kreirana.');
+        return redirect()->route('admin.kategorije.index')->with('success', 'Kategorija je uspešno kreirana.');
     }
 
     /**
@@ -134,7 +134,7 @@ class CategoryController extends Controller
 
         $category->update($validatedData);
 
-        return redirect()->route('admin.categories.index')->with('success', 'Kategorija je uspešno ažurirana.');
+        return redirect()->route('admin.kategorije.index')->with('success', 'Kategorija je uspešno ažurirana.');
     }
 
     /**
@@ -147,6 +147,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return redirect()->route('admin.categories.index')->with('success', 'Kategorija je uspešno obrisana.');
+        return redirect()->route('admin.kategorije.index')->with('success', 'Kategorija je uspešno obrisana.');
     }
 }

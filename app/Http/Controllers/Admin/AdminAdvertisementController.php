@@ -114,7 +114,7 @@ class AdminAdvertisementController extends Controller
             }
         }
 
-        return redirect()->route('admin.advertisements.index')->with('success', 'Oglas je ažuriran.');
+        return redirect()->route('admin.oglasi.index')->with('success', 'Oglas je ažuriran.');
     }
 
     public function togglePin(Advertisement $advertisement)
@@ -128,7 +128,7 @@ class AdminAdvertisementController extends Controller
     {
         $advertisement->delete();
 
-        return redirect()->route('admin.advertisements.index')->with('success', 'Oglas je obrisan.');
+        return redirect()->route('admin.oglasi.index')->with('success', 'Oglas je obrisan.');
     }
 
     public function bulkAction(Request $request)

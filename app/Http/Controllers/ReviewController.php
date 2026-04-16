@@ -14,7 +14,7 @@ class ReviewController extends Controller
      */
     public function loginThenReview(User $user)
     {
-        return redirect("/user/{$user->slug}#reviews");
+        return redirect("/korisnik/{$user->slug}#reviews");
     }
 
     public function store(Request $request, User $user)

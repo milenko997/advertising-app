@@ -20,6 +20,7 @@ class AdminCustomerController extends Controller
             'name'       => $u->name,
             'email'      => $u->email,
             'role'       => $u->role,
+            'avatar'     => $u->avatar,
             'created_at' => $u->created_at->format('d.m.Y'),
         ])->values();
 

@@ -56,9 +56,17 @@ export default function CustomersIndex({ customers: initialCustomers }) {
                                     <tr key={customer.id} className="hover:bg-gray-50 transition-colors">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-semibold shrink-0">
-                                                    {customer.name.charAt(0).toUpperCase()}
-                                                </div>
+                                                {customer.avatar ? (
+                                                    <img
+                                                        src={`/storage/${customer.avatar}`}
+                                                        alt={customer.name}
+                                                        className="w-8 h-8 rounded-full object-cover shrink-0"
+                                                    />
+                                                ) : (
+                                                    <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-semibold shrink-0">
+                                                        {customer.name.charAt(0).toUpperCase()}
+                                                    </div>
+                                                )}
                                                 <span className="font-medium text-gray-900 text-sm">{customer.name}</span>
                                             </div>
                                         </td>
@@ -69,7 +77,7 @@ export default function CustomersIndex({ customers: initialCustomers }) {
                                                     ? 'bg-indigo-100 text-indigo-700'
                                                     : 'bg-gray-100 text-gray-600'
                                             }`}>
-                                                {customer.role.charAt(0).toUpperCase() + customer.role.slice(1)}
+                                                {customer.role === 'admin' ? 'Admin' : 'Korisnik'}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-sm text-gray-400">{customer.created_at}</td>

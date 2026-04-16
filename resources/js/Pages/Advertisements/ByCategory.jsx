@@ -52,7 +52,7 @@ export default function ByCategory({ category, ads, location, favoritedIds }) {
 
             <div className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex gap-6 items-start">
+                    <div className="flex flex-col lg:flex-row gap-6 items-start">
 
                         {/* Sidebar */}
                         <Sidebar currentParent={category.slug} />

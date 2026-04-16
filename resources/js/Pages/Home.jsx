@@ -59,7 +59,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
 
             <div id="page-home" className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex gap-6 items-start">
+                    <div className="flex flex-col lg:flex-row gap-6 items-start">
 
                         {/* Sidebar */}
                         <Sidebar />
@@ -68,7 +68,8 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                         <div id="home-content" className="flex-1 min-w-0">
 
                             {/* Search bar */}
-                            <form id="section-search" onSubmit={handleSearch} className="flex items-center gap-2 mb-6">
+                            <form id="section-search" onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-2 mb-6">
+                                {/* Row 1 (mobile) / item 1 (desktop): keyword search */}
                                 <div className="relative flex-1">
                                     <svg className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -81,37 +82,40 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                         className="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                     />
                                 </div>
-                                <div className="relative">
-                                    <svg className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                    <input
-                                        type="text"
-                                        value={locationValue}
-                                        onChange={e => setLocationValue(e.target.value)}
-                                        placeholder="Lokacija…"
-                                        className="border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm w-40 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                    />
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="shrink-0 bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
-                                >
-                                    Pretraži
-                                </button>
-                                {(searchValue || locationValue) && (
-                                    <button
-                                        type="button"
-                                        onClick={clearSearch}
-                                        className="shrink-0 flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors"
-                                    >
-                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                {/* Row 2 (mobile) / items 2-4 (desktop): location + buttons */}
+                                <div className="flex gap-2">
+                                    <div className="relative flex-1 sm:flex-none">
+                                        <svg className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
-                                        Obriši
+                                        <input
+                                            type="text"
+                                            value={locationValue}
+                                            onChange={e => setLocationValue(e.target.value)}
+                                            placeholder="Lokacija…"
+                                            className="w-full sm:w-36 border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                        />
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="shrink-0 bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+                                    >
+                                        Pretraži
                                     </button>
-                                )}
+                                    {(searchValue || locationValue) && (
+                                        <button
+                                            type="button"
+                                            onClick={clearSearch}
+                                            className="shrink-0 flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                                        >
+                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                            Obriši
+                                        </button>
+                                    )}
+                                </div>
                             </form>
 
                             {/* Pinned ads */}

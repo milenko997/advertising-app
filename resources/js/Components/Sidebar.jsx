@@ -108,27 +108,28 @@ export default function Sidebar({ currentParent, currentChild }) {
 
     return (
         <>
-            {/* Mobile toggle button */}
-            <button
-                id="sidebar-mobile-toggle"
-                onClick={() => setMobileOpen(prev => !prev)}
-                className="lg:hidden w-full text-left flex items-center gap-2 mb-4 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors"
-            >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-                Kategorije
-                <svg className={`w-3.5 h-3.5 ml-auto transition-transform ${mobileOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
+            {/* Mobile: toggle + dropdown wrapped as one flex child so gap-6 doesn't split them */}
+            <div className="lg:hidden w-full">
+                <button
+                    id="sidebar-mobile-toggle"
+                    onClick={() => setMobileOpen(prev => !prev)}
+                    className="w-full text-left flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors"
+                >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    Kategorije
+                    <svg className={`w-3.5 h-3.5 ml-auto transition-transform ${mobileOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
 
-            {/* Mobile dropdown */}
-            {mobileOpen && (
-                <div id="sidebar-mobile-panel" className="lg:hidden mb-4 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    {content}
-                </div>
-            )}
+                {mobileOpen && (
+                    <div id="sidebar-mobile-panel" className="mt-1.5 w-full bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                        {content}
+                    </div>
+                )}
+            </div>
 
             {/* Desktop sidebar — sticky on the flex child itself + self-start is the key */}
             <aside id="sidebar" className="hidden lg:block w-52 shrink-0 sticky top-6 self-start">

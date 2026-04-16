@@ -5,7 +5,7 @@ export default function AdCard({ ad, favoritedIds = [] }) {
     const isSaved = favoritedIds.includes(ad.id);
 
     return (
-        <div data-ad-id={ad.id} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col border border-gray-100">
+        <div data-ad-id={ad.id} className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col border border-gray-100">
 
             {/* Image */}
             <div className="relative shrink-0">
@@ -19,12 +19,11 @@ export default function AdCard({ ad, favoritedIds = [] }) {
                             />
                         </div>
                     ) : (
-                        <div className="aspect-[16/10] bg-slate-50 flex flex-col items-center justify-center gap-2">
-                            <svg className="w-12 h-12 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                                    d="M3 7h18M3 12h18M3 17h18" />
+                        <div className="aspect-[16/10] bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col items-center justify-center gap-2">
+                            <svg fill="currentColor" viewBox="0 0 24 24" className="w-10 h-10 text-slate-300">
+                                <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
                             </svg>
-                            <span className="text-xs text-slate-300 font-medium">Bez slike</span>
+                            <span className="text-xs text-slate-400 font-medium">Bez slike</span>
                         </div>
                     )}
                 </Link>

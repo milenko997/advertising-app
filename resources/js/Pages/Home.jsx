@@ -67,6 +67,14 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                         {/* Main content */}
                         <div id="home-content" className="flex-1 min-w-0">
 
+                            {/* Page header */}
+                            {!search && (
+                                <div className="mb-5">
+                                    <h1 className="text-xl font-bold text-slate-900">Transport oglasi u Srbiji</h1>
+                                    <p className="text-sm text-slate-500 mt-0.5">Pronađite vozila, rute i logističke partnere na jednom mestu.</p>
+                                </div>
+                            )}
+
                             {/* Search bar */}
                             <form id="section-search" onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-2 mb-6">
                                 {/* Row 1 (mobile) / item 1 (desktop): keyword search */}
@@ -162,20 +170,20 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                     </div>
 
                                     {hasMore && (
-                                        <div className="mt-8 text-center">
+                                        <div className="mt-8">
                                             <button
                                                 id="btn-load-more"
                                                 onClick={loadMore}
                                                 disabled={loading}
-                                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                                className="w-full flex items-center justify-center gap-2 bg-white border border-gray-200 text-gray-600 px-6 py-3 rounded-xl text-sm font-medium hover:bg-orange-50 hover:border-orange-300 hover:text-orange-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
                                             >
                                                 {loading && (
-                                                    <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">
+                                                    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
                                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                                     </svg>
                                                 )}
-                                                {loading ? 'Učitavanje…' : 'Učitaj još'}
+                                                {loading ? 'Učitavanje…' : 'Učitaj još oglasa'}
                                             </button>
                                         </div>
                                     )}

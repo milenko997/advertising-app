@@ -26,9 +26,9 @@ export default function Sidebar({ currentParent, currentChild }) {
         <nav className="py-2">
             <Link
                 href="/"
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${
+                className={`flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium transition-colors ${
                     !currentParent
-                        ? 'text-orange-600 bg-orange-50'
+                        ? 'text-orange-600 bg-orange-50 border-r-2 border-orange-500'
                         : 'text-gray-600 hover:text-orange-600 hover:bg-gray-50'
                 }`}
             >
@@ -45,9 +45,9 @@ export default function Sidebar({ currentParent, currentChild }) {
                             <>
                                 <button
                                     onClick={() => toggle(cat.id)}
-                                    className={`w-full text-left flex items-center justify-between gap-2 px-4 py-2 text-sm font-medium transition-colors ${
+                                    className={`w-full text-left flex items-center justify-between gap-2 px-4 py-2.5 text-sm font-medium transition-colors ${
                                         currentParent === cat.slug
-                                            ? 'text-orange-600 bg-orange-50'
+                                            ? 'text-orange-600 bg-orange-50 border-r-2 border-orange-500'
                                             : 'text-gray-600 hover:text-orange-600 hover:bg-gray-50'
                                     }`}
                                 >
@@ -64,7 +64,7 @@ export default function Sidebar({ currentParent, currentChild }) {
                                     <div className="mb-1">
                                         <Link
                                             href={`/kategorija/${cat.slug}`}
-                                            className={`flex items-center gap-1.5 pl-8 pr-4 py-1.5 text-sm transition-colors ${
+                                            className={`flex items-center gap-1.5 pl-8 pr-4 py-2 text-sm transition-colors ${
                                                 currentParent === cat.slug && !currentChild
                                                     ? 'text-orange-600 font-semibold'
                                                     : 'text-gray-500 hover:text-orange-600'
@@ -76,13 +76,14 @@ export default function Sidebar({ currentParent, currentChild }) {
                                             <Link
                                                 key={child.id}
                                                 href={`/kategorija/${cat.slug}/${child.slug}`}
-                                                className={`flex items-center gap-1.5 pl-8 pr-4 py-1.5 text-sm transition-colors ${
+                                                className={`flex items-center gap-1.5 pl-8 pr-4 py-2 text-sm transition-colors ${
                                                     currentChild === child.slug
                                                         ? 'text-orange-600 font-semibold'
                                                         : 'text-gray-500 hover:text-orange-600'
                                                 }`}
                                             >
-                                                    {child.name}
+                                                <span className={`w-1 h-1 rounded-full shrink-0 ${currentChild === child.slug ? 'bg-orange-500' : 'bg-gray-300'}`} />
+                                                {child.name}
                                             </Link>
                                         ))}
                                     </div>
@@ -91,9 +92,9 @@ export default function Sidebar({ currentParent, currentChild }) {
                         ) : (
                             <Link
                                 href={`/kategorija/${cat.slug}`}
-                                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${
+                                className={`flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium transition-colors ${
                                     currentParent === cat.slug
-                                        ? 'text-orange-600 bg-orange-50'
+                                        ? 'text-orange-600 bg-orange-50 border-r-2 border-orange-500'
                                         : 'text-gray-600 hover:text-orange-600 hover:bg-gray-50'
                                 }`}
                             >

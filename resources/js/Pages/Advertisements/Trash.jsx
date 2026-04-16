@@ -57,44 +57,45 @@ export default function Trash({ ads: initialAds }) {
                         <>
                             <div className="space-y-3">
                                 {adList.map(ad => (
-                                    <div key={ad.id} className="flex gap-4 bg-white border border-gray-200 rounded-xl p-4 opacity-75">
-                                        {ad.image ? (
-                                            <img
-                                                src={`/storage/${ad.image}`}
-                                                alt={ad.title}
-                                                className="w-24 h-20 object-cover rounded-lg shrink-0 grayscale"
-                                            />
-                                        ) : (
-                                            <div className="w-24 h-20 bg-gray-100 rounded-lg flex items-center justify-center shrink-0">
-                                                <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                </svg>
-                                            </div>
-                                        )}
+                                    <div key={ad.id} className="bg-white border border-gray-200 rounded-xl p-4 opacity-75">
+                                        {/* Top row: thumbnail + info */}
+                                        <div className="flex gap-3">
+                                            {ad.image ? (
+                                                <img
+                                                    src={`/storage/${ad.image}`}
+                                                    alt={ad.title}
+                                                    className="w-20 h-16 sm:w-24 sm:h-20 object-cover rounded-lg shrink-0 grayscale"
+                                                />
+                                            ) : (
+                                                <div className="w-20 h-16 sm:w-24 sm:h-20 bg-gray-100 rounded-lg flex items-center justify-center shrink-0">
+                                                    <svg className="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                            )}
 
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-start justify-between gap-4">
-                                                <div className="min-w-0">
-                                                    <p className="font-semibold text-gray-700">{ad.title}</p>
-                                                    <p className="text-sm text-gray-400 mt-0.5 truncate">{ad.description}</p>
-                                                    <p className="text-xs text-red-500 mt-2">Obrisano: {ad.deleted_at}</p>
-                                                </div>
-                                                <div className="flex items-center gap-2 shrink-0">
-                                                    <button
-                                                        onClick={() => restore(ad.id)}
-                                                        className="px-3 py-1.5 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
-                                                    >
-                                                        Vrati
-                                                    </button>
-                                                    <button
-                                                        onClick={() => forceDelete(ad.id)}
-                                                        className="px-3 py-1.5 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-                                                    >
-                                                        Trajno obriši
-                                                    </button>
-                                                </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="font-semibold text-gray-700 text-sm sm:text-base line-clamp-1">{ad.title}</p>
+                                                <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">{ad.description}</p>
+                                                <p className="text-xs text-red-500 mt-1.5">Obrisano: {ad.deleted_at}</p>
                                             </div>
+                                        </div>
+
+                                        {/* Bottom row: actions */}
+                                        <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
+                                            <button
+                                                onClick={() => restore(ad.id)}
+                                                className="px-3 py-1.5 text-xs font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                                            >
+                                                Vrati
+                                            </button>
+                                            <button
+                                                onClick={() => forceDelete(ad.id)}
+                                                className="px-3 py-1.5 text-xs font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                                            >
+                                                Trajno obriši
+                                            </button>
                                         </div>
                                     </div>
                                 ))}

@@ -81,93 +81,87 @@ export default function UserIndex({ ads: initialAds }) {
                         <>
                             <div id="section-my-ads-list" className="space-y-3">
                                 {adList.map(ad => (
-                                    <div key={ad.id} className="flex gap-4 bg-white border border-gray-200 rounded-xl p-4 hover:border-indigo-200 hover:shadow-sm transition-all">
-                                        {/* Thumbnail */}
-                                        {ad.image ? (
-                                            <img
-                                                src={`/storage/${ad.image}`}
-                                                alt={ad.title}
-                                                className="w-24 h-20 object-cover rounded-lg shrink-0"
-                                            />
-                                        ) : (
-                                            <div className="w-24 h-20 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center shrink-0">
-                                                <svg className="w-7 h-7 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                </svg>
-                                            </div>
-                                        )}
+                                    <div key={ad.id} className="bg-white border border-gray-200 rounded-xl p-4 hover:border-indigo-200 hover:shadow-sm transition-all">
+                                        {/* Top row: thumbnail + info */}
+                                        <div className="flex gap-3">
+                                            {ad.image ? (
+                                                <img
+                                                    src={`/storage/${ad.image}`}
+                                                    alt={ad.title}
+                                                    className="w-20 h-16 sm:w-24 sm:h-20 object-cover rounded-lg shrink-0"
+                                                />
+                                            ) : (
+                                                <div className="w-20 h-16 sm:w-24 sm:h-20 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center shrink-0">
+                                                    <svg className="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                            )}
 
-                                        {/* Content */}
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-start justify-between gap-4">
-                                                <div className="min-w-0 flex-1">
-                                                    <Link
-                                                        href={`/oglas/${ad.slug}`}
-                                                        className="font-semibold text-gray-900 hover:text-indigo-600 transition-colors line-clamp-1"
-                                                    >
-                                                        {ad.title}
-                                                    </Link>
-                                                    <p className="text-sm text-gray-400 mt-0.5 line-clamp-1">{ad.description}</p>
-                                                    <div className="flex flex-wrap items-center gap-2 mt-2">
-                                                        {ad.availability && (
-                                                            <span className={`px-2 py-0.5 text-xs font-medium rounded-md ${
-                                                                ad.availability === 'available'
-                                                                    ? 'bg-emerald-50 text-emerald-700'
-                                                                    : 'bg-amber-50 text-amber-700'
-                                                            }`}>
-                                                                {AVAILABILITY_LABEL[ad.availability] || ad.availability}
-                                                            </span>
-                                                        )}
-                                                        {ad.price && <span className="text-xs font-semibold text-indigo-600">{ad.price}</span>}
-                                                        {ad.category?.name && <span className="text-xs text-gray-400">{ad.category.name}</span>}
-                                                        <span className="text-xs text-gray-400">{ad.created_at}</span>
-                                                        {ad.is_expired ? (
-                                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold bg-red-100 text-red-600">
-                                                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                                </svg>
-                                                                Isteklo
-                                                            </span>
-                                                        ) : ad.expires_at && (
-                                                            <span className="text-xs text-gray-400">
-                                                                Ističe {ad.expires_at}
-                                                            </span>
-                                                        )}
-                                                        <span className="inline-flex items-center gap-1 text-xs text-gray-400">
-                                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                            </svg>
-                                                            {ad.views ?? 0}
+                                            <div className="flex-1 min-w-0">
+                                                <Link
+                                                    href={`/oglas/${ad.slug}`}
+                                                    className="font-semibold text-gray-900 hover:text-indigo-600 transition-colors line-clamp-1 text-sm sm:text-base"
+                                                >
+                                                    {ad.title}
+                                                </Link>
+                                                <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">{ad.description}</p>
+                                                <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                                                    {ad.availability && (
+                                                        <span className={`px-2 py-0.5 text-xs font-medium rounded-md ${
+                                                            ad.availability === 'available'
+                                                                ? 'bg-emerald-50 text-emerald-700'
+                                                                : 'bg-amber-50 text-amber-700'
+                                                        }`}>
+                                                            {AVAILABILITY_LABEL[ad.availability] || ad.availability}
                                                         </span>
-                                                    </div>
-                                                </div>
-
-                                                {/* Actions */}
-                                                <div className="flex items-center gap-2 shrink-0">
-                                                    {ad.is_expired && (
-                                                        <button
-                                                            onClick={() => handleRenew(ad.id)}
-                                                            className="px-3 py-1.5 border border-emerald-300 rounded-lg text-xs font-medium text-emerald-700 hover:bg-emerald-50 transition"
-                                                        >
-                                                            Obnovi
-                                                        </button>
                                                     )}
-                                                    <Link
-                                                        href={`/oglasi/uredi/${ad.slug}`}
-                                                        className="px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-medium text-gray-700 hover:bg-gray-50 transition"
-                                                    >
-                                                        Izmeni
-                                                    </Link>
-                                                    <button
-                                                        onClick={() => handleDelete(ad.id)}
-                                                        className="px-3 py-1.5 border border-red-200 rounded-lg text-xs font-medium text-red-600 hover:bg-red-50 transition"
-                                                    >
-                                                        Obriši
-                                                    </button>
+                                                    {ad.price && <span className="text-xs font-semibold text-indigo-600">{ad.price}</span>}
+                                                    {ad.is_expired ? (
+                                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold bg-red-100 text-red-600">
+                                                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                            </svg>
+                                                            Isteklo
+                                                        </span>
+                                                    ) : ad.expires_at && (
+                                                        <span className="text-xs text-gray-400">Ističe {ad.expires_at}</span>
+                                                    )}
+                                                    <span className="inline-flex items-center gap-1 text-xs text-gray-400">
+                                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                        </svg>
+                                                        {ad.views ?? 0}
+                                                    </span>
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        {/* Bottom row: actions */}
+                                        <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
+                                            {ad.is_expired && (
+                                                <button
+                                                    onClick={() => handleRenew(ad.id)}
+                                                    className="px-3 py-1.5 border border-emerald-300 rounded-lg text-xs font-medium text-emerald-700 hover:bg-emerald-50 transition"
+                                                >
+                                                    Obnovi
+                                                </button>
+                                            )}
+                                            <Link
+                                                href={`/oglasi/uredi/${ad.slug}`}
+                                                className="px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-medium text-gray-700 hover:bg-gray-50 transition"
+                                            >
+                                                Izmeni
+                                            </Link>
+                                            <button
+                                                onClick={() => handleDelete(ad.id)}
+                                                className="px-3 py-1.5 border border-red-200 rounded-lg text-xs font-medium text-red-600 hover:bg-red-50 transition"
+                                            >
+                                                Obriši
+                                            </button>
+                                            <span className="ml-auto text-xs text-gray-400">{ad.created_at}</span>
                                         </div>
                                     </div>
                                 ))}

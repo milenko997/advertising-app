@@ -38,7 +38,7 @@ class AuthenticatedSessionController extends Controller
         $user = auth()->user();
 
         if ($user->role === 'admin') {
-            return redirect()->route('admin.oglasi.index');
+            return redirect()->route('admin.dashboard');
         }
 
         return redirect()->intended('/');

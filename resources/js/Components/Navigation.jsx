@@ -91,6 +91,7 @@ export default function Navigation() {
 
                             {user && user.isAdmin && (
                                 <>
+                                    <NavLink href="/admin/statistika" active={currentPath === '/admin/statistika'}>Statistika</NavLink>
                                     <NavLink href="/admin/oglasi" active={currentPath.startsWith('/admin/oglasi')}>Oglasi</NavLink>
                                     <NavLink href="/admin/kategorije" active={currentPath.startsWith('/admin/kategorije')}>Kategorije</NavLink>
                                     <NavLink href="/admin/korisnici" active={currentPath.startsWith('/admin/korisnici')}>Korisnici</NavLink>
@@ -317,6 +318,7 @@ export default function Navigation() {
                         <MobileNavLink href="/">Oglasi</MobileNavLink>
                         {user && user.isAdmin && (
                             <>
+                                <MobileNavLink href="/admin/statistika">Statistika</MobileNavLink>
                                 <MobileNavLink href="/admin/oglasi">Oglasi</MobileNavLink>
                                 <MobileNavLink href="/admin/kategorije">Kategorije</MobileNavLink>
                                 <MobileNavLink href="/admin/korisnici">Korisnici</MobileNavLink>

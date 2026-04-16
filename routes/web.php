@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminAdvertisementController;
 use App\Http\Controllers\Admin\AdminContactController;
 use App\Http\Controllers\Admin\AdminFeedbackController;
@@ -74,6 +75,7 @@ Route::middleware(['auth', 'isCustomer'])->group(function () {
 });
 
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/statistika', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('/kategorije', CategoryController::class)->parameters(['kategorije' => 'category']);
     Route::resource('/oglasi', AdminAdvertisementController::class)->except(['show', 'create', 'store'])->parameters(['oglasi' => 'advertisement']);
     Route::patch('/oglasi/{advertisement}/pin', [AdminAdvertisementController::class, 'togglePin'])->name('advertisements.pin');

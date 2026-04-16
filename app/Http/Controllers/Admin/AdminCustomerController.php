@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\User;
 use App\Notifications\ProfileUpdatedByAdminNotification;
+use App\Services\ImageService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
@@ -60,18 +61,34 @@ class AdminCustomerController extends Controller
     {
         return Inertia::render('Admin/Customers/Edit', [
             'customer' => [
-                'id'    => $customer->id,
-                'slug'  => $customer->slug,
-                'name'  => $customer->name,
-                'email' => $customer->email,
-                'role'  => $customer->role,
+                'id'     => $customer->id,
+                'slug'   => $customer->slug,
+                'name'   => $customer->name,
+                'email'  => $customer->email,
+                'role'   => $customer->role,
+                'phone'  => $customer->phone,
+                'avatar' => $customer->avatar,
             ],
         ]);
     }
 
     public function update(UpdateCustomerRequest $request, User $customer): RedirectResponse
     {
-        $customer->update($request->only(['name', 'email']));
+        $customer->name  = $request->validated('name');
+        $customer->email = $request->validated('email');
+        $customer->phone = $request->validated('phone');
+
+        if ($request->hasFile('avatar')) {
+            ImageService::delete($customer->avatar);
+            $customer->avatar = ImageService::store($request->file('avatar'), 'avatars');
+        }
+
+        if ($request->boolean('remove_avatar') && !$request->hasFile('avatar')) {
+            ImageService::delete($customer->avatar);
+            $customer->avatar = null;
+        }
+
+        $customer->save();
         $customer->forceFill(['role' => $request->validated('role')])->save();
 
         $customer->notify(new ProfileUpdatedByAdminNotification());

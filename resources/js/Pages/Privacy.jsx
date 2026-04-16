@@ -19,6 +19,16 @@ export default function Privacy() {
             <Head>
                 <title>Politika privatnosti — AdBoard</title>
                 <meta name="description" content="Saznajte kako AdBoard prikuplja, koristi i štiti vaše lične podatke u skladu sa srpskim zakonom o zaštiti podataka." />
+                <meta property="og:type"        content="website" />
+                <meta property="og:site_name"   content="AdBoard" />
+                <meta property="og:title"       content="Politika privatnosti — AdBoard" />
+                <meta property="og:description" content="Saznajte kako AdBoard prikuplja, koristi i štiti vaše lične podatke u skladu sa srpskim zakonom o zaštiti podataka." />
+                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta property="og:url"         content={window.location.href} />
+                <meta name="twitter:card"        content="summary_large_image" />
+                <meta name="twitter:title"       content="Politika privatnosti — AdBoard" />
+                <meta name="twitter:description" content="Saznajte kako AdBoard prikuplja, koristi i štiti vaše lične podatke u skladu sa srpskim zakonom o zaštiti podataka." />
+                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
             </Head>
 
             {/* Hero */}

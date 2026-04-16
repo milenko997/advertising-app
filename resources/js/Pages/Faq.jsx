@@ -141,6 +141,16 @@ export default function Faq() {
             <Head>
                 <title>Česta pitanja — AdBoard</title>
                 <meta name="description" content="Često postavljana pitanja o AdBoard-u — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
+                <meta property="og:type"        content="website" />
+                <meta property="og:site_name"   content="AdBoard" />
+                <meta property="og:title"       content="Česta pitanja — AdBoard" />
+                <meta property="og:description" content="Često postavljana pitanja o AdBoard-u — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
+                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta property="og:url"         content={window.location.href} />
+                <meta name="twitter:card"        content="summary_large_image" />
+                <meta name="twitter:title"       content="Česta pitanja — AdBoard" />
+                <meta name="twitter:description" content="Često postavljana pitanja o AdBoard-u — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
+                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
             </Head>
 
             {/* Hero */}

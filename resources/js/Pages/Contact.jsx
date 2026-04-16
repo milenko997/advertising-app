@@ -38,6 +38,16 @@ export default function Contact() {
             <Head>
                 <title>Kontakt — AdBoard</title>
                 <meta name="description" content="Stupite u kontakt sa AdBoard timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
+                <meta property="og:type"        content="website" />
+                <meta property="og:site_name"   content="AdBoard" />
+                <meta property="og:title"       content="Kontakt — AdBoard" />
+                <meta property="og:description" content="Stupite u kontakt sa AdBoard timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
+                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta property="og:url"         content={window.location.href} />
+                <meta name="twitter:card"        content="summary_large_image" />
+                <meta name="twitter:title"       content="Kontakt — AdBoard" />
+                <meta name="twitter:description" content="Stupite u kontakt sa AdBoard timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
+                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
             </Head>
 
             {/* Hero */}

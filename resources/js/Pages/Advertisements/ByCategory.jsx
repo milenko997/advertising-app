@@ -42,6 +42,12 @@ export default function ByCategory({ category, ads, location, favoritedIds }) {
                 <meta property="og:description" content={`Pregledajte oglase u kategoriji ${category.name} na AdBoard-u — srpskom marketplaceu za transport i teretne usluge.`} />
                 <meta property="og:type"        content="website" />
                 <meta property="og:site_name"   content="AdBoard" />
+                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta property="og:url"         content={window.location.href} />
+                <meta name="twitter:card"        content="summary_large_image" />
+                <meta name="twitter:title"       content={`${category.name} — AdBoard`} />
+                <meta name="twitter:description" content={`Pregledajte oglase u kategoriji ${category.name} na AdBoard-u — srpskom marketplaceu za transport i teretne usluge.`} />
+                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
             </Head>
 
             <div className="py-8">

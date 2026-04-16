@@ -19,6 +19,16 @@ export default function Terms() {
             <Head>
                 <title>Uslovi korišćenja — AdBoard</title>
                 <meta name="description" content="Pročitajte AdBoard uslove korišćenja koji pokrivaju registraciju naloga, pravila postavljanja oglasa, zabranjeni sadržaj i vaša prava kao korisnika." />
+                <meta property="og:type"        content="website" />
+                <meta property="og:site_name"   content="AdBoard" />
+                <meta property="og:title"       content="Uslovi korišćenja — AdBoard" />
+                <meta property="og:description" content="Pročitajte AdBoard uslove korišćenja koji pokrivaju registraciju naloga, pravila postavljanja oglasa, zabranjeni sadržaj i vaša prava kao korisnika." />
+                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta property="og:url"         content={window.location.href} />
+                <meta name="twitter:card"        content="summary_large_image" />
+                <meta name="twitter:title"       content="Uslovi korišćenja — AdBoard" />
+                <meta name="twitter:description" content="Pročitajte AdBoard uslove korišćenja koji pokrivaju registraciju naloga, pravila postavljanja oglasa, zabranjeni sadržaj i vaša prava kao korisnika." />
+                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
             </Head>
 
             {/* Hero */}

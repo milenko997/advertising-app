@@ -49,6 +49,12 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                 <meta property="og:site_name"   content="AdBoard" />
                 <meta property="og:title"       content="AdBoard — Transport & Freight Marketplace in Serbia" />
                 <meta property="og:description" content="Browse trucks, vans, trailers, and logistics services across Serbia. Find transport professionals or post your own ad on AdBoard." />
+                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta property="og:url"         content={window.location.href} />
+                <meta name="twitter:card"        content="summary_large_image" />
+                <meta name="twitter:title"       content="AdBoard — Transport & Freight Marketplace in Serbia" />
+                <meta name="twitter:description" content="Browse trucks, vans, trailers, and logistics services across Serbia. Find transport professionals or post your own ad on AdBoard." />
+                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
             </Head>
 
             <div id="page-home" className="py-8">

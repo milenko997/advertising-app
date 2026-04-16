@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, usePage, router } from '@inertiajs/react';
+import { Link, usePage, router, Head } from '@inertiajs/react';
 import axios from 'axios';
 import AppLayout from '@/Layouts/AppLayout';
 import AdCard from '@/Components/AdCard';
@@ -230,8 +230,28 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
         }
     };
 
+    const pageTitle  = `${user.name} — AdBoard`;
+    const pageDesc   = `Pogledajte profil korisnika ${user.name} na AdBoard-u — oglasi, recenzije i kontakt informacije.`;
+    const avatarUrl  = user.avatar
+        ? `${window.location.origin}/storage/${user.avatar}`
+        : `${window.location.origin}/og-default.png`;
+
     return (
         <AppLayout>
+            <Head>
+                <title>{pageTitle}</title>
+                <meta name="description" content={pageDesc} />
+                <meta property="og:type"        content="profile" />
+                <meta property="og:site_name"   content="AdBoard" />
+                <meta property="og:title"       content={pageTitle} />
+                <meta property="og:description" content={pageDesc} />
+                <meta property="og:image"       content={avatarUrl} />
+                <meta property="og:url"         content={window.location.href} />
+                <meta name="twitter:card"        content="summary" />
+                <meta name="twitter:title"       content={pageTitle} />
+                <meta name="twitter:description" content={pageDesc} />
+                <meta name="twitter:image"       content={avatarUrl} />
+            </Head>
             <div id="page-user-profile" className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 

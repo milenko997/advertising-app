@@ -11,6 +11,12 @@ export default function About() {
                 <meta property="og:description" content="Saznajte više o AdBoard platformi — srpskom marketplaceu za transport i logistiku." />
                 <meta property="og:type"        content="website" />
                 <meta property="og:site_name"   content="AdBoard" />
+                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta property="og:url"         content={window.location.href} />
+                <meta name="twitter:card"        content="summary_large_image" />
+                <meta name="twitter:title"       content="O nama — AdBoard" />
+                <meta name="twitter:description" content="Saznajte više o AdBoard platformi — srpskom marketplaceu za transport i logistiku." />
+                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
             </Head>
 
             {/* Hero */}

@@ -86,7 +86,7 @@ export default function Navigation() {
                             <span className="text-lg font-bold text-white tracking-tight">AdBoard</span>
                         </Link>
 
-                        <div id="navbar-links" className="hidden sm:flex items-center gap-0.5">
+                        <div id="navbar-links" className="hidden lg:flex items-center gap-0.5">
                             <NavLink href="/" active={currentPath === '/'}>Početna</NavLink>
 
                             {user && user.isAdmin && (
@@ -154,7 +154,7 @@ export default function Navigation() {
                     </div>
 
                     {/* Right: User menu */}
-                    <div id="navbar-right" className="hidden sm:flex items-center gap-3">
+                    <div id="navbar-right" className="hidden lg:flex items-center gap-3">
                         {!user?.isAdmin && (
                             <Link
                                 href="/postavi-oglas"
@@ -297,7 +297,7 @@ export default function Navigation() {
                     {!user?.isAdmin && (
                         <Link
                             href="/postavi-oglas"
-                            className="sm:hidden flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors"
+                            className="lg:hidden flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -309,7 +309,7 @@ export default function Navigation() {
                     {/* Mobile hamburger */}
                     <button
                         onClick={() => setOpen(!open)}
-                        className="sm:hidden p-2 rounded-md text-slate-400 hover:text-white hover:bg-white/10 transition"
+                        className="lg:hidden p-2 rounded-md text-slate-400 hover:text-white hover:bg-white/10 transition"
                     >
                         {open ? (
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -326,7 +326,7 @@ export default function Navigation() {
 
             {/* Mobile menu */}
             {open && (
-                <div id="navbar-mobile-menu" className="sm:hidden border-t border-slate-800 bg-slate-900">
+                <div id="navbar-mobile-menu" className="lg:hidden border-t border-slate-800 bg-slate-900">
                     <div className="px-4 py-3 space-y-0.5">
                         {!user?.isAdmin && (
                             <MobileNavLink href="/postavi-oglas">Postavi oglas</MobileNavLink>

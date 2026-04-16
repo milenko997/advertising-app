@@ -92,7 +92,7 @@ function ReviewCard({ review, authUserId }) {
                             <button
                                 onClick={() => setEditing(true)}
                                 className="text-gray-300 hover:text-indigo-500 transition-colors"
-                                title="Edit review"
+                                title="Izmeni recenziju"
                             >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -102,7 +102,7 @@ function ReviewCard({ review, authUserId }) {
                             <button
                                 onClick={handleDelete}
                                 className="text-gray-300 hover:text-red-500 transition-colors"
-                                title="Delete review"
+                                title="Obriši recenziju"
                             >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -273,7 +273,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                 <h1 className="text-xl font-bold text-gray-900">{user.name}</h1>
                                 <div className="flex items-center gap-3 mt-1 flex-wrap">
                                     <p className="text-sm text-gray-500">
-                                        {ads.total} {ads.total === 1 ? 'ad' : 'ads'} listed
+                                        {ads.total} {ads.total === 1 ? 'oglas objavljen' : 'oglasa objavljeno'} 
                                     </p>
                                     {avgRating !== null && (
                                         <>
@@ -282,7 +282,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                                 <StarRating value={Math.round(avgRating)} readOnly />
                                                 <span className="text-sm font-semibold text-gray-700">{avgRating}</span>
                                                 <span className="text-sm text-gray-400">
-                                                    ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})
+                                                    ({reviews.length} {reviews.length === 1 ? 'recenzija' : 'recenzije'})
                                                 </span>
                                             </div>
                                         </>
@@ -294,10 +294,10 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
 
                     {/* ── Reviews section ── */}
                     {!isOwnProfile && (
-                        <div id="reviews" className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
+                        <div id="recenzije" className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
                             <div className="flex items-center justify-between mb-4">
                                 <h2 className="text-base font-bold text-gray-900">
-                                    Reviews
+                                    Recenzije
                                     {reviews.length > 0 && (
                                         <span className="ml-2 text-sm font-normal text-gray-400">({reviews.length})</span>
                                     )}
@@ -327,7 +327,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                 <div className="space-y-4">
                                     {myReview && (
                                         <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
-                                            <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-2">Your Review</p>
+                                            <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-2">Tvoje recenzije</p>
                                             <StarRating value={myReview.rating} readOnly />
                                             {myReview.comment && (
                                                 <p className="text-sm text-indigo-700 mt-2">{myReview.comment}</p>
@@ -339,25 +339,25 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
 
                                     {!auth?.user && (
                                         <div className="rounded-xl border border-gray-200 p-5 text-center">
-                                            <p className="text-sm text-gray-500 mb-3">Log in to leave a review</p>
+                                            <p className="text-sm text-gray-500 mb-3">Prijavite se da biste ostavili recenziju</p>
                                             <Link
                                                 href={`/korisnik/${user.slug}/recenzija-prijava`}
                                                 className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition"
                                             >
-                                                Log in to Review
+                                                Prijavite se
                                             </Link>
                                         </div>
                                     )}
 
                                     {!canReview && !myReview && auth?.user && (
-                                        <p className="text-sm text-gray-400">You have already reviewed this user.</p>
+                                        <p className="text-sm text-gray-400">Ovom korisniku ste već dali recenziju.</p>
                                     )}
                                 </div>
 
                                 {/* Right: reviews list */}
                                 <div className="lg:col-span-2">
                                     {reviews.length === 0 ? (
-                                        <p className="text-sm text-gray-400 py-2">No reviews yet. Be the first!</p>
+                                        <p className="text-sm text-gray-400 py-2">Još nema recenzija. Budite prvi!</p>
                                     ) : (
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             {reviews.map(review => (
@@ -378,7 +378,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                     <div id="section-user-ads"></div>
                     {adList.length === 0 ? (
                         <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
-                            <p className="text-gray-500">This user has no active ads.</p>
+                            <p className="text-gray-500">Ovaj korisnik nema aktivnih oglasa.</p>
                         </div>
                     ) : (
                         <>

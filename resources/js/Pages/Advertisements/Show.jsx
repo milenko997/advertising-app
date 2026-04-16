@@ -109,7 +109,7 @@ function ReviewCard({ review, authUserId }) {
                             <button
                                 onClick={() => setEditing(true)}
                                 className="text-gray-300 hover:text-indigo-500 transition-colors"
-                                title="Edit review"
+                                title="Izmeni recenziju"
                             >
                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -119,7 +119,7 @@ function ReviewCard({ review, authUserId }) {
                             <button
                                 onClick={handleDelete}
                                 className="text-gray-300 hover:text-red-500 transition-colors"
-                                title="Delete review"
+                                title="Obriši recenziju"
                             >
                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -423,14 +423,14 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
 
                             {/* ── Reviews section ── */}
                             {ad.user && !isOwner && (
-                                <div className="bg-white rounded-xl border border-gray-200 p-6" id="reviews">
+                                <div className="bg-white rounded-xl border border-gray-200 p-6" id="recenzije">
                                     {/* Header */}
                                     <div className="flex items-center justify-between mb-1">
                                         <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
                                             Recenzije prodavca
                                         </h2>
                                         <Link
-                                            href={`/korisnik/${ad.user.slug}#reviews`}
+                                            href={`/korisnik/${ad.user.slug}#recenzije`}
                                             className="text-xs text-indigo-600 hover:underline"
                                         >
                                             Pogledaj profil

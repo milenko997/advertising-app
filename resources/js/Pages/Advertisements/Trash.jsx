@@ -38,7 +38,7 @@ export default function Trash({ ads: initialAds }) {
 
     return (
         <AppLayout>
-            <div className="py-8">
+            <div id="page-trash" className="py-8">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     <div className="mb-6">

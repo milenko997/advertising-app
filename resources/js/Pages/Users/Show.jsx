@@ -232,11 +232,11 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
 
     return (
         <AppLayout>
-            <div className="py-8">
+            <div id="page-user-profile" className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     {/* User card */}
-                    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
+                    <div id="section-user-header" className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
                         <div className="flex items-center gap-5">
                             {user.avatar ? (
                                 <img
@@ -355,6 +355,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                     )}
 
                     {/* ── Ads grid ── */}
+                    <div id="section-user-ads"></div>
                     {adList.length === 0 ? (
                         <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
                             <p className="text-gray-500">This user has no active ads.</p>

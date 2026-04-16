@@ -52,7 +52,7 @@ export default function ByCategory({ category, ads, location, favoritedIds }) {
                         <Sidebar currentParent={category.slug} />
 
                         {/* Main content */}
-                        <div className="flex-1 min-w-0">
+                        <div id="page-by-category" className="flex-1 min-w-0">
 
                             <div className="flex items-center justify-between mb-6">
                                 <h1 className="text-xl font-bold text-gray-900">{category.name}</h1>

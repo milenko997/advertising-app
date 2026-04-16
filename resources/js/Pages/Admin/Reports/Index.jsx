@@ -109,7 +109,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
 
     return (
         <AppLayout>
-            <div className="py-8">
+            <div id="page-admin-reports" className="py-8">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
                     <div className="flex items-center justify-between">

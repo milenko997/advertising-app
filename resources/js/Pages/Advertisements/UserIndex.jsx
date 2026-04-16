@@ -43,7 +43,7 @@ export default function UserIndex({ ads: initialAds }) {
 
     return (
         <AppLayout>
-            <div className="py-8">
+            <div id="page-my-ads" className="py-8">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     {/* Page header */}
@@ -79,7 +79,7 @@ export default function UserIndex({ ads: initialAds }) {
                         </div>
                     ) : (
                         <>
-                            <div className="space-y-3">
+                            <div id="section-my-ads-list" className="space-y-3">
                                 {adList.map(ad => (
                                     <div key={ad.id} className="flex gap-4 bg-white border border-gray-200 rounded-xl p-4 hover:border-indigo-200 hover:shadow-sm transition-all">
                                         {/* Thumbnail */}

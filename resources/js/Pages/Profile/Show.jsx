@@ -52,7 +52,7 @@ export default function ProfileShow({ user }) {
 
     return (
         <AppLayout>
-            <div className="py-8">
+            <div id="page-profile" className="py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
                     <div className="mb-2">
                         <h1 className="text-2xl font-bold text-gray-900">Moj profil</h1>
@@ -60,7 +60,7 @@ export default function ProfileShow({ user }) {
                     </div>
 
                     {/* Profile Information */}
-                    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+                    <div id="section-profile-info" className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                         <h3 className="text-base font-semibold text-gray-900 mb-5">Podaci profila</h3>
 
                         {recentlySuccessful && (
@@ -162,7 +162,7 @@ export default function ProfileShow({ user }) {
                     </div>
 
                     {/* Change Password */}
-                    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+                    <div id="section-profile-password" className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                         <h3 className="text-base font-semibold text-gray-900 mb-5">Promena lozinke</h3>
 
                         {pwSuccess && (

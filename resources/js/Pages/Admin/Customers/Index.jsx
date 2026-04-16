@@ -32,7 +32,7 @@ export default function CustomersIndex({ customers: initialCustomers }) {
 
     return (
         <AppLayout header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Korisnici</h2>}>
-            <div className="py-8">
+            <div id="page-admin-customers" className="py-8">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                         <table className="min-w-full divide-y divide-gray-200">

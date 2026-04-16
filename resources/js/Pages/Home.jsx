@@ -51,7 +51,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                 <meta property="og:description" content="Browse trucks, vans, trailers, and logistics services across Serbia. Find transport professionals or post your own ad on AdBoard." />
             </Head>
 
-            <div className="py-8">
+            <div id="page-home" className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex gap-6 items-start">
 
@@ -59,10 +59,10 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                         <Sidebar />
 
                         {/* Main content */}
-                        <div className="flex-1 min-w-0">
+                        <div id="home-content" className="flex-1 min-w-0">
 
                             {/* Search bar */}
-                            <form onSubmit={handleSearch} className="flex items-center gap-2 mb-6">
+                            <form id="section-search" onSubmit={handleSearch} className="flex items-center gap-2 mb-6">
                                 <div className="relative flex-1">
                                     <svg className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -110,7 +110,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
 
                             {/* Pinned ads */}
                             {pinnedAds.length > 0 && !search && (
-                                <div className="mb-8">
+                                <div id="section-pinned-ads" className="mb-8">
                                     <div className="flex items-center gap-2 mb-4">
                                         <svg className="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
@@ -145,7 +145,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                 </div>
                             ) : (
                                 <>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                                    <div id="section-ad-list" className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                                         {adList.map(ad => (
                                             <AdCard key={ad.id} ad={ad} favoritedIds={favoritedIds} />
                                         ))}
@@ -154,6 +154,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                     {hasMore && (
                                         <div className="mt-8 text-center">
                                             <button
+                                                id="btn-load-more"
                                                 onClick={loadMore}
                                                 disabled={loading}
                                                 className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-indigo-300 transition disabled:opacity-50 disabled:cursor-not-allowed"

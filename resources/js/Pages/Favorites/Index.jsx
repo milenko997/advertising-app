@@ -27,7 +27,7 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds 
 
     return (
         <AppLayout>
-            <div className="py-8">
+            <div id="page-favorites" className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     {/* Page header */}
@@ -52,7 +52,7 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds 
                         </div>
                     ) : (
                         <>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                            <div id="section-favorites-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                                 {adList.map(ad => (
                                     <AdCard key={ad.id} ad={ad} favoritedIds={favoritedIds} />
                                 ))}

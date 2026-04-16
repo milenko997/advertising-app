@@ -14,7 +14,7 @@ export default function About() {
             </Head>
 
             {/* Hero */}
-            <div className="bg-slate-900 py-20">
+            <div id="section-about-hero" className="bg-slate-900 py-20">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full text-orange-400 text-xs font-semibold tracking-wide uppercase mb-6">
                         O nama
@@ -31,7 +31,7 @@ export default function About() {
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
 
                 {/* Mission */}
-                <section className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                <section id="section-about-mission" className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                     <div>
                         <h2 className="text-2xl font-bold text-gray-900 mb-4">Naša misija</h2>
                         <p className="text-gray-600 leading-relaxed mb-4">
@@ -50,7 +50,7 @@ export default function About() {
                 </section>
 
                 {/* Stats */}
-                <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+                <section id="section-about-stats" className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
                     <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">AdBoard u brojevima</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
                         {[
@@ -68,7 +68,7 @@ export default function About() {
                 </section>
 
                 {/* Values */}
-                <section>
+                <section id="section-about-values">
                     <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Naše vrednosti</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                         {[
@@ -111,7 +111,7 @@ export default function About() {
                 </section>
 
                 {/* How it works */}
-                <section>
+                <section id="section-about-how-it-works">
                     <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Kako funkcioniše</h2>
                     <div className="space-y-4">
                         {[
@@ -132,7 +132,7 @@ export default function About() {
                 </section>
 
                 {/* CTA */}
-                <section className="bg-indigo-600 rounded-2xl p-10 text-center">
+                <section id="section-about-cta" className="bg-indigo-600 rounded-2xl p-10 text-center">
                     <h2 className="text-2xl font-bold text-white mb-3">Pridružite se AdBoard zajednici</h2>
                     <p className="text-indigo-200 mb-7 max-w-xl mx-auto">
                         Registracija je besplatna. Postavite oglas danas i dosegnite klijente širom Srbije.

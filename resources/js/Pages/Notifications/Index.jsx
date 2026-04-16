@@ -96,7 +96,7 @@ export default function NotificationsIndex({ notifications: initialData }) {
 
     return (
         <AppLayout>
-            <div className="py-8">
+            <div id="page-notifications" className="py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     {/* Header */}
@@ -125,7 +125,7 @@ export default function NotificationsIndex({ notifications: initialData }) {
                             <p className="text-gray-400">Nema obaveštenja.</p>
                         </div>
                     ) : (
-                        <div className="space-y-2">
+                        <div id="section-notification-list" className="space-y-2">
                             {list.map(n => (
                                 <div
                                     key={n.id}

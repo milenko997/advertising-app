@@ -71,12 +71,12 @@ export default function Navigation() {
     };
 
     return (
-        <nav className="bg-slate-900 border-b border-slate-800">
+        <nav id="navbar" className="bg-slate-900 border-b border-slate-800">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
 
                     {/* Left: Logo + links */}
-                    <div className="flex items-center gap-8">
+                    <div id="navbar-left" className="flex items-center gap-8">
                         <Link href="/" className="shrink-0 flex items-center gap-2.5">
                             <span className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center shadow-sm">
                                 <svg className="w-4.5 h-4.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{width:'18px',height:'18px'}}>
@@ -86,7 +86,7 @@ export default function Navigation() {
                             <span className="text-lg font-bold text-white tracking-tight">AdBoard</span>
                         </Link>
 
-                        <div className="hidden sm:flex items-center gap-0.5">
+                        <div id="navbar-links" className="hidden sm:flex items-center gap-0.5">
                             <NavLink href="/" active={currentPath === '/'}>Početna</NavLink>
 
                             {user && user.isAdmin && (
@@ -153,7 +153,7 @@ export default function Navigation() {
                     </div>
 
                     {/* Right: User menu */}
-                    <div className="hidden sm:flex items-center gap-3">
+                    <div id="navbar-right" className="hidden sm:flex items-center gap-3">
                         {user && !user.isAdmin && (
                             <Link
                                 href="/postavi-oglas"
@@ -168,7 +168,7 @@ export default function Navigation() {
 
                         {/* Bell */}
                         {user && !user.isAdmin && (
-                            <div className="relative" ref={bellRef}>
+                            <div id="navbar-bell" className="relative" ref={bellRef}>
                                 <button
                                     onClick={() => setBellOpen(!bellOpen)}
                                     className="relative p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-white/10"
@@ -312,7 +312,7 @@ export default function Navigation() {
 
             {/* Mobile menu */}
             {open && (
-                <div className="sm:hidden border-t border-slate-800 bg-slate-900">
+                <div id="navbar-mobile-menu" className="sm:hidden border-t border-slate-800 bg-slate-900">
                     <div className="px-4 py-3 space-y-0.5">
                         <MobileNavLink href="/">Oglasi</MobileNavLink>
                         {user && user.isAdmin && (

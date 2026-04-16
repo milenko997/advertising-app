@@ -110,6 +110,7 @@ export default function Sidebar({ currentParent, currentChild }) {
         <>
             {/* Mobile toggle button */}
             <button
+                id="sidebar-mobile-toggle"
                 onClick={() => setMobileOpen(prev => !prev)}
                 className="lg:hidden w-full text-left flex items-center gap-2 mb-4 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors"
             >
@@ -124,13 +125,13 @@ export default function Sidebar({ currentParent, currentChild }) {
 
             {/* Mobile dropdown */}
             {mobileOpen && (
-                <div className="lg:hidden mb-4 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                <div id="sidebar-mobile-panel" className="lg:hidden mb-4 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                     {content}
                 </div>
             )}
 
             {/* Desktop sidebar — sticky on the flex child itself + self-start is the key */}
-            <aside className="hidden lg:block w-52 shrink-0 sticky top-6 self-start">
+            <aside id="sidebar" className="hidden lg:block w-52 shrink-0 sticky top-6 self-start">
                 <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                     <div className="px-4 py-3 border-b border-gray-100">
                         <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kategorije</h2>

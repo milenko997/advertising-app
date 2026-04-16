@@ -14,7 +14,7 @@ export default function CategoriesCreate({ categories }) {
 
     return (
         <AppLayout>
-            <div className="py-8">
+            <div id="page-admin-create-category" className="py-8">
                 <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                         <form onSubmit={submit} className="space-y-5">

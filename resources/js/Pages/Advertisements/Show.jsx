@@ -283,7 +283,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                 <meta name="twitter:image"       content={imageUrl} />
             </Head>
 
-            <div className="py-8">
+            <div id="page-ad-detail" className="py-8">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     {/* Back link */}
@@ -297,7 +297,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                         {/* ── Left column ── */}
-                        <div className="lg:col-span-2 space-y-6">
+                        <div id="ad-left-col" className="lg:col-span-2 space-y-6">
 
                             {/* Image gallery */}
                             {allImages.length > 0 ? (
@@ -396,13 +396,13 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                             </div>
 
                             {/* Description */}
-                            <div className="bg-white rounded-xl border border-gray-200 p-6">
+                            <div id="section-ad-description" className="bg-white rounded-xl border border-gray-200 p-6">
                                 <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Opis</h2>
                                 <p className="text-gray-700 leading-relaxed whitespace-pre-line">{ad.description}</p>
                             </div>
 
                             {/* Specs */}
-                            <div className="bg-white rounded-xl border border-gray-200 p-6">
+                            <div id="section-ad-specs" className="bg-white rounded-xl border border-gray-200 p-6">
                                 <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Detalji</h2>
                                 <SpecRow
                                     icon={<svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>}
@@ -508,11 +508,11 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                         </div>
 
                         {/* ── Right column (sticky sidebar) ── */}
-                        <div className="lg:col-span-1">
+                        <div id="ad-right-col" className="lg:col-span-1">
                             <div className="sticky top-6 space-y-4">
 
                                 {/* Price card */}
-                                <div className="bg-white rounded-xl border border-gray-200 p-6">
+                                <div id="section-ad-contact" className="bg-white rounded-xl border border-gray-200 p-6">
                                     <div className="mb-4">
                                         <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">Cena</p>
                                         {ad.price ? (

@@ -21,10 +21,10 @@ class Report extends Model
     public static function typeLabels(): array
     {
         return [
-            'wrong_category' => 'Wrong category',
-            'duplicate_spam' => 'Duplicated ad / spam',
-            'against_rules'  => 'Against the rules',
-            'ignore_user'    => 'Ignore all ads of this user',
+            'wrong_category' => 'Pogrešna kategorija',
+            'duplicate_spam' => 'Duplikat oglasa / spam',
+            'against_rules'  => 'Krši pravila',
+            'ignore_user'    => 'Ignoriši sve oglase ovog korisnika',
         ];
     }
 }

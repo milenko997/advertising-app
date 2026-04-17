@@ -57,8 +57,16 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                 <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
             </Head>
 
-            <div id="page-home" className="py-8">
+            <div id="page-home" className="py-4 sm:py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Page header */}
+                    {!search && (
+                        <div className="mb-5">
+                            <h1 className="text-xl font-bold text-slate-900">Transport oglasi u Srbiji</h1>
+                            <p className="text-sm text-slate-500 mt-0.5">Pronađite vozila, rute i logističke partnere na jednom mestu.</p>
+                        </div>
+                    )}
+
                     <div className="flex flex-col lg:flex-row gap-6 items-start">
 
                         {/* Sidebar */}
@@ -67,13 +75,6 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                         {/* Main content */}
                         <div id="home-content" className="flex-1 min-w-0">
 
-                            {/* Page header */}
-                            {!search && (
-                                <div className="mb-5">
-                                    <h1 className="text-xl font-bold text-slate-900">Transport oglasi u Srbiji</h1>
-                                    <p className="text-sm text-slate-500 mt-0.5">Pronađite vozila, rute i logističke partnere na jednom mestu.</p>
-                                </div>
-                            )}
 
                             {/* Search bar */}
                             <form id="section-search" onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-2 mb-6">

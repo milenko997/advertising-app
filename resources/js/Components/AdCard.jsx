@@ -79,7 +79,7 @@ export default function AdCard({ ad, favoritedIds = [] }) {
                 </div>
 
                 {/* Description */}
-                <p className="text-xs text-slate-400 line-clamp-2 mb-4 leading-relaxed">
+                <p className="text-sm text-slate-400 line-clamp-2 mb-4 leading-relaxed">
                     {ad.description}
                 </p>
 

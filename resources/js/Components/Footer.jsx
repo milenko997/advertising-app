@@ -25,19 +25,19 @@ export default function Footer() {
                         </p>
                         {/* Social icons */}
                         <div className="flex items-center gap-3 mt-5">
-                            <a href="#" aria-label="Facebook" className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition-colors">
+                            <a href="#" aria-label="Facebook" className="w-11 h-11 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition-colors">
                                 <svg className="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
                                 </svg>
                             </a>
-                            <a href="#" aria-label="Instagram" className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition-colors">
+                            <a href="#" aria-label="Instagram" className="w-11 h-11 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition-colors">
                                 <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                                     <circle cx="12" cy="12" r="4"/>
                                     <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
                                 </svg>
                             </a>
-                            <a href="#" aria-label="LinkedIn" className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition-colors">
+                            <a href="#" aria-label="LinkedIn" className="w-11 h-11 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition-colors">
                                 <svg className="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
                                     <circle cx="4" cy="4" r="2"/>

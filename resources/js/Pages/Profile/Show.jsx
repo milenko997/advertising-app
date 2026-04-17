@@ -52,7 +52,7 @@ export default function ProfileShow({ user }) {
 
     return (
         <AppLayout>
-            <div id="page-profile" className="py-8">
+            <div id="page-profile" className="py-4 sm:py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
                     <div className="mb-2">
                         <h1 className="text-2xl font-bold text-gray-900">Moj profil</h1>
@@ -88,7 +88,7 @@ export default function ProfileShow({ user }) {
                                     )}
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <label className="cursor-pointer inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition w-fit">
+                                    <label className="cursor-pointer inline-flex items-center gap-2 px-3 py-2.5 text-sm font-medium bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition w-fit min-h-[44px]">
                                         <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                                         </svg>
@@ -99,7 +99,7 @@ export default function ProfileShow({ user }) {
                                         <button
                                             type="button"
                                             onClick={removeAvatar}
-                                            className="inline-flex items-center gap-1.5 text-sm text-red-500 hover:text-red-700 w-fit"
+                                            className="inline-flex items-center gap-1.5 py-2 text-sm text-red-500 hover:text-red-700 w-fit min-h-[44px]"
                                         >
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />

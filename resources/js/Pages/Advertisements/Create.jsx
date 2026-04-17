@@ -122,7 +122,7 @@ export default function Create({ categories }) {
 
     return (
         <AppLayout>
-            <div className="py-8">
+            <div className="py-4 sm:py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     {/* Page header */}
@@ -255,7 +255,7 @@ export default function Create({ categories }) {
                                                 <button
                                                     type="button"
                                                     onClick={() => removeGalleryImage(i)}
-                                                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                                    className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
                                                 >
                                                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -285,15 +285,15 @@ export default function Create({ categories }) {
                                 </button>
                             </div>
 
-                            <div className="mt-6 pt-6 border-t border-gray-100 flex items-center gap-3">
+                            <div className="mt-6 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="px-6 py-2.5 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition disabled:opacity-50"
+                                    className="w-full sm:w-auto px-6 py-3 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition disabled:opacity-50"
                                 >
                                     {processing ? 'Postavljanje…' : 'Postavi oglas'}
                                 </button>
-                                <Link href="/moji-oglasi" className="text-sm text-gray-500 hover:text-gray-700">
+                                <Link href="/moji-oglasi" className="w-full sm:w-auto text-center py-3 text-sm text-gray-500 hover:text-gray-700 border border-gray-200 rounded-lg sm:border-0 sm:py-0">
                                     Otkaži
                                 </Link>
                             </div>

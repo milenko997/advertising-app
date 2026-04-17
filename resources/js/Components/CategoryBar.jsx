@@ -22,7 +22,7 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                 <nav className="flex flex-wrap items-center gap-1.5">
                     <Link
                         href="/"
-                        className={`px-3.5 py-1.5 text-sm rounded-full font-medium transition-colors ${
+                        className={`px-3.5 py-2 text-sm rounded-full font-medium transition-colors ${
                             !currentParent
                                 ? 'bg-orange-600 text-white'
                                 : 'text-gray-500 hover:text-orange-600 hover:bg-orange-50'
@@ -37,7 +37,7 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                                 <>
                                     <button
                                         onClick={() => setOpenId(openId === cat.id ? null : cat.id)}
-                                        className={`flex items-center gap-1 px-3.5 py-1.5 text-sm rounded-full font-medium transition-colors ${
+                                        className={`flex items-center gap-1 px-3.5 py-2 text-sm rounded-full font-medium transition-colors ${
                                             currentParent === cat.slug
                                                 ? 'bg-orange-600 text-white'
                                                 : 'text-gray-500 hover:text-orange-600 hover:bg-orange-50'
@@ -80,7 +80,7 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                             ) : (
                                 <Link
                                     href={`/kategorija/${cat.slug}`}
-                                    className={`block px-3.5 py-1.5 text-sm rounded-full font-medium transition-colors ${
+                                    className={`block px-3.5 py-2 text-sm rounded-full font-medium transition-colors ${
                                         currentParent === cat.slug
                                             ? 'bg-orange-600 text-white'
                                             : 'text-gray-500 hover:text-orange-600 hover:bg-orange-50'
@@ -96,7 +96,7 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                 {/* Search row */}
                 <form
                     onSubmit={e => { e.preventDefault(); onSearch?.(); }}
-                    className="flex items-center gap-2"
+                    className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2"
                 >
                     <div className="relative flex-1">
                         <svg className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,39 +111,41 @@ export default function CategoryBar({ currentParent, currentChild, search, locat
                         />
                     </div>
 
-                    <div className="relative flex-1">
-                        <svg className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <input
-                            type="text"
-                            value={location ?? ''}
-                            onChange={e => onSearch && onSearch(e.target.value, 'location')}
-                            placeholder="Lokacija…"
-                            className="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                        />
-                    </div>
-
-                    <button
-                        type="submit"
-                        className="shrink-0 bg-orange-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors"
-                    >
-                        Pretraži
-                    </button>
-
-                    {(search || location) && (
-                        <button
-                            type="button"
-                            onClick={() => onSearch?.('clear')}
-                            className="shrink-0 flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors"
-                        >
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <div className="flex gap-2">
+                        <div className="relative flex-1 sm:flex-none sm:w-36">
+                            <svg className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                            Obriši
+                            <input
+                                type="text"
+                                value={location ?? ''}
+                                onChange={e => onSearch && onSearch(e.target.value, 'location')}
+                                placeholder="Lokacija…"
+                                className="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="shrink-0 bg-orange-600 text-white px-5 py-3 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors"
+                        >
+                            Pretraži
                         </button>
-                    )}
+
+                        {(search || location) && (
+                            <button
+                                type="button"
+                                onClick={() => onSearch?.('clear')}
+                                className="shrink-0 flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                            >
+                                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Obriši
+                            </button>
+                        )}
+                    </div>
                 </form>
 
             </div>

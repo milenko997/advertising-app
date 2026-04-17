@@ -114,7 +114,7 @@ export default function Sidebar({ currentParent, currentChild }) {
                 <button
                     id="sidebar-mobile-toggle"
                     onClick={() => setMobileOpen(prev => !prev)}
-                    className="w-full text-left flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors"
+                    className="w-full text-left flex items-center gap-2 px-4 py-3 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors"
                 >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />

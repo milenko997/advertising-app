@@ -186,7 +186,7 @@ export default function Navigation() {
                                 </button>
 
                                 {bellOpen && (
-                                    <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl border border-gray-200 shadow-xl z-30">
+                                    <div className="absolute right-0 mt-2 w-80 max-w-[calc(100vw-1rem)] bg-white rounded-xl border border-gray-200 shadow-xl z-30">
                                         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
                                             <span className="text-sm font-semibold text-gray-900">Obaveštenja</span>
                                             {unreadNotificationsCount > 0 && (
@@ -297,7 +297,7 @@ export default function Navigation() {
                     {!user?.isAdmin && (
                         <Link
                             href="/postavi-oglas"
-                            className="lg:hidden flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors"
+                            className="lg:hidden flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-3 py-2.5 rounded-lg transition-colors min-h-[44px]"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

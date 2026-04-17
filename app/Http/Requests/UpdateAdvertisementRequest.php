@@ -8,12 +8,7 @@ class UpdateAdvertisementRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        $user = $this->user();
-        if (!$user) return false;
-        if ($user->isAdmin()) return true;
-
-        $ad = \App\Models\Advertisement::where('slug', $this->route('slug'))->first();
-        return $ad && $ad->user_id === $user->id;
+        return $this->user() !== null;
     }
 
     public function rules(): array

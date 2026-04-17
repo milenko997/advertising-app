@@ -14,7 +14,8 @@ class SlugService
         $counter = 1;
 
         while (
-            Advertisement::where('slug', $slug)
+            Advertisement::withTrashed()
+                ->where('slug', $slug)
                 ->when($excludeId, fn($q) => $q->where('id', '!=', $excludeId))
                 ->exists()
         ) {

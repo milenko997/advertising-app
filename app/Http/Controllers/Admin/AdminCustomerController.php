@@ -98,6 +98,10 @@ class AdminCustomerController extends Controller
 
     public function destroy(User $customer): RedirectResponse
     {
+        if ($customer->isAdmin()) {
+            abort(403, 'Admin accounts cannot be deleted.');
+        }
+
         $customer->delete();
 
         return redirect()->route('admin.korisnici.index')->with('success', 'Korisnik je uspešno obrisan.');

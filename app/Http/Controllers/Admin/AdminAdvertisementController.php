@@ -109,6 +109,10 @@ class AdminAdvertisementController extends Controller
         }
 
         if ($request->hasFile('images')) {
+            if ($advertisement->images()->count() + count($request->file('images')) > 10) {
+                return back()->withErrors(['images' => 'Ne možete dodati više od 10 slika u galeriju.']);
+            }
+
             $nextOrder = $advertisement->images()->max('order') + 1;
             foreach ($request->file('images') as $i => $file) {
                 $advertisement->images()->create([

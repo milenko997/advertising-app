@@ -127,6 +127,10 @@ class UserAdvertisementController extends Controller
         $ad->save();
 
         if ($request->hasFile('images')) {
+            if ($ad->images()->count() + count($request->file('images')) > 10) {
+                return back()->withErrors(['images' => 'Ne možete dodati više od 10 slika u galeriju.']);
+            }
+
             $nextOrder = $ad->images()->max('order') + 1;
             foreach ($request->file('images') as $i => $file) {
                 $ad->images()->create([

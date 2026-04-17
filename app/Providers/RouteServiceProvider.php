@@ -61,7 +61,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('ad-creation', function (Request $request) {
-            return Limit::perHour(5)->by($request->user()?->id)->response(function () {
+            return Limit::perHour(5)->by($request->user()?->id ?? $request->ip())->response(function () {
                 return back()->withErrors([
                     'rate_limit' => 'You have reached the limit of 5 ads per hour. Please wait before posting again.',
                 ]);

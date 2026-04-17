@@ -30,6 +30,12 @@ class ImageService
             $quality -= 10;
         } while (strlen((string) $encoded) > self::MAX_BYTES && $quality >= self::MIN_QUALITY);
 
+        // If still oversized after reaching minimum quality, halve dimensions and re-encode
+        if (strlen((string) $encoded) > self::MAX_BYTES) {
+            $image->scale(width: (int) ($image->width() / 2));
+            $encoded = $image->encode(new JpegEncoder(quality: self::MIN_QUALITY));
+        }
+
         $path = $directory . '/' . Str::random(40) . '.jpg';
         Storage::disk('public')->put($path, (string) $encoded);
 

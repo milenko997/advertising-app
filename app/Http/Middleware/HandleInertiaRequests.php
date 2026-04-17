@@ -48,7 +48,7 @@ class HandleInertiaRequests extends Middleware
                 ? Cache::remember('badge_feedback', 60, fn () => Feedback::where('read', false)->count())
                 : 0,
             'unreadNotificationsCount' => $user && !$user->isAdmin()
-                ? $user->unreadNotifications()->count()
+                ? Cache::remember('unread_notifications_' . $user->id, 60, fn () => $user->unreadNotifications()->count())
                 : 0,
             'recentNotifications' => $user && !$user->isAdmin()
                 ? $user->notifications()->latest()->take(5)->get()->map(fn ($n) => [

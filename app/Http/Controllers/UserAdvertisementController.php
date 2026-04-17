@@ -101,7 +101,6 @@ class UserAdvertisementController extends Controller
     public function update(UpdateAdvertisementRequest $request, $slug)
     {
         $ad = Advertisement::where('slug', $slug)->firstOrFail();
-        $this->authorize('update', $ad);
 
         $ad->title        = $request->title;
         $ad->description  = $request->description;

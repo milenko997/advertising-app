@@ -109,7 +109,7 @@ class AdminCustomerController extends Controller
 
     public function restore($id): RedirectResponse
     {
-        $user = User::withTrashed()->with('advertisements')->findOrFail($id);
+        $user = User::withTrashed()->with(['advertisements' => fn ($q) => $q->withTrashed()])->findOrFail($id);
 
         if ($user->trashed()) {
             $user->restore();

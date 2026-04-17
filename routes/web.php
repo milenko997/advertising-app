@@ -83,6 +83,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::patch('/oglasi/{advertisement}/pin', [AdminAdvertisementController::class, 'togglePin'])->name('advertisements.pin');
     Route::post('/oglasi/bulk-action', [AdminAdvertisementController::class, 'bulkAction'])->name('advertisements.bulk');
     Route::resource('/korisnici', AdminCustomerController::class)->parameters(['korisnici' => 'customer']);
+    Route::patch('/korisnici/{id}/restore', [AdminCustomerController::class, 'restore'])->name('korisnici.restore');
     Route::get('/prijave', [AdminReportController::class, 'index'])->name('reports.index');
     Route::patch('/prijave/{report}/resolve', [AdminReportController::class, 'resolve'])->name('reports.resolve');
     Route::delete('/prijave/{report}', [AdminReportController::class, 'destroy'])->name('reports.destroy');

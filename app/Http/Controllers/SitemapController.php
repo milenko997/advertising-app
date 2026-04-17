@@ -61,6 +61,7 @@ class SitemapController extends Controller
     {
         $urls = Advertisement::active()
             ->orderByDesc('updated_at')
+            ->limit(50000)
             ->get(['slug', 'updated_at'])
             ->map(fn ($ad) => [
                 'loc'        => route('advertisements.show', $ad->slug),

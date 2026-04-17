@@ -294,10 +294,10 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                         Nazad na oglase
                     </Link>
 
-                    <div className="space-y-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                        {/* ── Main content ── */}
-                        <div id="ad-left-col" className="space-y-6">
+                        {/* ── Left column ── */}
+                        <div id="ad-left-col" className="lg:col-span-2 space-y-6">
 
                             {/* Image gallery */}
                             {allImages.length > 0 ? (
@@ -420,129 +420,135 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                     value={ad.category?.name}
                                 />
                             </div>
+                        </div>
 
-                            {/* Price card */}
-                            <div id="section-ad-contact" className="bg-white rounded-xl border border-gray-200 p-6">
-                                <div className="mb-4">
-                                    <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">Cena</p>
-                                    {ad.price ? (
-                                        <p className="text-3xl font-bold text-orange-600">{ad.price}</p>
-                                    ) : (
-                                        <p className="text-lg text-gray-400 italic font-normal">Cena na upit</p>
+                        {/* ── Right column (sticky sidebar) ── */}
+                        <div id="ad-right-col" className="lg:col-span-1">
+                            <div className="sticky top-20 space-y-4">
+
+                                {/* Price card */}
+                                <div id="section-ad-contact" className="bg-white rounded-xl border border-gray-200 p-6">
+                                    <div className="mb-4">
+                                        <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">Cena</p>
+                                        {ad.price ? (
+                                            <p className="text-3xl font-bold text-orange-600">{ad.price}</p>
+                                        ) : (
+                                            <p className="text-lg text-gray-400 italic font-normal">Cena na upit</p>
+                                        )}
+                                    </div>
+
+                                    {ad.phone && (
+                                        <a
+                                            href={`tel:${ad.phone}`}
+                                            className="flex items-center justify-center gap-2 w-full py-3 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors text-sm"
+                                        >
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                            </svg>
+                                            {ad.phone}
+                                        </a>
+                                    )}
+
+                                    <div className="flex gap-2 mt-3">
+                                        {auth?.user && (
+                                            <button
+                                                onClick={toggleSave}
+                                                disabled={bookmarkLoading}
+                                                className={`flex-1 flex items-center justify-center gap-2 py-2.5 border rounded-lg text-sm font-medium transition disabled:opacity-50 ${
+                                                    saved
+                                                        ? 'border-orange-300 bg-orange-50 text-orange-700 hover:bg-orange-100'
+                                                        : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'
+                                                }`}
+                                            >
+                                                {saved ? (
+                                                    <svg className="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                                    </svg>
+                                                ) : (
+                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                                    </svg>
+                                                )}
+                                                {saved ? 'Sačuvano' : 'Sačuvaj'}
+                                            </button>
+                                        )}
+                                        <div className={auth?.user ? 'flex-1' : 'w-full'}>
+                                            <ShareButton url={currentUrl} title={ad.title} fullWidth />
+                                        </div>
+                                    </div>
+                                    {!isOwner && (
+                                        <div className="flex justify-end mt-1">
+                                            <ReportButton advertisementId={ad.id} />
+                                        </div>
                                     )}
                                 </div>
 
-                                {/* Phone CTA */}
-                                {ad.phone && (
-                                    <a
-                                        href={`tel:${ad.phone}`}
-                                        className="flex items-center justify-center gap-2 w-full py-3 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors text-sm"
-                                    >
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                        </svg>
-                                        {ad.phone}
-                                    </a>
+                                {/* Owner card */}
+                                {ad.user && (
+                                    <div className="bg-white rounded-xl border border-gray-200 p-5">
+                                        <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3">Objavio</p>
+                                        <Link href={`/korisnik/${ad.user.slug}`} className="flex items-center gap-3 group">
+                                            <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
+                                                {ad.user.avatar ? (
+                                                    <img src={`/storage/${ad.user.avatar}`} alt={ad.user.name} className="w-10 h-10 rounded-full object-cover" />
+                                                ) : (
+                                                    <span className="text-orange-600 font-bold text-sm">
+                                                        {ad.user.name?.charAt(0)?.toUpperCase()}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-semibold text-gray-800 group-hover:text-orange-600 transition-colors">
+                                                    {ad.user.name}
+                                                </p>
+                                                {avgRating !== null && (
+                                                    <div className="flex items-center gap-1 mt-0.5">
+                                                        <StarRating value={Math.round(avgRating)} readOnly />
+                                                        <span className="text-xs text-gray-400">({reviews.length})</span>
+                                                    </div>
+                                                )}
+                                                {avgRating === null && (
+                                                    <p className="text-xs text-gray-400">Pogledaj profil</p>
+                                                )}
+                                            </div>
+                                            <svg className="w-4 h-4 text-gray-300 ml-auto group-hover:text-orange-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </Link>
+                                    </div>
                                 )}
 
-                                {/* Save / Share */}
-                                <div className="flex gap-2 mt-3">
-                                    {auth?.user && (
-                                        <button
-                                            onClick={toggleSave}
-                                            disabled={bookmarkLoading}
-                                            className={`flex-1 flex items-center justify-center gap-2 py-2.5 border rounded-lg text-sm font-medium transition disabled:opacity-50 ${
-                                                saved
-                                                    ? 'border-orange-300 bg-orange-50 text-orange-700 hover:bg-orange-100'
-                                                    : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'
-                                            }`}
+                                {/* Owner actions */}
+                                {isOwner && (
+                                    <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-2">
+                                        <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3">Upravljanje</p>
+                                        <Link
+                                            href={`/oglasi/uredi/${ad.slug}`}
+                                            className="flex items-center justify-center gap-2 w-full py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
                                         >
-                                            {saved ? (
-                                                <svg className="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                                                </svg>
-                                            ) : (
-                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                                                </svg>
-                                            )}
-                                            {saved ? 'Sačuvano' : 'Sačuvaj'}
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                            Izmeni oglas
+                                        </Link>
+                                        <button
+                                            onClick={handleDelete}
+                                            className="flex items-center justify-center gap-2 w-full py-2.5 border border-red-200 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition"
+                                        >
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                            Obriši oglas
                                         </button>
-                                    )}
-                                    <div className={auth?.user ? 'flex-1' : 'w-full'}>
-                                        <ShareButton url={currentUrl} title={ad.title} fullWidth />
-                                    </div>
-                                </div>
-                                {!isOwner && (
-                                    <div className="flex justify-end mt-1">
-                                        <ReportButton advertisementId={ad.id} />
                                     </div>
                                 )}
                             </div>
+                        </div>
 
-                            {/* Owner card */}
-                            {ad.user && (
-                                <div className="bg-white rounded-xl border border-gray-200 p-5">
-                                    <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3">Objavio</p>
-                                    <Link href={`/korisnik/${ad.user.slug}`} className="flex items-center gap-3 group">
-                                        <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
-                                            {ad.user.avatar ? (
-                                                <img src={`/storage/${ad.user.avatar}`} alt={ad.user.name} className="w-10 h-10 rounded-full object-cover" />
-                                            ) : (
-                                                <span className="text-orange-600 font-bold text-sm">
-                                                    {ad.user.name?.charAt(0)?.toUpperCase()}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-semibold text-gray-800 group-hover:text-orange-600 transition-colors">
-                                                {ad.user.name}
-                                            </p>
-                                            {avgRating !== null && (
-                                                <div className="flex items-center gap-1 mt-0.5">
-                                                    <StarRating value={Math.round(avgRating)} readOnly />
-                                                    <span className="text-xs text-gray-400">({reviews.length})</span>
-                                                </div>
-                                            )}
-                                            {avgRating === null && (
-                                                <p className="text-xs text-gray-400">Pogledaj profil</p>
-                                            )}
-                                        </div>
-                                        <svg className="w-4 h-4 text-gray-300 ml-auto group-hover:text-orange-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </Link>
-                                </div>
-                            )}
-
-                            {/* Owner actions */}
-                            {isOwner && (
-                                <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-2">
-                                    <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3">Upravljanje</p>
-                                    <Link
-                                        href={`/oglasi/uredi/${ad.slug}`}
-                                        className="flex items-center justify-center gap-2 w-full py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
-                                    >
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                        </svg>
-                                        Izmeni oglas
-                                    </Link>
-                                    <button
-                                        onClick={handleDelete}
-                                        className="flex items-center justify-center gap-2 w-full py-2.5 border border-red-200 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition"
-                                    >
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
-                                        Obriši oglas
-                                    </button>
-                                </div>
-                            )}
-
-                            {/* ── Reviews section ── */}
-                            {ad.user && !isOwner && (
-                                <div className="bg-white rounded-xl border border-gray-200 p-6" id="recenzije">
+                        {/* ── Reviews ── */}
+                        {ad.user && !isOwner && (
+                            <div className="lg:col-span-2" id="recenzije">
+                                <div className="bg-white rounded-xl border border-gray-200 p-6">
                                     <div className="flex items-center justify-between mb-1">
                                         <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
                                             Recenzije prodavca
@@ -616,8 +622,8 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                         </div>
                                     )}
                                 </div>
-                            )}
-                        </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

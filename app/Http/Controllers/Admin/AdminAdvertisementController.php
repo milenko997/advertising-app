@@ -13,6 +13,8 @@ use Inertia\Inertia;
 
 class AdminAdvertisementController extends Controller
 {
+    public function __construct(private ImageService $imageService) {}
+
     public function index(Request $request)
     {
         $paginator = Advertisement::with('category', 'user')->latest()->paginate(20);
@@ -97,10 +99,10 @@ class AdminAdvertisementController extends Controller
         $advertisement->category_id  = $request->category_id;
 
         if ($request->hasFile('image')) {
-            ImageService::delete($advertisement->image);
-            $advertisement->image = ImageService::store($request->file('image'));
+            $this->imageService->delete($advertisement->image);
+            $advertisement->image = $this->imageService->store($request->file('image'));
         } elseif ($request->input('remove_image') == '1') {
-            ImageService::delete($advertisement->image);
+            $this->imageService->delete($advertisement->image);
             $advertisement->image = null;
         }
 
@@ -114,7 +116,7 @@ class AdminAdvertisementController extends Controller
             $nextOrder = $advertisement->images()->max('order') + 1;
             foreach ($request->file('images') as $i => $file) {
                 $advertisement->images()->create([
-                    'path'  => ImageService::store($file),
+                    'path'  => $this->imageService->store($file),
                     'order' => $nextOrder + $i,
                 ]);
             }

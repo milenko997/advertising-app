@@ -9,6 +9,8 @@ use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
+    public function __construct(private ImageService $imageService) {}
+
     public function show()
     {
         $user = auth()->user();
@@ -43,12 +45,12 @@ class ProfileController extends Controller
         $user->phone = $request->phone;
 
         if ($request->hasFile('avatar')) {
-            ImageService::delete($user->avatar);
-            $user->avatar = ImageService::store($request->file('avatar'), 'avatars');
+            $this->imageService->delete($user->avatar);
+            $user->avatar = $this->imageService->store($request->file('avatar'), 'avatars');
         }
 
         if ($request->boolean('remove_avatar') && !$request->hasFile('avatar')) {
-            ImageService::delete($user->avatar);
+            $this->imageService->delete($user->avatar);
             $user->avatar = null;
         }
 

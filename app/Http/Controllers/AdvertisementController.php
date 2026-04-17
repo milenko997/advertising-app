@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAdvertisementRequest;
 use App\Http\Requests\UpdateAdvertisementRequest;
+use App\Http\Resources\AdvertisementResource;
 use App\Models\Advertisement;
 use App\Models\AdvertisementImage;
 use App\Models\Category;
@@ -17,6 +18,11 @@ use Inertia\Inertia;
 
 class AdvertisementController extends Controller
 {
+    public function __construct(
+        private ImageService $imageService,
+        private SlugService $slugService,
+    ) {}
+
     public function publicIndex(Request $request)
     {
         $search   = $request->get('search');
@@ -105,13 +111,13 @@ class AdvertisementController extends Controller
     {
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = ImageService::store($request->file('image'));
+            $imagePath = $this->imageService->store($request->file('image'));
         }
 
         $ad = Advertisement::create([
             'user_id'      => Auth::id(),
             'title'        => $request->title,
-            'slug'         => SlugService::generate($request->title),
+            'slug'         => $this->slugService->generate($request->title),
             'description'  => $request->description,
             'payload'      => $request->payload,
 
@@ -126,7 +132,7 @@ class AdvertisementController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $i => $file) {
                 $ad->images()->create([
-                    'path'  => ImageService::store($file),
+                    'path'  => $this->imageService->store($file),
                     'order' => $i,
                 ]);
             }
@@ -221,14 +227,14 @@ class AdvertisementController extends Controller
         $ad->category_id  = $request->category_id;
 
         if ($request->title !== $ad->getOriginal('title')) {
-            $ad->slug = SlugService::generate($request->title, $ad->id);
+            $ad->slug = $this->slugService->generate($request->title, $ad->id);
         }
 
         if ($request->hasFile('image')) {
-            ImageService::delete($ad->image);
-            $ad->image = ImageService::store($request->file('image'));
+            $this->imageService->delete($ad->image);
+            $ad->image = $this->imageService->store($request->file('image'));
         } elseif ($request->input('remove_image')) {
-            ImageService::delete($ad->image);
+            $this->imageService->delete($ad->image);
             $ad->image = null;
         }
 
@@ -238,7 +244,7 @@ class AdvertisementController extends Controller
             $nextOrder = $ad->images()->max('order') + 1;
             foreach ($request->file('images') as $i => $file) {
                 $ad->images()->create([
-                    'path'  => ImageService::store($file),
+                    'path'  => $this->imageService->store($file),
                     'order' => $nextOrder + $i,
                 ]);
             }
@@ -259,7 +265,7 @@ class AdvertisementController extends Controller
     public function destroyImage(AdvertisementImage $image)
     {
         $this->authorize('update', $image->advertisement);
-        ImageService::delete($image->path);
+        $this->imageService->delete($image->path);
         $image->delete();
 
         return back()->with('success', 'Slika je uklonjena.');
@@ -359,36 +365,7 @@ class AdvertisementController extends Controller
 
     private function formatAd($ad): array
     {
-        return [
-            'id'           => $ad->id,
-            'slug'         => $ad->slug,
-            'title'        => $ad->title,
-            'description'  => $ad->description,
-            'price'        => $ad->price,
-            'availability' => $ad->availability,
-            'payload'      => $ad->payload,
-
-            'image'        => $ad->image,
-            'phone'        => $ad->phone,
-            'location'     => $ad->location,
-            'views'        => $ad->views,
-            'is_pinned'    => (bool) $ad->is_pinned,
-            'expires_at'   => $ad->expires_at?->format('d.m.Y'),
-            'is_expired'   => $ad->isExpired(),
-            'user_id'      => $ad->user_id,
-            'category_id'  => $ad->category_id,
-            'created_at'   => $ad->created_at?->format('d.m.Y'),
-            'updated_at'   => $ad->updated_at?->format('d.m.Y'),
-            'category'     => $ad->relationLoaded('category') && $ad->category
-                ? ['id' => $ad->category->id, 'name' => $ad->category->name]
-                : null,
-            'user'         => $ad->relationLoaded('user') && $ad->user
-                ? ['id' => $ad->user->id, 'name' => $ad->user->name, 'slug' => $ad->user->slug, 'avatar' => $ad->user->avatar]
-                : null,
-            'images'       => $ad->relationLoaded('images')
-                ? $ad->images->map(fn ($img) => ['id' => $img->id, 'path' => $img->path, 'order' => $img->order])->values()->all()
-                : [],
-        ];
+        return AdvertisementResource::make($ad)->resolve();
     }
 
     private function formatAds($paginator): array

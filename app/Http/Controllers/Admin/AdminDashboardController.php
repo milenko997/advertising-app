@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement;
 use App\Models\Category;
@@ -33,9 +34,9 @@ class AdminDashboardController extends Controller
         $totalViews  = (int) Advertisement::sum('views');
 
         // ── Users ─────────────────────────────────────────────────────────
-        $totalCustomers  = User::where('role', 'customer')->count();
-        $newThisWeek     = User::where('role', 'customer')->where('created_at', '>=', $week)->count();
-        $newThisMonth    = User::where('role', 'customer')->where('created_at', '>=', $month)->count();
+        $totalCustomers  = User::where('role', UserRole::Customer)->count();
+        $newThisWeek     = User::where('role', UserRole::Customer)->where('created_at', '>=', $week)->count();
+        $newThisMonth    = User::where('role', UserRole::Customer)->where('created_at', '>=', $month)->count();
 
         // ── Reviews ───────────────────────────────────────────────────────
         $totalReviews = Review::count();
@@ -98,7 +99,7 @@ class AdminDashboardController extends Controller
             ]);
 
         // ── Recent users ──────────────────────────────────────────────
-        $recentUsers = User::where('role', 'customer')
+        $recentUsers = User::where('role', UserRole::Customer)
             ->latest()
             ->limit(5)
             ->get(['id', 'name', 'slug', 'email', 'avatar', 'created_at'])

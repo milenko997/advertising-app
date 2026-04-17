@@ -15,7 +15,7 @@ class ImageService
     private const MAX_BYTES   = 2 * 1024 * 1024; // 2 MB stored limit
     private const MIN_QUALITY = 20;
 
-    public static function store(UploadedFile $file, string $directory = 'ads'): string
+    public function store(UploadedFile $file, string $directory = 'ads'): string
     {
         $manager = new ImageManager(new Driver());
         $image   = $manager->decodePath($file->getRealPath());
@@ -36,7 +36,7 @@ class ImageService
         return $path;
     }
 
-    public static function delete(?string $path): void
+    public function delete(?string $path): void
     {
         if ($path) {
             Storage::disk('public')->delete($path);

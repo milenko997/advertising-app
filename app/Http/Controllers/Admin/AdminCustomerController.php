@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\User;
@@ -12,9 +13,11 @@ use Inertia\Inertia;
 
 class AdminCustomerController extends Controller
 {
+    public function __construct(private ImageService $imageService) {}
+
     public function index(\Illuminate\Http\Request $request)
     {
-        $paginator = User::where('role', 'customer')->latest()->paginate(20);
+        $paginator = User::where('role', UserRole::Customer)->latest()->paginate(20);
 
         $customers = $paginator->getCollection()->map(fn ($u) => [
             'id'         => $u->id,
@@ -79,12 +82,12 @@ class AdminCustomerController extends Controller
         $customer->phone = $request->validated('phone');
 
         if ($request->hasFile('avatar')) {
-            ImageService::delete($customer->avatar);
-            $customer->avatar = ImageService::store($request->file('avatar'), 'avatars');
+            $this->imageService->delete($customer->avatar);
+            $customer->avatar = $this->imageService->store($request->file('avatar'), 'avatars');
         }
 
         if ($request->boolean('remove_avatar') && !$request->hasFile('avatar')) {
-            ImageService::delete($customer->avatar);
+            $this->imageService->delete($customer->avatar);
             $customer->avatar = null;
         }
 

@@ -9,7 +9,8 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        //
+        $this->app->singleton(\App\Services\ImageService::class);
+        $this->app->singleton(\App\Services\SlugService::class);
     }
 
     public function boot()

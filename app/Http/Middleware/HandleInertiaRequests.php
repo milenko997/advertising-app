@@ -7,6 +7,7 @@ use App\Models\ContactMessage;
 use App\Models\Feedback;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -38,13 +39,13 @@ class HandleInertiaRequests extends Middleware
                 'error'   => session('error'),
             ],
             'pendingReportsCount' => $user?->isAdmin()
-                ? Report::where('resolved', false)->count()
+                ? Cache::remember('badge_reports', 60, fn () => Report::where('resolved', false)->count())
                 : 0,
             'unreadMessagesCount' => $user?->isAdmin()
-                ? ContactMessage::where('read', false)->count()
+                ? Cache::remember('badge_messages', 60, fn () => ContactMessage::where('read', false)->count())
                 : 0,
             'unreadFeedbackCount' => $user?->isAdmin()
-                ? Feedback::where('read', false)->count()
+                ? Cache::remember('badge_feedback', 60, fn () => Feedback::where('read', false)->count())
                 : 0,
             'unreadNotificationsCount' => $user && !$user->isAdmin()
                 ? $user->unreadNotifications()->count()
@@ -57,7 +58,7 @@ class HandleInertiaRequests extends Middleware
                     'created_at' => $n->created_at->diffForHumans(),
                 ])->values()
                 : [],
-            'categories' => Category::with('children')
+            'categories' => Cache::remember('nav_categories', 300, fn () => Category::with('children')
                 ->whereNull('parent_id')
                 ->orderBy('name')
                 ->get()
@@ -70,7 +71,7 @@ class HandleInertiaRequests extends Middleware
                         'name' => $ch->name,
                         'slug' => $ch->slug,
                     ])->values(),
-                ])->values(),
+                ])->values()),
         ]);
     }
 }

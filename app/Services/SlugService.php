@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class SlugService
 {
-    public static function generate(string $title, ?int $excludeId = null): string
+    public function generate(string $title, ?int $excludeId = null): string
     {
         $base = Str::slug($title, '_');
         $slug = $base;

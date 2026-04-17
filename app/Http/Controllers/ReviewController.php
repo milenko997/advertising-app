@@ -49,9 +49,7 @@ class ReviewController extends Controller
 
     public function update(Request $request, Review $review)
     {
-        if (auth()->id() !== $review->reviewer_id) {
-            abort(403);
-        }
+        $this->authorize('update', $review);
 
         $validated = $request->validate([
             'rating'  => 'required|integer|min:1|max:5',
@@ -74,9 +72,7 @@ class ReviewController extends Controller
 
     public function destroy(Review $review)
     {
-        if (auth()->id() !== $review->reviewer_id) {
-            abort(403);
-        }
+        $this->authorize('delete', $review);
 
         $reviewedUser = $review->reviewedUser;
         $reviewer = auth()->user();

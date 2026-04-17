@@ -133,7 +133,7 @@ export default function Sidebar({ currentParent, currentChild }) {
             </div>
 
             {/* Desktop sidebar — sticky on the flex child itself + self-start is the key */}
-            <aside id="sidebar" className="hidden lg:block w-52 shrink-0 sticky top-6 self-start">
+            <aside id="sidebar" className="hidden lg:block w-52 shrink-0 sticky top-20 self-start">
                 <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col max-h-[calc(100vh-5rem)]">
                     <div className="px-4 py-3 border-b border-gray-100 shrink-0">
                         <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kategorije</h2>

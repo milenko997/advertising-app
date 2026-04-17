@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCustomerRequest extends FormRequest
 {
@@ -15,7 +16,7 @@ class UpdateCustomerRequest extends FormRequest
     {
         return [
             'name'          => 'required|string|max:255',
-            'email'         => 'required|email|max:255',
+            'email'         => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->route('customer'))],
             'role'          => 'required|in:admin,customer',
             'phone'         => ['nullable', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
             'avatar'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1900',

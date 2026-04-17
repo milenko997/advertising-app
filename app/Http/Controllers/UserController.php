@@ -17,6 +17,7 @@ class UserController extends Controller
     {
         $ads = $user->advertisements()
             ->with('category')
+            ->active()
             ->latest()
             ->paginate(21);
 

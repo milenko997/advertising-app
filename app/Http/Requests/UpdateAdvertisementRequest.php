@@ -33,19 +33,29 @@ class UpdateAdvertisementRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.min'         => 'The title must be at least 5 characters.',
-            'description.min'   => 'The description must be at least 10 characters.',
-            'description.max'   => 'The description may not exceed 5000 characters.',
-            'payload.min'       => 'Payload must be at least 2 characters (e.g. 10 tons).',
-
-            'phone.regex'       => 'Enter a valid phone number (digits, spaces, +, -, parentheses only).',
-            'location.min'      => 'Location must be at least 2 characters.',
-            'images.max'        => 'You may upload at most 10 gallery photos.',
-            'images.*.image'    => 'Each gallery file must be an image.',
-            'images.*.mimes'    => 'Gallery images must be JPEG, PNG, or GIF.',
-            'images.*.max'      => 'Each gallery image must not exceed 10 MB.',
-            'image.max'         => 'The cover image must not be larger than 10 MB.',
-            'image.uploaded'    => 'The image is too large to upload. Please use an image under 10 MB.',
+            'title.required'        => 'Naslov je obavezan.',
+            'title.min'             => 'Naslov mora imati najmanje :min karaktera.',
+            'title.max'             => 'Naslov ne sme biti duži od :max karaktera.',
+            'description.required'  => 'Opis je obavezan.',
+            'description.min'       => 'Opis mora imati najmanje :min karaktera.',
+            'description.max'       => 'Opis ne sme biti duži od :max karaktera.',
+            'payload.min'           => 'Tovar mora imati najmanje :min karaktera (npr. 10 tona).',
+            'availability.required' => 'Dostupnost je obavezna.',
+            'availability.in'       => 'Dostupnost mora biti "available" ili "on_request".',
+            'price.numeric'         => 'Cena mora biti broj.',
+            'image.image'           => 'Fajl mora biti slika.',
+            'image.max'             => 'Slika ne sme biti veća od :max KB.',
+            'image.uploaded'        => 'Slika je prevelika za otpremanje. Koristite sliku manju od 10 MB.',
+            'images.max'            => 'Možete otpremiti najviše 10 fotografija u galeriji.',
+            'images.*.image'        => 'Svaki fajl u galeriji mora biti slika.',
+            'images.*.mimes'        => 'Slike u galeriji moraju biti JPEG, PNG ili GIF.',
+            'images.*.max'          => 'Svaka slika u galeriji ne sme biti veća od 10 MB.',
+            'phone.required'        => 'Broj telefona je obavezan.',
+            'phone.regex'           => 'Unesite ispravan broj telefona (cifre, razmaci, +, -, zagrade).',
+            'location.required'     => 'Lokacija je obavezna.',
+            'location.min'          => 'Lokacija mora imati najmanje :min karaktera.',
+            'category_id.required'  => 'Kategorija je obavezna.',
+            'category_id.exists'    => 'Izabrana kategorija ne postoji.',
         ];
     }
 }

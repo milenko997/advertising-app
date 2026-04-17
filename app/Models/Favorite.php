@@ -18,6 +18,9 @@ class Favorite extends Model
     public static function idsForUser(?int $userId): array
     {
         if (!$userId) return [];
-        return static::where('user_id', $userId)->pluck('advertisement_id')->all();
+        return \Illuminate\Support\Facades\Cache::remember(
+            'favorite_ids_' . $userId, 60, fn() =>
+            static::where('user_id', $userId)->pluck('advertisement_id')->all()
+        );
     }
 }

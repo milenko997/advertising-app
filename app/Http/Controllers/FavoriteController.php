@@ -6,6 +6,7 @@ use App\Http\Resources\AdvertisementResource;
 use App\Models\Advertisement;
 use App\Models\Favorite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class FavoriteController extends Controller
@@ -55,6 +56,8 @@ class FavoriteController extends Controller
             ]);
             $saved = true;
         }
+
+        Cache::forget('favorite_ids_' . $userId);
 
         return response()->json(['saved' => $saved]);
     }

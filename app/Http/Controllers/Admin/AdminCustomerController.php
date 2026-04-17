@@ -41,21 +41,6 @@ class AdminCustomerController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        // not needed
-    }
-
-    public function store()
-    {
-        // not needed
-    }
-
-    public function show()
-    {
-        // not needed
-    }
-
     public function edit(User $customer)
     {
         return Inertia::render('Admin/Customers/Edit', [
@@ -88,8 +73,8 @@ class AdminCustomerController extends Controller
             $customer->avatar = null;
         }
 
+        $customer->role = \App\Enums\UserRole::from($validated['role']);
         $customer->save();
-        $customer->forceFill(['role' => $validated['role']])->save();
 
         $customer->notify(new ProfileUpdatedByAdminNotification());
 

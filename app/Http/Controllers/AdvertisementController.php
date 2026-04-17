@@ -79,7 +79,7 @@ class AdvertisementController extends Controller
             'type'        => 'product',
         ]);
 
-        $sessionKey = 'viewed_ad_' . $ad->id;
+        $sessionKey = 'viewed_ad_' . $ad->id . '_' . now()->toDateString();
         if (!Auth::check() || Auth::id() !== $ad->user_id) {
             if (!session()->has($sessionKey)) {
                 $ad->increment('views');

@@ -73,9 +73,10 @@ class AdminCustomerController extends Controller
 
     public function update(UpdateCustomerRequest $request, User $customer): RedirectResponse
     {
-        $customer->name  = $request->validated('name');
-        $customer->email = $request->validated('email');
-        $customer->phone = $request->validated('phone');
+        $validated = $request->validated();
+        $customer->name  = $validated['name'];
+        $customer->email = $validated['email'];
+        $customer->phone = $validated['phone'] ?? null;
 
         if ($request->hasFile('avatar')) {
             $this->imageService->delete($customer->avatar);
@@ -88,7 +89,7 @@ class AdminCustomerController extends Controller
         }
 
         $customer->save();
-        $customer->forceFill(['role' => $request->validated('role')])->save();
+        $customer->forceFill(['role' => $validated['role']])->save();
 
         $customer->notify(new ProfileUpdatedByAdminNotification());
 

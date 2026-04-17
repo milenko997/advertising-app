@@ -13,8 +13,9 @@ class AdvertisementsSeeder extends Seeder
 {
     public function run()
     {
-        $users     = User::where('role', 'customer')->pluck('id')->toArray();
-        $catByName = Category::pluck('id', 'name')->toArray();
+        $slugService = new SlugService();
+        $users       = User::where('role', 'customer')->pluck('id')->toArray();
+        $catByName   = Category::pluck('id', 'name')->toArray();
 
         $locations = [
             'Beograd', 'Novi Sad', 'Niš', 'Kragujevac', 'Subotica',
@@ -473,7 +474,7 @@ class AdvertisementsSeeder extends Seeder
                 'user_id'      => $userId,
                 'category_id'  => $catId,
                 'title'        => $data['title'],
-                'slug'         => SlugService::generate($data['title']),
+                'slug'         => $slugService->generate($data['title']),
                 'description'  => $data['description'],
                 'price'        => $data['price'] ?? null,
                 'payload'      => $data['payload'] ?? null,

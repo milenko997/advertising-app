@@ -22,7 +22,7 @@ class AdvertisementFactory extends Factory
             'slug'        => Str::slug($title, '_') . '_' . $this->faker->unique()->randomNumber(5),
             'description' => $this->faker->paragraph(),
             'price'       => $this->faker->numberBetween(10, 10000) . ' USD',
-            'condition'   => $this->faker->randomElement(['new', 'used', 'refurbished']),
+            'availability' => 'available',
             'image'       => null,
             'phone'       => '0612345678',
             'location'    => $this->faker->city(),

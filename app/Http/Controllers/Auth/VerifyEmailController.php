@@ -25,7 +25,7 @@ class VerifyEmailController extends Controller
             event(new Verified($request->user()));
         }
 
-        return redirect()->intended(RouteServiceProvider::HOME)
+        return redirect()->intended(RouteServiceProvider::HOME.'?verified=1')
             ->with('success', 'Vaš email je verifikovan. Dobrodošli na AdBoard!');
     }
 }

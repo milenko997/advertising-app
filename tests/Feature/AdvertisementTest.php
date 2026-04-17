@@ -70,13 +70,12 @@ class AdvertisementTest extends TestCase
 
         $this->actingAs($user)
             ->post(route('advertisements.store'), [
-                'title'       => 'My Test Ad',
-                'description' => 'Some description',
-                'price'       => '100 USD',
-                'condition'   => 'new',
-                'phone'       => '0612345678',
-                'location'    => 'Belgrade',
-                'category_id' => $category->id,
+                'title'        => 'My Test Ad',
+                'description'  => 'Some description that is long enough',
+                'availability' => 'available',
+                'phone'        => '0612345678',
+                'location'     => 'Belgrade',
+                'category_id'  => $category->id,
             ])
             ->assertRedirect(route('advertisements.user'));
 
@@ -89,7 +88,7 @@ class AdvertisementTest extends TestCase
 
         $this->actingAs($user)
             ->post(route('advertisements.store'), [])
-            ->assertSessionHasErrors(['title', 'description', 'price', 'condition', 'phone', 'location', 'category_id']);
+            ->assertSessionHasErrors(['title', 'description', 'availability', 'phone', 'location', 'category_id']);
     }
 
     public function test_owner_can_edit_their_advertisement(): void
@@ -120,13 +119,12 @@ class AdvertisementTest extends TestCase
 
         $this->actingAs($user)
             ->put(route('advertisements.update', $ad->slug), [
-                'title'       => 'Updated Title',
-                'description' => 'Updated description',
-                'price'       => '200 USD',
-                'condition'   => 'used',
-                'phone'       => '0612345678',
-                'location'    => 'Novi Sad',
-                'category_id' => $ad->category_id,
+                'title'        => 'Updated Title',
+                'description'  => 'Updated description that is long enough',
+                'availability' => 'available',
+                'phone'        => '0612345678',
+                'location'     => 'Novi Sad',
+                'category_id'  => $ad->category_id,
             ])
             ->assertRedirect();
 
@@ -141,13 +139,12 @@ class AdvertisementTest extends TestCase
 
         $this->actingAs($other)
             ->put(route('advertisements.update', $ad->slug), [
-                'title'       => 'Hacked Title',
-                'description' => 'x',
-                'price'       => '1',
-                'condition'   => 'new',
-                'phone'       => '0612345678',
-                'location'    => 'x',
-                'category_id' => $ad->category_id,
+                'title'        => 'Hacked Title',
+                'description'  => 'Some description that is long enough',
+                'availability' => 'available',
+                'phone'        => '0612345678',
+                'location'     => 'Belgrade',
+                'category_id'  => $ad->category_id,
             ])
             ->assertForbidden();
     }

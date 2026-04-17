@@ -31,7 +31,7 @@ class ProfileController extends Controller
 
         $request->validate([
             'name'   => 'required|string|min:2|max:255',
-            'email'  => 'required|email:rfc,dns|max:255|unique:users,email,' . $user->id,
+            'email'  => 'required|email:rfc|max:255|unique:users,email,' . $user->id,
             'phone'  => ['nullable', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1900',
         ], [

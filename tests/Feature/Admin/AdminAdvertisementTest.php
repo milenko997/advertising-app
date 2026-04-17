@@ -32,13 +32,13 @@ class AdminAdvertisementTest extends TestCase
 
     public function test_guest_cannot_access_admin_advertisements(): void
     {
-        $this->get(route('admin.advertisements.index'))->assertRedirect(route('login'));
+        $this->get(route('admin.oglasi.index'))->assertRedirect(route('login'));
     }
 
     public function test_customer_cannot_access_admin_advertisements(): void
     {
         $this->actingAs($this->customer())
-            ->get(route('admin.advertisements.index'))
+            ->get(route('admin.oglasi.index'))
             ->assertForbidden();
     }
 
@@ -47,7 +47,7 @@ class AdminAdvertisementTest extends TestCase
         $ad = Advertisement::factory()->create();
 
         $this->actingAs($this->admin())
-            ->get(route('admin.advertisements.index'))
+            ->get(route('admin.oglasi.index'))
             ->assertOk()
             ->assertSee($ad->title);
     }
@@ -60,16 +60,15 @@ class AdminAdvertisementTest extends TestCase
         $ad    = Advertisement::factory()->create();
 
         $this->actingAs($admin)
-            ->put(route('admin.advertisements.update', $ad), [
-                'title'       => 'Admin Updated Title',
-                'description' => 'Updated description',
-                'price'       => '500 USD',
-                'condition'   => 'used',
-                'phone'       => '0612345678',
-                'location'    => 'Belgrade',
-                'category_id' => $ad->category_id,
+            ->put(route('admin.oglasi.update', $ad), [
+                'title'        => 'Admin Updated Title',
+                'description'  => 'Updated description text here',
+                'availability' => 'available',
+                'phone'        => '0612345678',
+                'location'     => 'Belgrade',
+                'category_id'  => $ad->category_id,
             ])
-            ->assertRedirect(route('admin.advertisements.index'));
+            ->assertRedirect(route('admin.oglasi.index'));
 
         $this->assertDatabaseHas('advertisements', ['id' => $ad->id, 'title' => 'Admin Updated Title']);
     }
@@ -82,8 +81,8 @@ class AdminAdvertisementTest extends TestCase
         $ad    = Advertisement::factory()->create();
 
         $this->actingAs($admin)
-            ->delete(route('admin.advertisements.destroy', $ad))
-            ->assertRedirect(route('admin.advertisements.index'));
+            ->delete(route('admin.oglasi.destroy', $ad))
+            ->assertRedirect(route('admin.oglasi.index'));
 
         $this->assertSoftDeleted('advertisements', ['id' => $ad->id]);
     }

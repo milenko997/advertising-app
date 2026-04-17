@@ -38,6 +38,16 @@ class Advertisement extends Model
         static::creating(function (Advertisement $ad) {
             $ad->expires_at ??= now()->addDays(self::EXPIRY_DAYS);
         });
+
+        static::deleting(function (Advertisement $ad) {
+            if ($ad->isForceDeleting()) {
+                $imageService = app(\App\Services\ImageService::class);
+                foreach ($ad->images as $img) {
+                    $imageService->delete($img->path);
+                }
+                $imageService->delete($ad->image);
+            }
+        });
     }
 
     public function isExpired(): bool

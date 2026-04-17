@@ -39,7 +39,7 @@ class UserController extends Controller
 
         $favoritedIds = Favorite::idsForUser(Auth::id());
 
-        $reviews = Review::with('reviewer')
+        $reviews = Review::with(['reviewer' => fn ($q) => $q->withTrashed()])
             ->where('reviewed_user_id', $user->id)
             ->latest()
             ->get()
@@ -49,10 +49,10 @@ class UserController extends Controller
                 'comment'    => $r->comment,
                 'created_at' => $r->created_at->format('d.m.Y'),
                 'reviewer'   => [
-                    'id'     => $r->reviewer->id,
-                    'name'   => $r->reviewer->name,
-                    'slug'   => $r->reviewer->slug,
-                    'avatar' => $r->reviewer->avatar,
+                    'id'     => $r->reviewer?->id,
+                    'name'   => $r->reviewer?->name ?? 'Obrisan korisnik',
+                    'slug'   => $r->reviewer?->slug,
+                    'avatar' => $r->reviewer?->avatar,
                 ],
             ])->values()->all();
 

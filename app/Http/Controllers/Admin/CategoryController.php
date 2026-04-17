@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
@@ -60,8 +61,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|unique:categories|max:255',
-            'parent_id' => 'nullable|exists:categories,id',
+            'name'      => 'required|unique:categories|max:255',
+            'parent_id' => ['nullable', 'exists:categories,id', Rule::notIn([])],
         ]);
 
         Category::create($validatedData);
@@ -111,8 +112,8 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $validatedData = $request->validate([
-            'name' => 'required|unique:categories,name,' . $category->id . '|max:255',
-            'parent_id' => 'nullable|exists:categories,id',
+            'name'      => 'required|unique:categories,name,' . $category->id . '|max:255',
+            'parent_id' => ['nullable', 'exists:categories,id', Rule::notIn([$category->id])],
         ]);
 
         $category->update($validatedData);

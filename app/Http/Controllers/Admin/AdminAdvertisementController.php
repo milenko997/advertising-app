@@ -157,7 +157,14 @@ class AdminAdvertisementController extends Controller
         $ads = Advertisement::whereIn('id', $request->ids);
 
         match ($request->action) {
-            'delete' => $ads->get()->each->delete(),
+            'delete' => $ads->get()->each(function ($ad) {
+                $owner = $ad->user;
+                $title = $ad->title;
+                $ad->delete();
+                if ($owner) {
+                    $owner->notify(new AdDeletedByAdminNotification($title));
+                }
+            }),
             'pin'    => $ads->update(['is_pinned' => true]),
             'unpin'  => $ads->update(['is_pinned' => false]),
         };

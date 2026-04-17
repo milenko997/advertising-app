@@ -18,10 +18,11 @@ class NotifyExpiringAds extends Command
 
         Advertisement::with('user')
             ->whereDate('expires_at', $target)
-            ->get()
-            ->each(function (Advertisement $ad) {
-                if ($ad->user) {
-                    $ad->user->notify(new AdExpiringNotification($ad));
+            ->chunkById(100, function ($ads) {
+                foreach ($ads as $ad) {
+                    if ($ad->user) {
+                        $ad->user->notify(new AdExpiringNotification($ad));
+                    }
                 }
             });
 

@@ -29,6 +29,14 @@ class UserController extends Controller
             ]);
         }
 
+        view()->share('meta', [
+            'title'       => $user->name . ' — ' . config('app.name'),
+            'description' => 'Profil korisnika ' . $user->name . ' na ' . config('app.name') . '.',
+            'image'       => $user->avatar ? url('storage/' . $user->avatar) : null,
+            'url'         => url('/korisnik/' . $user->slug),
+            'type'        => 'profile',
+        ]);
+
         $favoritedIds = Favorite::idsForUser(Auth::id());
 
         $reviews = Review::with('reviewer')

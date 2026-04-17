@@ -10,6 +10,7 @@ use App\Models\Favorite;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class AdvertisementController extends Controller
@@ -69,6 +70,14 @@ class AdvertisementController extends Controller
     public function show($slug)
     {
         $ad = Advertisement::with('user', 'category', 'images')->where('slug', $slug)->firstOrFail();
+
+        view()->share('meta', [
+            'title'       => $ad->title . ' — ' . config('app.name'),
+            'description' => Str::limit(strip_tags($ad->description), 160),
+            'image'       => $ad->image ? url('storage/' . $ad->image) : null,
+            'url'         => url('/oglas/' . $ad->slug),
+            'type'        => 'product',
+        ]);
 
         $sessionKey = 'viewed_ad_' . $ad->id;
         if (!Auth::check() || Auth::id() !== $ad->user_id) {
@@ -145,6 +154,12 @@ class AdvertisementController extends Controller
                 'hasMore' => $ads->hasMorePages(),
             ]);
         }
+
+        view()->share('meta', [
+            'title'       => $category->name . ' — ' . config('app.name'),
+            'description' => 'Pregledajte oglase u kategoriji ' . $category->name . ' na ' . config('app.name') . '.',
+            'url'         => url()->current(),
+        ]);
 
         return Inertia::render('Advertisements/ByCategory', [
             'category'     => ['id' => $category->id, 'name' => $category->name, 'slug' => $category->slug],

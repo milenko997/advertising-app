@@ -10,6 +10,7 @@ class ContactController extends Controller
 {
     public function index()
     {
+        view()->share('meta', ['title' => 'Kontakt — ' . config('app.name'), 'url' => url('/kontakt')]);
         return Inertia::render('Contact');
     }
 

@@ -3,9 +3,10 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class AdDeletedByAdminNotification extends Notification
+class AdDeletedByAdminNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 

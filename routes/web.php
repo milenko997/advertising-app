@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\AdvertisementTrashController;
+use App\Http\Controllers\UserAdvertisementController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProfileController;
@@ -61,17 +63,17 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'isCustomer'])->group(function () {
-    Route::get('/moji-oglasi', [AdvertisementController::class, 'userIndex'])->name('advertisements.user');
-    Route::get('/postavi-oglas', [AdvertisementController::class, 'create'])->name('advertisements.create');
-    Route::post('/oglasi', [AdvertisementController::class, 'store'])->name('advertisements.store')->middleware('throttle:ad-creation');
-    Route::get('/oglasi/uredi/{slug}', [AdvertisementController::class, 'edit'])->name('advertisements.edit');
-    Route::put('/oglasi/{slug}/azuriraj', [AdvertisementController::class, 'update'])->name('advertisements.update');
-    Route::delete('/oglasi/{id}', [AdvertisementController::class, 'destroy'])->name('advertisements.destroy');
-    Route::get('/obrisani-oglasi', [AdvertisementController::class, 'trash'])->name('advertisements.trash');
-    Route::delete('/oglasi/trajno-brisi/{id}', [AdvertisementController::class, 'forceDelete'])->name('advertisements.forceDelete');
-    Route::patch('/oglasi/{id}/vrati', [AdvertisementController::class, 'restore'])->name('advertisements.restore');
-    Route::patch('/oglasi/{id}/obnovi', [AdvertisementController::class, 'renew'])->name('advertisements.renew');
-    Route::delete('/slike-oglasa/{image}', [AdvertisementController::class, 'destroyImage'])->name('advertisement-images.destroy');
+    Route::get('/moji-oglasi', [UserAdvertisementController::class, 'userIndex'])->name('advertisements.user');
+    Route::get('/postavi-oglas', [UserAdvertisementController::class, 'create'])->name('advertisements.create');
+    Route::post('/oglasi', [UserAdvertisementController::class, 'store'])->name('advertisements.store')->middleware('throttle:ad-creation');
+    Route::get('/oglasi/uredi/{slug}', [UserAdvertisementController::class, 'edit'])->name('advertisements.edit');
+    Route::put('/oglasi/{slug}/azuriraj', [UserAdvertisementController::class, 'update'])->name('advertisements.update');
+    Route::delete('/oglasi/{id}', [UserAdvertisementController::class, 'destroy'])->name('advertisements.destroy');
+    Route::get('/obrisani-oglasi', [AdvertisementTrashController::class, 'trash'])->name('advertisements.trash');
+    Route::delete('/oglasi/trajno-brisi/{id}', [AdvertisementTrashController::class, 'forceDelete'])->name('advertisements.forceDelete');
+    Route::patch('/oglasi/{id}/vrati', [AdvertisementTrashController::class, 'restore'])->name('advertisements.restore');
+    Route::patch('/oglasi/{id}/obnovi', [AdvertisementTrashController::class, 'renew'])->name('advertisements.renew');
+    Route::delete('/slike-oglasa/{image}', [UserAdvertisementController::class, 'destroyImage'])->name('advertisement-images.destroy');
 });
 
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {

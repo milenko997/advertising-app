@@ -10,6 +10,7 @@ use Inertia\Inertia;
 
 class FavoriteController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HasPagination;
     public function index(Request $request)
     {
         $favoritedIds = Favorite::idsForUser(auth()->id());
@@ -26,13 +27,10 @@ class FavoriteController extends Controller
             ]);
         }
 
+        $items = $ads->getCollection()->map(fn ($ad) => AdvertisementResource::make($ad)->resolve());
+
         return Inertia::render('Favorites/Index', [
-            'ads' => [
-                'data'         => $ads->map(fn ($ad) => AdvertisementResource::make($ad)->resolve())->values()->all(),
-                'current_page' => $ads->currentPage(),
-                'last_page'    => $ads->lastPage(),
-                'total'        => $ads->total(),
-            ],
+            'ads'          => $this->paginationData($ads, $items->values()->all()),
             'favoritedIds' => $favoritedIds,
         ]);
     }

@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HasPagination;
     /**
      * Display a listing of the resource.
      *
@@ -35,12 +35,7 @@ class CategoryController extends Controller
         }
 
         return Inertia::render('Admin/Categories/Index', [
-            'categories' => [
-                'data'         => $categories,
-                'current_page' => $paginator->currentPage(),
-                'last_page'    => $paginator->lastPage(),
-                'total'        => $paginator->total(),
-            ],
+            'categories' => $this->paginationData($paginator, $categories->values()->all()),
         ]);
     }
 
@@ -119,18 +114,6 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories,name,' . $category->id . '|max:255',
             'parent_id' => 'nullable|exists:categories,id',
         ]);
-
-        if ($category->name !== $validatedData['name']) {
-            $baseSlug = Str::slug($validatedData['name']);
-            $slug = $baseSlug;
-            $counter = 1;
-
-            while (Category::where('slug', $slug)->where('id', '!=', $category->id)->exists()) {
-                $slug = $baseSlug . '-' . $counter++;
-            }
-
-            $validatedData['slug'] = $slug;
-        }
 
         $category->update($validatedData);
 

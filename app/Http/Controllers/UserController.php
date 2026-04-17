@@ -12,6 +12,7 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HasPagination;
     public function show(Request $request, User $user)
     {
         $ads = $user->advertisements()
@@ -64,12 +65,7 @@ class UserController extends Controller
                 'slug'   => $user->slug,
                 'avatar' => $user->avatar,
             ],
-            'ads' => [
-                'data'         => $ads->map($formatAd)->values()->all(),
-                'current_page' => $ads->currentPage(),
-                'last_page'    => $ads->lastPage(),
-                'total'        => $ads->total(),
-            ],
+            'ads' => $this->paginationData($ads, $ads->map($formatAd)->values()->all()),
             'favoritedIds' => $favoritedIds,
             'reviews'      => $reviews,
             'avgRating'    => $avgRating,

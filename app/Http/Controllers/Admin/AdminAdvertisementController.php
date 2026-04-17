@@ -13,6 +13,7 @@ use Inertia\Inertia;
 
 class AdminAdvertisementController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HasPagination;
     public function __construct(private ImageService $imageService) {}
 
     public function index(Request $request)
@@ -38,12 +39,7 @@ class AdminAdvertisementController extends Controller
         }
 
         return Inertia::render('Admin/Advertisements/Index', [
-            'ads' => [
-                'data'         => $ads,
-                'current_page' => $paginator->currentPage(),
-                'last_page'    => $paginator->lastPage(),
-                'total'        => $paginator->total(),
-            ],
+            'ads' => $this->paginationData($paginator, $ads->values()->all()),
         ]);
     }
 

@@ -13,6 +13,7 @@ use Inertia\Inertia;
 
 class AdminCustomerController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HasPagination;
     public function __construct(private ImageService $imageService) {}
 
     public function index(\Illuminate\Http\Request $request)
@@ -36,12 +37,7 @@ class AdminCustomerController extends Controller
         }
 
         return Inertia::render('Admin/Customers/Index', [
-            'customers' => [
-                'data'         => $customers,
-                'current_page' => $paginator->currentPage(),
-                'last_page'    => $paginator->lastPage(),
-                'total'        => $paginator->total(),
-            ],
+            'customers' => $this->paginationData($paginator, $customers->values()->all()),
         ]);
     }
 

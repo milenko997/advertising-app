@@ -4,9 +4,10 @@ namespace App\Notifications;
 
 use App\Models\Advertisement;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class AdUpdatedByAdminNotification extends Notification
+class AdUpdatedByAdminNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 

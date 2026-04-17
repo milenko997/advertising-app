@@ -34,15 +34,33 @@ class Category extends Model
     protected static function boot()
     {
         parent::boot();
+
         static::creating(function ($category) {
-           $category->slug = Str::slug($category->name);
+            $category->slug = static::generateUniqueSlug($category->name);
         });
 
         static::updating(function ($category) {
             if ($category->isDirty('name')) {
-                $category->slug = Str::slug($category->name);
+                $category->slug = static::generateUniqueSlug($category->name, $category->id);
             }
         });
+    }
+
+    private static function generateUniqueSlug(string $name, ?int $excludeId = null): string
+    {
+        $base    = Str::slug($name);
+        $slug    = $base;
+        $counter = 1;
+
+        while (
+            static::where('slug', $slug)
+                ->when($excludeId, fn ($q) => $q->where('id', '!=', $excludeId))
+                ->exists()
+        ) {
+            $slug = $base . '-' . $counter++;
+        }
+
+        return $slug;
     }
 
     public function advertisements()

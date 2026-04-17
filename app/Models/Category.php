@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\GeneratesSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, GeneratesSlug;
 
     protected $fillable = [
         'name',
@@ -44,23 +44,6 @@ class Category extends Model
                 $category->slug = static::generateUniqueSlug($category->name, $category->id);
             }
         });
-    }
-
-    private static function generateUniqueSlug(string $name, ?int $excludeId = null): string
-    {
-        $base    = Str::slug($name);
-        $slug    = $base;
-        $counter = 1;
-
-        while (
-            static::where('slug', $slug)
-                ->when($excludeId, fn ($q) => $q->where('id', '!=', $excludeId))
-                ->exists()
-        ) {
-            $slug = $base . '-' . $counter++;
-        }
-
-        return $slug;
     }
 
     public function advertisements()

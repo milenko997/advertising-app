@@ -3,7 +3,7 @@ import Navigation from '@/Components/Navigation';
 import Footer from '@/Components/Footer';
 import FeedbackButton from '@/Components/FeedbackButton';
 
-export default function AppLayout({ children }) {
+export default function AppLayout({ children, header }) {
     const { flash } = usePage().props;
 
     return (
@@ -29,6 +29,14 @@ export default function AppLayout({ children }) {
                         {flash.error}
                     </div>
                 </div>
+            )}
+
+            {header && (
+                <header className="bg-white border-b border-gray-200">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                        {header}
+                    </div>
+                </header>
             )}
 
             <main id="main-content">{children}</main>

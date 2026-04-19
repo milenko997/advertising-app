@@ -47,7 +47,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::orderBy('name')->get(['id', 'name']);
+        $categories = Category::orderBy('name')->get(['id', 'name', 'parent_id']);
 
         return Inertia::render('Admin/Categories/Create', compact('categories'));
     }
@@ -89,7 +89,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories = Category::where('id', '!=', $category->id)->orderBy('name')->get(['id', 'name']);
+        $categories = Category::where('id', '!=', $category->id)->orderBy('name')->get(['id', 'name', 'parent_id']);
 
         return Inertia::render('Admin/Categories/Edit', [
             'category'   => [

@@ -1,4 +1,4 @@
-export default function CategoryPicker({ categories, value, onChange, className }) {
+export default function CategoryPicker({ categories, value, onChange, className, blankLabel = 'Odaberi kategoriju' }) {
     const parents = categories.filter(c => !c.parent_id);
     const childrenOf = {};
     categories.forEach(c => {
@@ -15,7 +15,7 @@ export default function CategoryPicker({ categories, value, onChange, className 
             onChange={e => onChange(e.target.value)}
             className={className ?? 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent'}
         >
-            <option value="">Odaberi kategoriju</option>
+            <option value="">{blankLabel}</option>
             {parents.filter(p => childrenOf[p.id]?.length > 0).map(parent => (
                 <optgroup key={parent.id} label={parent.name}>
                     {childrenOf[parent.id].map(cat => (

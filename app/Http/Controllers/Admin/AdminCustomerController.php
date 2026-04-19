@@ -9,6 +9,9 @@ use App\Models\User;
 use App\Notifications\ProfileUpdatedByAdminNotification;
 use App\Services\ImageService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class AdminCustomerController extends Controller
@@ -39,6 +42,32 @@ class AdminCustomerController extends Controller
         return Inertia::render('Admin/Customers/Index', [
             'customers' => $this->paginationData($paginator, $customers->values()->all()),
         ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('Admin/Customers/Create');
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => ['required', 'email:rfc', 'max:255', Rule::unique('users', 'email')],
+            'password' => 'required|string|min:8|confirmed',
+            'role'     => 'required|in:admin,customer',
+            'phone'    => ['nullable', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
+        ]);
+
+        User::create([
+            'name'     => $validated['name'],
+            'email'    => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role'     => UserRole::from($validated['role']),
+            'phone'    => $validated['phone'] ?? null,
+        ]);
+
+        return redirect()->route('admin.korisnici.index')->with('success', 'Korisnik je uspešno kreiran.');
     }
 
     public function edit(User $customer)

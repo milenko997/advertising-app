@@ -83,7 +83,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::patch('/oglasi/{advertisement}/pin', [AdminAdvertisementController::class, 'togglePin'])->name('advertisements.pin');
     Route::post('/oglasi/bulk-action', [AdminAdvertisementController::class, 'bulkAction'])->name('advertisements.bulk');
     Route::resource('/korisnici', AdminCustomerController::class)
-        ->except(['create', 'store', 'show'])
+        ->except(['show'])
         ->parameters(['korisnici' => 'customer']);
     Route::patch('/korisnici/{id}/restore', [AdminCustomerController::class, 'restore'])->name('korisnici.restore');
     Route::get('/prijave', [AdminReportController::class, 'index'])->name('reports.index');

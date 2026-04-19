@@ -13,6 +13,17 @@ class AdminContactController extends Controller
         $messages = ContactMessage::orderByRaw('read ASC, created_at DESC')
             ->paginate(20);
 
+        $messages->getCollection()->transform(fn ($m) => [
+            'id'         => $m->id,
+            'name'       => $m->name,
+            'email'      => $m->email,
+            'subject'    => $m->subject,
+            'message'    => $m->message,
+            'read'       => $m->read,
+            'date'       => $m->created_at->format('d.m.Y'),
+            'time'       => $m->created_at->format('H:i'),
+        ]);
+
         return Inertia::render('Admin/Messages/Index', [
             'messages' => $messages,
         ]);

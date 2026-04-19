@@ -76,7 +76,10 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
                                             </p>
                                         </div>
 
-                                        <span className="text-xs text-gray-400 shrink-0">{msg.created_at}</span>
+                                        <div className="text-right shrink-0">
+                                            <div className="text-xs text-gray-500">{msg.date}</div>
+                                            <div className="text-xs text-gray-400">{msg.time}</div>
+                                        </div>
 
                                         <svg
                                             className={`w-4 h-4 text-gray-400 shrink-0 transition-transform ${expanded === msg.id ? 'rotate-180' : ''}`}

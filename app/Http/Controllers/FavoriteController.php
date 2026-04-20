@@ -17,6 +17,7 @@ class FavoriteController extends Controller
         $favoritedIds = Favorite::idsForUser(auth()->id());
 
         $ads = Advertisement::whereIn('id', $favoritedIds)
+            ->active()
             ->with('category')
             ->latest()
             ->paginate(20);
@@ -58,6 +59,7 @@ class FavoriteController extends Controller
         }
 
         Cache::forget('favorite_ids_' . $userId);
+        Cache::forget('saved_ads_count_' . $userId);
 
         return response()->json(['saved' => $saved]);
     }

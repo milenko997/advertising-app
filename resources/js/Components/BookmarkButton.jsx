@@ -17,6 +17,7 @@ export default function BookmarkButton({ adId, initialSaved, className = '' }) {
         try {
             const { data } = await axios.post(`/sacuvani/${adId}`);
             setSaved(data.saved);
+            window.dispatchEvent(new CustomEvent('saved-ads-changed', { detail: { delta: data.saved ? 1 : -1 } }));
         } finally {
             setLoading(false);
         }

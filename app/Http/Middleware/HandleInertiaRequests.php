@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\Category;
 use App\Models\ContactMessage;
+use App\Models\Favorite;
 use App\Models\Feedback;
 use App\Models\Report;
 use Illuminate\Http\Request;
@@ -46,6 +47,9 @@ class HandleInertiaRequests extends Middleware
                 : 0,
             'unreadFeedbackCount' => $user?->isAdmin()
                 ? Cache::remember('badge_feedback', 60, fn () => Feedback::where('read', false)->count())
+                : 0,
+            'savedAdsCount' => $user && !$user->isAdmin()
+                ? Cache::remember('saved_ads_count_' . $user->id, 60, fn () => Favorite::where('user_id', $user->id)->count())
                 : 0,
             'unreadNotificationsCount' => $user && !$user->isAdmin()
                 ? Cache::remember('unread_notifications_' . $user->id, 60, fn () => $user->unreadNotifications()->count())

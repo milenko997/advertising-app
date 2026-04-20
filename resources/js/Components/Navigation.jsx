@@ -49,16 +49,24 @@ function NotifIcon({ type }) {
 }
 
 export default function Navigation() {
-    const { auth, pendingReportsCount, unreadMessagesCount, unreadFeedbackCount, unreadNotificationsCount, recentNotifications } = usePage().props;
+    const { auth, pendingReportsCount, unreadMessagesCount, unreadFeedbackCount, unreadNotificationsCount, recentNotifications, savedAdsCount } = usePage().props;
     const user = auth?.user;
     const [open, setOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [bellOpen, setBellOpen] = useState(false);
     const bellRef = useRef(null);
     const [localNotifications, setLocalNotifications] = useState(recentNotifications);
+    const [localSavedCount, setLocalSavedCount] = useState(savedAdsCount);
 
     // Sync dropdown items when Inertia updates shared props (page navigation)
     useEffect(() => { setLocalNotifications(recentNotifications); }, [recentNotifications]);
+    useEffect(() => { setLocalSavedCount(savedAdsCount); }, [savedAdsCount]);
+
+    useEffect(() => {
+        const handler = (e) => setLocalSavedCount(prev => Math.max(0, prev + e.detail.delta));
+        window.addEventListener('saved-ads-changed', handler);
+        return () => window.removeEventListener('saved-ads-changed', handler);
+    }, []);
 
     const handleDropdownView = (n) => {
         if (!n.read_at) {
@@ -169,7 +177,21 @@ export default function Navigation() {
                             {user && !user.isAdmin && (
                                 <>
                                     <NavLink href="/moji-oglasi" active={currentPath === '/moji-oglasi'}>Moji oglasi</NavLink>
-                                    <NavLink href="/sacuvani" active={currentPath === '/sacuvani'}>Sačuvani</NavLink>
+                                    <Link
+                                        href="/sacuvani"
+                                        className={`relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                                            currentPath === '/sacuvani'
+                                                ? 'text-white bg-white/10'
+                                                : 'text-slate-300 hover:text-white hover:bg-white/10'
+                                        }`}
+                                    >
+                                        Sačuvani
+                                        {localSavedCount > 0 && (
+                                            <span className="ml-1.5 inline-flex items-center justify-center min-w-[1rem] h-4 px-1 text-[10px] font-bold bg-orange-500 text-white rounded-full">
+                                                {localSavedCount}
+                                            </span>
+                                        )}
+                                    </Link>
                                     <NavLink href="/obrisani-oglasi" active={currentPath === '/obrisani-oglasi'}>Obrisani</NavLink>
                                 </>
                             )}
@@ -376,7 +398,9 @@ export default function Navigation() {
                         {user && !user.isAdmin && (
                             <>
                                 <MobileNavLink href="/moji-oglasi">Moji oglasi</MobileNavLink>
-                                <MobileNavLink href="/sacuvani">Sačuvani</MobileNavLink>
+                                <MobileNavLink href="/sacuvani">
+                                    Sačuvani {localSavedCount > 0 && `(${localSavedCount})`}
+                                </MobileNavLink>
                                 <MobileNavLink href="/obrisani-oglasi">Obrisani</MobileNavLink>
                                 <MobileNavLink href="/obaveštenja">
                                     Obaveštenja {unreadNotificationsCount > 0 && `(${unreadNotificationsCount})`}

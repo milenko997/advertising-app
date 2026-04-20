@@ -20,7 +20,7 @@ class FavoriteController extends Controller
             ->active()
             ->with('category')
             ->latest()
-            ->paginate(20);
+            ->paginate(21);
 
         if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
             return response()->json([

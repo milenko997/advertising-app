@@ -29,7 +29,7 @@ class AdminCustomerController extends Controller
                 ->orWhere('email', 'like', "%{$search}%")
             ))
             ->latest()
-            ->paginate(20);
+            ->paginate(21);
 
         $customers = $paginator->getCollection()->map(fn ($u) => [
             'id'         => $u->id,

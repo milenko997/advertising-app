@@ -22,7 +22,7 @@ class CategoryController extends Controller
 
         $paginator = Category::with('parent')
             ->when($search, fn ($q) => $q->where('name', 'like', "%{$search}%"))
-            ->paginate(20);
+            ->paginate(21);
 
         $categories = $paginator->getCollection()->map(fn ($c) => [
             'id'          => $c->id,

@@ -13,7 +13,7 @@ class NotificationController extends Controller
         $paginator = $request->user()
             ->notifications()
             ->latest()
-            ->paginate(20);
+            ->paginate(21);
 
         $notifications = $paginator->getCollection()->map(fn ($n) => [
             'id'         => $n->id,

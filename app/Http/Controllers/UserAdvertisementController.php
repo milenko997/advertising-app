@@ -30,7 +30,7 @@ class UserAdvertisementController extends Controller
             ->where('user_id', Auth::id())
             ->orderByRaw("CASE WHEN expires_at IS NULL OR expires_at > datetime('now') THEN 0 ELSE 1 END")
             ->latest()
-            ->paginate(20);
+            ->paginate(21);
 
         $ads = $paginator->getCollection()->map(fn ($ad) => $this->formatAd($ad))->values();
 

@@ -18,7 +18,7 @@ class AdminAdvertisementController extends Controller
 
     public function index(Request $request)
     {
-        $paginator = Advertisement::with('category', 'user')->latest()->paginate(20);
+        $paginator = Advertisement::with('category', 'user')->latest()->paginate(21);
 
         $ads = $paginator->getCollection()->map(fn ($ad) => [
             'id'          => $ad->id,

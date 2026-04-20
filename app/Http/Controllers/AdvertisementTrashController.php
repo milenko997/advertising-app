@@ -17,7 +17,7 @@ class AdvertisementTrashController extends Controller
         $paginator = Advertisement::onlyTrashed()
             ->where('user_id', Auth::id())
             ->latest()
-            ->paginate(20);
+            ->paginate(21);
 
         $ads = $paginator->getCollection()->map(fn ($ad) => [
             'id'          => $ad->id,

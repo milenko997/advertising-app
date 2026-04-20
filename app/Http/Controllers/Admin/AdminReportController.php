@@ -11,7 +11,7 @@ class AdminReportController extends Controller
 {
     public function index(Request $request)
     {
-        $paginator = Report::with(['advertisement', 'reporter'])->latest()->paginate(20);
+        $paginator = Report::with(['advertisement', 'reporter'])->latest()->paginate(21);
 
         $reports = $paginator->getCollection()->map(fn ($r) => [
             'id'       => $r->id,

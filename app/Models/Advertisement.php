@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 class Advertisement extends Model
 {
@@ -40,6 +41,16 @@ class Advertisement extends Model
         });
 
         static::deleting(function (Advertisement $ad) {
+            // Clean up favorites for all users who saved this ad
+            $userIds = Favorite::where('advertisement_id', $ad->id)->pluck('user_id');
+            if ($userIds->isNotEmpty()) {
+                Favorite::where('advertisement_id', $ad->id)->delete();
+                foreach ($userIds as $uid) {
+                    Cache::forget('favorite_ids_' . $uid);
+                    Cache::forget('saved_ads_count_' . $uid);
+                }
+            }
+
             if ($ad->isForceDeleting()) {
                 $imageService = app(\App\Services\ImageService::class);
                 foreach ($ad->images as $img) {

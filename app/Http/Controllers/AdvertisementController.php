@@ -142,7 +142,14 @@ class AdvertisementController extends Controller
             : $parentCategory;
 
         $location = $request->get('location');
-        $ads = $category->advertisements()->with('user', 'category')
+
+        // When viewing a parent category, include ads from all child categories too
+        $categoryIds = $child
+            ? [$category->id]
+            : $parentCategory->children()->pluck('id')->prepend($category->id)->all();
+
+        $ads = Advertisement::whereIn('category_id', $categoryIds)
+            ->with('user', 'category')
             ->active()
             ->when($location, fn ($q) => $q->where('location', 'like', '%' . $location . '%'))
             ->latest()

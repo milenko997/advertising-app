@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class NotificationController extends Controller
@@ -40,18 +41,20 @@ class NotificationController extends Controller
 
     public function markRead(Request $request, string $id)
     {
-        $request->user()
-            ->notifications()
-            ->where('id', $id)
-            ->first()
-            ?->markAsRead();
+        $user = $request->user();
+
+        $user->notifications()->where('id', $id)->first()?->markAsRead();
+        Cache::forget('unread_notifications_' . $user->id);
 
         return back();
     }
 
     public function markAllRead(Request $request)
     {
-        $request->user()->unreadNotifications()->update(['read_at' => now()]);
+        $user = $request->user();
+
+        $user->unreadNotifications()->update(['read_at' => now()]);
+        Cache::forget('unread_notifications_' . $user->id);
 
         return back();
     }

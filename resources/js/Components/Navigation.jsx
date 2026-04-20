@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, usePage, router } from '@inertiajs/react';
+import axios from 'axios';
 
 function NavLink({ href, active, children }) {
     return (
@@ -54,6 +55,28 @@ export default function Navigation() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [bellOpen, setBellOpen] = useState(false);
     const bellRef = useRef(null);
+    const [localNotifications, setLocalNotifications] = useState(recentNotifications);
+
+    // Sync dropdown items when Inertia updates shared props (page navigation)
+    useEffect(() => { setLocalNotifications(recentNotifications); }, [recentNotifications]);
+
+    const handleDropdownView = (n) => {
+        if (!n.read_at) {
+            axios.patch(`/obaveštenja/${n.id}/procitano`);
+            setLocalNotifications(prev => prev.map(x => x.id === n.id ? { ...x, read_at: 'now' } : x));
+        }
+        setBellOpen(false);
+        if (n.data.url) router.visit(n.data.url);
+    };
+
+    const handleMarkAllRead = () => {
+        router.post('/obaveštenja/procitaj-sve', {}, {
+            preserveScroll: true,
+            only: ['unreadNotificationsCount', 'recentNotifications'],
+            onSuccess: () => setLocalNotifications(prev => prev.map(n => ({ ...n, read_at: n.read_at ?? 'now' }))),
+        });
+        setBellOpen(false);
+    };
 
     useEffect(() => {
         const handler = (e) => {
@@ -191,7 +214,7 @@ export default function Navigation() {
                                             <span className="text-sm font-semibold text-gray-900">Obaveštenja</span>
                                             {unreadNotificationsCount > 0 && (
                                                 <button
-                                                    onClick={() => { router.post('/obaveštenja/procitaj-sve', {}, { preserveScroll: true }); setBellOpen(false); }}
+                                                    onClick={handleMarkAllRead}
                                                     className="text-xs text-orange-600 hover:text-orange-700"
                                                 >
                                                     Označi sve
@@ -200,12 +223,13 @@ export default function Navigation() {
                                         </div>
 
                                         <div className="max-h-80 overflow-y-auto divide-y divide-gray-50">
-                                            {recentNotifications.length === 0 ? (
+                                            {localNotifications.length === 0 ? (
                                                 <p className="text-sm text-gray-400 text-center py-8">Nema obaveštenja</p>
-                                            ) : recentNotifications.map(n => (
-                                                <div
+                                            ) : localNotifications.map(n => (
+                                                <button
                                                     key={n.id}
-                                                    className={`flex gap-3 px-4 py-3 hover:bg-gray-50 transition-colors ${!n.read_at ? 'bg-orange-50/40' : ''}`}
+                                                    onClick={() => handleDropdownView(n)}
+                                                    className={`w-full text-left flex gap-3 px-4 py-3 hover:bg-gray-50 transition-colors ${!n.read_at ? 'bg-orange-50/40' : ''}`}
                                                 >
                                                     <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${!n.read_at ? 'bg-orange-100 text-orange-600' : 'bg-gray-100 text-gray-500'}`}>
                                                         <NotifIcon type={n.data.type} />
@@ -216,7 +240,7 @@ export default function Navigation() {
                                                         <p className="text-[11px] text-gray-400 mt-1">{n.created_at}</p>
                                                     </div>
                                                     {!n.read_at && <span className="w-2 h-2 bg-orange-500 rounded-full shrink-0 mt-1.5" />}
-                                                </div>
+                                                </button>
                                             ))}
                                         </div>
 

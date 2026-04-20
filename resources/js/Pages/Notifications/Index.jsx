@@ -60,8 +60,18 @@ export default function NotificationsIndex({ notifications: initialData }) {
     const markRead = (id) => {
         router.patch(`/obaveštenja/${id}/procitano`, {}, {
             preserveScroll: true,
+            only: ['unreadNotificationsCount', 'recentNotifications'],
             onSuccess: () => setList(prev => prev.map(n => n.id === id ? { ...n, read_at: 'now' } : n)),
         });
+    };
+
+    const handleView = (id, url) => {
+        const n = list.find(n => n.id === id);
+        if (n && !n.read_at) {
+            axios.patch(`/obaveštenja/${id}/procitano`);
+            setList(prev => prev.map(n => n.id === id ? { ...n, read_at: 'now' } : n));
+        }
+        router.visit(url);
     };
 
     const markAllRead = () => {
@@ -152,13 +162,12 @@ export default function NotificationsIndex({ notifications: initialData }) {
                                         <div className="flex items-center gap-3 mt-2">
                                             <span className="text-xs text-gray-400">{n.created_at}</span>
                                             {n.data.url && (
-                                                <Link
-                                                    href={n.data.url}
-                                                    onClick={() => !n.read_at && markRead(n.id)}
+                                                <button
+                                                    onClick={() => handleView(n.id, n.data.url)}
                                                     className="text-xs text-orange-600 hover:text-orange-700 font-medium"
                                                 >
                                                     Pogledaj →
-                                                </Link>
+                                                </button>
                                             )}
                                             {!n.read_at && (
                                                 <button

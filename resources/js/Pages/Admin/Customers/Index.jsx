@@ -1,13 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
 
-export default function CustomersIndex({ customers: initialCustomers }) {
+export default function CustomersIndex({ customers: initialCustomers, search: initialSearch = '' }) {
     const [customerList, setCustomerList] = useState(initialCustomers.data);
     const [currentPage, setCurrentPage] = useState(initialCustomers.current_page);
     const [hasMore, setHasMore] = useState(initialCustomers.current_page < initialCustomers.last_page);
     const [loading, setLoading] = useState(false);
+    const [search, setSearch] = useState(initialSearch);
+    const debounceRef = useRef(null);
+
+    // When Inertia delivers fresh props after a search, reset the list.
+    useEffect(() => {
+        setCustomerList(initialCustomers.data);
+        setCurrentPage(initialCustomers.current_page);
+        setHasMore(initialCustomers.current_page < initialCustomers.last_page);
+    }, [initialCustomers]);
+
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        setSearch(value);
+        clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(() => {
+            router.get('/admin/korisnici', { search: value }, { preserveState: true, replace: true });
+        }, 400);
+    };
 
     const destroy = (slug) => {
         if (!confirm('Da li ste sigurni?')) return;
@@ -21,7 +39,9 @@ export default function CustomersIndex({ customers: initialCustomers }) {
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/admin/korisnici?page=${nextPage}`);
+            const { data } = await axios.get(
+                `/admin/korisnici?page=${nextPage}&search=${encodeURIComponent(search)}`
+            );
             setCustomerList(prev => [...prev, ...data.customers]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);
@@ -29,6 +49,10 @@ export default function CustomersIndex({ customers: initialCustomers }) {
             setLoading(false);
         }
     };
+
+    const emptyMessage = search
+        ? 'Nema korisnika koji odgovaraju pretrazi.'
+        : 'Nema korisnika.';
 
     return (
         <AppLayout header={
@@ -44,6 +68,17 @@ export default function CustomersIndex({ customers: initialCustomers }) {
         }>
             <div id="page-admin-customers" className="py-8">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    <div className="mb-4">
+                        <input
+                            type="search"
+                            value={search}
+                            onChange={handleSearchChange}
+                            placeholder="Pretraži po imenu ili email-u…"
+                            className="w-full sm:w-80 px-4 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                        />
+                    </div>
+
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
@@ -59,7 +94,7 @@ export default function CustomersIndex({ customers: initialCustomers }) {
                                 {customerList.length === 0 ? (
                                     <tr>
                                         <td colSpan={5} className="px-6 py-16 text-center text-gray-500">
-                                            Nema korisnika.
+                                            {emptyMessage}
                                         </td>
                                     </tr>
                                 ) : customerList.map(customer => (

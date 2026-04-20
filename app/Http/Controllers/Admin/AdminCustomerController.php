@@ -21,13 +21,22 @@ class AdminCustomerController extends Controller
 
     public function index(\Illuminate\Http\Request $request)
     {
-        $paginator = User::where('role', UserRole::Customer)->latest()->paginate(20);
+        $search = $request->input('search', '');
+
+        $paginator = User::where('role', UserRole::Customer)
+            ->when($search, fn ($q) => $q->where(fn ($q) => $q
+                ->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+            ))
+            ->latest()
+            ->paginate(20);
 
         $customers = $paginator->getCollection()->map(fn ($u) => [
             'id'         => $u->id,
             'slug'       => $u->slug,
             'name'       => $u->name,
             'email'      => $u->email,
+            'role'       => $u->role->value,
             'avatar'     => $u->avatar,
             'created_at' => $u->created_at->format('d.m.Y'),
         ])->values();
@@ -36,11 +45,13 @@ class AdminCustomerController extends Controller
             return response()->json([
                 'customers' => $customers,
                 'hasMore'   => $paginator->hasMorePages(),
+                'search'    => $search,
             ]);
         }
 
         return Inertia::render('Admin/Customers/Index', [
             'customers' => $this->paginationData($paginator, $customers->values()->all()),
+            'search'    => $search,
         ]);
     }
 

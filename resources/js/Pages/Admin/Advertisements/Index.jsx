@@ -62,7 +62,8 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
             preserveScroll: true,
             only: ['flash'],
             onSuccess: () => {
-                setAdList(prev => prev.map(a => a.id === id ? { ...a, is_pinned: !a.is_pinned } : a));
+                const d = new Date(); const today = `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
+                setAdList(prev => prev.map(a => a.id === id ? { ...a, is_pinned: !a.is_pinned, pinned_at: !a.is_pinned ? today : null } : a));
             },
         });
     };
@@ -72,7 +73,8 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
             preserveScroll: true,
             only: ['flash'],
             onSuccess: () => {
-                setAdList(prev => prev.map(a => a.id === id ? { ...a, is_pinned_category: !a.is_pinned_category } : a));
+                const d = new Date(); const today = `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
+                setAdList(prev => prev.map(a => a.id === id ? { ...a, is_pinned_category: !a.is_pinned_category, pinned_category_at: !a.is_pinned_category ? today : null } : a));
             },
         });
     };
@@ -214,35 +216,45 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 {/* Global pin */}
-                                                <button
-                                                    onClick={() => togglePin(ad.id)}
-                                                    title={ad.is_pinned ? 'Ukloni globalni pin' : 'Prikači globalno'}
-                                                    className={`px-2 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 ${
-                                                        ad.is_pinned
-                                                            ? 'bg-amber-100 text-amber-700 border border-amber-300 hover:bg-amber-200'
-                                                            : 'border border-gray-300 text-gray-500 hover:bg-gray-50'
-                                                    }`}
-                                                >
-                                                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                                                        <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
-                                                    </svg>
-                                                    Global
-                                                </button>
+                                                <div className="flex flex-col items-center gap-0.5">
+                                                    <button
+                                                        onClick={() => togglePin(ad.id)}
+                                                        title={ad.is_pinned ? `Prikačeno: ${ad.pinned_at} — klikni za uklanjanje` : 'Prikači globalno'}
+                                                        className={`px-2 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 ${
+                                                            ad.is_pinned
+                                                                ? 'bg-amber-100 text-amber-700 border border-amber-300 hover:bg-amber-200'
+                                                                : 'border border-gray-300 text-gray-500 hover:bg-gray-50'
+                                                        }`}
+                                                    >
+                                                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                                                            <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
+                                                        </svg>
+                                                        Global
+                                                    </button>
+                                                    {ad.is_pinned && (
+                                                        <span className="text-[10px] text-amber-600">{ad.pinned_at ?? '—'}</span>
+                                                    )}
+                                                </div>
                                                 {/* Category pin */}
-                                                <button
-                                                    onClick={() => togglePinCategory(ad.id)}
-                                                    title={ad.is_pinned_category ? 'Ukloni pin iz kategorije' : 'Prikači u kategoriji'}
-                                                    className={`px-2 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 ${
-                                                        ad.is_pinned_category
-                                                            ? 'bg-blue-100 text-blue-700 border border-blue-300 hover:bg-blue-200'
-                                                            : 'border border-gray-300 text-gray-500 hover:bg-gray-50'
-                                                    }`}
-                                                >
-                                                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                                                        <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
-                                                    </svg>
-                                                    Kategorija
-                                                </button>
+                                                <div className="flex flex-col items-center gap-0.5">
+                                                    <button
+                                                        onClick={() => togglePinCategory(ad.id)}
+                                                        title={ad.is_pinned_category ? `Prikačeno: ${ad.pinned_category_at} — klikni za uklanjanje` : 'Prikači u kategoriji'}
+                                                        className={`px-2 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 ${
+                                                            ad.is_pinned_category
+                                                                ? 'bg-blue-100 text-blue-700 border border-blue-300 hover:bg-blue-200'
+                                                                : 'border border-gray-300 text-gray-500 hover:bg-gray-50'
+                                                        }`}
+                                                    >
+                                                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                                                            <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
+                                                        </svg>
+                                                        Kategorija
+                                                    </button>
+                                                    {ad.is_pinned_category && (
+                                                        <span className="text-[10px] text-blue-600">{ad.pinned_category_at ?? '—'}</span>
+                                                    )}
+                                                </div>
                                                 <Link
                                                     href={`/admin/oglasi/${ad.id}/edit`}
                                                     className="px-3 py-1.5 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"

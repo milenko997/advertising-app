@@ -1,14 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
 
-export default function AdminAdvertisementsIndex({ ads: initialAds }) {
+export default function AdminAdvertisementsIndex({ ads: initialAds, search: initialSearch = '' }) {
     const [adList, setAdList] = useState(initialAds.data);
     const [currentPage, setCurrentPage] = useState(initialAds.current_page);
     const [hasMore, setHasMore] = useState(initialAds.current_page < initialAds.last_page);
     const [loading, setLoading] = useState(false);
     const [selected, setSelected] = useState(new Set());
+    const [search, setSearch] = useState(initialSearch);
+    const debounceRef = useRef(null);
+
+    useEffect(() => {
+        setAdList(initialAds.data);
+        setCurrentPage(initialAds.current_page);
+        setHasMore(initialAds.current_page < initialAds.last_page);
+        setSelected(new Set());
+    }, [initialAds]);
+
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        setSearch(value);
+        clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(() => {
+            router.get('/admin/oglasi', { search: value }, { preserveState: true, replace: true });
+        }, 400);
+    };
 
     const allSelected = adList.length > 0 && selected.size === adList.length;
     const someSelected = selected.size > 0;
@@ -78,7 +96,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/admin/oglasi?page=${nextPage}`);
+            const { data } = await axios.get(`/admin/oglasi?page=${nextPage}&search=${encodeURIComponent(search)}`);
             setAdList(prev => [...prev, ...data.ads]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);
@@ -91,6 +109,16 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
         <AppLayout>
             <div id="page-admin-ads" className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    <div className="mb-4">
+                        <input
+                            type="search"
+                            value={search}
+                            onChange={handleSearchChange}
+                            placeholder="Pretraži po naslovu, korisniku, kategoriji, lokaciji…"
+                            className="w-full sm:w-96 px-4 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                        />
+                    </div>
 
                     {/* Bulk toolbar */}
                     {someSelected && (
@@ -157,7 +185,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
                                 {adList.length === 0 ? (
                                     <tr>
                                         <td colSpan={7} className="px-6 py-16 text-center text-gray-500">
-                                            Nema oglasa.
+                                            {search ? 'Nema oglasa koji odgovaraju pretrazi.' : 'Nema oglasa.'}
                                         </td>
                                     </tr>
                                 ) : adList.map(ad => (

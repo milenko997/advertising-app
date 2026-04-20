@@ -18,7 +18,17 @@ class AdminAdvertisementController extends Controller
 
     public function index(Request $request)
     {
-        $paginator = Advertisement::with('category', 'user')->latest()->paginate(21);
+        $search = $request->input('search', '');
+
+        $paginator = Advertisement::with('category', 'user')
+            ->when($search, fn ($q) => $q->where(fn ($q) => $q
+                ->where('title', 'like', "%{$search}%")
+                ->orWhere('location', 'like', "%{$search}%")
+                ->orWhereHas('user', fn ($q) => $q->where('name', 'like', "%{$search}%"))
+                ->orWhereHas('category', fn ($q) => $q->where('name', 'like', "%{$search}%"))
+            ))
+            ->latest()
+            ->paginate(21);
 
         $ads = $paginator->getCollection()->map(fn ($ad) => [
             'id'          => $ad->id,
@@ -36,11 +46,13 @@ class AdminAdvertisementController extends Controller
             return response()->json([
                 'ads'     => $ads,
                 'hasMore' => $paginator->hasMorePages(),
+                'search'  => $search,
             ]);
         }
 
         return Inertia::render('Admin/Advertisements/Index', [
-            'ads' => $this->paginationData($paginator, $ads->values()->all()),
+            'ads'    => $this->paginationData($paginator, $ads->values()->all()),
+            'search' => $search,
         ]);
     }
 

@@ -60,6 +60,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
     const togglePin = (id) => {
         router.patch(`/admin/oglasi/${id}/pin`, {}, {
             preserveScroll: true,
+            only: ['flash'],
             onSuccess: () => {
                 setAdList(prev => prev.map(a => a.id === id ? { ...a, is_pinned: !a.is_pinned } : a));
             },
@@ -69,6 +70,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
     const togglePinCategory = (id) => {
         router.patch(`/admin/oglasi/${id}/pin-category`, {}, {
             preserveScroll: true,
+            only: ['flash'],
             onSuccess: () => {
                 setAdList(prev => prev.map(a => a.id === id ? { ...a, is_pinned_category: !a.is_pinned_category } : a));
             },

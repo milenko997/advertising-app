@@ -110,7 +110,7 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                                         {pinnedCategoryAds.map(ad => (
-                                            <AdCard key={ad.id} ad={ad} favoritedIds={favoritedIds} />
+                                            <AdCard key={ad.id} ad={ad} favoritedIds={favoritedIds} showCategoryPin />
                                         ))}
                                     </div>
                                     <div className="mt-8 border-t border-gray-200" />
@@ -125,7 +125,7 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
                                 <>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                                         {adList.map(ad => (
-                                            <AdCard key={ad.id} ad={ad} favoritedIds={favoritedIds} />
+                                            <AdCard key={ad.id} ad={ad} favoritedIds={favoritedIds} showCategoryPin />
                                         ))}
                                     </div>
 

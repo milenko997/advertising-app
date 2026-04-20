@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react';
 import BookmarkButton from '@/Components/BookmarkButton';
 
-export default function AdCard({ ad, favoritedIds = [] }) {
+export default function AdCard({ ad, favoritedIds = [], showCategoryPin = false }) {
     const isSaved = favoritedIds.includes(ad.id);
 
     return (
@@ -44,6 +44,14 @@ export default function AdCard({ ad, favoritedIds = [] }) {
                                 <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
                             </svg>
                             Istaknuto
+                        </span>
+                    )}
+                    {showCategoryPin && ad.is_pinned_category && !ad.is_pinned && (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-500/90 text-white backdrop-blur-sm">
+                            <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
+                            </svg>
+                            Istaknuto u kategoriji
                         </span>
                     )}
                 </div>

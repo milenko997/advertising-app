@@ -63,7 +63,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                     {!search && (
                         <div className="mb-5">
                             <h1 className="text-xl font-bold text-slate-900">Transport oglasi u Srbiji</h1>
-                            <p className="text-sm text-slate-500 mt-0.5">Pronađite vozila, rute i logističke partnere na jednom mestu.</p>
+                            <p className="text-sm text-slate-500 mt-0.5">Pronađite pouzdane prevoznike i transportne usluge širom Srbije.</p>
                         </div>
                     )}
 

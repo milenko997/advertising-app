@@ -15,9 +15,11 @@ class FavoriteController extends Controller
     public function index(Request $request)
     {
         $favoritedIds = Favorite::idsForUser(auth()->id());
+        $search = $request->input('search', '');
 
         $ads = Advertisement::whereIn('id', $favoritedIds)
             ->active()
+            ->when($search, fn ($q) => $q->where('title', 'like', "%{$search}%"))
             ->with('category')
             ->latest()
             ->paginate(21);
@@ -26,6 +28,7 @@ class FavoriteController extends Controller
             return response()->json([
                 'ads'     => $ads->map(fn ($ad) => AdvertisementResource::make($ad)->resolve())->values()->all(),
                 'hasMore' => $ads->hasMorePages(),
+                'search'  => $search,
             ]);
         }
 
@@ -34,6 +37,7 @@ class FavoriteController extends Controller
         return Inertia::render('Favorites/Index', [
             'ads'          => $this->paginationData($ads, $items->values()->all()),
             'favoritedIds' => $favoritedIds,
+            'search'       => $search,
         ]);
     }
 

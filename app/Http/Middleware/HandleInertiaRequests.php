@@ -62,7 +62,9 @@ class HandleInertiaRequests extends Middleware
                     'created_at' => $n->created_at->diffForHumans(),
                 ])->values()
                 : [],
-            'categories' => Cache::remember('nav_categories', 300, fn () => Category::with('children')
+            'categories' => Cache::remember('nav_categories', 300, fn () => Category::with(['children' => function ($q) {
+                    $q->whereHas('advertisements', fn ($q) => $q->active());
+                }])
                 ->whereNull('parent_id')
                 ->orderBy('name')
                 ->get()
@@ -75,7 +77,11 @@ class HandleInertiaRequests extends Middleware
                         'name' => $ch->name,
                         'slug' => $ch->slug,
                     ])->values(),
-                ])->values()),
+                ])
+                ->filter(fn ($c) => $c['children']->isNotEmpty() ||
+                    \App\Models\Advertisement::where('category_id', $c['id'])->active()->exists()
+                )
+                ->values()),
         ]);
     }
 }

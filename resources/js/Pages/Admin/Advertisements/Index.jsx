@@ -48,6 +48,15 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
         });
     };
 
+    const togglePinCategory = (id) => {
+        router.patch(`/admin/oglasi/${id}/pin-category`, {}, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setAdList(prev => prev.map(a => a.id === id ? { ...a, is_pinned_category: !a.is_pinned_category } : a));
+            },
+        });
+    };
+
     const bulkAction = (action) => {
         const ids = [...selected];
         if (action === 'delete' && !confirm(`Obrisati ${ids.length} izabrani oglas(e)?`)) return;
@@ -174,10 +183,11 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
                                         <td className="px-4 py-4 text-sm text-gray-400 whitespace-nowrap">{ad.created_at}</td>
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
+                                                {/* Global pin */}
                                                 <button
                                                     onClick={() => togglePin(ad.id)}
-                                                    title={ad.is_pinned ? 'Otkači' : 'Prikači na vrh'}
-                                                    className={`px-3 py-1.5 text-sm font-medium rounded-lg transition inline-flex items-center gap-1 ${
+                                                    title={ad.is_pinned ? 'Ukloni globalni pin' : 'Prikači globalno'}
+                                                    className={`px-2 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 ${
                                                         ad.is_pinned
                                                             ? 'bg-amber-100 text-amber-700 border border-amber-300 hover:bg-amber-200'
                                                             : 'border border-gray-300 text-gray-500 hover:bg-gray-50'
@@ -186,7 +196,22 @@ export default function AdminAdvertisementsIndex({ ads: initialAds }) {
                                                     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
                                                         <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
                                                     </svg>
-                                                    {ad.is_pinned ? 'Prikačeno' : 'Prikači'}
+                                                    Global
+                                                </button>
+                                                {/* Category pin */}
+                                                <button
+                                                    onClick={() => togglePinCategory(ad.id)}
+                                                    title={ad.is_pinned_category ? 'Ukloni pin iz kategorije' : 'Prikači u kategoriji'}
+                                                    className={`px-2 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 ${
+                                                        ad.is_pinned_category
+                                                            ? 'bg-blue-100 text-blue-700 border border-blue-300 hover:bg-blue-200'
+                                                            : 'border border-gray-300 text-gray-500 hover:bg-gray-50'
+                                                    }`}
+                                                >
+                                                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                                                        <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
+                                                    </svg>
+                                                    Kategorija
                                                 </button>
                                                 <Link
                                                     href={`/admin/oglasi/${ad.id}/edit`}

@@ -27,6 +27,7 @@ class Advertisement extends Model
         'location',
         'category_id',
         'is_pinned',
+        'is_pinned_category',
         'expires_at',
     ];
 

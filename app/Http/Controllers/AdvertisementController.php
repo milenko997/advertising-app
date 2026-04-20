@@ -143,15 +143,30 @@ class AdvertisementController extends Controller
 
         $location = $request->get('location');
 
-        // When viewing a parent category, include ads from all child categories too
         $categoryIds = $child
             ? [$category->id]
             : $parentCategory->children()->pluck('id')->prepend($category->id)->all();
+
+        $pinnedCategoryAds = [];
+        if (!$location) {
+            $pinnedCategoryAds = Advertisement::whereIn('category_id', $categoryIds)
+                ->active()
+                ->where('is_pinned_category', true)
+                ->with('user', 'category')
+                ->latest()
+                ->get()
+                ->map(fn ($ad) => $this->formatAd($ad))
+                ->values()
+                ->all();
+        }
+
+        $pinnedCategoryIds = collect($pinnedCategoryAds)->pluck('id')->all();
 
         $ads = Advertisement::whereIn('category_id', $categoryIds)
             ->with('user', 'category')
             ->active()
             ->when($location, fn ($q) => $q->where('location', 'like', '%' . $location . '%'))
+            ->when(!empty($pinnedCategoryIds), fn ($q) => $q->whereNotIn('id', $pinnedCategoryIds))
             ->latest()
             ->paginate(21);
 
@@ -169,10 +184,11 @@ class AdvertisementController extends Controller
         ]);
 
         return Inertia::render('Advertisements/ByCategory', [
-            'category'     => ['id' => $category->id, 'name' => $category->name, 'slug' => $category->slug],
-            'ads'          => $this->paginationData($ads, $this->formatAds($ads)),
-            'location'     => $location,
-            'favoritedIds' => Favorite::idsForUser(Auth::id()),
+            'category'           => ['id' => $category->id, 'name' => $category->name, 'slug' => $category->slug],
+            'ads'                => $this->paginationData($ads, $this->formatAds($ads)),
+            'pinnedCategoryAds'  => $pinnedCategoryAds,
+            'location'           => $location,
+            'favoritedIds'       => Favorite::idsForUser(Auth::id()),
         ]);
     }
 

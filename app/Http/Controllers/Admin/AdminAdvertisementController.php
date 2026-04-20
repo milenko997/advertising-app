@@ -25,7 +25,8 @@ class AdminAdvertisementController extends Controller
             'title'       => $ad->title,
             'description' => $ad->description,
             'price'       => $ad->price,
-            'is_pinned'   => (bool) $ad->is_pinned,
+            'is_pinned'          => (bool) $ad->is_pinned,
+            'is_pinned_category' => (bool) $ad->is_pinned_category,
             'created_at'  => $ad->created_at->format('d.m.Y'),
             'category'    => $ad->category ? ['name' => $ad->category->name] : null,
             'user'        => $ad->user ? ['name' => $ad->user->name] : null,
@@ -130,6 +131,13 @@ class AdminAdvertisementController extends Controller
         $advertisement->update(['is_pinned' => !$advertisement->is_pinned]);
 
         return back()->with('success', $advertisement->is_pinned ? 'Oglas je prikačen.' : 'Oglas je otkačen.');
+    }
+
+    public function togglePinCategory(Advertisement $advertisement)
+    {
+        $advertisement->update(['is_pinned_category' => !$advertisement->is_pinned_category]);
+
+        return back()->with('success', $advertisement->is_pinned_category ? 'Oglas je prikačen u kategoriji.' : 'Oglas je otkačen iz kategorije.');
     }
 
     public function destroy(Advertisement $advertisement)

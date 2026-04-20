@@ -18,7 +18,11 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $paginator = Category::with('parent')->paginate(20);
+        $search = $request->input('search', '');
+
+        $paginator = Category::with('parent')
+            ->when($search, fn ($q) => $q->where('name', 'like', "%{$search}%"))
+            ->paginate(20);
 
         $categories = $paginator->getCollection()->map(fn ($c) => [
             'id'          => $c->id,
@@ -32,11 +36,13 @@ class CategoryController extends Controller
             return response()->json([
                 'categories' => $categories,
                 'hasMore'    => $paginator->hasMorePages(),
+                'search'     => $search,
             ]);
         }
 
         return Inertia::render('Admin/Categories/Index', [
             'categories' => $this->paginationData($paginator, $categories->values()->all()),
+            'search'     => $search,
         ]);
     }
 

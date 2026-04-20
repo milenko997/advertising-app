@@ -1,13 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
 
-export default function CategoriesIndex({ categories: initialCategories }) {
+export default function CategoriesIndex({ categories: initialCategories, search: initialSearch = '' }) {
     const [categoryList, setCategoryList] = useState(initialCategories.data);
     const [currentPage, setCurrentPage] = useState(initialCategories.current_page);
     const [hasMore, setHasMore] = useState(initialCategories.current_page < initialCategories.last_page);
     const [loading, setLoading] = useState(false);
+    const [search, setSearch] = useState(initialSearch);
+    const debounceRef = useRef(null);
+
+    useEffect(() => {
+        setCategoryList(initialCategories.data);
+        setCurrentPage(initialCategories.current_page);
+        setHasMore(initialCategories.current_page < initialCategories.last_page);
+    }, [initialCategories]);
+
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        setSearch(value);
+        clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(() => {
+            router.get('/admin/kategorije', { search: value }, { preserveState: true, replace: true });
+        }, 400);
+    };
 
     const destroy = (slug) => {
         if (!confirm('Da li ste sigurni?')) return;
@@ -21,7 +38,7 @@ export default function CategoriesIndex({ categories: initialCategories }) {
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/admin/kategorije?page=${nextPage}`);
+            const { data } = await axios.get(`/admin/kategorije?page=${nextPage}&search=${encodeURIComponent(search)}`);
             setCategoryList(prev => [...prev, ...data.categories]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);
@@ -44,6 +61,16 @@ export default function CategoriesIndex({ categories: initialCategories }) {
         }>
             <div id="page-admin-categories" className="py-8">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="mb-4">
+                        <input
+                            type="text"
+                            value={search}
+                            onChange={handleSearchChange}
+                            placeholder="Pretraži kategorije..."
+                            className="w-full sm:w-80 px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                        />
+                    </div>
+
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
@@ -58,7 +85,7 @@ export default function CategoriesIndex({ categories: initialCategories }) {
                                 {categoryList.length === 0 ? (
                                     <tr>
                                         <td colSpan={4} className="px-6 py-16 text-center text-gray-500">
-                                            Nema kategorija.
+                                            {search ? 'Nema kategorija koje odgovaraju pretrazi.' : 'Nema kategorija.'}
                                         </td>
                                     </tr>
                                 ) : categoryList.map(cat => (

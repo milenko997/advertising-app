@@ -45,6 +45,7 @@ class NotificationController extends Controller
 
         $user->notifications()->where('id', $id)->first()?->markAsRead();
         Cache::forget('unread_notifications_' . $user->id);
+        Cache::forget('recent_notifications_' . $user->id);
 
         return back();
     }
@@ -55,16 +56,20 @@ class NotificationController extends Controller
 
         $user->unreadNotifications()->update(['read_at' => now()]);
         Cache::forget('unread_notifications_' . $user->id);
+        Cache::forget('recent_notifications_' . $user->id);
 
         return back();
     }
 
     public function destroy(Request $request, string $id)
     {
-        $request->user()
-            ->notifications()
+        $user = $request->user();
+
+        $user->notifications()
             ->where('id', $id)
             ->delete();
+
+        Cache::forget('recent_notifications_' . $user->id);
 
         return back();
     }

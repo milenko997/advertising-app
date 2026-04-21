@@ -55,12 +55,14 @@ class HandleInertiaRequests extends Middleware
                 ? Cache::remember('unread_notifications_' . $user->id, 60, fn () => $user->unreadNotifications()->count())
                 : 0,
             'recentNotifications' => $user && !$user->isAdmin()
-                ? $user->notifications()->latest()->take(5)->get()->map(fn ($n) => [
-                    'id'         => $n->id,
-                    'data'       => $n->data,
-                    'read_at'    => $n->read_at?->format('d.m.Y H:i'),
-                    'created_at' => $n->created_at->diffForHumans(),
-                ])->values()
+                ? Cache::remember('recent_notifications_' . $user->id, 60, fn () =>
+                    $user->notifications()->latest()->take(5)->get()->map(fn ($n) => [
+                        'id'         => $n->id,
+                        'data'       => $n->data,
+                        'read_at'    => $n->read_at?->format('d.m.Y H:i'),
+                        'created_at' => $n->created_at->diffForHumans(),
+                    ])->values()->all()
+                )
                 : [],
             'categories' => Cache::remember('nav_categories', 300, fn () => Category::with(['children' => function ($q) {
                     $q->whereHas('advertisements', fn ($q) => $q->active());

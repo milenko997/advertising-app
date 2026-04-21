@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Advertisement;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 
 class UnpinExpiredAds extends Command
 {
@@ -23,6 +24,8 @@ class UnpinExpiredAds extends Command
             ->whereNotNull('pinned_category_at')
             ->where('pinned_category_at', '<=', $cutoff)
             ->update(['is_pinned_category' => false, 'pinned_category_at' => null]);
+
+        Cache::forget('nav_categories');
 
         $this->info("Unpinned: {$global} global, {$category} category.");
     }

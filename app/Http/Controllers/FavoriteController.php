@@ -43,7 +43,7 @@ class FavoriteController extends Controller
 
     public function toggle(Advertisement $advertisement)
     {
-        abort_unless(!$advertisement->isExpired(), 403);
+        abort_if($advertisement->isExpired(), 403);
 
         $userId   = auth()->id();
         $existing = Favorite::where('user_id', $userId)

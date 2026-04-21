@@ -11,6 +11,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
     const [selected, setSelected] = useState(new Set());
     const [search, setSearch] = useState(initialSearch);
     const debounceRef = useRef(null);
+    const [pinning, setPinning] = useState(new Set());
 
     useEffect(() => {
         setAdList(initialAds.data);
@@ -58,6 +59,8 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
     };
 
     const togglePin = (id) => {
+        if (pinning.has(`pin-${id}`)) return;
+        setPinning(prev => new Set(prev).add(`pin-${id}`));
         router.patch(`/admin/oglasi/${id}/pin`, {}, {
             preserveScroll: true,
             only: ['flash'],
@@ -65,10 +68,13 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                 const d = new Date(); const today = `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
                 setAdList(prev => prev.map(a => a.id === id ? { ...a, is_pinned: !a.is_pinned, pinned_at: !a.is_pinned ? today : null } : a));
             },
+            onFinish: () => setPinning(prev => { const n = new Set(prev); n.delete(`pin-${id}`); return n; }),
         });
     };
 
     const togglePinCategory = (id) => {
+        if (pinning.has(`cat-${id}`)) return;
+        setPinning(prev => new Set(prev).add(`cat-${id}`));
         router.patch(`/admin/oglasi/${id}/pin-category`, {}, {
             preserveScroll: true,
             only: ['flash'],
@@ -76,6 +82,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                 const d = new Date(); const today = `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
                 setAdList(prev => prev.map(a => a.id === id ? { ...a, is_pinned_category: !a.is_pinned_category, pinned_category_at: !a.is_pinned_category ? today : null } : a));
             },
+            onFinish: () => setPinning(prev => { const n = new Set(prev); n.delete(`cat-${id}`); return n; }),
         });
     };
 
@@ -219,8 +226,9 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                 <div className="flex flex-col items-center gap-0.5">
                                                     <button
                                                         onClick={() => togglePin(ad.id)}
+                                                        disabled={pinning.has(`pin-${ad.id}`)}
                                                         title={ad.is_pinned ? `Prikačeno: ${ad.pinned_at} — klikni za uklanjanje` : 'Prikači globalno'}
-                                                        className={`px-2 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 ${
+                                                        className={`px-2 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed ${
                                                             ad.is_pinned
                                                                 ? 'bg-amber-100 text-amber-700 border border-amber-300 hover:bg-amber-200'
                                                                 : 'border border-gray-300 text-gray-500 hover:bg-gray-50'
@@ -239,8 +247,9 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                 <div className="flex flex-col items-center gap-0.5">
                                                     <button
                                                         onClick={() => togglePinCategory(ad.id)}
+                                                        disabled={pinning.has(`cat-${ad.id}`)}
                                                         title={ad.is_pinned_category ? `Prikačeno: ${ad.pinned_category_at} — klikni za uklanjanje` : 'Prikači u kategoriji'}
-                                                        className={`px-2 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 ${
+                                                        className={`px-2 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed ${
                                                             ad.is_pinned_category
                                                                 ? 'bg-blue-100 text-blue-700 border border-blue-300 hover:bg-blue-200'
                                                                 : 'border border-gray-300 text-gray-500 hover:bg-gray-50'

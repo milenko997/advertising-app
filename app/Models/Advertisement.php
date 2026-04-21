@@ -45,6 +45,13 @@ class Advertisement extends Model
             $ad->expires_at ??= now()->addDays(self::EXPIRY_DAYS);
         });
 
+        static::restoring(function (Advertisement $ad) {
+            $ad->is_pinned          = false;
+            $ad->is_pinned_category = false;
+            $ad->pinned_at          = null;
+            $ad->pinned_category_at = null;
+        });
+
         static::deleting(function (Advertisement $ad) {
             // Clean up favorites for all users who saved this ad
             $userIds = Favorite::where('advertisement_id', $ad->id)->pluck('user_id');

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Blade::directive('vite', function ($expression) {
             return "<?php echo \\App\\Support\\Vite::tags($expression); ?>";
+        });
+
+        Password::defaults(function () {
+            return Password::min(10)->mixedCase()->numbers()->uncompromised();
         });
     }
 }

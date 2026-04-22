@@ -65,7 +65,7 @@ class UserAdvertisementController extends Controller
             'title'        => $request->title,
             'slug'         => $this->slugService->generate($request->title),
             'description'  => $request->description,
-            'payload'      => $request->payload,
+            'payload'      => $request->payload ? strip_tags($request->payload) : null,
 
             'availability' => $request->availability,
             'price'        => $request->price,
@@ -106,7 +106,7 @@ class UserAdvertisementController extends Controller
 
         $ad->title        = $request->title;
         $ad->description  = $request->description;
-        $ad->payload      = $request->payload;
+        $ad->payload      = $request->payload ? strip_tags($request->payload) : null;
         $ad->availability = $request->availability;
         $ad->price        = $request->price;
         $ad->phone        = $request->phone;

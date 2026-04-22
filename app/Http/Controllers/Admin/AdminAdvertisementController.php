@@ -88,13 +88,13 @@ class AdminAdvertisementController extends Controller
     public function update(Request $request, Advertisement $advertisement)
     {
         $request->validate([
-            'title'        => 'required|string|max:255',
-            'description'  => 'required|string',
-            'payload'      => 'nullable|string|max:255',
+            'title'        => 'required|string|min:5|max:255',
+            'description'  => 'required|string|min:10|max:5000',
+            'payload'      => 'nullable|string|min:2|max:100',
             'availability' => 'required|in:available,on_request',
-            'price'        => 'nullable|string|max:255',
-            'phone'        => 'required|string|min:8|max:15',
-            'location'     => 'required|string',
+            'price'        => 'nullable|string|max:100',
+            'phone'        => ['required', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
+            'location'     => 'required|string|min:2|max:255',
             'category_id'  => 'required|exists:categories,id',
             'image'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
             'images.*'     => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
@@ -102,7 +102,7 @@ class AdminAdvertisementController extends Controller
 
         $advertisement->title        = $request->title;
         $advertisement->description  = $request->description;
-        $advertisement->payload      = $request->payload;
+        $advertisement->payload      = $request->payload ? strip_tags($request->payload) : null;
         $advertisement->availability = $request->availability;
         $advertisement->price        = $request->price;
         $advertisement->phone        = $request->phone;
@@ -143,10 +143,9 @@ class AdminAdvertisementController extends Controller
     public function togglePin(Advertisement $advertisement)
     {
         $pinning = !$advertisement->is_pinned;
-        $advertisement->update([
-            'is_pinned' => $pinning,
-            'pinned_at' => $pinning ? now() : null,
-        ]);
+        $advertisement->is_pinned = $pinning;
+        $advertisement->pinned_at = $pinning ? now() : null;
+        $advertisement->save();
 
         return back()->with('success', $pinning ? 'Oglas je globalno prikačen.' : 'Oglas je otkačen.');
     }
@@ -154,10 +153,9 @@ class AdminAdvertisementController extends Controller
     public function togglePinCategory(Advertisement $advertisement)
     {
         $pinning = !$advertisement->is_pinned_category;
-        $advertisement->update([
-            'is_pinned_category' => $pinning,
-            'pinned_category_at' => $pinning ? now() : null,
-        ]);
+        $advertisement->is_pinned_category = $pinning;
+        $advertisement->pinned_category_at = $pinning ? now() : null;
+        $advertisement->save();
 
         return back()->with('success', $pinning ? 'Oglas je prikačen u kategoriji.' : 'Oglas je otkačen iz kategorije.');
     }

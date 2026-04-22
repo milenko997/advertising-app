@@ -67,6 +67,7 @@ class NotificationController extends Controller
 
         $user->notifications()
             ->where('id', $id)
+            ->firstOrFail()
             ->delete();
 
         Cache::forget('recent_notifications_' . $user->id);

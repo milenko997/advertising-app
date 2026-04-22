@@ -26,11 +26,6 @@ class Advertisement extends Model
         'phone',
         'location',
         'category_id',
-        'is_pinned',
-        'is_pinned_category',
-        'pinned_at',
-        'pinned_category_at',
-        'expires_at',
     ];
 
     protected $casts = [

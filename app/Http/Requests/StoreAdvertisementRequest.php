@@ -8,7 +8,8 @@ class StoreAdvertisementRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->isCustomer() ?? false;
+        $user = $this->user();
+        return $user && ($user->isCustomer() || $user->isAdmin());
     }
 
     public function rules(): array

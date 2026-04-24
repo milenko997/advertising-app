@@ -48,13 +48,19 @@ function InboxCard({ label, count, href, color }) {
 function MiniBar({ data }) {
     if (!data || data.length === 0) return null;
     const max = Math.max(...data.map(d => d.count), 1);
+    const summary = data.map(d => `${d.date}: ${d.count}`).join(', ');
 
     return (
-        <div className="flex items-end gap-px h-14 w-full">
+        <div
+            role="img"
+            aria-label={`Grafikon aktivnosti: ${summary}`}
+            className="flex items-end gap-px h-14 w-full"
+        >
             {data.map((d, i) => (
                 <div
                     key={i}
                     title={`${d.date}: ${d.count}`}
+                    aria-hidden="true"
                     className="flex-1 bg-orange-400 rounded-sm opacity-70 hover:opacity-100 transition-opacity"
                     style={{ height: `${Math.max((d.count / max) * 100, d.count > 0 ? 4 : 0)}%` }}
                 />

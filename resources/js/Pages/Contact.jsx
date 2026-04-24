@@ -142,10 +142,11 @@ export default function Contact() {
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                             {/* Name */}
                                             <div>
-                                                <label className="block text-xs font-semibold text-slate-600 mb-1.5">
+                                                <label htmlFor="contact-name" className="block text-xs font-semibold text-slate-600 mb-1.5">
                                                     Ime i prezime <span className="text-red-400">*</span>
                                                 </label>
                                                 <input
+                                                    id="contact-name"
                                                     type="text"
                                                     value={data.name}
                                                     onChange={e => setData('name', e.target.value)}
@@ -159,10 +160,11 @@ export default function Contact() {
 
                                             {/* Email */}
                                             <div>
-                                                <label className="block text-xs font-semibold text-slate-600 mb-1.5">
+                                                <label htmlFor="contact-email" className="block text-xs font-semibold text-slate-600 mb-1.5">
                                                     Email adresa <span className="text-red-400">*</span>
                                                 </label>
                                                 <input
+                                                    id="contact-email"
                                                     type="email"
                                                     value={data.email}
                                                     onChange={e => setData('email', e.target.value)}
@@ -177,10 +179,11 @@ export default function Contact() {
 
                                         {/* Subject */}
                                         <div>
-                                            <label className="block text-xs font-semibold text-slate-600 mb-1.5">
+                                            <label htmlFor="contact-subject" className="block text-xs font-semibold text-slate-600 mb-1.5">
                                                 Predmet <span className="text-red-400">*</span>
                                             </label>
                                             <input
+                                                id="contact-subject"
                                                 type="text"
                                                 value={data.subject}
                                                 onChange={e => setData('subject', e.target.value)}
@@ -194,10 +197,11 @@ export default function Contact() {
 
                                         {/* Message */}
                                         <div>
-                                            <label className="block text-xs font-semibold text-slate-600 mb-1.5">
+                                            <label htmlFor="contact-message" className="block text-xs font-semibold text-slate-600 mb-1.5">
                                                 Poruka <span className="text-red-400">*</span>
                                             </label>
                                             <textarea
+                                                id="contact-message"
                                                 rows={6}
                                                 value={data.message}
                                                 onChange={e => setData('message', e.target.value)}
@@ -211,7 +215,7 @@ export default function Contact() {
                                                     ? <p className="text-xs text-red-500">{errors.message}</p>
                                                     : <span />
                                                 }
-                                                <span className={`text-xs ${data.message.length > 2800 ? 'text-red-400' : 'text-slate-300'}`}>
+                                                <span className={`text-xs ${data.message.length > 2800 ? 'text-red-400' : data.message.length > 2000 ? 'text-amber-400' : 'text-slate-300'}`}>
                                                     {data.message.length}/3000
                                                 </span>
                                             </div>

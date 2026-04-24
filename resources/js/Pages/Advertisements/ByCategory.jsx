@@ -35,19 +35,18 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
 
     return (
         <AppLayout>
-            <Head>
-                <title>{`${category.name} — AdBoard`}</title>
+            <Head title={category.name}>
                 <meta name="description" content={`Pregledajte oglase u kategoriji ${category.name} na AdBoard-u — srpskom marketplaceu za transport i teretne usluge.`} />
                 <meta property="og:title"       content={`${category.name} — AdBoard`} />
                 <meta property="og:description" content={`Pregledajte oglase u kategoriji ${category.name} na AdBoard-u — srpskom marketplaceu za transport i teretne usluge.`} />
                 <meta property="og:type"        content="website" />
                 <meta property="og:site_name"   content="AdBoard" />
-                <meta property="og:image"       content="/og-default.png" />
-                <meta property="og:url"         content={typeof window !== 'undefined' ? window.location.href : ''} />
+                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta property="og:url"         content={window.location.href} />
                 <meta name="twitter:card"        content="summary_large_image" />
                 <meta name="twitter:title"       content={`${category.name} — AdBoard`} />
                 <meta name="twitter:description" content={`Pregledajte oglase u kategoriji ${category.name} na AdBoard-u — srpskom marketplaceu za transport i teretne usluge.`} />
-                <meta name="twitter:image"       content="/og-default.png" />
+                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
             </Head>
 
             <div className="py-8">

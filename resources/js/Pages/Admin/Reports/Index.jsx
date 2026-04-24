@@ -10,6 +10,65 @@ const TYPE_COLORS = {
     ignore_user:    'bg-purple-50 text-purple-700',
 };
 
+function ReportRow({ report, onToggleResolve, onDestroy }) {
+    return (
+        <tr className={`hover:bg-gray-50 transition-colors ${report.resolved ? 'opacity-60' : ''}`}>
+            <td className="px-4 py-3">
+                <input
+                    type="checkbox"
+                    checked={report.resolved}
+                    onChange={() => onToggleResolve(report.id)}
+                    className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
+                />
+            </td>
+            <td className="px-4 py-3">
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${TYPE_COLORS[report.type] ?? 'bg-gray-100 text-gray-700'}`}>
+                    {report.label}
+                </span>
+            </td>
+            <td className="px-4 py-3">
+                {report.advertisement ? (
+                    <Link
+                        href={`/oglas/${report.advertisement.slug}`}
+                        className="text-sm font-medium text-orange-600 hover:underline line-clamp-1"
+                        target="_blank"
+                    >
+                        {report.advertisement.title}
+                    </Link>
+                ) : (
+                    <span className="text-sm text-gray-400 italic">Oglas obrisan</span>
+                )}
+            </td>
+            <td className="px-4 py-3 text-sm text-gray-600">
+                {report.reporter?.name ?? '—'}
+            </td>
+            <td className="px-4 py-3 text-sm text-gray-400 whitespace-nowrap">
+                {report.created_at}
+            </td>
+            <td className="px-4 py-3 text-right">
+                <div className="flex items-center justify-end gap-2">
+                    <button
+                        onClick={() => onToggleResolve(report.id)}
+                        className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition ${
+                            report.resolved
+                                ? 'border-gray-300 text-gray-600 hover:bg-gray-50'
+                                : 'border-emerald-300 text-emerald-700 hover:bg-emerald-50'
+                        }`}
+                    >
+                        {report.resolved ? 'Ponovo otvori' : 'Reši'}
+                    </button>
+                    <button
+                        onClick={() => onDestroy(report.id)}
+                        className="px-3 py-1.5 text-xs font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                    >
+                        Obriši
+                    </button>
+                </div>
+            </td>
+        </tr>
+    );
+}
+
 export default function AdminReportsIndex({ reports: initialReports }) {
     const [reportList, setReportList] = useState(initialReports.data);
     const [currentPage, setCurrentPage] = useState(initialReports.current_page);
@@ -49,63 +108,6 @@ export default function AdminReportsIndex({ reports: initialReports }) {
             setLoading(false);
         }
     };
-
-    const ReportRow = ({ report }) => (
-        <tr className={`hover:bg-gray-50 transition-colors ${report.resolved ? 'opacity-60' : ''}`}>
-            <td className="px-4 py-3">
-                <input
-                    type="checkbox"
-                    checked={report.resolved}
-                    onChange={() => toggleResolve(report.id)}
-                    className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
-                />
-            </td>
-            <td className="px-4 py-3">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${TYPE_COLORS[report.type] ?? 'bg-gray-100 text-gray-700'}`}>
-                    {report.label}
-                </span>
-            </td>
-            <td className="px-4 py-3">
-                {report.advertisement ? (
-                    <Link
-                        href={`/oglas/${report.advertisement.slug}`}
-                        className="text-sm font-medium text-orange-600 hover:underline line-clamp-1"
-                        target="_blank"
-                    >
-                        {report.advertisement.title}
-                    </Link>
-                ) : (
-                    <span className="text-sm text-gray-400 italic">Oglas obrisan</span>
-                )}
-            </td>
-            <td className="px-4 py-3 text-sm text-gray-600">
-                {report.reporter?.name ?? '—'}
-            </td>
-            <td className="px-4 py-3 text-sm text-gray-400 whitespace-nowrap">
-                {report.created_at}
-            </td>
-            <td className="px-4 py-3 text-right">
-                <div className="flex items-center justify-end gap-2">
-                    <button
-                        onClick={() => toggleResolve(report.id)}
-                        className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition ${
-                            report.resolved
-                                ? 'border-gray-300 text-gray-600 hover:bg-gray-50'
-                                : 'border-emerald-300 text-emerald-700 hover:bg-emerald-50'
-                        }`}
-                    >
-                        {report.resolved ? 'Ponovo otvori' : 'Reši'}
-                    </button>
-                    <button
-                        onClick={() => destroy(report.id)}
-                        className="px-3 py-1.5 text-xs font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-                    >
-                        Obriši
-                    </button>
-                </div>
-            </td>
-        </tr>
-    );
 
     return (
         <AppLayout>
@@ -153,7 +155,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                             Nema prijava na čekanju.
                                         </td>
                                     </tr>
-                                ) : pending.map(r => <ReportRow key={r.id} report={r} />)}
+                                ) : pending.map(r => <ReportRow key={r.id} report={r} onToggleResolve={toggleResolve} onDestroy={destroy} />)}
                             </tbody>
                         </table>
                         </div>
@@ -219,7 +221,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-100">
-                                    {resolved.map(r => <ReportRow key={r.id} report={r} />)}
+                                    {resolved.map(r => <ReportRow key={r.id} report={r} onToggleResolve={toggleResolve} onDestroy={destroy} />)}
                                 </tbody>
                             </table>
                             </div>

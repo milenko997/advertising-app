@@ -70,5 +70,13 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('feedback', function (Request $request) {
             return Limit::perHour(10)->by($request->ip());
         });
+
+        RateLimiter::for('login', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
+        });
+
+        RateLimiter::for('password-reset', function (Request $request) {
+            return Limit::perMinute(5)->by($request->ip());
+        });
     }
 }

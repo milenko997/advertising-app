@@ -305,13 +305,13 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                 <div>
                                     {/* Main image */}
                                     <div
-                                        className="rounded-xl overflow-hidden border border-gray-200 bg-gray-50 cursor-zoom-in relative group"
+                                        className="aspect-[16/10] rounded-xl overflow-hidden border border-gray-200 bg-gray-50 cursor-zoom-in relative group"
                                         onClick={() => openCarousel(0)}
                                     >
                                         <img
                                             src={`/storage/${allImages[0].path}`}
                                             alt={ad.title}
-                                            className="w-full object-cover max-h-[480px]"
+                                            className="w-full h-full object-cover"
                                         />
                                         {allImages.length > 1 && (
                                             <div className="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full">

@@ -42,18 +42,17 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
 
     return (
         <AppLayout>
-            <Head>
-                <title>AdBoard — Transport & Freight Marketplace in Serbia</title>
-                <meta name="description" content="Browse trucks, vans, trailers, and logistics services across Serbia. Find transport professionals or post your own ad on AdBoard." />
+            <Head title="Oglasi za transport i logistiku u Srbiji">
+                <meta name="description" content="Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite sopstveni oglas na AdBoard-u." />
                 <meta property="og:type"        content="website" />
                 <meta property="og:site_name"   content="AdBoard" />
-                <meta property="og:title"       content="AdBoard — Transport & Freight Marketplace in Serbia" />
-                <meta property="og:description" content="Browse trucks, vans, trailers, and logistics services across Serbia. Find transport professionals or post your own ad on AdBoard." />
+                <meta property="og:title"       content="AdBoard — Oglasi za transport i logistiku u Srbiji" />
+                <meta property="og:description" content="Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite sopstveni oglas na AdBoard-u." />
                 <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
                 <meta property="og:url"         content={window.location.href} />
                 <meta name="twitter:card"        content="summary_large_image" />
-                <meta name="twitter:title"       content="AdBoard — Transport & Freight Marketplace in Serbia" />
-                <meta name="twitter:description" content="Browse trucks, vans, trailers, and logistics services across Serbia. Find transport professionals or post your own ad on AdBoard." />
+                <meta name="twitter:title"       content="AdBoard — Oglasi za transport i logistiku u Srbiji" />
+                <meta name="twitter:description" content="Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite sopstveni oglas na AdBoard-u." />
                 <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
             </Head>
 

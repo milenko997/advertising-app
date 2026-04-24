@@ -1,8 +1,11 @@
-import { Head, useForm, Link } from '@inertiajs/react';
+import { Head, useForm, Link, usePage } from '@inertiajs/react';
 import { useState, useRef } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 
 export default function CustomersEdit({ customer }) {
+    const { auth } = usePage().props;
+    const isSuperAdmin = auth.user?.isSuperAdmin ?? false;
+
     const { data, setData, post, processing, errors } = useForm({
         _method:       'PUT',
         name:          customer.name,
@@ -125,19 +128,23 @@ export default function CustomersEdit({ customer }) {
                                 {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
                             </div>
 
-                            {/* Role */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Uloga</label>
-                                <select
-                                    value={data.role}
-                                    onChange={e => setData('role', e.target.value)}
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                >
-                                    <option value="customer">Korisnik</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                                {errors.role && <p className="mt-1 text-xs text-red-600">{errors.role}</p>}
-                            </div>
+                            {/* Role — only super admins can change this */}
+                            {isSuperAdmin ? (
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Uloga</label>
+                                    <select
+                                        value={data.role}
+                                        onChange={e => setData('role', e.target.value)}
+                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                    >
+                                        <option value="customer">Korisnik</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                    {errors.role && <p className="mt-1 text-xs text-red-600">{errors.role}</p>}
+                                </div>
+                            ) : (
+                                <input type="hidden" name="role" value={data.role} />
+                            )}
 
                             <div className="flex items-center gap-3 pt-1">
                                 <button

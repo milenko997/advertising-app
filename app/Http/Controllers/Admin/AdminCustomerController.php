@@ -84,7 +84,8 @@ class AdminCustomerController extends Controller
 
     public function edit(User $customer)
     {
-        abort_if($customer->isAdmin(), 403);
+        abort_if($customer->isSuperAdmin(), 403);
+        abort_if($customer->role === UserRole::Admin && !auth()->user()->isSuperAdmin(), 403);
 
         return Inertia::render('Admin/Customers/Edit', [
             'customer' => [
@@ -101,7 +102,8 @@ class AdminCustomerController extends Controller
 
     public function update(UpdateCustomerRequest $request, User $customer): RedirectResponse
     {
-        abort_if($customer->isAdmin(), 403);
+        abort_if($customer->isSuperAdmin(), 403);
+        abort_if($customer->role === UserRole::Admin && !auth()->user()->isSuperAdmin(), 403);
 
         $validated = $request->validated();
         $customer->name  = $validated['name'];
@@ -118,7 +120,9 @@ class AdminCustomerController extends Controller
             $customer->avatar = null;
         }
 
-        $customer->role = \App\Enums\UserRole::from($validated['role']);
+        if (auth()->user()->isSuperAdmin()) {
+            $customer->role = UserRole::from($validated['role']);
+        }
         $customer->save();
 
         $customer->notify(new ProfileUpdatedByAdminNotification());
@@ -128,9 +132,8 @@ class AdminCustomerController extends Controller
 
     public function destroy(User $customer): RedirectResponse
     {
-        if ($customer->isAdmin()) {
-            abort(403, 'Admin accounts cannot be deleted.');
-        }
+        abort_if($customer->isSuperAdmin(), 403);
+        abort_if($customer->role === UserRole::Admin && !auth()->user()->isSuperAdmin(), 403);
 
         $customer->delete();
 

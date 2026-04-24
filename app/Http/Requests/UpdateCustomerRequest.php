@@ -16,7 +16,7 @@ class UpdateCustomerRequest extends FormRequest
     public function rules(): array
     {
         $customer = $this->route('customer');
-        $isEscalation = $this->input('role') === 'admin' && $customer && !$customer->isAdmin();
+        $isEscalation = $this->input('role') === 'admin' && $customer && $customer->isCustomer();
 
         $rules = [
             'name'          => 'required|string|max:255',
@@ -37,7 +37,7 @@ class UpdateCustomerRequest extends FormRequest
     public function withValidator($validator): void
     {
         $customer = $this->route('customer');
-        $isEscalation = $this->input('role') === 'admin' && $customer && !$customer->isAdmin();
+        $isEscalation = $this->input('role') === 'admin' && $customer && $customer->isCustomer();
 
         if ($isEscalation) {
             $validator->after(function ($v) {

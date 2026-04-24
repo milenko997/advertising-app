@@ -118,7 +118,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
 
     return (
         <AppLayout>
-            <Head><title>Oglasi — AdBoard Admin</title></Head>
+            <Head title="Oglasi — Admin" />
             <div id="page-admin-ads" className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 

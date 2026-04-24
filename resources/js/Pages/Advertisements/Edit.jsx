@@ -66,7 +66,7 @@ export default function Edit({ ad, categories }) {
 
     return (
         <AppLayout>
-            <Head><title>Izmeni oglas — AdBoard</title></Head>
+            <Head title="Izmeni oglas" />
             <div className="py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
 

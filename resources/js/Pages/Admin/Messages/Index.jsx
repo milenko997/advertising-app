@@ -36,7 +36,7 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
 
     return (
         <AppLayout>
-            <Head><title>Poruke — AdBoard Admin</title></Head>
+            <Head title="Poruke — Admin" />
             <div id="page-admin-messages" className="py-8">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 

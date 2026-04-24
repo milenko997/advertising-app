@@ -68,7 +68,7 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
 
     return (
         <AppLayout>
-            <Head><title>Statistika — AdBoard Admin</title></Head>
+            <Head title="Statistika — Admin" />
             <div id="page-admin-dashboard" className="py-6 sm:py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
 

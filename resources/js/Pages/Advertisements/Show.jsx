@@ -33,6 +33,7 @@ function StarRating({ value, onChange, readOnly = false }) {
                     key={star}
                     type="button"
                     disabled={readOnly}
+                    aria-label={`${star} od 5 zvezda`}
                     onClick={() => !readOnly && onChange?.(star)}
                     onMouseEnter={() => !readOnly && setHovered(star)}
                     onMouseLeave={() => !readOnly && setHovered(0)}

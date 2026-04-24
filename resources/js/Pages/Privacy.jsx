@@ -67,9 +67,9 @@ export default function Privacy() {
                                 <table className="w-full text-xs">
                                     <thead className="bg-slate-50">
                                         <tr>
-                                            <th className="text-left px-4 py-2.5 font-semibold text-slate-600">Tip podataka</th>
-                                            <th className="text-left px-4 py-2.5 font-semibold text-slate-600">Primeri</th>
-                                            <th className="text-left px-4 py-2.5 font-semibold text-slate-600">Svrha</th>
+                                            <th scope="col" className="text-left px-4 py-2.5 font-semibold text-slate-600">Tip podataka</th>
+                                            <th scope="col" className="text-left px-4 py-2.5 font-semibold text-slate-600">Primeri</th>
+                                            <th scope="col" className="text-left px-4 py-2.5 font-semibold text-slate-600">Svrha</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">

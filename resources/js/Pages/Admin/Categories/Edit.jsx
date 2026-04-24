@@ -14,7 +14,7 @@ export default function CategoriesEdit({ category, categories }) {
 
     return (
         <AppLayout>
-            <Head><title>Izmeni kategoriju — AdBoard Admin</title></Head>
+            <Head title="Izmeni kategoriju — Admin" />
             <div id="page-admin-edit-category" className="py-8">
                 <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">

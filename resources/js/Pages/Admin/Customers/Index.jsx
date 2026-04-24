@@ -66,7 +66,7 @@ export default function CustomersIndex({ customers: initialCustomers, search: in
                 </Link>
             </div>
         }>
-            <Head><title>Korisnici — AdBoard Admin</title></Head>
+            <Head title="Korisnici — Admin" />
             <div id="page-admin-customers" className="py-8">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 

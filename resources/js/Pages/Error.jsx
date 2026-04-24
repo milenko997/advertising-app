@@ -37,7 +37,7 @@ export default function Error({ status }) {
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
-            <Head><title>{status} — {title} — AdBoard</title></Head>
+            <Head title={`${status} — ${title}`} />
             <Navigation />
 
             <main className="flex-1 flex items-center justify-center px-4 py-24">

@@ -27,7 +27,7 @@ export default function CustomersCreate() {
                 </Link>
             </div>
         }>
-            <Head><title>Novi korisnik — AdBoard Admin</title></Head>
+            <Head title="Novi korisnik — Admin" />
             <div id="page-admin-create-customer" className="py-8">
                 <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">

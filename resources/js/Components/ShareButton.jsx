@@ -65,7 +65,7 @@ export default function ShareButton({ url, title, fullWidth = false }) {
 
                     <a
                         href={`https://wa.me/?text=${encodeURIComponent(title + ' – ' + url)}`}
-                        target="_blank" rel="noopener"
+                        target="_blank" rel="noopener noreferrer"
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition"
                     >
                         <span className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center shrink-0">
@@ -94,7 +94,7 @@ export default function ShareButton({ url, title, fullWidth = false }) {
 
                     <a
                         href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`}
-                        target="_blank" rel="noopener"
+                        target="_blank" rel="noopener noreferrer"
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition"
                     >
                         <span className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0">

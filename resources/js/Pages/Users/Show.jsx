@@ -15,6 +15,7 @@ function StarRating({ value, onChange, readOnly = false }) {
                     key={star}
                     type="button"
                     disabled={readOnly}
+                    aria-label={`${star} od 5 zvezda`}
                     onClick={() => !readOnly && onChange?.(star)}
                     onMouseEnter={() => !readOnly && setHovered(star)}
                     onMouseLeave={() => !readOnly && setHovered(0)}
@@ -42,13 +43,13 @@ function ReviewCard({ review, authUserId }) {
     const [error, setError] = useState('');
 
     const handleDelete = () => {
-        if (!confirm('Delete your review?')) return;
+        if (!confirm('Obrisati vašu recenziju?')) return;
         router.delete(`/recenzije/${review.id}`);
     };
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        if (!rating) { setError('Please select a star rating.'); return; }
+        if (!rating) { setError('Molimo odaberite ocenu zvezdicama.'); return; }
         setError('');
         setSubmitting(true);
         router.put(`/recenzije/${review.id}`, { rating, comment }, {
@@ -133,14 +134,14 @@ function ReviewCard({ review, authUserId }) {
                             disabled={submitting}
                             className="px-4 py-1.5 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition disabled:opacity-50"
                         >
-                            {submitting ? 'Saving…' : 'Save'}
+                            {submitting ? 'Čuvanje…' : 'Sačuvaj'}
                         </button>
                         <button
                             type="button"
                             onClick={() => { setEditing(false); setRating(review.rating); setComment(review.comment ?? ''); setError(''); }}
                             className="px-4 py-1.5 text-sm text-gray-500 hover:text-gray-700 transition"
                         >
-                            Cancel
+                            Otkaži
                         </button>
                     </div>
                 </form>
@@ -161,7 +162,7 @@ function ReviewForm({ userSlug }) {
 
     const submit = (e) => {
         e.preventDefault();
-        if (!rating) { setError('Please select a star rating.'); return; }
+        if (!rating) { setError('Molimo odaberite ocenu zvezdicama.'); return; }
         setError('');
         setSubmitting(true);
         router.post(`/korisnik/${userSlug}/recenzije`, { rating, comment }, {

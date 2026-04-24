@@ -38,7 +38,7 @@ export default function CustomersEdit({ customer }) {
 
     return (
         <AppLayout>
-            <Head><title>Izmeni korisnika — AdBoard Admin</title></Head>
+            <Head title="Izmeni korisnika — Admin" />
             <div id="page-admin-edit-customer" className="py-8">
                 <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">

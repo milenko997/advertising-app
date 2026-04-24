@@ -27,7 +27,8 @@ export default function BookmarkButton({ adId, initialSaved, className = '' }) {
         <button
             onClick={toggle}
             disabled={loading}
-            title={saved ? 'Remove from saved' : 'Save ad'}
+            title={saved ? 'Ukloni iz sačuvanih' : 'Sačuvaj oglas'}
+            aria-label={saved ? 'Ukloni iz sačuvanih' : 'Sačuvaj oglas'}
             className={`w-8 h-8 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm shadow hover:bg-white transition disabled:opacity-50 ${className}`}
         >
             {saved ? (

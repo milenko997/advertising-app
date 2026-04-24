@@ -24,7 +24,7 @@ export default function AdminFeedbacksIndex({ feedbacks: initialFeedbacks }) {
 
     return (
         <AppLayout>
-            <Head><title>Povratne informacije — AdBoard Admin</title></Head>
+            <Head title="Povratne informacije — Admin" />
             <div id="page-admin-feedbacks" className="py-8">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 

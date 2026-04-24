@@ -106,7 +106,7 @@ export default function NotificationsIndex({ notifications: initialData }) {
 
     return (
         <AppLayout>
-            <Head><title>Obaveštenja — AdBoard</title></Head>
+            <Head title="Obaveštenja" />
             <div id="page-notifications" className="py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
 

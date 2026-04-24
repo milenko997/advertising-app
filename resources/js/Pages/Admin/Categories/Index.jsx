@@ -59,7 +59,7 @@ export default function CategoriesIndex({ categories: initialCategories, search:
                 </Link>
             </div>
         }>
-            <Head><title>Kategorije — AdBoard Admin</title></Head>
+            <Head title="Kategorije — Admin" />
             <div id="page-admin-categories" className="py-8">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mb-4">

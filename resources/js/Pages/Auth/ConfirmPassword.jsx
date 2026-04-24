@@ -18,8 +18,9 @@ export default function ConfirmPassword() {
 
             <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Lozinka</label>
+                    <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700 mb-1">Lozinka</label>
                     <input
+                        id="confirm-password"
                         type="password"
                         value={data.password}
                         onChange={e => setData('password', e.target.value)}

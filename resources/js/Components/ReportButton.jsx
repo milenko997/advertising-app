@@ -48,6 +48,8 @@ export default function ReportButton({ advertisementId }) {
         <div ref={containerRef} className="relative">
             <button
                 onClick={() => setOpen(o => !o)}
+                aria-haspopup="menu"
+                aria-expanded={open}
                 className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-red-500 transition-colors py-1"
             >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,13 +59,14 @@ export default function ReportButton({ advertisementId }) {
             </button>
 
             {open && (
-                <div className="absolute right-0 bottom-full mb-2 w-56 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-30">
+                <div role="menu" className="absolute right-0 top-full mt-2 w-56 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-30">
                     <p className="px-3 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wide border-b border-gray-100">
                         Odaberi razlog
                     </p>
                     {REPORT_TYPES.map(({ value, label }) => (
                         <button
                             key={value}
+                            role="menuitem"
                             onClick={() => submit(value)}
                             className="w-full text-left px-3 py-2.5 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors"
                         >

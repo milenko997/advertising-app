@@ -20,8 +20,9 @@ export default function ResetPassword({ token, email }) {
 
             <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
+                    <label htmlFor="reset-email" className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
                     <input
+                        id="reset-email"
                         type="email"
                         value={data.email}
                         onChange={e => setData('email', e.target.value)}
@@ -32,8 +33,9 @@ export default function ResetPassword({ token, email }) {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Nova lozinka</label>
+                    <label htmlFor="reset-password" className="block text-sm font-medium text-gray-700 mb-1">Nova lozinka</label>
                     <input
+                        id="reset-password"
                         type="password"
                         value={data.password}
                         onChange={e => setData('password', e.target.value)}
@@ -44,8 +46,9 @@ export default function ResetPassword({ token, email }) {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Potvrda nove lozinke</label>
+                    <label htmlFor="reset-password-confirmation" className="block text-sm font-medium text-gray-700 mb-1">Potvrda nove lozinke</label>
                     <input
+                        id="reset-password-confirmation"
                         type="password"
                         value={data.password_confirmation}
                         onChange={e => setData('password_confirmation', e.target.value)}

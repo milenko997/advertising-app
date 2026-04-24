@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 
 class AdminCustomerController extends Controller
@@ -65,7 +66,7 @@ class AdminCustomerController extends Controller
         $validated = $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => ['required', 'email:rfc', 'max:255', Rule::unique('users', 'email')],
-            'password' => 'required|string|min:8|confirmed',
+            'password' => ['required', 'confirmed', Password::defaults()],
             'role'     => 'required|in:admin,customer',
             'phone'    => ['nullable', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
         ]);
@@ -83,6 +84,8 @@ class AdminCustomerController extends Controller
 
     public function edit(User $customer)
     {
+        abort_if($customer->isAdmin(), 403);
+
         return Inertia::render('Admin/Customers/Edit', [
             'customer' => [
                 'id'     => $customer->id,
@@ -98,6 +101,8 @@ class AdminCustomerController extends Controller
 
     public function update(UpdateCustomerRequest $request, User $customer): RedirectResponse
     {
+        abort_if($customer->isAdmin(), 403);
+
         $validated = $request->validated();
         $customer->name  = $validated['name'];
         $customer->email = $validated['email'];

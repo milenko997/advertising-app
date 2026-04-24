@@ -171,7 +171,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                 <button
                                     onClick={() => setSelected(new Set())}
                                     className="ml-1 text-gray-400 hover:text-gray-600 transition"
-                                    title="Clear selection"
+                                    aria-label="Poništi selekciju"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
@@ -192,6 +192,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                             type="checkbox"
                                             checked={allSelected}
                                             onChange={toggleAll}
+                                            aria-label={allSelected ? 'Poništi selekciju' : 'Izaberi sve'}
                                             className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
                                         />
                                     </th>
@@ -220,6 +221,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                 type="checkbox"
                                                 checked={selected.has(ad.id)}
                                                 onChange={() => toggleOne(ad.id)}
+                                                aria-label={`Izaberi: ${ad.title}`}
                                                 className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
                                             />
                                         </td>
@@ -303,6 +305,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                         type="checkbox"
                                         checked={allSelected}
                                         onChange={toggleAll}
+                                        aria-label={allSelected ? 'Poništi selekciju' : 'Izaberi sve'}
                                         className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
                                     />
                                     <span className="text-xs text-gray-500">Izaberi sve</span>
@@ -320,6 +323,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                 type="checkbox"
                                                 checked={selected.has(ad.id)}
                                                 onChange={() => toggleOne(ad.id)}
+                                                aria-label={`Izaberi: ${ad.title}`}
                                                 className="w-4 h-4 mt-0.5 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer shrink-0"
                                             />
                                             <div className="flex-1 min-w-0">

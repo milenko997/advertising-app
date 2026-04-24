@@ -94,7 +94,19 @@ export default function Navigation() {
         return () => document.removeEventListener('mousedown', handler);
     }, []);
 
-    const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+    useEffect(() => {
+        const handler = (e) => {
+            if (e.key === 'Escape') {
+                setBellOpen(false);
+                setDropdownOpen(false);
+                setOpen(false);
+            }
+        };
+        document.addEventListener('keydown', handler);
+        return () => document.removeEventListener('keydown', handler);
+    }, []);
+
+    const { url: currentPath } = usePage();
 
     const logout = (e) => {
         e.preventDefault();
@@ -355,6 +367,9 @@ export default function Navigation() {
                     {/* Mobile hamburger */}
                     <button
                         onClick={() => setOpen(!open)}
+                        aria-label={open ? 'Zatvori meni' : 'Otvori meni'}
+                        aria-expanded={open}
+                        aria-controls="navbar-mobile-menu"
                         className="lg:hidden p-2 rounded-md text-slate-400 hover:text-white hover:bg-white/10 transition"
                     >
                         {open ? (

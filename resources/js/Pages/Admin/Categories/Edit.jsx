@@ -17,6 +17,7 @@ export default function CategoriesEdit({ category, categories }) {
             <Head title="Izmeni kategoriju — Admin" />
             <div id="page-admin-edit-category" className="py-8">
                 <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h1 className="text-xl font-bold text-gray-900 mb-6">Izmeni kategoriju</h1>
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                         <form onSubmit={submit} className="space-y-5">
                             <div>

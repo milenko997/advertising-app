@@ -17,6 +17,7 @@ export default function CategoriesCreate({ categories }) {
             <Head title="Nova kategorija — Admin" />
             <div id="page-admin-create-category" className="py-8">
                 <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h1 className="text-xl font-bold text-gray-900 mb-6">Nova kategorija</h1>
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                         <form onSubmit={submit} className="space-y-5">
                             <div>

@@ -205,7 +205,9 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                                                 className="text-sm font-medium text-gray-800 hover:text-orange-600 transition-colors line-clamp-1"
                                             >
                                                 {ad.is_pinned && (
-                                                    <span className="inline-block mr-1 text-orange-500 text-xs">📌</span>
+                                                    <svg className="inline-block mr-1 w-3 h-3 text-orange-500 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                        <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
+                                                    </svg>
                                                 )}
                                                 {ad.title}
                                             </Link>

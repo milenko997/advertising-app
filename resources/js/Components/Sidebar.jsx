@@ -5,14 +5,15 @@ export default function Sidebar({ currentParent, currentChild }) {
     const { categories } = usePage().props;
     const [mobileOpen, setMobileOpen] = useState(false);
 
-    // Auto-expand the active parent on first render
-    const initialOpen = new Set();
-    categories.forEach(cat => {
-        if (cat.slug === currentParent || cat.children?.some(ch => ch.slug === currentChild)) {
-            initialOpen.add(cat.id);
-        }
+    const [openIds, setOpenIds] = useState(() => {
+        const initial = new Set();
+        categories.forEach(cat => {
+            if (cat.slug === currentParent || cat.children?.some(ch => ch.slug === currentChild)) {
+                initial.add(cat.id);
+            }
+        });
+        return initial;
     });
-    const [openIds, setOpenIds] = useState(initialOpen);
 
     const toggle = (id) => {
         setOpenIds(prev => {
@@ -45,6 +46,7 @@ export default function Sidebar({ currentParent, currentChild }) {
                             <>
                                 <button
                                     onClick={() => toggle(cat.id)}
+                                    aria-expanded={openIds.has(cat.id)}
                                     className={`w-full text-left flex items-center justify-between gap-2 px-4 py-2.5 text-sm font-medium transition-colors ${
                                         currentParent === cat.slug
                                             ? 'text-orange-600 bg-orange-50 border-r-2 border-orange-500'

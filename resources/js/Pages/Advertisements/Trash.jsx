@@ -65,6 +65,7 @@ export default function Trash({ ads: initialAds }) {
                                                 <img
                                                     src={`/storage/${ad.image}`}
                                                     alt={ad.title}
+                                                    loading="lazy"
                                                     className="w-20 h-16 sm:w-24 sm:h-20 object-cover rounded-lg shrink-0 grayscale"
                                                 />
                                             ) : (

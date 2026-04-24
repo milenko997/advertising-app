@@ -11,14 +11,14 @@ export default function ConfirmPassword() {
 
     return (
         <GuestLayout>
-            <h1 className="text-xl font-semibold text-gray-900 mb-2">Confirm Password</h1>
+            <h1 className="text-xl font-semibold text-gray-900 mb-2">Potvrdi lozinku</h1>
             <p className="text-sm text-gray-500 mb-6">
-                This is a secure area. Please confirm your password before continuing.
+                Ovo je zaštićena oblast. Molimo potvrdite lozinku pre nego što nastavite.
             </p>
 
             <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Lozinka</label>
                     <input
                         type="password"
                         value={data.password}
@@ -35,7 +35,7 @@ export default function ConfirmPassword() {
                         disabled={processing}
                         className="px-5 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 disabled:opacity-50 transition"
                     >
-                        Confirm
+                        Potvrdi
                     </button>
                 </div>
             </form>

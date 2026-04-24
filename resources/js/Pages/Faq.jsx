@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 const faqs = [
@@ -136,6 +136,7 @@ function FaqItem({ q, a }) {
 }
 
 export default function Faq() {
+    const { url, props: { appUrl } } = usePage();
     return (
         <AppLayout>
             <Head>
@@ -145,12 +146,12 @@ export default function Faq() {
                 <meta property="og:site_name"   content="AdBoard" />
                 <meta property="og:title"       content="Česta pitanja — AdBoard" />
                 <meta property="og:description" content="Često postavljana pitanja o AdBoard-u — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
-                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
-                <meta property="og:url"         content={window.location.href} />
+                <meta property="og:image"       content={`${appUrl}/og-default.png`} />
+                <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
                 <meta name="twitter:title"       content="Česta pitanja — AdBoard" />
                 <meta name="twitter:description" content="Često postavljana pitanja o AdBoard-u — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
-                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 
             {/* Hero */}

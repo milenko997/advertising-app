@@ -1,4 +1,4 @@
-import { Link, Head } from '@inertiajs/react';
+import { Link, Head, usePage } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 function Section({ title, children }) {
@@ -14,6 +14,7 @@ function Section({ title, children }) {
 }
 
 export default function Terms() {
+    const { url, props: { appUrl } } = usePage();
     return (
         <AppLayout>
             <Head>
@@ -23,12 +24,12 @@ export default function Terms() {
                 <meta property="og:site_name"   content="AdBoard" />
                 <meta property="og:title"       content="Uslovi korišćenja — AdBoard" />
                 <meta property="og:description" content="Pročitajte AdBoard uslove korišćenja koji pokrivaju registraciju naloga, pravila postavljanja oglasa, zabranjeni sadržaj i vaša prava kao korisnika." />
-                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
-                <meta property="og:url"         content={window.location.href} />
+                <meta property="og:image"       content={`${appUrl}/og-default.png`} />
+                <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
                 <meta name="twitter:title"       content="Uslovi korišćenja — AdBoard" />
                 <meta name="twitter:description" content="Pročitajte AdBoard uslove korišćenja koji pokrivaju registraciju naloga, pravila postavljanja oglasa, zabranjeni sadržaj i vaša prava kao korisnika." />
-                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 
             {/* Hero */}

@@ -1,4 +1,4 @@
-import { useForm, Head } from '@inertiajs/react';
+import { useForm, Head, usePage } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 function InfoCard({ icon, label, value, href }) {
@@ -21,6 +21,7 @@ function InfoCard({ icon, label, value, href }) {
 }
 
 export default function Contact() {
+    const { url, props: { appUrl } } = usePage();
     const { data, setData, post, processing, errors, reset, wasSuccessful } = useForm({
         name: '',
         email: '',
@@ -42,12 +43,12 @@ export default function Contact() {
                 <meta property="og:site_name"   content="AdBoard" />
                 <meta property="og:title"       content="Kontakt — AdBoard" />
                 <meta property="og:description" content="Stupite u kontakt sa AdBoard timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
-                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
-                <meta property="og:url"         content={window.location.href} />
+                <meta property="og:image"       content={`${appUrl}/og-default.png`} />
+                <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
                 <meta name="twitter:title"       content="Kontakt — AdBoard" />
                 <meta name="twitter:description" content="Stupite u kontakt sa AdBoard timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
-                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 
             {/* Hero */}

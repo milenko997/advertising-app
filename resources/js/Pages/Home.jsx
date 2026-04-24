@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { router, Head } from '@inertiajs/react';
+import { router, Head, usePage } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import AdCard from '@/Components/AdCard';
 import Sidebar from '@/Components/Sidebar';
 import axios from 'axios';
 
 export default function Home({ ads, pinnedAds = [], search, location, favoritedIds }) {
+    const { url, props: { appUrl } } = usePage();
     const [adList, setAdList] = useState(ads.data);
     const [currentPage, setCurrentPage] = useState(ads.current_page);
     const [hasMore, setHasMore] = useState(ads.current_page < ads.last_page);
@@ -48,12 +49,12 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                 <meta property="og:site_name"   content="AdBoard" />
                 <meta property="og:title"       content="AdBoard — Oglasi za transport i logistiku u Srbiji" />
                 <meta property="og:description" content="Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite sopstveni oglas na AdBoard-u." />
-                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
-                <meta property="og:url"         content={window.location.href} />
+                <meta property="og:image"       content={`${appUrl}/og-default.png`} />
+                <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
                 <meta name="twitter:title"       content="AdBoard — Oglasi za transport i logistiku u Srbiji" />
                 <meta name="twitter:description" content="Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite sopstveni oglas na AdBoard-u." />
-                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 
             <div id="page-home" className="py-4 sm:py-8">

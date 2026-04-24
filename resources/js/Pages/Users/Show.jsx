@@ -6,7 +6,7 @@ import AdCard from '@/Components/AdCard';
 import { StarRating, ReviewCard, ReviewForm } from '@/Components/ReviewWidgets';
 
 export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds, reviews, avgRating, myReview }) {
-    const { auth, flash } = usePage().props;
+    const { url, props: { auth, flash, appUrl } } = usePage();
     const [adList, setAdList] = useState(ads.data);
     const [favoritedIds] = useState(initialFavoritedIds);
     const [currentPage, setCurrentPage] = useState(ads.current_page);
@@ -33,8 +33,8 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
     const pageTitle  = `${user.name} — AdBoard`;
     const pageDesc   = `Pogledajte profil korisnika ${user.name} na AdBoard-u — oglasi, recenzije i kontakt informacije.`;
     const avatarUrl  = user.avatar
-        ? `${window.location.origin}/storage/${user.avatar}`
-        : `${window.location.origin}/og-default.png`;
+        ? `${appUrl}/storage/${user.avatar}`
+        : `${appUrl}/og-default.png`;
 
     return (
         <AppLayout>
@@ -46,7 +46,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                 <meta property="og:title"       content={pageTitle} />
                 <meta property="og:description" content={pageDesc} />
                 <meta property="og:image"       content={avatarUrl} />
-                <meta property="og:url"         content={window.location.href} />
+                <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary" />
                 <meta name="twitter:title"       content={pageTitle} />
                 <meta name="twitter:description" content={pageDesc} />

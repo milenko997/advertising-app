@@ -1,4 +1,4 @@
-import { useForm, Link } from '@inertiajs/react';
+import { Head, useForm, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 const inputClass = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent';
@@ -27,6 +27,7 @@ export default function CustomersCreate() {
                 </Link>
             </div>
         }>
+            <Head><title>Novi korisnik — AdBoard Admin</title></Head>
             <div id="page-admin-create-customer" className="py-8">
                 <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">

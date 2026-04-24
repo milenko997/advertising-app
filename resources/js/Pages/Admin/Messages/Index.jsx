@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { router } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 export default function AdminMessagesIndex({ messages: initialMessages }) {
@@ -36,6 +36,7 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
 
     return (
         <AppLayout>
+            <Head><title>Poruke — AdBoard Admin</title></Head>
             <div id="page-admin-messages" className="py-8">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 

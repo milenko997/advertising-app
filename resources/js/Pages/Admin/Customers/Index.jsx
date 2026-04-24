@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
 
@@ -66,6 +66,7 @@ export default function CustomersIndex({ customers: initialCustomers, search: in
                 </Link>
             </div>
         }>
+            <Head><title>Korisnici — AdBoard Admin</title></Head>
             <div id="page-admin-customers" className="py-8">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 

@@ -1,4 +1,4 @@
-import { useForm, Link } from '@inertiajs/react';
+import { Head, useForm, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 export default function CategoriesCreate({ categories }) {
@@ -14,6 +14,7 @@ export default function CategoriesCreate({ categories }) {
 
     return (
         <AppLayout>
+            <Head><title>Nova kategorija — AdBoard Admin</title></Head>
             <div id="page-admin-create-category" className="py-8">
                 <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">

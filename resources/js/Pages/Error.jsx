@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import Navigation from '@/Components/Navigation';
 import Footer from '@/Components/Footer';
 
@@ -37,6 +37,7 @@ export default function Error({ status }) {
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
+            <Head><title>{status} — {title} — AdBoard</title></Head>
             <Navigation />
 
             <main className="flex-1 flex items-center justify-center px-4 py-24">

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { router } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
 
@@ -38,6 +38,7 @@ export default function Trash({ ads: initialAds }) {
 
     return (
         <AppLayout>
+            <Head><title>Obrisani oglasi — AdBoard</title></Head>
             <div id="page-trash" className="py-8">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 

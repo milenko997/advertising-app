@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
 
@@ -118,6 +118,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
 
     return (
         <AppLayout>
+            <Head><title>Oglasi — AdBoard Admin</title></Head>
             <div id="page-admin-ads" className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 

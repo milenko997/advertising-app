@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import ImageUpload from '@/Components/ImageUpload';
 
@@ -52,6 +52,7 @@ export default function ProfileShow({ user }) {
 
     return (
         <AppLayout>
+            <Head><title>Moj profil — AdBoard</title></Head>
             <div id="page-profile" className="py-4 sm:py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
                     <div className="mb-2">

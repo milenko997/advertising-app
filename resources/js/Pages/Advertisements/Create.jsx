@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useForm, Link } from '@inertiajs/react';
+import { Head, useForm, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import ImageUpload from '@/Components/ImageUpload';
 import LocationAutocomplete from '@/Components/LocationAutocomplete';
@@ -60,6 +60,7 @@ export default function Create({ categories }) {
 
     return (
         <AppLayout>
+            <Head><title>Postavi oglas — AdBoard</title></Head>
             <div className="py-4 sm:py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
 

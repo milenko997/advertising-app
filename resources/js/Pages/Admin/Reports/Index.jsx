@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
 
@@ -109,6 +109,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
 
     return (
         <AppLayout>
+            <Head><title>Prijave — AdBoard Admin</title></Head>
             <div id="page-admin-reports" className="py-8">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 

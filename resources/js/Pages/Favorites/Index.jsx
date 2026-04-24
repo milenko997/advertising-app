@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import AdCard from '@/Components/AdCard';
 import axios from 'axios';
@@ -44,6 +44,7 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds,
 
     return (
         <AppLayout>
+            <Head><title>Sačuvani oglasi — AdBoard</title></Head>
             <div id="page-favorites" className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 

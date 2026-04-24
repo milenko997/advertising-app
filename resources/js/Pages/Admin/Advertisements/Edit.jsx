@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useForm, Link, router } from '@inertiajs/react';
+import { Head, useForm, Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import ImageUpload from '@/Components/ImageUpload';
 import CategoryPicker from '@/Components/CategoryPicker';
@@ -127,6 +127,7 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
 
     return (
         <AppLayout>
+            <Head><title>Izmeni oglas — AdBoard Admin</title></Head>
             <div className="py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
 

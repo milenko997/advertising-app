@@ -282,7 +282,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                             </button>
                                         )}
                                         <div className={auth?.user ? 'flex-1' : 'w-full'}>
-                                            <ShareButton url={currentUrl} title={ad.title} fullWidth />
+                                            <ShareButton url={pageUrl} title={ad.title} fullWidth />
                                         </div>
                                     </div>
                                     {!isOwner && (

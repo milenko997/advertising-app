@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 export default function ImageCarousel({ images, initialIndex = 0, onClose }) {
     const [current, setCurrent] = useState(initialIndex);
+    const closeButtonRef = useRef(null);
 
     const prev = useCallback(() => setCurrent(i => (i - 1 + images.length) % images.length), [images.length]);
     const next = useCallback(() => setCurrent(i => (i + 1) % images.length), [images.length]);
@@ -16,10 +17,25 @@ export default function ImageCarousel({ images, initialIndex = 0, onClose }) {
         return () => window.removeEventListener('keydown', handler);
     }, [prev, next, onClose]);
 
-    // Lock body scroll
+    // Focus the close button on open; restore focus to the trigger on close
     useEffect(() => {
-        document.body.style.overflow = 'hidden';
-        return () => { document.body.style.overflow = ''; };
+        const trigger = document.activeElement;
+        closeButtonRef.current?.focus();
+        return () => { trigger?.focus(); };
+    }, []);
+
+    // Lock body scroll — position:fixed technique works on iOS Safari
+    useEffect(() => {
+        const scrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.width = '100%';
+        return () => {
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, scrollY);
+        };
     }, []);
 
     return (
@@ -29,9 +45,10 @@ export default function ImageCarousel({ images, initialIndex = 0, onClose }) {
         >
             {/* Close */}
             <button
+                ref={closeButtonRef}
                 onClick={onClose}
                 className="absolute top-4 right-4 text-white/80 hover:text-white transition"
-                aria-label="Close"
+                aria-label="Zatvori"
             >
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -50,7 +67,7 @@ export default function ImageCarousel({ images, initialIndex = 0, onClose }) {
                 <button
                     onClick={e => { e.stopPropagation(); prev(); }}
                     className="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white transition p-2 rounded-full hover:bg-white/10"
-                    aria-label="Previous"
+                    aria-label="Prethodna slika"
                 >
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -71,7 +88,7 @@ export default function ImageCarousel({ images, initialIndex = 0, onClose }) {
                 <button
                     onClick={e => { e.stopPropagation(); next(); }}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white transition p-2 rounded-full hover:bg-white/10"
-                    aria-label="Next"
+                    aria-label="Sledeća slika"
                 >
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

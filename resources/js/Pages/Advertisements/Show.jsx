@@ -24,7 +24,7 @@ function SpecRow({ icon, label, value }) {
 }
 
 export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
-    const { auth, flash } = usePage().props;
+    const { url, props: { auth, flash, appUrl } } = usePage();
     const isOwner = auth?.user?.id === ad.user_id;
     const canReview = auth?.user && !isOwner && !myReview;
     const [saved, setSaved] = useState(isSaved);
@@ -54,8 +54,6 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
         }
     };
 
-    const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
-
     const handleDelete = () => {
         if (!confirm('Premesti oglas u otpad?')) return;
         router.delete(`/oglasi/${ad.id}`);
@@ -69,9 +67,9 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
         ? ad.description.replace(/\s+/g, ' ').trim().slice(0, 160)
         : `${ad.title} — available on AdBoard, the marketplace for transport and freight professionals in Serbia.`;
     const imageUrl    = ad.image
-        ? `${window.location.origin}/storage/${ad.image}`
-        : `${window.location.origin}/og-default.png`;
-    const pageUrl     = window.location.href;
+        ? `${appUrl}/storage/${ad.image}`
+        : `${appUrl}/og-default.png`;
+    const pageUrl     = `${appUrl}${url}`;
 
     return (
         <AppLayout>

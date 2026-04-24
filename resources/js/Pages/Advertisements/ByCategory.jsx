@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { router, Head } from '@inertiajs/react';
+import { router, Head, usePage } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import AdCard from '@/Components/AdCard';
 import Sidebar from '@/Components/Sidebar';
 import axios from 'axios';
 
 export default function ByCategory({ category, ads, pinnedCategoryAds = [], location, favoritedIds }) {
+    const { url, props: { appUrl } } = usePage();
     const [adList, setAdList] = useState(ads.data);
     const [currentPage, setCurrentPage] = useState(ads.current_page);
     const [hasMore, setHasMore] = useState(ads.current_page < ads.last_page);
@@ -41,12 +42,12 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
                 <meta property="og:description" content={`Pregledajte oglase u kategoriji ${category.name} na AdBoard-u — srpskom marketplaceu za transport i teretne usluge.`} />
                 <meta property="og:type"        content="website" />
                 <meta property="og:site_name"   content="AdBoard" />
-                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
-                <meta property="og:url"         content={window.location.href} />
+                <meta property="og:image"       content={`${appUrl}/og-default.png`} />
+                <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
                 <meta name="twitter:title"       content={`${category.name} — AdBoard`} />
                 <meta name="twitter:description" content={`Pregledajte oglase u kategoriji ${category.name} na AdBoard-u — srpskom marketplaceu za transport i teretne usluge.`} />
-                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 
             <div className="py-8">

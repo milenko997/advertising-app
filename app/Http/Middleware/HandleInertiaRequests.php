@@ -64,6 +64,7 @@ class HandleInertiaRequests extends Middleware
                     ])->values()->all()
                 )
                 : [],
+            'appUrl' => rtrim(config('app.url'), '/'),
             'categories' => Cache::remember('nav_categories', 300, fn () => Category::with(['children' => function ($q) {
                     $q->whereHas('advertisements', fn ($q) => $q->active());
                 }])

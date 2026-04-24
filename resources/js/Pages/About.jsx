@@ -1,7 +1,8 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 export default function About() {
+    const { url, props: { appUrl } } = usePage();
     return (
         <AppLayout>
             <Head>
@@ -11,12 +12,12 @@ export default function About() {
                 <meta property="og:description" content="Saznajte više o AdBoard platformi — srpskom marketplaceu za transport i logistiku." />
                 <meta property="og:type"        content="website" />
                 <meta property="og:site_name"   content="AdBoard" />
-                <meta property="og:image"       content={`${window.location.origin}/og-default.png`} />
-                <meta property="og:url"         content={window.location.href} />
+                <meta property="og:image"       content={`${appUrl}/og-default.png`} />
+                <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
                 <meta name="twitter:title"       content="O nama — AdBoard" />
                 <meta name="twitter:description" content="Saznajte više o AdBoard platformi — srpskom marketplaceu za transport i logistiku." />
-                <meta name="twitter:image"       content={`${window.location.origin}/og-default.png`} />
+                <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 
             {/* Hero */}

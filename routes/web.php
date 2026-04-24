@@ -98,7 +98,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::delete('/utisci/{feedback}', [AdminFeedbackController::class, 'destroy'])->name('feedbacks.destroy');
 });
 
-Route::post('/oglasi/{advertisement}/prijavi', [ReportController::class, 'store'])->name('advertisements.report')->middleware('auth');
+Route::post('/oglasi/{advertisement}/prijavi', [ReportController::class, 'store'])->name('advertisements.report')->middleware(['auth', 'throttle:report']);
 Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store')->middleware('throttle:feedback');
 
 Route::get('/oglas/{slug}', [AdvertisementController::class, 'show'])->name('advertisements.show');
@@ -106,8 +106,8 @@ Route::get('/korisnik/{user}', [UserController::class, 'show'])->name('user.show
 
 // Reviews — login-gate sets intended URL so user returns here after login
 Route::get('/korisnik/{user}/recenzija-prijava', [ReviewController::class, 'loginThenReview'])->middleware('auth')->name('reviews.login');
-Route::post('/korisnik/{user}/recenzije', [ReviewController::class, 'store'])->middleware('auth')->name('reviews.store');
-Route::put('/recenzije/{review}', [ReviewController::class, 'update'])->middleware('auth')->name('reviews.update');
+Route::post('/korisnik/{user}/recenzije', [ReviewController::class, 'store'])->middleware(['auth', 'throttle:review'])->name('reviews.store');
+Route::put('/recenzije/{review}', [ReviewController::class, 'update'])->middleware(['auth', 'throttle:review'])->name('reviews.update');
 Route::delete('/recenzije/{review}', [ReviewController::class, 'destroy'])->middleware('auth')->name('reviews.destroy');
 Route::get('/kategorija/{parent}/{child?}', [AdvertisementController::class, 'byCategory'])
     ->name('advertisements.byCategory');

@@ -8,16 +8,20 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
 
     const toggleExpand = (id) => {
         setExpanded(prev => prev === id ? null : id);
-
         const msg = messageList.find(m => m.id === id);
         if (msg && !msg.read) {
             router.patch(`/admin/poruke/${id}/read`, {}, {
                 preserveScroll: true,
-                onSuccess: () => {
-                    setMessageList(prev => prev.map(m => m.id === id ? { ...m, read: true } : m));
-                },
+                onSuccess: () => setMessageList(prev => prev.map(m => m.id === id ? { ...m, read: true } : m)),
             });
         }
+    };
+
+    const markRead = (id) => {
+        router.patch(`/admin/poruke/${id}/read`, {}, {
+            preserveScroll: true,
+            onSuccess: () => setMessageList(prev => prev.map(m => m.id === id ? { ...m, read: true } : m)),
+        });
     };
 
     const destroy = (id) => {
@@ -28,6 +32,8 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
         });
     };
 
+    const unreadCount = messageList.filter(m => !m.read).length;
+
     return (
         <AppLayout>
             <div id="page-admin-messages" className="py-8">
@@ -35,9 +41,12 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
 
                     <div className="flex items-center justify-between mb-6">
                         <h1 className="text-xl font-bold text-gray-900">Kontakt poruke</h1>
-                        <span className="text-sm text-gray-500">
-                            {messageList.filter(m => !m.read).length} nepročitanih
-                        </span>
+                        {unreadCount > 0 && (
+                            <span className="inline-flex items-center gap-1.5 text-sm text-orange-600 font-medium">
+                                <span className="w-2 h-2 rounded-full bg-orange-500 inline-block" />
+                                {unreadCount} nepročitanih
+                            </span>
+                        )}
                     </div>
 
                     {messageList.length === 0 ? (
@@ -48,7 +57,7 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
                             <p className="text-gray-500">Nema poruka.</p>
                         </div>
                     ) : (
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                             {messageList.map(msg => (
                                 <div
                                     key={msg.id}
@@ -56,61 +65,69 @@ export default function AdminMessagesIndex({ messages: initialMessages }) {
                                         msg.read ? 'border-gray-200' : 'border-orange-200'
                                     }`}
                                 >
-                                    {/* Header row */}
+                                    {/* Clickable header */}
                                     <button
                                         onClick={() => toggleExpand(msg.id)}
-                                        className="w-full text-left flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors"
+                                        className="w-full text-left p-5 hover:bg-gray-50 transition-colors"
                                     >
-                                        {/* Unread dot */}
-                                        <span className={`w-2 h-2 rounded-full shrink-0 ${msg.read ? 'bg-transparent' : 'bg-orange-500'}`} />
-
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-center gap-3">
-                                                <span className={`text-sm ${msg.read ? 'font-medium text-gray-700' : 'font-semibold text-gray-900'}`}>
-                                                    {msg.name}
-                                                </span>
-                                                <span className="text-xs text-gray-400">{msg.email}</span>
+                                        <div className="flex items-start justify-between gap-4">
+                                            <div className="flex items-center gap-2.5">
+                                                {!msg.read && (
+                                                    <span className="w-2 h-2 rounded-full bg-orange-500 shrink-0 mt-0.5" />
+                                                )}
+                                                <div>
+                                                    <span className={`text-sm ${msg.read ? 'font-medium text-gray-700' : 'font-semibold text-gray-900'}`}>
+                                                        {msg.name}
+                                                    </span>
+                                                    <p className="text-xs text-orange-500 mt-0.5">{msg.email}</p>
+                                                    <p className="text-xs text-gray-400 mt-0.5">{msg.subject}</p>
+                                                </div>
                                             </div>
-                                            <p className={`text-sm truncate mt-0.5 ${msg.read ? 'text-gray-500' : 'text-gray-700 font-medium'}`}>
-                                                {msg.subject}
-                                            </p>
+                                            <div className="flex items-center gap-3 shrink-0">
+                                                <div className="text-right">
+                                                    <p className="text-xs text-gray-400">{msg.date}</p>
+                                                    <p className="text-xs text-gray-400">{msg.time}</p>
+                                                </div>
+                                                <svg
+                                                    className={`w-4 h-4 text-gray-400 transition-transform ${expanded === msg.id ? 'rotate-180' : ''}`}
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                >
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </div>
                                         </div>
-
-                                        <div className="text-right shrink-0">
-                                            <div className="text-xs text-gray-500">{msg.date}</div>
-                                            <div className="text-xs text-gray-400">{msg.time}</div>
-                                        </div>
-
-                                        <svg
-                                            className={`w-4 h-4 text-gray-400 shrink-0 transition-transform ${expanded === msg.id ? 'rotate-180' : ''}`}
-                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
                                     </button>
 
-                                    {/* Expanded body */}
+                                    {/* Expanded body + actions */}
                                     {expanded === msg.id && (
                                         <div className="px-5 pb-5 border-t border-gray-100">
-                                            <div className="pt-4 text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
-                                                {msg.message}
-                                            </div>
-                                            <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+                                            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap pt-4">{msg.message}</p>
+                                            <div className="flex items-center justify-between gap-3 mt-4 pt-3 border-t border-gray-100">
                                                 <a
                                                     href={`mailto:${msg.email}?subject=Re: ${encodeURIComponent(msg.subject)}`}
-                                                    className="inline-flex items-center gap-1.5 text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors"
+                                                    className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-600 hover:text-orange-700 transition-colors"
                                                 >
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                                     </svg>
                                                     Odgovori emailom
                                                 </a>
-                                                <button
-                                                    onClick={() => destroy(msg.id)}
-                                                    className="text-sm font-medium text-red-500 hover:text-red-700 transition-colors"
-                                                >
-                                                    Obriši
-                                                </button>
+                                                <div className="flex items-center gap-3">
+                                                    {!msg.read && (
+                                                        <button
+                                                            onClick={() => markRead(msg.id)}
+                                                            className="text-xs font-medium text-orange-600 hover:text-orange-700 transition-colors"
+                                                        >
+                                                            Označi kao pročitano
+                                                        </button>
+                                                    )}
+                                                    <button
+                                                        onClick={() => destroy(msg.id)}
+                                                        className="text-xs font-medium text-red-500 hover:text-red-700 transition-colors"
+                                                    >
+                                                        Obriši
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     )}

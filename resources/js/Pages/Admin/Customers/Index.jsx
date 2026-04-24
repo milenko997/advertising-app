@@ -80,6 +80,8 @@ export default function CustomersIndex({ customers: initialCustomers, search: in
                     </div>
 
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                        {/* Desktop table */}
+                        <div className="hidden md:block">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
@@ -146,6 +148,50 @@ export default function CustomersIndex({ customers: initialCustomers, search: in
                                 ))}
                             </tbody>
                         </table>
+                        </div>
+
+                        {/* Mobile cards */}
+                        <div className="md:hidden divide-y divide-gray-100">
+                            {customerList.length === 0 ? (
+                                <p className="px-4 py-10 text-center text-sm text-gray-400">{emptyMessage}</p>
+                            ) : customerList.map(customer => (
+                                <div key={customer.id} className="p-4">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        {customer.avatar ? (
+                                            <img src={`/storage/${customer.avatar}`} alt={customer.name} className="w-10 h-10 rounded-full object-cover shrink-0" />
+                                        ) : (
+                                            <div className="w-10 h-10 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-sm font-semibold shrink-0">
+                                                {customer.name.charAt(0).toUpperCase()}
+                                            </div>
+                                        )}
+                                        <div className="flex-1 min-w-0">
+                                            <p className="font-medium text-gray-900 text-sm">{customer.name}</p>
+                                            <p className="text-xs text-gray-500 truncate">{customer.email}</p>
+                                        </div>
+                                        <span className={`shrink-0 inline-flex px-2 py-0.5 text-xs font-medium rounded-full ${
+                                            customer.role === 'admin' ? 'bg-orange-100 text-orange-700' : 'bg-gray-100 text-gray-600'
+                                        }`}>
+                                            {customer.role === 'admin' ? 'Admin' : 'Korisnik'}
+                                        </span>
+                                    </div>
+                                    <p className="text-xs text-gray-400 mb-3">Registrovan: {customer.created_at}</p>
+                                    <div className="flex gap-2">
+                                        <Link
+                                            href={`/admin/korisnici/${customer.slug}/edit`}
+                                            className="flex-1 text-center px-3 py-2 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                                        >
+                                            Izmeni
+                                        </Link>
+                                        <button
+                                            onClick={() => destroy(customer.slug)}
+                                            className="flex-1 px-3 py-2 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                                        >
+                                            Obriši
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
                     {hasMore && (

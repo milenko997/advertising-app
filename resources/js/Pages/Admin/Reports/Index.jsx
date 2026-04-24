@@ -132,6 +132,8 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                 </span>
                             )}
                         </div>
+                        {/* Desktop table */}
+                        <div className="hidden md:block">
                         <table className="min-w-full divide-y divide-gray-100">
                             <thead className="bg-gray-50">
                                 <tr>
@@ -153,6 +155,46 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                 ) : pending.map(r => <ReportRow key={r.id} report={r} />)}
                             </tbody>
                         </table>
+                        </div>
+                        {/* Mobile cards */}
+                        <div className="md:hidden divide-y divide-gray-100">
+                            {pending.length === 0 ? (
+                                <p className="px-4 py-10 text-center text-sm text-gray-400">Nema prijava na čekanju.</p>
+                            ) : pending.map(r => (
+                                <div key={r.id} className={`p-4 ${r.resolved ? 'opacity-60' : ''}`}>
+                                    <div className="flex items-center justify-between gap-2 mb-2">
+                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${TYPE_COLORS[r.type] ?? 'bg-gray-100 text-gray-700'}`}>
+                                            {r.label}
+                                        </span>
+                                        <span className="text-xs text-gray-400">{r.created_at}</span>
+                                    </div>
+                                    <div className="mb-3">
+                                        {r.advertisement ? (
+                                            <Link href={`/oglas/${r.advertisement.slug}`} className="text-sm font-medium text-orange-600 hover:underline line-clamp-1" target="_blank">
+                                                {r.advertisement.title}
+                                            </Link>
+                                        ) : (
+                                            <span className="text-sm text-gray-400 italic">Oglas obrisan</span>
+                                        )}
+                                        <p className="text-xs text-gray-500 mt-0.5">Prijavio: {r.reporter?.name ?? '—'}</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => toggleResolve(r.id)}
+                                            className="flex-1 text-center px-3 py-2 text-xs font-medium rounded-lg border transition border-emerald-300 text-emerald-700 hover:bg-emerald-50"
+                                        >
+                                            Reši
+                                        </button>
+                                        <button
+                                            onClick={() => destroy(r.id)}
+                                            className="flex-1 px-3 py-2 text-xs font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                                        >
+                                            Obriši
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
                     {/* Resolved */}
@@ -162,6 +204,8 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                 <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
                                 <h2 className="text-sm font-semibold text-gray-700">Rešene</h2>
                             </div>
+                            {/* Desktop table */}
+                            <div className="hidden md:block">
                             <table className="min-w-full divide-y divide-gray-100">
                                 <thead className="bg-gray-50">
                                     <tr>
@@ -177,6 +221,44 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                     {resolved.map(r => <ReportRow key={r.id} report={r} />)}
                                 </tbody>
                             </table>
+                            </div>
+                            {/* Mobile cards */}
+                            <div className="md:hidden divide-y divide-gray-100">
+                                {resolved.map(r => (
+                                    <div key={r.id} className="p-4 opacity-60">
+                                        <div className="flex items-center justify-between gap-2 mb-2">
+                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${TYPE_COLORS[r.type] ?? 'bg-gray-100 text-gray-700'}`}>
+                                                {r.label}
+                                            </span>
+                                            <span className="text-xs text-gray-400">{r.created_at}</span>
+                                        </div>
+                                        <div className="mb-3">
+                                            {r.advertisement ? (
+                                                <Link href={`/oglas/${r.advertisement.slug}`} className="text-sm font-medium text-orange-600 hover:underline line-clamp-1" target="_blank">
+                                                    {r.advertisement.title}
+                                                </Link>
+                                            ) : (
+                                                <span className="text-sm text-gray-400 italic">Oglas obrisan</span>
+                                            )}
+                                            <p className="text-xs text-gray-500 mt-0.5">Prijavio: {r.reporter?.name ?? '—'}</p>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() => toggleResolve(r.id)}
+                                                className="flex-1 text-center px-3 py-2 text-xs font-medium rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 transition"
+                                            >
+                                                Ponovo otvori
+                                            </button>
+                                            <button
+                                                onClick={() => destroy(r.id)}
+                                                className="flex-1 px-3 py-2 text-xs font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                                            >
+                                                Obriši
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     )}
 

@@ -72,6 +72,8 @@ export default function CategoriesIndex({ categories: initialCategories, search:
                     </div>
 
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                        {/* Desktop table */}
+                        <div className="hidden md:block">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
@@ -113,6 +115,38 @@ export default function CategoriesIndex({ categories: initialCategories, search:
                                 ))}
                             </tbody>
                         </table>
+                        </div>
+
+                        {/* Mobile cards */}
+                        <div className="md:hidden divide-y divide-gray-100">
+                            {categoryList.length === 0 ? (
+                                <p className="px-4 py-10 text-center text-sm text-gray-400">
+                                    {search ? 'Nema kategorija koje odgovaraju pretrazi.' : 'Nema kategorija.'}
+                                </p>
+                            ) : categoryList.map(cat => (
+                                <div key={cat.id} className="p-4">
+                                    <p className="font-medium text-gray-900 text-sm">{cat.name}</p>
+                                    <p className="text-xs text-gray-400 font-mono mt-0.5">{cat.slug}</p>
+                                    {cat.parent_name && (
+                                        <p className="text-xs text-gray-500 mt-1">Nadkategorija: <span className="font-medium">{cat.parent_name}</span></p>
+                                    )}
+                                    <div className="flex gap-2 mt-3">
+                                        <Link
+                                            href={`/admin/kategorije/${cat.slug}/edit`}
+                                            className="flex-1 text-center px-3 py-2 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                                        >
+                                            Izmeni
+                                        </Link>
+                                        <button
+                                            onClick={() => destroy(cat.slug)}
+                                            className="flex-1 px-3 py-2 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                                        >
+                                            Obriši
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
                     {hasMore && (

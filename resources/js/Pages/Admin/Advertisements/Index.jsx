@@ -173,6 +173,8 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                     )}
 
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                        {/* Desktop table */}
+                        <div className="hidden md:block">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
@@ -282,6 +284,96 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                 ))}
                             </tbody>
                         </table>
+                        </div>
+
+                        {/* Mobile cards */}
+                        <div className="md:hidden">
+                            {adList.length > 0 && (
+                                <div className="px-4 py-2.5 border-b border-gray-100 flex items-center gap-2 bg-gray-50">
+                                    <input
+                                        type="checkbox"
+                                        checked={allSelected}
+                                        onChange={toggleAll}
+                                        className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
+                                    />
+                                    <span className="text-xs text-gray-500">Izaberi sve</span>
+                                </div>
+                            )}
+                            <div className="divide-y divide-gray-100">
+                                {adList.length === 0 ? (
+                                    <p className="px-4 py-10 text-center text-sm text-gray-400">
+                                        {search ? 'Nema oglasa koji odgovaraju pretrazi.' : 'Nema oglasa.'}
+                                    </p>
+                                ) : adList.map(ad => (
+                                    <div key={ad.id} className={`p-4 ${selected.has(ad.id) ? 'bg-orange-50' : ''}`}>
+                                        <div className="flex items-start gap-3 mb-3">
+                                            <input
+                                                type="checkbox"
+                                                checked={selected.has(ad.id)}
+                                                onChange={() => toggleOne(ad.id)}
+                                                className="w-4 h-4 mt-0.5 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer shrink-0"
+                                            />
+                                            <div className="flex-1 min-w-0">
+                                                <p className="font-medium text-gray-900 text-sm truncate">{ad.title}</p>
+                                                <p className="text-xs text-gray-400 truncate mt-0.5">{ad.description}</p>
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs mb-3 ml-7">
+                                            <div>
+                                                <p className="text-gray-400">Kategorija</p>
+                                                <p className="text-gray-700 font-medium">{ad.category?.name ?? '—'}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-gray-400">Korisnik</p>
+                                                <p className="text-gray-700 font-medium">{ad.user?.name ?? '—'}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-gray-400">Cena</p>
+                                                <p className="font-semibold text-orange-600">{ad.price || '—'}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-gray-400">Datum</p>
+                                                <p className="text-gray-500">{ad.created_at}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-wrap gap-2 ml-7">
+                                            <button
+                                                onClick={() => togglePin(ad.id)}
+                                                disabled={pinning.has(`pin-${ad.id}`)}
+                                                className={`px-2.5 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 disabled:opacity-50 ${
+                                                    ad.is_pinned ? 'bg-amber-100 text-amber-700 border border-amber-300' : 'border border-gray-300 text-gray-500'
+                                                }`}
+                                            >
+                                                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                                                Global{ad.is_pinned && ad.pinned_at ? ` · ${ad.pinned_at}` : ''}
+                                            </button>
+                                            <button
+                                                onClick={() => togglePinCategory(ad.id)}
+                                                disabled={pinning.has(`cat-${ad.id}`)}
+                                                className={`px-2.5 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 disabled:opacity-50 ${
+                                                    ad.is_pinned_category ? 'bg-blue-100 text-blue-700 border border-blue-300' : 'border border-gray-300 text-gray-500'
+                                                }`}
+                                            >
+                                                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                                                Kategorija{ad.is_pinned_category && ad.pinned_category_at ? ` · ${ad.pinned_category_at}` : ''}
+                                            </button>
+                                            <Link
+                                                href={`/admin/oglasi/${ad.id}/edit`}
+                                                className="px-3 py-1.5 text-xs font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                                            >
+                                                Izmeni
+                                            </Link>
+                                            <button
+                                                onClick={() => destroy(ad.id)}
+                                                className="px-3 py-1.5 text-xs font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                                            >
+                                                Obriši
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
 
                     {hasMore && (

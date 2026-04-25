@@ -193,8 +193,8 @@ class AdminAdvertisementController extends Controller
                     $owner->notify(new AdDeletedByAdminNotification($title));
                 }
             }),
-            'pin'    => $ads->update(['is_pinned' => true, 'pinned_at' => now()]),
-            'unpin'  => $ads->update(['is_pinned' => false, 'pinned_at' => null]),
+            'pin'    => $ads->get()->each(fn ($ad) => $ad->update(['is_pinned' => true, 'pinned_at' => now()])),
+            'unpin'  => $ads->get()->each(fn ($ad) => $ad->update(['is_pinned' => false, 'pinned_at' => null])),
         };
 
         $count = count($request->ids);

@@ -19,7 +19,7 @@ class FeedbackController extends Controller
             'user_id' => auth()->id(),
             'email'   => auth()->check() ? auth()->user()->email : $request->email,
             'message' => $request->message,
-            'page'    => $request->page,
+            'page'    => $request->page ? strip_tags($request->page) : null,
         ]);
 
         return response()->json(['ok' => true]);

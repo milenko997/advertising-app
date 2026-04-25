@@ -21,6 +21,7 @@
         <meta name="twitter:description" content="{{ $meta['description'] ?? 'Srpski marketplace za oglase.' }}" />
         @inertiaHead
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+        @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.jsx'])
     </head>
     <body class="font-sans antialiased">

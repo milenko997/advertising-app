@@ -62,7 +62,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/sacuvani/{advertisement}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 });
 
-Route::middleware(['auth', 'verified', 'isCustomer'])->group(function () {
+// TODO: uncomment 'verified' before deploying to production
+Route::middleware(['auth', /* 'verified', */ 'isCustomer'])->group(function () {
     Route::get('/moji-oglasi', [UserAdvertisementController::class, 'userIndex'])->name('advertisements.user');
     Route::get('/postavi-oglas', [UserAdvertisementController::class, 'create'])->name('advertisements.create');
     Route::post('/oglasi', [UserAdvertisementController::class, 'store'])->name('advertisements.store')->middleware('throttle:ad-creation');
@@ -76,7 +77,8 @@ Route::middleware(['auth', 'verified', 'isCustomer'])->group(function () {
     Route::delete('/slike-oglasa/{image}', [UserAdvertisementController::class, 'destroyImage'])->name('advertisement-images.destroy');
 });
 
-Route::middleware(['auth', 'verified', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
+// TODO: uncomment 'verified' before deploying to production
+Route::middleware(['auth', /* 'verified', */ 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/statistika', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('/kategorije', CategoryController::class)->parameters(['kategorije' => 'category']);
     Route::resource('/oglasi', AdminAdvertisementController::class)->except(['show', 'create', 'store'])->parameters(['oglasi' => 'advertisement']);

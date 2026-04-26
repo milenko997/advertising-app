@@ -35,7 +35,7 @@ class AdvertisementResource extends JsonResource
             'user'         => $this->whenLoaded('user', fn () => $this->user ? [
                 'id'     => $this->user->id,
                 'name'   => $this->user->name,
-                'slug'   => $this->user->slug,
+                'slug'   => $this->user->isAdmin() ? null : $this->user->slug,
                 'avatar' => $this->user->avatar,
             ] : null),
             'images'       => $this->whenLoaded('images', fn () =>

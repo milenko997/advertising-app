@@ -62,6 +62,7 @@ class AdvertisementTrashController extends Controller
         $ad = Advertisement::withTrashed()->findOrFail($id);
         $this->authorize('update', $ad);
 
+        $ad->created_at = now();
         $ad->expires_at = now()->addDays(Advertisement::EXPIRY_DAYS);
         $ad->save();
 

@@ -55,20 +55,24 @@ export default function CustomersIndex({ customers: initialCustomers, search: in
         : 'Nema korisnika.';
 
     return (
-        <AppLayout header={
-            <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">Korisnici</h2>
-                <Link
-                    href="/admin/korisnici/create"
-                    className="px-4 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 transition"
-                >
-                    + Dodaj korisnika
-                </Link>
-            </div>
-        }>
+        <AppLayout>
             <Head title="Korisnici — Admin" />
             <div id="page-admin-customers" className="py-8">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    {/* Page header */}
+                    <div className="flex flex-wrap items-start justify-between gap-3 mb-6">
+                        <div>
+                            <h1 className="text-xl font-bold text-gray-900">Korisnici</h1>
+                            <p className="text-sm text-gray-500 mt-0.5">Svi registrovani korisnici</p>
+                        </div>
+                        <Link
+                            href="/admin/korisnici/create"
+                            className="px-4 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 transition"
+                        >
+                            + Dodaj korisnika
+                        </Link>
+                    </div>
 
                     <div className="mb-4">
                         <input

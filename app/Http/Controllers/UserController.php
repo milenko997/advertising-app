@@ -15,6 +15,18 @@ class UserController extends Controller
     use \App\Http\Controllers\Concerns\HasPagination;
     public function show(Request $request, User $user)
     {
+        if ($request->ajax() && !$request->hasHeader('X-Inertia') && $request->boolean('reviews')) {
+            $paginated = Review::with(['reviewer' => fn ($q) => $q->withTrashed()])
+                ->where('reviewed_user_id', $user->id)
+                ->latest()
+                ->paginate(5);
+
+            return response()->json([
+                'reviews' => $paginated->map(fn ($r) => $this->formatReview($r))->values()->all(),
+                'hasMore' => $paginated->hasMorePages(),
+            ]);
+        }
+
         $ads = $user->advertisements()
             ->with('category')
             ->active()
@@ -40,26 +52,15 @@ class UserController extends Controller
 
         $favoritedIds = Favorite::idsForUser(Auth::id());
 
-        $reviews = Review::with(['reviewer' => fn ($q) => $q->withTrashed()])
+        $reviewsTotal = Review::where('reviewed_user_id', $user->id)->count();
+        $avgRating = $reviewsTotal > 0
+            ? round(Review::where('reviewed_user_id', $user->id)->avg('rating'), 1)
+            : null;
+
+        $initialReviews = Review::with(['reviewer' => fn ($q) => $q->withTrashed()])
             ->where('reviewed_user_id', $user->id)
             ->latest()
-            ->get()
-            ->map(fn ($r) => [
-                'id'         => $r->id,
-                'rating'     => $r->rating,
-                'comment'    => $r->comment,
-                'created_at' => $r->created_at->format('d.m.Y'),
-                'reviewer'   => [
-                    'id'     => $r->reviewer?->id,
-                    'name'   => $r->reviewer?->name ?? 'Obrisan korisnik',
-                    'slug'   => $r->reviewer?->slug,
-                    'avatar' => $r->reviewer?->avatar,
-                ],
-            ])->values()->all();
-
-        $avgRating = count($reviews) > 0
-            ? round(collect($reviews)->avg('rating'), 1)
-            : null;
+            ->paginate(5);
 
         $myReview = Auth::check()
             ? Review::where('reviewer_id', Auth::id())
@@ -74,15 +75,33 @@ class UserController extends Controller
                 'slug'   => $user->slug,
                 'avatar' => $user->avatar,
             ],
-            'ads' => $this->paginationData($ads, $ads->map($formatAd)->values()->all()),
-            'favoritedIds' => $favoritedIds,
-            'reviews'      => $reviews,
-            'avgRating'    => $avgRating,
-            'myReview'     => $myReview ? [
+            'ads'            => $this->paginationData($ads, $ads->map($formatAd)->values()->all()),
+            'favoritedIds'   => $favoritedIds,
+            'reviews'        => $initialReviews->map(fn ($r) => $this->formatReview($r))->values()->all(),
+            'hasMoreReviews' => $initialReviews->hasMorePages(),
+            'reviewsTotal'   => $reviewsTotal,
+            'avgRating'      => $avgRating,
+            'myReview'       => $myReview ? [
                 'id'      => $myReview->id,
                 'rating'  => $myReview->rating,
                 'comment' => $myReview->comment,
             ] : null,
         ]);
+    }
+
+    private function formatReview($r): array
+    {
+        return [
+            'id'         => $r->id,
+            'rating'     => $r->rating,
+            'comment'    => $r->comment,
+            'created_at' => $r->created_at->format('d.m.Y'),
+            'reviewer'   => [
+                'id'     => $r->reviewer?->id,
+                'name'   => $r->reviewer?->name ?? 'Obrisan korisnik',
+                'slug'   => $r->reviewer?->slug,
+                'avatar' => $r->reviewer?->avatar,
+            ],
+        ];
     }
 }

@@ -17,7 +17,7 @@ class AdvertisementResource extends JsonResource
             'availability' => $this->availability,
             'payload'      => $this->payload,
             'image'        => $this->image,
-            'phone'        => $this->phone,
+            'phone'        => $this->when($this->relationLoaded('images'), $this->phone),
             'location'     => $this->location,
             'views'        => $this->views,
             'is_pinned'          => (bool) $this->is_pinned,

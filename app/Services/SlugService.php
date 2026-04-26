@@ -9,7 +9,7 @@ class SlugService
 {
     public function generate(string $title, ?int $excludeId = null): string
     {
-        $base = Str::slug($title, '_');
+        $base = Str::slug($title);
         $slug = $base;
         $counter = 1;
 
@@ -19,7 +19,7 @@ class SlugService
                 ->when($excludeId, fn($q) => $q->where('id', '!=', $excludeId))
                 ->exists()
         ) {
-            $slug = $base . '_' . $counter++;
+            $slug = $base . '-' . $counter++;
         }
 
         return $slug;

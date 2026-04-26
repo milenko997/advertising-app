@@ -100,7 +100,7 @@ Route::middleware(['auth', /* 'verified', */ 'isAdmin'])->prefix('admin')->name(
     Route::delete('/utisci/{feedback}', [AdminFeedbackController::class, 'destroy'])->name('feedbacks.destroy');
 });
 
-Route::post('/oglasi/{advertisement}/prijavi', [ReportController::class, 'store'])->name('advertisements.report')->middleware(['auth', 'throttle:report']);
+Route::post('/oglasi/{advertisement}/prijavi', [ReportController::class, 'store'])->name('advertisements.report')->middleware('throttle:report');
 Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store')->middleware('throttle:feedback');
 
 Route::get('/oglas/{slug}', [AdvertisementController::class, 'show'])->name('advertisements.show');

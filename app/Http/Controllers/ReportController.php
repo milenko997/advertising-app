@@ -15,19 +15,27 @@ class ReportController extends Controller
             'type' => 'required|in:wrong_category,duplicate_spam,against_rules,ignore_user',
         ]);
 
-        // Prevent owner from reporting their own ad
-        if ($advertisement->user_id === Auth::id()) {
-            return back()->withErrors(['type' => 'Ne možete prijaviti sopstveni oglas.']);
-        }
+        if (Auth::check()) {
+            if ($advertisement->user_id === Auth::id()) {
+                return back()->withErrors(['type' => 'Ne možete prijaviti sopstveni oglas.']);
+            }
 
-        Report::updateOrCreate(
-            [
+            Report::updateOrCreate(
+                [
+                    'advertisement_id' => $advertisement->id,
+                    'reporter_id'      => Auth::id(),
+                    'type'             => $request->type,
+                ],
+                ['resolved' => false]
+            );
+        } else {
+            Report::create([
                 'advertisement_id' => $advertisement->id,
-                'reporter_id'      => Auth::id(),
+                'reporter_id'      => null,
                 'type'             => $request->type,
-            ],
-            ['resolved' => false]
-        );
+                'resolved'         => false,
+            ]);
+        }
 
         return back()->with('success', 'Hvala vam. Vaša prijava je podneta.');
     }

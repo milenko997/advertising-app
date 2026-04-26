@@ -106,7 +106,7 @@ class AdminAdvertisementController extends Controller
         }
 
         $advertisement->title        = $request->title;
-        $advertisement->description  = $request->description;
+        $advertisement->description  = strip_tags($request->description);
         $advertisement->payload      = $request->payload ? strip_tags($request->payload) : null;
         $advertisement->availability = $request->availability;
         $advertisement->price        = $request->price;

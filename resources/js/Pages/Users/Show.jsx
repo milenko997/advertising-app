@@ -5,13 +5,17 @@ import AppLayout from '@/Layouts/AppLayout';
 import AdCard from '@/Components/AdCard';
 import { StarRating, ReviewCard, ReviewForm } from '@/Components/ReviewWidgets';
 
-export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds, reviews, avgRating, myReview }) {
+export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds, reviews: initialReviews, hasMoreReviews: initialHasMoreReviews, reviewsTotal, avgRating, myReview }) {
     const { url, props: { auth, flash, appUrl } } = usePage();
     const [adList, setAdList] = useState(ads.data);
     const [favoritedIds] = useState(initialFavoritedIds);
     const [currentPage, setCurrentPage] = useState(ads.current_page);
     const [hasMore, setHasMore] = useState(ads.current_page < ads.last_page);
     const [loading, setLoading] = useState(false);
+    const [reviewsList, setReviewsList] = useState(initialReviews);
+    const [hasMoreReviews, setHasMoreReviews] = useState(initialHasMoreReviews);
+    const [reviewsPage, setReviewsPage] = useState(1);
+    const [reviewsLoading, setReviewsLoading] = useState(false);
 
     const isOwnProfile = auth?.user?.id === user.id;
     const canReview = auth?.user && !isOwnProfile && !myReview;
@@ -27,6 +31,20 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
             setCurrentPage(nextPage);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const loadMoreReviews = async () => {
+        if (reviewsLoading || !hasMoreReviews) return;
+        setReviewsLoading(true);
+        const nextPage = reviewsPage + 1;
+        try {
+            const { data } = await axios.get(`/korisnik/${user.slug}?reviews=1&page=${nextPage}`);
+            setReviewsList(prev => [...prev, ...data.reviews]);
+            setHasMoreReviews(data.hasMore);
+            setReviewsPage(nextPage);
+        } finally {
+            setReviewsLoading(false);
         }
     };
 
@@ -82,7 +100,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                                 <StarRating value={Math.round(avgRating)} readOnly />
                                                 <span className="text-sm font-semibold text-gray-700">{avgRating}</span>
                                                 <span className="text-sm text-gray-400">
-                                                    ({reviews.length} {reviews.length === 1 ? 'recenzija' : 'recenzije'})
+                                                    ({reviewsTotal} {reviewsTotal === 1 ? 'recenzija' : 'recenzije'})
                                                 </span>
                                             </div>
                                         </>
@@ -132,8 +150,8 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                             <div className="flex items-center justify-between mb-4">
                                 <h2 className="text-base font-bold text-gray-900">
                                     Recenzije
-                                    {reviews.length > 0 && (
-                                        <span className="ml-2 text-sm font-normal text-gray-400">({reviews.length})</span>
+                                    {reviewsTotal > 0 && (
+                                        <span className="ml-2 text-sm font-normal text-gray-400">({reviewsTotal})</span>
                                     )}
                                 </h2>
                                 {avgRating !== null && (
@@ -190,18 +208,37 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
 
                                 {/* Right: reviews list */}
                                 <div className="lg:col-span-2">
-                                    {reviews.length === 0 ? (
+                                    {reviewsList.length === 0 ? (
                                         <p className="text-sm text-gray-400 py-2">Još nema recenzija. Budite prvi!</p>
                                     ) : (
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                            {reviews.map(review => (
-                                                <ReviewCard
-                                                    key={review.id}
-                                                    review={review}
-                                                    authUserId={auth?.user?.id}
-                                                />
-                                            ))}
-                                        </div>
+                                        <>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                {reviewsList.map(review => (
+                                                    <ReviewCard
+                                                        key={review.id}
+                                                        review={review}
+                                                        authUserId={auth?.user?.id}
+                                                    />
+                                                ))}
+                                            </div>
+                                            {hasMoreReviews && (
+                                                <div className="mt-4 text-center">
+                                                    <button
+                                                        onClick={loadMoreReviews}
+                                                        disabled={reviewsLoading}
+                                                        className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-5 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
+                                                    >
+                                                        {reviewsLoading && (
+                                                            <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">
+                                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                                            </svg>
+                                                        )}
+                                                        {reviewsLoading ? 'Učitavanje…' : 'Prikaži više recenzija'}
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </>
                                     )}
                                 </div>
                             </div>

@@ -23,7 +23,7 @@ function SpecRow({ icon, label, value }) {
     );
 }
 
-export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
+export default function Show({ ad, isSaved, reviews: initialReviews, hasMoreReviews: initialHasMoreReviews, reviewsTotal, avgRating, myReview }) {
     const { url, props: { auth, flash, appUrl } } = usePage();
     const isOwner = auth?.user?.id === ad.user_id;
     const canReview = auth?.user && !isOwner && !myReview;
@@ -31,6 +31,24 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
     const [bookmarkLoading, setBookmarkLoading] = useState(false);
     const [carouselOpen, setCarouselOpen] = useState(false);
     const [carouselIndex, setCarouselIndex] = useState(0);
+    const [reviewsList, setReviewsList] = useState(initialReviews);
+    const [hasMoreReviews, setHasMoreReviews] = useState(initialHasMoreReviews);
+    const [reviewsPage, setReviewsPage] = useState(1);
+    const [reviewsLoading, setReviewsLoading] = useState(false);
+
+    const loadMoreReviews = async () => {
+        if (reviewsLoading || !hasMoreReviews) return;
+        setReviewsLoading(true);
+        const nextPage = reviewsPage + 1;
+        try {
+            const { data } = await axios.get(`/oglas/${ad.slug}?reviews=1&page=${nextPage}`);
+            setReviewsList(prev => [...prev, ...data.reviews]);
+            setHasMoreReviews(data.hasMore);
+            setReviewsPage(nextPage);
+        } finally {
+            setReviewsLoading(false);
+        }
+    };
 
     // Combine primary image and gallery images into one array for carousel
     const allImages = [
@@ -313,7 +331,7 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                                 {avgRating !== null && (
                                                     <div className="flex items-center gap-1 mt-0.5">
                                                         <StarRating value={Math.round(avgRating)} readOnly />
-                                                        <span className="text-xs text-gray-400">({reviews.length})</span>
+                                                        <span className="text-xs text-gray-400">({reviewsTotal})</span>
                                                     </div>
                                                 )}
                                                 {avgRating === null && (
@@ -375,8 +393,8 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                             <StarRating value={Math.round(avgRating)} readOnly />
                                             <span className="text-sm font-bold text-gray-700">{avgRating}</span>
                                             <span className="text-sm text-gray-400">
-                                                ({reviews.length} {reviews.length === 1 ? 'recenzija' : 'recenzija'})
-                                            </span>
+                                                ({reviewsTotal} {reviewsTotal === 1 ? 'recenzija' : 'recenzija'})
+</span>
                                         </div>
                                     )}
 
@@ -401,11 +419,11 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                         </div>
                                     )}
 
-                                    {reviews.length === 0 && !canReview && !auth?.user ? (
+                                    {reviewsList.length === 0 && !canReview && !auth?.user ? (
                                         <p className="text-sm text-gray-400">Još nema recenzija.</p>
-                                    ) : reviews.length > 0 ? (
+                                    ) : reviewsList.length > 0 ? (
                                         <div>
-                                            {reviews.map(review => (
+                                            {reviewsList.map(review => (
                                                 <ReviewCard
                                                     key={review.id}
                                                     review={review}
@@ -413,6 +431,23 @@ export default function Show({ ad, isSaved, reviews, avgRating, myReview }) {
                                                     authUserId={auth?.user?.id}
                                                 />
                                             ))}
+                                            {hasMoreReviews && (
+                                                <div className="mt-4 text-center">
+                                                    <button
+                                                        onClick={loadMoreReviews}
+                                                        disabled={reviewsLoading}
+                                                        className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-5 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
+                                                    >
+                                                        {reviewsLoading && (
+                                                            <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">
+                                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                                            </svg>
+                                                        )}
+                                                        {reviewsLoading ? 'Učitavanje…' : 'Prikaži više recenzija'}
+                                                    </button>
+                                                </div>
+                                            )}
                                         </div>
                                     ) : (
                                         <p className="text-sm text-gray-400">Još nema recenzija. Budite prvi!</p>

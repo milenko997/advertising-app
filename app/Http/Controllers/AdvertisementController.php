@@ -67,9 +67,24 @@ class AdvertisementController extends Controller
         ]);
     }
 
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
         $ad = Advertisement::with('user', 'category', 'images')->where('slug', $slug)->firstOrFail();
+
+        if ($request->ajax() && !$request->hasHeader('X-Inertia') && $request->boolean('reviews')) {
+            if (!$ad->user) {
+                return response()->json(['reviews' => [], 'hasMore' => false]);
+            }
+            $paginated = Review::with(['reviewer' => fn ($q) => $q->withTrashed()])
+                ->where('reviewed_user_id', $ad->user_id)
+                ->latest()
+                ->paginate(5);
+
+            return response()->json([
+                'reviews' => $paginated->map(fn ($r) => $this->formatReview($r))->values()->all(),
+                'hasMore' => $paginated->hasMorePages(),
+            ]);
+        }
 
         view()->share('meta', [
             'title'       => $ad->title . ' — ' . config('app.name'),
@@ -94,28 +109,22 @@ class AdvertisementController extends Controller
         $reviews = [];
         $avgRating = null;
         $myReview = null;
+        $hasMoreReviews = false;
+        $reviewsTotal = 0;
 
         if ($ad->user) {
-            $reviews = Review::with(['reviewer' => fn ($q) => $q->withTrashed()])
+            $reviewsTotal = Review::where('reviewed_user_id', $ad->user_id)->count();
+            $avgRating = $reviewsTotal > 0
+                ? round(Review::where('reviewed_user_id', $ad->user_id)->avg('rating'), 1)
+                : null;
+
+            $initialReviews = Review::with(['reviewer' => fn ($q) => $q->withTrashed()])
                 ->where('reviewed_user_id', $ad->user_id)
                 ->latest()
-                ->get()
-                ->map(fn ($r) => [
-                    'id'         => $r->id,
-                    'rating'     => $r->rating,
-                    'comment'    => $r->comment,
-                    'created_at' => $r->created_at->format('d.m.Y'),
-                    'reviewer'   => [
-                        'id'     => $r->reviewer?->id,
-                        'name'   => $r->reviewer?->name ?? 'Obrisan korisnik',
-                        'slug'   => $r->reviewer?->slug,
-                        'avatar' => $r->reviewer?->avatar,
-                    ],
-                ])->values()->all();
+                ->paginate(5);
 
-            $avgRating = count($reviews) > 0
-                ? round(collect($reviews)->avg('rating'), 1)
-                : null;
+            $reviews = $initialReviews->map(fn ($r) => $this->formatReview($r))->values()->all();
+            $hasMoreReviews = $initialReviews->hasMorePages();
 
             if (Auth::check()) {
                 $raw = Review::where('reviewer_id', Auth::id())
@@ -126,11 +135,13 @@ class AdvertisementController extends Controller
         }
 
         return Inertia::render('Advertisements/Show', [
-            'ad'        => $this->formatAd($ad),
-            'isSaved'   => $isSaved,
-            'reviews'   => $reviews,
-            'avgRating' => $avgRating,
-            'myReview'  => $myReview,
+            'ad'             => $this->formatAd($ad),
+            'isSaved'        => $isSaved,
+            'reviews'        => $reviews,
+            'hasMoreReviews' => $hasMoreReviews,
+            'reviewsTotal'   => $reviewsTotal,
+            'avgRating'      => $avgRating,
+            'myReview'       => $myReview,
         ]);
     }
 
@@ -200,5 +211,21 @@ class AdvertisementController extends Controller
     private function formatAds($paginator): array
     {
         return $paginator->map(fn ($ad) => $this->formatAd($ad))->values()->all();
+    }
+
+    private function formatReview($r): array
+    {
+        return [
+            'id'         => $r->id,
+            'rating'     => $r->rating,
+            'comment'    => $r->comment,
+            'created_at' => $r->created_at->format('d.m.Y'),
+            'reviewer'   => [
+                'id'     => $r->reviewer?->id,
+                'name'   => $r->reviewer?->name ?? 'Obrisan korisnik',
+                'slug'   => $r->reviewer?->slug,
+                'avatar' => $r->reviewer?->avatar,
+            ],
+        ];
     }
 }

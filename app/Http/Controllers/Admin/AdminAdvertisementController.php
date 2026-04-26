@@ -179,14 +179,14 @@ class AdminAdvertisementController extends Controller
     {
         $request->validate([
             'action' => 'required|in:delete,pin,unpin',
-            'ids'    => 'required|array|min:1',
+            'ids'    => 'required|array|min:1|max:100',
             'ids.*'  => 'integer|exists:advertisements,id',
         ]);
 
         $ads = Advertisement::whereIn('id', $request->ids);
 
         match ($request->action) {
-            'delete' => $ads->get()->each(function ($ad) {
+            'delete' => $ads->with('user')->get()->each(function ($ad) {
                 $owner = $ad->user;
                 $title = $ad->title;
                 $ad->delete();
@@ -194,8 +194,8 @@ class AdminAdvertisementController extends Controller
                     $owner->notify(new AdDeletedByAdminNotification($title));
                 }
             }),
-            'pin'    => $ads->get()->each(fn ($ad) => $ad->update(['is_pinned' => true, 'pinned_at' => now()])),
-            'unpin'  => $ads->get()->each(fn ($ad) => $ad->update(['is_pinned' => false, 'pinned_at' => null])),
+            'pin'   => $ads->update(['is_pinned' => true,  'pinned_at' => now()]),
+            'unpin' => $ads->update(['is_pinned' => false, 'pinned_at' => null]),
         };
 
         $count = count($request->ids);

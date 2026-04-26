@@ -78,7 +78,7 @@ class AdvertisementController extends Controller
             $paginated = Review::with(['reviewer' => fn ($q) => $q->withTrashed()])
                 ->where('reviewed_user_id', $ad->user_id)
                 ->latest()
-                ->paginate(5);
+                ->paginate(6);
 
             return response()->json([
                 'reviews' => $paginated->map(fn ($r) => $this->formatReview($r))->values()->all(),
@@ -121,7 +121,7 @@ class AdvertisementController extends Controller
             $initialReviews = Review::with(['reviewer' => fn ($q) => $q->withTrashed()])
                 ->where('reviewed_user_id', $ad->user_id)
                 ->latest()
-                ->paginate(5);
+                ->paginate(6);
 
             $reviews = $initialReviews->map(fn ($r) => $this->formatReview($r))->values()->all();
             $hasMoreReviews = $initialReviews->hasMorePages();

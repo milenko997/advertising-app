@@ -31,36 +31,9 @@ export function StarRating({ value, onChange, readOnly = false }) {
     );
 }
 
-export function ReviewCard({ review, authUserId, variant = 'card', onDeleted }) {
+export function ReviewCard({ review, variant = 'card' }) {
     const isList = variant === 'list';
-    const isOwn = authUserId === review.reviewer.id;
-    const [editing, setEditing]     = useState(false);
-    const [rating, setRating]       = useState(review.rating);
-    const [comment, setComment]     = useState(review.comment ?? '');
-    const [submitting, setSubmitting] = useState(false);
-    const [error, setError]         = useState('');
-
-    const handleDelete = () => {
-        if (!confirm('Obrisati recenziju?')) return;
-        router.delete(`/recenzije/${review.id}`, {
-            preserveScroll: true,
-            onSuccess: () => onDeleted?.(review.id),
-        });
-    };
-
-    const handleUpdate = (e) => {
-        e.preventDefault();
-        if (!rating) { setError('Molimo odaberite ocenu zvezdicama.'); return; }
-        setError('');
-        setSubmitting(true);
-        router.put(`/recenzije/${review.id}`, { rating, comment }, {
-            onSuccess: () => setEditing(false),
-            onFinish:  () => setSubmitting(false),
-        });
-    };
-
     const avatarSize = isList ? 'w-8 h-8' : 'w-9 h-9';
-    const iconSize   = isList ? 'w-3.5 h-3.5' : 'w-4 h-4';
 
     return (
         <div className={isList
@@ -83,79 +56,23 @@ export function ReviewCard({ review, authUserId, variant = 'card', onDeleted }) 
                         )}
                     </div>
                     <div>
-                        <Link
-                            href={`/korisnik/${review.reviewer.slug}`}
-                            className="text-sm font-semibold text-gray-800 hover:text-orange-600 transition-colors"
-                        >
-                            {review.reviewer.name}
-                        </Link>
+                        {review.reviewer.slug ? (
+                            <Link
+                                href={`/korisnik/${review.reviewer.slug}`}
+                                className="text-sm font-semibold text-gray-800 hover:text-orange-600 transition-colors"
+                            >
+                                {review.reviewer.name}
+                            </Link>
+                        ) : (
+                            <span className="text-sm font-semibold text-gray-400">{review.reviewer.name}</span>
+                        )}
                         <p className="text-xs text-gray-400">{review.created_at}</p>
                     </div>
                 </div>
-
-                <div className="flex items-center gap-2 shrink-0">
-                    {!editing && <StarRating value={review.rating} readOnly />}
-                    {isOwn && !editing && (
-                        <>
-                            <button
-                                onClick={() => setEditing(true)}
-                                className={`${isList ? 'p-2 -m-2' : ''} text-gray-300 hover:text-orange-500 transition-colors rounded`}
-                                title="Izmeni recenziju"
-                            >
-                                <svg className={iconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                </svg>
-                            </button>
-                            <button
-                                onClick={handleDelete}
-                                className={`${isList ? 'p-2 -m-2' : ''} text-gray-300 hover:text-red-500 transition-colors rounded`}
-                                title="Obriši recenziju"
-                            >
-                                <svg className={iconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                </svg>
-                            </button>
-                        </>
-                    )}
-                </div>
+                <StarRating value={review.rating} readOnly />
             </div>
-
-            {editing ? (
-                <form onSubmit={handleUpdate} className={isList ? 'space-y-2' : 'mt-3 space-y-3'}>
-                    <div>
-                        <StarRating value={rating} onChange={setRating} />
-                        {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
-                    </div>
-                    <textarea
-                        rows={3}
-                        value={comment}
-                        onChange={e => setComment(e.target.value)}
-                        maxLength={1000}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
-                    />
-                    <div className="flex items-center gap-2">
-                        <button
-                            type="submit"
-                            disabled={submitting}
-                            className="px-4 py-1.5 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition disabled:opacity-50"
-                        >
-                            {submitting ? 'Čuvanje…' : 'Sačuvaj'}
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => { setEditing(false); setRating(review.rating); setComment(review.comment ?? ''); setError(''); }}
-                            className="px-4 py-1.5 text-sm text-gray-500 hover:text-gray-700 transition"
-                        >
-                            Otkaži
-                        </button>
-                    </div>
-                </form>
-            ) : (
-                review.comment && (
-                    <p className={`${isList ? '' : 'mt-3'} text-sm text-gray-600 leading-relaxed`}>{review.comment}</p>
-                )
+            {review.comment && (
+                <p className={`${isList ? '' : 'mt-3'} text-sm text-gray-600 leading-relaxed`}>{review.comment}</p>
             )}
         </div>
     );

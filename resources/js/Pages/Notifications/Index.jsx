@@ -175,7 +175,7 @@ export default function NotificationsIndex({ notifications: initialData }) {
                                                     onClick={() => markRead(n.id)}
                                                     className="text-xs text-gray-400 hover:text-gray-600"
                                                 >
-                                                    Označi pročitanim
+                                                    Označi kao pročitano
                                                 </button>
                                             )}
                                             <button

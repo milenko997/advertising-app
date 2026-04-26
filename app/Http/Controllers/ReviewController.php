@@ -18,7 +18,7 @@ class ReviewController extends Controller
      */
     public function loginThenReview(User $user)
     {
-        return redirect("/korisnik/{$user->slug}#reviews");
+        return redirect("/korisnik/{$user->slug}#recenzije");
     }
 
     public function store(Request $request, User $user)
@@ -41,7 +41,7 @@ class ReviewController extends Controller
                 'reviewer_id'      => auth()->id(),
                 'reviewed_user_id' => $user->id,
                 'rating'           => $validated['rating'],
-                'comment'          => $validated['comment'] ?? null,
+                'comment'          => isset($validated['comment']) ? strip_tags($validated['comment']) : null,
             ]);
         } catch (QueryException $e) {
             if (str_contains($e->getMessage(), 'UNIQUE constraint failed')) {
@@ -68,7 +68,7 @@ class ReviewController extends Controller
 
         $review->update([
             'rating'  => $validated['rating'],
-            'comment' => $validated['comment'] ?? null,
+            'comment' => isset($validated['comment']) ? strip_tags($validated['comment']) : null,
         ]);
 
         if ($reviewedUser) {

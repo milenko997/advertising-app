@@ -24,7 +24,7 @@ class ReviewDeletedNotification extends Notification implements ShouldQueue
             'type'    => 'review_deleted',
             'title'   => 'Recenzija obrisana',
             'message' => "{$this->reviewer->name} je obrisao/la svoju recenziju.",
-            'url'     => "/korisnik/{$notifiable->slug}#reviews",
+            'url'     => "/korisnik/{$notifiable->slug}#recenzije",
         ];
     }
 }

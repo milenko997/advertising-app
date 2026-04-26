@@ -17,6 +17,20 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
     const [reviewsPage, setReviewsPage] = useState(1);
     const [reviewsLoading, setReviewsLoading] = useState(false);
 
+    const [ownReview, setOwnReview] = useState(myReview);
+    const [editingOwn, setEditingOwn] = useState(false);
+    const [ownRating, setOwnRating] = useState(myReview?.rating ?? 0);
+    const [ownComment, setOwnComment] = useState(myReview?.comment ?? '');
+    const [ownSubmitting, setOwnSubmitting] = useState(false);
+    const [ownError, setOwnError] = useState('');
+
+    useEffect(() => {
+        setOwnReview(myReview);
+        setOwnRating(myReview?.rating ?? 0);
+        setOwnComment(myReview?.comment ?? '');
+        setEditingOwn(false);
+    }, [myReview?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
     const reviewsKey = initialReviews.map(r => r.id).join('-');
     useEffect(() => {
         setReviewsList(initialReviews);
@@ -25,7 +39,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
     }, [reviewsKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const isOwnProfile = auth?.user?.id === user.id;
-    const canReview = auth?.user && !isOwnProfile && !myReview;
+    const canReview = auth?.user && !isOwnProfile && !ownReview;
 
     const loadMore = async () => {
         if (loading || !hasMore) return;
@@ -53,6 +67,35 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
         } finally {
             setReviewsLoading(false);
         }
+    };
+
+    const handleDeleteOwn = () => {
+        if (!confirm('Obrisati recenziju?')) return;
+        router.delete(`/recenzije/${ownReview.id}`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setReviewsList(prev => prev.filter(r => r.id !== ownReview.id));
+                setOwnReview(null);
+            },
+        });
+    };
+
+    const handleUpdateOwn = (e) => {
+        e.preventDefault();
+        if (!ownRating) { setOwnError('Molimo odaberite ocenu zvezdicama.'); return; }
+        setOwnError('');
+        setOwnSubmitting(true);
+        router.put(`/recenzije/${ownReview.id}`, { rating: ownRating, comment: ownComment }, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setOwnReview(prev => ({ ...prev, rating: ownRating, comment: ownComment }));
+                setReviewsList(prev => prev.map(r =>
+                    r.id === ownReview.id ? { ...r, rating: ownRating, comment: ownComment } : r
+                ));
+                setEditingOwn(false);
+            },
+            onFinish: () => setOwnSubmitting(false),
+        });
     };
 
     const pageTitle  = `${user.name} — AdBoard`;
@@ -152,8 +195,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                     )}
 
                     {/* ── Reviews section ── */}
-                    {!isOwnProfile && (
-                        <div id="recenzije" className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mt-8">
+                    <div id="recenzije" className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mt-8">
                             <div className="flex items-center justify-between mb-4">
                                 <h2 className="text-base font-bold text-gray-900">
                                     Recenzije
@@ -180,43 +222,99 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                 </div>
                             )}
 
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div className={`grid grid-cols-1 gap-6 ${!isOwnProfile ? 'lg:grid-cols-3' : ''}`}>
 
-                                {/* Left: form / CTA / own review */}
-                                <div className="space-y-4">
-                                    {myReview && (
-                                        <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
-                                            <p className="text-xs font-semibold text-orange-500 uppercase tracking-wide mb-2">Tvoje recenzije</p>
-                                            <StarRating value={myReview.rating} readOnly />
-                                            {myReview.comment && (
-                                                <p className="text-sm text-orange-700 mt-2">{myReview.comment}</p>
-                                            )}
-                                        </div>
-                                    )}
+                                {/* Left: form / CTA / own review — hidden on own profile */}
+                                {!isOwnProfile && (
+                                    <div className="space-y-4">
+                                        {ownReview && (
+                                            <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <p className="text-xs font-semibold text-orange-500 uppercase tracking-wide">Vaša recenzija</p>
+                                                    {!editingOwn && (
+                                                        <div className="flex items-center gap-1">
+                                                            <button
+                                                                onClick={() => setEditingOwn(true)}
+                                                                className="p-1 text-orange-300 hover:text-orange-600 transition-colors rounded"
+                                                                title="Izmeni recenziju"
+                                                            >
+                                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                                </svg>
+                                                            </button>
+                                                            <button
+                                                                onClick={handleDeleteOwn}
+                                                                className="p-1 text-orange-300 hover:text-red-500 transition-colors rounded"
+                                                                title="Obriši recenziju"
+                                                            >
+                                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                {editingOwn ? (
+                                                    <form onSubmit={handleUpdateOwn} className="space-y-2">
+                                                        <div>
+                                                            <StarRating value={ownRating} onChange={setOwnRating} />
+                                                            {ownError && <p className="mt-1 text-xs text-red-600">{ownError}</p>}
+                                                        </div>
+                                                        <textarea
+                                                            rows={3}
+                                                            value={ownComment}
+                                                            onChange={e => setOwnComment(e.target.value)}
+                                                            maxLength={1000}
+                                                            className="w-full border border-orange-200 bg-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
+                                                        />
+                                                        <div className="flex items-center gap-2">
+                                                            <button
+                                                                type="submit"
+                                                                disabled={ownSubmitting}
+                                                                className="px-4 py-1.5 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition disabled:opacity-50"
+                                                            >
+                                                                {ownSubmitting ? 'Čuvanje…' : 'Sačuvaj'}
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => { setEditingOwn(false); setOwnRating(ownReview.rating); setOwnComment(ownReview.comment ?? ''); setOwnError(''); }}
+                                                                className="px-4 py-1.5 text-sm text-orange-600 hover:text-orange-800 transition"
+                                                            >
+                                                                Otkaži
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                ) : (
+                                                    <>
+                                                        <StarRating value={ownReview.rating} readOnly />
+                                                        {ownReview.comment && (
+                                                            <p className="text-sm text-orange-700 mt-2">{ownReview.comment}</p>
+                                                        )}
+                                                    </>
+                                                )}
+                                            </div>
+                                        )}
 
-                                    {canReview && <ReviewForm userSlug={user.slug} />}
+                                        {!ownReview && canReview && <ReviewForm userSlug={user.slug} />}
 
-                                    {!auth?.user && (
-                                        <div className="rounded-xl border border-gray-200 p-5 text-center">
-                                            <p className="text-sm text-gray-500 mb-3">Prijavite se da biste ostavili recenziju</p>
-                                            <Link
-                                                href={`/korisnik/${user.slug}/recenzija-prijava`}
-                                                className="inline-flex items-center gap-2 px-4 py-2 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition"
-                                            >
-                                                Prijavite se
-                                            </Link>
-                                        </div>
-                                    )}
-
-                                    {!canReview && !myReview && auth?.user && (
-                                        <p className="text-sm text-gray-400">Ovom korisniku ste već dali recenziju.</p>
-                                    )}
-                                </div>
+                                        {!auth?.user && (
+                                            <div className="rounded-xl border border-gray-200 p-5 text-center">
+                                                <p className="text-sm text-gray-500 mb-3">Prijavite se da biste ostavili recenziju</p>
+                                                <Link
+                                                    href={`/korisnik/${user.slug}/recenzija-prijava`}
+                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition"
+                                                >
+                                                    Prijavite se
+                                                </Link>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
 
                                 {/* Right: reviews list */}
-                                <div className="lg:col-span-2">
+                                <div className={!isOwnProfile ? 'lg:col-span-2' : ''}>
                                     {reviewsList.length === 0 ? (
-                                        <p className="text-sm text-gray-400 py-2">Još nema recenzija. Budite prvi!</p>
+                                        <p className="text-sm text-gray-400 py-2">{isOwnProfile ? 'Još nema recenzija.' : 'Još nema recenzija. Budite prvi!'}</p>
                                     ) : (
                                         <>
                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -224,8 +322,6 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                                     <ReviewCard
                                                         key={review.id}
                                                         review={review}
-                                                        authUserId={auth?.user?.id}
-                                                        onDeleted={(id) => setReviewsList(prev => prev.filter(r => r.id !== id))}
                                                     />
                                                 ))}
                                             </div>
@@ -251,7 +347,6 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                 </div>
                             </div>
                         </div>
-                    )}
                 </div>
             </div>
         </AppLayout>

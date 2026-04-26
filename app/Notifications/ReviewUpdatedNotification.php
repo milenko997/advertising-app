@@ -26,7 +26,7 @@ class ReviewUpdatedNotification extends Notification implements ShouldQueue
             'type'    => 'review_updated',
             'title'   => 'Recenzija izmenjena',
             'message' => "{$this->reviewer->name} je izmenio/la recenziju {$stars}",
-            'url'     => "/korisnik/{$notifiable->slug}#reviews",
+            'url'     => "/korisnik/{$notifiable->slug}#recenzije",
         ];
     }
 }

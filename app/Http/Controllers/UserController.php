@@ -19,7 +19,7 @@ class UserController extends Controller
             $paginated = Review::with(['reviewer' => fn ($q) => $q->withTrashed()])
                 ->where('reviewed_user_id', $user->id)
                 ->latest()
-                ->paginate(5);
+                ->paginate(6);
 
             return response()->json([
                 'reviews' => $paginated->map(fn ($r) => $this->formatReview($r))->values()->all(),
@@ -60,7 +60,7 @@ class UserController extends Controller
         $initialReviews = Review::with(['reviewer' => fn ($q) => $q->withTrashed()])
             ->where('reviewed_user_id', $user->id)
             ->latest()
-            ->paginate(5);
+            ->paginate(6);
 
         $myReview = Auth::check()
             ? Review::where('reviewer_id', Auth::id())

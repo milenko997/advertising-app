@@ -251,7 +251,7 @@ export default function Navigation() {
                                                     onClick={handleMarkAllRead}
                                                     className="text-xs text-orange-600 hover:text-orange-700"
                                                 >
-                                                    Označi sve
+                                                    Označi sve kao pročitano
                                                 </button>
                                             )}
                                         </div>

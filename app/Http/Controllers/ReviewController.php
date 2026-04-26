@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Notifications\NewReviewNotification;
 use App\Notifications\ReviewDeletedNotification;
 use App\Notifications\ReviewUpdatedNotification;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -35,12 +36,19 @@ class ReviewController extends Controller
             'comment' => 'nullable|string|max:1000',
         ]);
 
-        Review::create([
-            'reviewer_id'      => auth()->id(),
-            'reviewed_user_id' => $user->id,
-            'rating'           => $validated['rating'],
-            'comment'          => $validated['comment'] ?? null,
-        ]);
+        try {
+            Review::create([
+                'reviewer_id'      => auth()->id(),
+                'reviewed_user_id' => $user->id,
+                'rating'           => $validated['rating'],
+                'comment'          => $validated['comment'] ?? null,
+            ]);
+        } catch (QueryException $e) {
+            if (str_contains($e->getMessage(), 'UNIQUE constraint failed')) {
+                return back()->with('error', 'Već ste ostavili recenziju ovom korisniku.');
+            }
+            throw $e;
+        }
 
         $user->notify(new NewReviewNotification(auth()->user(), $validated['rating']));
 

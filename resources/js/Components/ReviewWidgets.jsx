@@ -31,7 +31,7 @@ export function StarRating({ value, onChange, readOnly = false }) {
     );
 }
 
-export function ReviewCard({ review, authUserId, variant = 'card' }) {
+export function ReviewCard({ review, authUserId, variant = 'card', onDeleted }) {
     const isList = variant === 'list';
     const isOwn = authUserId === review.reviewer.id;
     const [editing, setEditing]     = useState(false);
@@ -42,7 +42,10 @@ export function ReviewCard({ review, authUserId, variant = 'card' }) {
 
     const handleDelete = () => {
         if (!confirm('Obrisati recenziju?')) return;
-        router.delete(`/recenzije/${review.id}`);
+        router.delete(`/recenzije/${review.id}`, {
+            preserveScroll: true,
+            onSuccess: () => onDeleted?.(review.id),
+        });
     };
 
     const handleUpdate = (e) => {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, usePage, router, Head } from '@inertiajs/react';
 import axios from 'axios';
 import AppLayout from '@/Layouts/AppLayout';
@@ -16,6 +16,13 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
     const [hasMoreReviews, setHasMoreReviews] = useState(initialHasMoreReviews);
     const [reviewsPage, setReviewsPage] = useState(1);
     const [reviewsLoading, setReviewsLoading] = useState(false);
+
+    const reviewsKey = initialReviews.map(r => r.id).join('-');
+    useEffect(() => {
+        setReviewsList(initialReviews);
+        setHasMoreReviews(initialHasMoreReviews);
+        setReviewsPage(1);
+    }, [reviewsKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const isOwnProfile = auth?.user?.id === user.id;
     const canReview = auth?.user && !isOwnProfile && !myReview;
@@ -218,6 +225,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                                         key={review.id}
                                                         review={review}
                                                         authUserId={auth?.user?.id}
+                                                        onDeleted={(id) => setReviewsList(prev => prev.filter(r => r.id !== id))}
                                                     />
                                                 ))}
                                             </div>

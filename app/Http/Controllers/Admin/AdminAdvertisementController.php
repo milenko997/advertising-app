@@ -100,6 +100,11 @@ class AdminAdvertisementController extends Controller
             'images.*'     => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
+        if ($request->hasFile('images') &&
+            $advertisement->images()->count() + count($request->file('images')) > 10) {
+            return back()->withErrors(['images' => 'Ne možete dodati više od 10 slika u galeriju.']);
+        }
+
         $advertisement->title        = $request->title;
         $advertisement->description  = $request->description;
         $advertisement->payload      = $request->payload ? strip_tags($request->payload) : null;
@@ -124,10 +129,6 @@ class AdminAdvertisementController extends Controller
         }
 
         if ($request->hasFile('images')) {
-            if ($advertisement->images()->count() + count($request->file('images')) > 10) {
-                return back()->withErrors(['images' => 'Ne možete dodati više od 10 slika u galeriju.']);
-            }
-
             $nextOrder = $advertisement->images()->max('order') + 1;
             foreach ($request->file('images') as $i => $file) {
                 $advertisement->images()->create([

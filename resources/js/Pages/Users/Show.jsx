@@ -146,11 +146,13 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                     {avgRating !== null && (
                                         <>
                                             <span className="text-gray-300">·</span>
-                                            <div className="flex items-center gap-1.5">
-                                                <StarRating value={Math.round(avgRating)} readOnly />
-                                                <span className="text-sm font-semibold text-gray-700">{avgRating}</span>
+                                            <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-1.5">
+                                                <div className="flex items-center gap-1.5">
+                                                    <StarRating value={Math.round(avgRating)} readOnly />
+                                                    <span className="text-sm font-semibold text-gray-700">{avgRating}</span>
+                                                </div>
                                                 <span className="text-sm text-gray-400">
-                                                    ({reviewsTotal} {reviewsTotal === 1 ? 'recenzija' : 'recenzije'})
+                                                    ({reviewsTotal} {reviewsTotal === 2 ? 'recenzije' : 'recenzija'})
                                                 </span>
                                             </div>
                                         </>

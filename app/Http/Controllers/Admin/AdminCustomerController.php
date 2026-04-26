@@ -71,6 +71,8 @@ class AdminCustomerController extends Controller
             'phone'    => ['nullable', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
         ]);
 
+        abort_if($validated['role'] === 'admin' && !auth()->user()->isSuperAdmin(), 403);
+
         User::create([
             'name'     => $validated['name'],
             'email'    => $validated['email'],

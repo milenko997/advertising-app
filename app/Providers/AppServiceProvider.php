@@ -18,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        abort_if(app()->isProduction() && config('app.debug'), 500, 'APP_DEBUG must be false in production.');
+
         Password::defaults(fn () => Password::min(10)->mixedCase()->numbers()->uncompromised());
 
         RateLimiter::for('api', fn (Request $r) =>
@@ -34,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('feedback',       fn (Request $r) => Limit::perHour(10)->by($r->ip()));
         RateLimiter::for('login',          fn (Request $r) => Limit::perMinute(10)->by($r->ip()));
         RateLimiter::for('password-reset', fn (Request $r) => Limit::perMinute(5)->by($r->ip()));
-        RateLimiter::for('report',         fn (Request $r) => Limit::perMinute(5)->by($r->user()?->id ?? $r->ip()));
+        RateLimiter::for('report',         fn (Request $r) => Limit::perHour(5)->by($r->user()?->id ?? $r->ip()));
         RateLimiter::for('review',         fn (Request $r) => Limit::perMinute(10)->by($r->user()?->id ?? $r->ip()));
     }
 }

@@ -69,22 +69,22 @@ class HandleInertiaRequests extends Middleware
             'categories' => Cache::remember('nav_categories', 300, fn () => Category::with(['children' => function ($q) {
                     $q->whereHas('advertisements', fn ($q) => $q->active());
                 }])
+                ->withExists(['advertisements as has_active_ads' => fn ($q) => $q->active()])
                 ->whereNull('parent_id')
                 ->orderBy('name')
                 ->get()
                 ->map(fn ($c) => [
-                    'id'       => $c->id,
-                    'name'     => $c->name,
-                    'slug'     => $c->slug,
-                    'children' => $c->children->map(fn ($ch) => [
+                    'id'            => $c->id,
+                    'name'          => $c->name,
+                    'slug'          => $c->slug,
+                    'has_active_ads' => $c->has_active_ads,
+                    'children'      => $c->children->map(fn ($ch) => [
                         'id'   => $ch->id,
                         'name' => $ch->name,
                         'slug' => $ch->slug,
                     ])->values(),
                 ])
-                ->filter(fn ($c) => $c['children']->isNotEmpty() ||
-                    \App\Models\Advertisement::where('category_id', $c['id'])->active()->exists()
-                )
+                ->filter(fn ($c) => $c['children']->isNotEmpty() || $c['has_active_ads'])
                 ->values()),
         ]);
     }

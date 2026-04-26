@@ -19,17 +19,22 @@ export default function CustomersCreate() {
     };
 
     return (
-        <AppLayout header={
-            <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">Novi korisnik</h2>
-                <Link href="/admin/korisnici" className="text-sm text-gray-500 hover:text-gray-700">
-                    ← Nazad
-                </Link>
-            </div>
-        }>
+        <AppLayout>
             <Head title="Novi korisnik — Admin" />
             <div id="page-admin-create-customer" className="py-8">
                 <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    {/* Page header */}
+                    <div className="flex items-center justify-between mb-6">
+                        <div>
+                            <h1 className="text-xl font-bold text-gray-900">Novi korisnik</h1>
+                            <p className="text-sm text-gray-500 mt-0.5">Kreirajte novi korisnički nalog</p>
+                        </div>
+                        <Link href="/admin/korisnici" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+                            ← Nazad
+                        </Link>
+                    </div>
+
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                         <form onSubmit={submit} className="space-y-5">
 

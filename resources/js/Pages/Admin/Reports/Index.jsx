@@ -40,7 +40,7 @@ function ReportRow({ report, onToggleResolve, onDestroy }) {
                 )}
             </td>
             <td className="px-4 py-3 text-sm text-gray-600">
-                {report.reporter?.name ?? '—'}
+                {report.reporter?.name ?? 'Anonimni korisnik'}
             </td>
             <td className="px-4 py-3 text-sm text-gray-400 whitespace-nowrap">
                 {report.created_at}
@@ -179,7 +179,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                         ) : (
                                             <span className="text-sm text-gray-400 italic">Oglas obrisan</span>
                                         )}
-                                        <p className="text-xs text-gray-500 mt-0.5">Prijavio: {r.reporter?.name ?? '—'}</p>
+                                        <p className="text-xs text-gray-500 mt-0.5">Prijavio: {r.reporter?.name ?? 'Anonimni korisnik'}</p>
                                     </div>
                                     <div className="flex gap-2">
                                         <button
@@ -243,7 +243,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                             ) : (
                                                 <span className="text-sm text-gray-400 italic">Oglas obrisan</span>
                                             )}
-                                            <p className="text-xs text-gray-500 mt-0.5">Prijavio: {r.reporter?.name ?? '—'}</p>
+                                            <p className="text-xs text-gray-500 mt-0.5">Prijavio: {r.reporter?.name ?? 'Anonimni korisnik'}</p>
                                         </div>
                                         <div className="flex gap-2">
                                             <button

@@ -14,7 +14,7 @@ export default function VerifyEmail({ status }) {
     return (
         <GuestLayout>
             <Head>
-                <title>Verify Your Email — AdBoard</title>
+                <title>Verifikacija emaila — Transporteri</title>
             </Head>
 
             {/* Icon */}

@@ -17,7 +17,7 @@ class IsCustomer
     public function handle(Request $request, Closure $next)
     {
         if (!auth()->check()) {
-            abort(403);
+            return redirect()->route('login');
         }
 
         $user = auth()->user();

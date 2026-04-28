@@ -236,7 +236,7 @@ export default function Navigation() {
                     <div id="navbar-right" className="hidden lg:flex items-center gap-3">
                         {!user?.isAdmin && (
                             <Link
-                                href="/postavi-oglas"
+                                href={user ? "/postavi-oglas" : "/login"}
                                 className="inline-flex items-center gap-1.5 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm"
                             >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -378,7 +378,7 @@ export default function Navigation() {
                     {/* Mobile: Postavi oglas button */}
                     {!user?.isAdmin && (
                         <Link
-                            href="/postavi-oglas"
+                            href={user ? "/postavi-oglas" : "/login"}
                             className="lg:hidden flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-3 py-2.5 rounded-lg transition-colors min-h-[44px]"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -414,7 +414,7 @@ export default function Navigation() {
                 <div id="navbar-mobile-menu" className="lg:hidden border-t border-neutral-800 bg-black">
                     <div className="px-4 py-3 space-y-0.5">
                         {!user?.isAdmin && (
-                            <MobileNavLink href="/postavi-oglas">Postavi oglas</MobileNavLink>
+                            <MobileNavLink href={user ? "/postavi-oglas" : "/login"}>Postavi oglas</MobileNavLink>
                         )}
                         <MobileNavLink href="/">Oglasi</MobileNavLink>
                         {user && user.isAdmin && (

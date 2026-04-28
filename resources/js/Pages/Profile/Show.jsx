@@ -36,6 +36,13 @@ export default function ProfileShow({ user }) {
         setPreviewUrl(null);
     };
 
+    const handleName = (e) => {
+        const cleaned = e.target.value
+            .replace(/[^a-zA-ZđĐšŠčČćĆžŽ \-']/g, '')
+            .slice(0, 50);
+        setData('name', cleaned);
+    };
+
     const handlePhone = (e) => {
         setData('phone', e.target.value.replace(/[^\d+\s\-().]/g, ''));
     };
@@ -119,8 +126,10 @@ export default function ProfileShow({ user }) {
                                     <input
                                         type="text"
                                         value={data.name}
-                                        onChange={e => setData('name', e.target.value)}
+                                        onChange={handleName}
                                         required
+                                        minLength={2}
+                                        maxLength={50}
                                         className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                                     />
                                     {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}

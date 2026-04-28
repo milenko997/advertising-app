@@ -18,17 +18,17 @@ export default function Privacy() {
     return (
         <AppLayout>
             <Head>
-                <title>Politika privatnosti — AdBoard</title>
-                <meta name="description" content="Saznajte kako AdBoard prikuplja, koristi i štiti vaše lične podatke u skladu sa srpskim zakonom o zaštiti podataka." />
+                <title>Politika privatnosti — Transporteri</title>
+                <meta name="description" content="Saznajte kako Transporteri prikuplja, koristi i štiti vaše lične podatke u skladu sa srpskim zakonom o zaštiti podataka." />
                 <meta property="og:type"        content="website" />
-                <meta property="og:site_name"   content="AdBoard" />
-                <meta property="og:title"       content="Politika privatnosti — AdBoard" />
-                <meta property="og:description" content="Saznajte kako AdBoard prikuplja, koristi i štiti vaše lične podatke u skladu sa srpskim zakonom o zaštiti podataka." />
+                <meta property="og:site_name"   content="Transporteri" />
+                <meta property="og:title"       content="Politika privatnosti — Transporteri" />
+                <meta property="og:description" content="Saznajte kako Transporteri prikuplja, koristi i štiti vaše lične podatke u skladu sa srpskim zakonom o zaštiti podataka." />
                 <meta property="og:image"       content={`${appUrl}/og-default.png`} />
                 <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
-                <meta name="twitter:title"       content="Politika privatnosti — AdBoard" />
-                <meta name="twitter:description" content="Saznajte kako AdBoard prikuplja, koristi i štiti vaše lične podatke u skladu sa srpskim zakonom o zaštiti podataka." />
+                <meta name="twitter:title"       content="Politika privatnosti — Transporteri" />
+                <meta name="twitter:description" content="Saznajte kako Transporteri prikuplja, koristi i štiti vaše lične podatke u skladu sa srpskim zakonom o zaštiti podataka." />
                 <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 
@@ -52,12 +52,12 @@ export default function Privacy() {
                     <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-slate-100 dark:border-neutral-700 shadow-sm px-8 py-10">
 
                         <p className="text-sm text-slate-500 dark:text-neutral-400 leading-relaxed mb-10">
-                            U <strong className="text-slate-700 dark:text-neutral-200">AdBoard</strong>-u, vaša privatnost nam je važna. Ova Politika privatnosti objašnjava koje lične podatke prikupljamo, kako ih koristimo i koja prava imate u pogledu vaših podataka. Korišćenjem AdBoard-a, pristajete na prakse opisane u ovoj politici.
+                            U <strong className="text-slate-700 dark:text-neutral-200">Transporteri</strong>-u, vaša privatnost nam je važna. Ova Politika privatnosti objašnjava koje lične podatke prikupljamo, kako ih koristimo i koja prava imate u pogledu vaših podataka. Korišćenjem Transportera, pristajete na prakse opisane u ovoj politici.
                         </p>
 
                         <Section title="1. Ko smo mi">
                             <p>
-                                AdBoard je online marketplace za profesionalce iz oblasti transporta i teretnih usluga sa sedištem u Beogradu, Srbija. Za sva pitanja u vezi sa privatnošću, možete nas kontaktirati na <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a>.
+                                Transporteri je online marketplace za profesionalce iz oblasti transporta i teretnih usluga sa sedištem u Beogradu, Srbija. Za sva pitanja u vezi sa privatnošću, možete nas kontaktirati na <a href="mailto:info@transporteri.rs" className="text-orange-500 hover:underline">info@transporteri.rs</a>.
                             </p>
                         </Section>
 
@@ -107,7 +107,7 @@ export default function Privacy() {
                         <Section title="3. Kako koristimo vaše podatke">
                             <p>Koristimo prikupljene podatke da bismo:</p>
                             <ul className="list-disc list-inside space-y-1.5 pl-2">
-                                <li>Upravljali i održavali AdBoard platformu.</li>
+                                <li>Upravljali i održavali Transporteri platformu.</li>
                                 <li>Kreirali i upravljali vašim nalogom.</li>
                                 <li>Objavljivali i prikazivali vaše oglase drugim korisnicima.</li>
                                 <li>Obrađivali prijave i moderirali sadržaj.</li>
@@ -121,7 +121,7 @@ export default function Privacy() {
                         </Section>
 
                         <Section title="4. Šta je javno vidljivo">
-                            <p>Sledeće informacije su javno vidljive svim posetiocima AdBoard-a:</p>
+                            <p>Sledeće informacije su javno vidljive svim posetiocima Transportera:</p>
                             <ul className="list-disc list-inside space-y-1.5 pl-2">
                                 <li>Vaše prikazno ime i avatar (ako je postavljeno).</li>
                                 <li>Vaši objavljeni oglasi (naslov, opis, slike, lokacija, cena, kontakt telefon).</li>
@@ -134,10 +134,10 @@ export default function Privacy() {
 
                         <Section title="5. Kolačići">
                             <p>
-                                AdBoard koristi kolačiće da vas drži prijavljenim (kolačić sesije) i da zaštiti forme od falsifikovanja međustraničnih zahteva (CSRF kolačić). Ovo su neophodni kolačići potrebni za funkcionisanje platforme — ne koriste se kolačići za praćenje niti za oglašavanje.
+                                Transporteri koristi kolačiće da vas drži prijavljenim (kolačić sesije) i da zaštiti forme od falsifikovanja međustraničnih zahteva (CSRF kolačić). Ovo su neophodni kolačići potrebni za funkcionisanje platforme — ne koriste se kolačići za praćenje niti za oglašavanje.
                             </p>
                             <p>
-                                Možete onemogućiti kolačiće u podešavanjima pretraživača, ali to će vas sprečiti da se prijavite ili koristite većinu funkcija AdBoard-a.
+                                Možete onemogućiti kolačiće u podešavanjima pretraživača, ali to će vas sprečiti da se prijavite ili koristite većinu funkcija Transportera.
                             </p>
                         </Section>
 
@@ -177,13 +177,13 @@ export default function Privacy() {
                                 <li><strong className="text-slate-700 dark:text-neutral-200">Prigovor</strong> — uložite prigovor na određene aktivnosti obrade.</li>
                             </ul>
                             <p>
-                                Da biste ostvarili bilo koje od ovih prava, pišite nam na <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a>. Odgovorićemo u roku od 30 dana.
+                                Da biste ostvarili bilo koje od ovih prava, pišite nam na <a href="mailto:info@transporteri.rs" className="text-orange-500 hover:underline">info@transporteri.rs</a>. Odgovorićemo u roku od 30 dana.
                             </p>
                         </Section>
 
                         <Section title="9. Usluge trećih strana">
                             <p>
-                                AdBoard ne deli vaše podatke sa analitičkim, reklamnim ili uslugama praćenja trećih strana. Platforma je samostalno hostovana i ne učitava eksterne skripte od Google-a, Facebook-a ili sličnih provajdera.
+                                Transporteri ne deli vaše podatke sa analitičkim, reklamnim ili uslugama praćenja trećih strana. Platforma je samostalno hostovana i ne učitava eksterne skripte od Google-a, Facebook-a ili sličnih provajdera.
                             </p>
                         </Section>
 
@@ -194,7 +194,7 @@ export default function Privacy() {
                         </Section>
 
                         <div className="mt-10 pt-8 border-t border-slate-100 dark:border-neutral-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-neutral-400 dark:text-neutral-500">
-                            <span>Pitanja? <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a></span>
+                            <span>Pitanja? <a href="mailto:info@transporteri.rs" className="text-orange-500 hover:underline">info@transporteri.rs</a></span>
                             <div className="flex items-center gap-4">
                                 <Link href="/uslovi-koriscenja" className="hover:text-slate-600 transition-colors">Uslovi korišćenja</Link>
                                 <Link href="/cesta-pitanja" className="hover:text-slate-600 transition-colors">Česta pitanja</Link>

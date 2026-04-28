@@ -46,16 +46,16 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
     return (
         <AppLayout>
             <Head title="Oglasi za transport i logistiku u Srbiji">
-                <meta name="description" content="Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite sopstveni oglas na AdBoard-u." />
+                <meta name="description" content="Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite sopstveni oglas na Transporterima." />
                 <meta property="og:type"        content="website" />
-                <meta property="og:site_name"   content="AdBoard" />
-                <meta property="og:title"       content="AdBoard — Oglasi za transport i logistiku u Srbiji" />
-                <meta property="og:description" content="Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite sopstveni oglas na AdBoard-u." />
+                <meta property="og:site_name"   content="Transporteri" />
+                <meta property="og:title"       content="Transporteri — Oglasi za transport i logistiku u Srbiji" />
+                <meta property="og:description" content="Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite sopstveni oglas na Transporterima." />
                 <meta property="og:image"       content={`${appUrl}/og-default.png`} />
                 <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
-                <meta name="twitter:title"       content="AdBoard — Oglasi za transport i logistiku u Srbiji" />
-                <meta name="twitter:description" content="Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite sopstveni oglas na AdBoard-u." />
+                <meta name="twitter:title"       content="Transporteri — Oglasi za transport i logistiku u Srbiji" />
+                <meta name="twitter:description" content="Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite sopstveni oglas na Transporterima." />
                 <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 

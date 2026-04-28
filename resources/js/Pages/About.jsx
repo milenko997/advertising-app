@@ -2,7 +2,7 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
 export default function About() {
-    const { url, props: { appUrl } } = usePage();
+    const { url, props: { appUrl, auth } } = usePage();
     return (
         <AppLayout>
             <Head>
@@ -139,7 +139,7 @@ export default function About() {
                 </section>
 
                 {/* CTA */}
-                <section id="section-about-cta" className="bg-orange-600 rounded-2xl p-10 text-center">
+                {!auth?.user && <section id="section-about-cta" className="bg-orange-600 rounded-2xl p-10 text-center">
                     <h2 className="text-2xl font-bold text-white mb-3">Pridružite se AdBoard zajednici</h2>
                     <p className="text-orange-200 mb-7 max-w-xl mx-auto">
                         Registracija je besplatna. Postavite oglas danas i dosegnite klijente širom Srbije.
@@ -158,7 +158,7 @@ export default function About() {
                             Kontaktirajte nas
                         </Link>
                     </div>
-                </section>
+                </section>}
 
             </div>
         </AppLayout>

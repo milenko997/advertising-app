@@ -8,8 +8,8 @@ function InfoCard({ icon, label, value, href }) {
                 {icon}
             </span>
             <div>
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-0.5">{label}</p>
-                <p className="text-sm font-medium text-slate-800">{value}</p>
+                <p className="text-xs font-semibold text-slate-500 dark:text-neutral-400 uppercase tracking-wider mb-0.5">{label}</p>
+                <p className="text-sm font-medium text-slate-800 dark:text-neutral-200">{value}</p>
             </div>
         </div>
     );
@@ -74,7 +74,7 @@ export default function Contact() {
 
                         {/* Left: Info */}
                         <div id="section-contact-info" className="lg:col-span-2 space-y-4">
-                            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-6">
+                            <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-slate-100 dark:border-neutral-700 shadow-sm p-6 space-y-6">
                                 <InfoCard
                                     label="Email"
                                     value="info@adboard.rs"
@@ -126,7 +126,7 @@ export default function Contact() {
 
                         {/* Right: Form */}
                         <div id="section-contact-form" className="lg:col-span-3">
-                            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-8">
+                            <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-slate-100 dark:border-neutral-700 shadow-sm p-8">
 
                                 {wasSuccessful ? (
                                     <div className="text-center py-10">
@@ -135,15 +135,15 @@ export default function Contact() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                             </svg>
                                         </span>
-                                        <h3 className="text-lg font-bold text-slate-900 mb-2">Poruka poslata!</h3>
-                                        <p className="text-sm text-slate-500">Hvala vam što ste nas kontaktirali. Odgovorićemo vam u roku od 1 radnog dana.</p>
+                                        <h3 className="text-lg font-bold text-slate-900 dark:text-neutral-100 mb-2">Poruka poslata!</h3>
+                                        <p className="text-sm text-slate-500 dark:text-neutral-400">Hvala vam što ste nas kontaktirali. Odgovorićemo vam u roku od 1 radnog dana.</p>
                                     </div>
                                 ) : (
                                     <form onSubmit={submit} className="space-y-5">
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                             {/* Name */}
                                             <div>
-                                                <label htmlFor="contact-name" className="block text-xs font-semibold text-slate-600 mb-1.5">
+                                                <label htmlFor="contact-name" className="block text-xs font-semibold text-slate-600 dark:text-neutral-300 mb-1.5">
                                                     Ime i prezime <span className="text-red-400">*</span>
                                                 </label>
                                                 <input
@@ -152,8 +152,8 @@ export default function Contact() {
                                                     value={data.name}
                                                     onChange={e => setData('name', e.target.value)}
                                                     placeholder="Vaše ime"
-                                                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
-                                                        errors.name ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
+                                                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 dark:bg-neutral-700 dark:text-neutral-100 focus:bg-white dark:focus:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
+                                                        errors.name ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 dark:border-neutral-600 focus:border-orange-400'
                                                     }`}
                                                 />
                                                 {errors.name && <p className="mt-1.5 text-xs text-red-500">{errors.name}</p>}
@@ -161,7 +161,7 @@ export default function Contact() {
 
                                             {/* Email */}
                                             <div>
-                                                <label htmlFor="contact-email" className="block text-xs font-semibold text-slate-600 mb-1.5">
+                                                <label htmlFor="contact-email" className="block text-xs font-semibold text-slate-600 dark:text-neutral-300 mb-1.5">
                                                     Email adresa <span className="text-red-400">*</span>
                                                 </label>
                                                 <input
@@ -170,8 +170,8 @@ export default function Contact() {
                                                     value={data.email}
                                                     onChange={e => setData('email', e.target.value)}
                                                     placeholder="vas@primer.com"
-                                                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
-                                                        errors.email ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
+                                                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 dark:bg-neutral-700 dark:text-neutral-100 focus:bg-white dark:focus:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
+                                                        errors.email ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 dark:border-neutral-600 focus:border-orange-400'
                                                     }`}
                                                 />
                                                 {errors.email && <p className="mt-1.5 text-xs text-red-500">{errors.email}</p>}
@@ -180,7 +180,7 @@ export default function Contact() {
 
                                         {/* Subject */}
                                         <div>
-                                            <label htmlFor="contact-subject" className="block text-xs font-semibold text-slate-600 mb-1.5">
+                                            <label htmlFor="contact-subject" className="block text-xs font-semibold text-slate-600 dark:text-neutral-300 mb-1.5">
                                                 Predmet <span className="text-red-400">*</span>
                                             </label>
                                             <input
@@ -189,7 +189,7 @@ export default function Contact() {
                                                 value={data.subject}
                                                 onChange={e => setData('subject', e.target.value)}
                                                 placeholder="O čemu je vaša poruka?"
-                                                className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
+                                                className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 dark:bg-neutral-700 dark:text-neutral-100 focus:bg-white dark:focus:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
                                                     errors.subject ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
                                                 }`}
                                             />
@@ -198,7 +198,7 @@ export default function Contact() {
 
                                         {/* Message */}
                                         <div>
-                                            <label htmlFor="contact-message" className="block text-xs font-semibold text-slate-600 mb-1.5">
+                                            <label htmlFor="contact-message" className="block text-xs font-semibold text-slate-600 dark:text-neutral-300 mb-1.5">
                                                 Poruka <span className="text-red-400">*</span>
                                             </label>
                                             <textarea

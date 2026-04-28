@@ -56,8 +56,8 @@ export default function CategoriesIndex({ categories: initialCategories, search:
                     {/* Page header */}
                     <div className="flex flex-wrap items-start justify-between gap-3 mb-6">
                         <div>
-                            <h1 className="text-xl font-bold text-gray-900">Kategorije</h1>
-                            <p className="text-sm text-gray-500 mt-0.5">Sve kategorije oglasa</p>
+                            <h1 className="text-xl font-bold text-gray-900 dark:text-neutral-100">Kategorije</h1>
+                            <p className="text-sm text-gray-500 dark:text-neutral-400 mt-0.5">Sve kategorije oglasa</p>
                         </div>
                         <Link
                             href="/admin/kategorije/create"
@@ -73,39 +73,39 @@ export default function CategoriesIndex({ categories: initialCategories, search:
                             value={search}
                             onChange={handleSearchChange}
                             placeholder="Pretraži kategorije..."
-                            className="w-full sm:w-80 px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                            className="w-full sm:w-80 px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                         />
                     </div>
 
-                    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm overflow-hidden">
                         {/* Desktop table */}
                         <div className="hidden md:block">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
+                        <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                            <thead className="bg-gray-50 dark:bg-neutral-800">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Naziv</th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Slug</th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Nadkategorija</th>
+                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Naziv</th>
+                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Slug</th>
+                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Nadkategorija</th>
                                     <th className="px-6 py-3" />
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-100">
+                            <tbody className="divide-y divide-gray-100 dark:divide-neutral-700">
                                 {categoryList.length === 0 ? (
                                     <tr>
-                                        <td colSpan={4} className="px-6 py-16 text-center text-gray-500">
+                                        <td colSpan={4} className="px-6 py-16 text-center text-gray-500 dark:text-neutral-400">
                                             {search ? 'Nema kategorija koje odgovaraju pretrazi.' : 'Nema kategorija.'}
                                         </td>
                                     </tr>
                                 ) : categoryList.map(cat => (
-                                    <tr key={cat.id} className="hover:bg-gray-50 transition-colors">
-                                        <td className="px-6 py-4 font-medium text-gray-900 text-sm">{cat.name}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-400 font-mono">{cat.slug}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-500">{cat.parent_name ?? '—'}</td>
+                                    <tr key={cat.id} className="hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors">
+                                        <td className="px-6 py-4 font-medium text-gray-900 dark:text-neutral-100 text-sm">{cat.name}</td>
+                                        <td className="px-6 py-4 text-sm text-gray-400 dark:text-neutral-500 font-mono">{cat.slug}</td>
+                                        <td className="px-6 py-4 text-sm text-gray-500 dark:text-neutral-400">{cat.parent_name ?? '—'}</td>
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 <Link
                                                     href={`/admin/kategorije/${cat.slug}/edit`}
-                                                    className="px-3 py-1.5 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                                                    className="px-3 py-1.5 text-sm font-medium border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                                                 >
                                                     Izmeni
                                                 </Link>
@@ -124,22 +124,22 @@ export default function CategoriesIndex({ categories: initialCategories, search:
                         </div>
 
                         {/* Mobile cards */}
-                        <div className="md:hidden divide-y divide-gray-100">
+                        <div className="md:hidden divide-y divide-gray-100 dark:divide-neutral-700">
                             {categoryList.length === 0 ? (
-                                <p className="px-4 py-10 text-center text-sm text-gray-400">
+                                <p className="px-4 py-10 text-center text-sm text-gray-400 dark:text-neutral-500">
                                     {search ? 'Nema kategorija koje odgovaraju pretrazi.' : 'Nema kategorija.'}
                                 </p>
                             ) : categoryList.map(cat => (
                                 <div key={cat.id} className="p-4">
-                                    <p className="font-medium text-gray-900 text-sm">{cat.name}</p>
-                                    <p className="text-xs text-gray-400 font-mono mt-0.5">{cat.slug}</p>
+                                    <p className="font-medium text-gray-900 dark:text-neutral-100 text-sm">{cat.name}</p>
+                                    <p className="text-xs text-gray-400 dark:text-neutral-500 font-mono mt-0.5">{cat.slug}</p>
                                     {cat.parent_name && (
-                                        <p className="text-xs text-gray-500 mt-1">Nadkategorija: <span className="font-medium">{cat.parent_name}</span></p>
+                                        <p className="text-xs text-gray-500 dark:text-neutral-400 mt-1">Nadkategorija: <span className="font-medium">{cat.parent_name}</span></p>
                                     )}
                                     <div className="flex gap-2 mt-3">
                                         <Link
                                             href={`/admin/kategorije/${cat.slug}/edit`}
-                                            className="flex-1 text-center px-3 py-2 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                                            className="flex-1 text-center px-3 py-2 text-sm font-medium border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                                         >
                                             Izmeni
                                         </Link>
@@ -160,7 +160,7 @@ export default function CategoriesIndex({ categories: initialCategories, search:
                             <button
                                 onClick={loadMore}
                                 disabled={loading}
-                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
+                                className="inline-flex items-center gap-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-neutral-700 hover:border-orange-300 transition disabled:opacity-50"
                             >
                                 {loading && (
                                     <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">

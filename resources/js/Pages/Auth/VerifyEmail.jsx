@@ -19,7 +19,7 @@ export default function VerifyEmail({ status }) {
 
             {/* Icon */}
             <div className="flex justify-center mb-6">
-                <span className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center">
+                <span className="w-16 h-16 rounded-full bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center">
                     <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
                             d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -27,13 +27,13 @@ export default function VerifyEmail({ status }) {
                 </span>
             </div>
 
-            <h1 className="text-xl font-bold text-slate-900 text-center mb-2">Proverite inbox</h1>
-            <p className="text-sm text-slate-500 text-center leading-relaxed mb-6">
+            <h1 className="text-xl font-bold text-slate-900 dark:text-neutral-100 text-center mb-2">Proverite inbox</h1>
+            <p className="text-sm text-slate-500 dark:text-neutral-400 text-center leading-relaxed mb-6">
                 Poslali smo link za verifikaciju na vašu email adresu. Kliknite na link da aktivirate nalog.
             </p>
 
             {justSent && (
-                <div className="mb-5 flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-lg px-4 py-3 text-sm">
+                <div className="mb-5 flex items-center gap-2 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 rounded-lg px-4 py-3 text-sm">
                     <svg className="w-4 h-4 shrink-0 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -51,7 +51,7 @@ export default function VerifyEmail({ status }) {
                 </button>
             </form>
 
-            <p className="text-xs text-slate-400 text-center mt-4">
+            <p className="text-xs text-slate-400 dark:text-neutral-500 text-center mt-4">
                 Pogrešan nalog?{' '}
                 <button
                     type="button"

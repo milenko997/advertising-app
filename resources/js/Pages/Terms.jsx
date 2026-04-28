@@ -4,11 +4,11 @@ import AppLayout from '@/Layouts/AppLayout';
 function Section({ title, children }) {
     return (
         <section className="mb-10">
-            <h2 className="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+            <h2 className="text-base font-bold text-slate-900 dark:text-neutral-100 mb-3 flex items-center gap-2">
                 <span className="w-1.5 h-5 rounded-full bg-orange-500 inline-block shrink-0" />
                 {title}
             </h2>
-            <div className="text-sm text-slate-500 leading-relaxed space-y-3">{children}</div>
+            <div className="text-sm text-slate-500 dark:text-neutral-400 leading-relaxed space-y-3">{children}</div>
         </section>
     );
 }
@@ -49,10 +49,10 @@ export default function Terms() {
             {/* Content */}
             <div className="py-14">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm px-8 py-10">
+                    <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-slate-100 dark:border-neutral-700 shadow-sm px-8 py-10">
 
-                        <p className="text-sm text-slate-500 leading-relaxed mb-10">
-                            Dobrodošli na <strong className="text-slate-700">AdBoard</strong>. Pristupanjem ili korišćenjem naše platforme, slažete se da budete vezani ovim Uslovima korišćenja. Molimo vas da ih pažljivo pročitate pre korišćenja usluge. Ukoliko se ne slažete sa ovim uslovima, molimo vas da ne koristite AdBoard.
+                        <p className="text-sm text-slate-500 dark:text-neutral-400 leading-relaxed mb-10">
+                            Dobrodošli na <strong className="text-slate-700 dark:text-neutral-200">AdBoard</strong>. Pristupanjem ili korišćenjem naše platforme, slažete se da budete vezani ovim Uslovima korišćenja. Molimo vas da ih pažljivo pročitate pre korišćenja usluge. Ukoliko se ne slažete sa ovim uslovima, molimo vas da ne koristite AdBoard.
                         </p>
 
                         <Section title="1. Prihvatanje uslova">
@@ -93,7 +93,7 @@ export default function Terms() {
                                 <li>Otpremljene slike su vaše ili imate pravo da ih koristite.</li>
                             </ul>
                             <p>
-                                Oglasi su aktivni <strong className="text-slate-700">60 dana</strong> od datuma postavljanja. Istekli oglasi mogu se obnoviti sa stranice "Moji oglasi".
+                                Oglasi su aktivni <strong className="text-slate-700 dark:text-neutral-200">60 dana</strong> od datuma postavljanja. Istekli oglasi mogu se obnoviti sa stranice "Moji oglasi".
                             </p>
                         </Section>
 
@@ -132,7 +132,7 @@ export default function Terms() {
 
                         <Section title="8. Ograničenje brzine i pravično korišćenje">
                             <p>
-                                Radi održavanja kvaliteta platforme, korisnici su ograničeni na postavljanje <strong className="text-slate-700">5 oglasa po satu</strong>. Automatizovano postavljanje, scraping ili bilo kakvo korišćenje botova je strogo zabranjeno.
+                                Radi održavanja kvaliteta platforme, korisnici su ograničeni na postavljanje <strong className="text-slate-700 dark:text-neutral-200">5 oglasa po satu</strong>. Automatizovano postavljanje, scraping ili bilo kakvo korišćenje botova je strogo zabranjeno.
                             </p>
                         </Section>
 
@@ -151,7 +151,7 @@ export default function Terms() {
                             </p>
                         </Section>
 
-                        <div className="mt-10 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-400">
+                        <div className="mt-10 pt-8 border-t border-slate-100 dark:border-neutral-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-400 dark:text-neutral-500">
                             <span>Pitanja? <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a></span>
                             <div className="flex items-center gap-4">
                                 <Link href="/politika-privatnosti" className="hover:text-slate-600 transition-colors">Politika privatnosti</Link>

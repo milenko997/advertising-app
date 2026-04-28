@@ -29,7 +29,7 @@ export default function ShareButton({ url, title, fullWidth = false }) {
         <div className="relative" ref={ref}>
             <button
                 onClick={() => setOpen(!open)}
-                className={`inline-flex items-center justify-center gap-1.5 px-3 py-2.5 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition ${fullWidth ? 'w-full' : ''}`}
+                className={`inline-flex items-center justify-center gap-1.5 px-3 py-2.5 text-sm text-gray-600 dark:text-neutral-300 border border-gray-300 dark:border-neutral-600 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition ${fullWidth ? 'w-full' : ''}`}
             >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -39,14 +39,14 @@ export default function ShareButton({ url, title, fullWidth = false }) {
             </button>
 
             {open && (
-                <div className="absolute right-0 bottom-10 z-50 w-56 bg-white border border-gray-200 rounded-xl shadow-lg py-2">
-                    <p className="px-4 py-1.5 text-xs font-semibold text-gray-400 uppercase tracking-wide">Podeli oglas</p>
+                <div className="absolute right-0 bottom-10 z-50 w-56 bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-xl shadow-lg py-2">
+                    <p className="px-4 py-1.5 text-xs font-semibold text-gray-400 dark:text-neutral-500 uppercase tracking-wide">Podeli oglas</p>
 
                     <button
                         onClick={copyLink}
-                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition"
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                     >
-                        <span className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
+                        <span className="w-8 h-8 rounded-full bg-gray-100 dark:bg-neutral-700 flex items-center justify-center shrink-0">
                             {copied ? (
                                 <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -61,12 +61,12 @@ export default function ShareButton({ url, title, fullWidth = false }) {
                         {copied ? 'Link kopiran!' : 'Kopiraj link'}
                     </button>
 
-                    <div className="border-t border-gray-100 my-1" />
+                    <div className="border-t border-gray-100 dark:border-neutral-700 my-1" />
 
                     <a
                         href={`https://wa.me/?text=${encodeURIComponent(title + ' – ' + url)}`}
                         target="_blank" rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                     >
                         <span className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center shrink-0">
                             <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 24 24">
@@ -79,7 +79,7 @@ export default function ShareButton({ url, title, fullWidth = false }) {
 
                     <a
                         href={`viber://forward?text=${encodeURIComponent(title + ' – ' + url)}`}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                     >
                         <span className="w-8 h-8 rounded-full bg-purple-50 flex items-center justify-center shrink-0">
                             <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -95,7 +95,7 @@ export default function ShareButton({ url, title, fullWidth = false }) {
                     <a
                         href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`}
                         target="_blank" rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                     >
                         <span className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
                             <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">

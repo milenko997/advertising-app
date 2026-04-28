@@ -124,7 +124,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     {/* User card */}
-                    <div id="section-user-header" className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
+                    <div id="section-user-header" className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-6 mb-8">
                         <div className="flex items-center gap-5">
                             {user.avatar ? (
                                 <img
@@ -138,9 +138,9 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                 </div>
                             )}
                             <div>
-                                <h1 className="text-xl font-bold text-gray-900">{user.name}</h1>
+                                <h1 className="text-xl font-bold text-gray-900 dark:text-neutral-100">{user.name}</h1>
                                 <div className="flex items-center gap-3 mt-1 flex-wrap">
-                                    <p className="text-sm text-gray-500">
+                                    <p className="text-sm text-gray-500 dark:text-neutral-400">
                                         {ads.total} {ads.total === 1 ? 'oglas objavljen' : 'oglasa objavljeno'} 
                                     </p>
                                     {avgRating !== null && (
@@ -149,9 +149,9 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                             <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-1.5">
                                                 <div className="flex items-center gap-1.5">
                                                     <StarRating value={Math.round(avgRating)} readOnly />
-                                                    <span className="text-sm font-semibold text-gray-700">{avgRating}</span>
+                                                    <span className="text-sm font-semibold text-gray-700 dark:text-neutral-300">{avgRating}</span>
                                                 </div>
-                                                <span className="text-sm text-gray-400">
+                                                <span className="text-sm text-gray-400 dark:text-neutral-500">
                                                     ({reviewsTotal} {reviewsTotal === 2 ? 'recenzije' : 'recenzija'})
                                                 </span>
                                             </div>
@@ -165,8 +165,8 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                     {/* ── Ads grid ── */}
                     <div id="section-user-ads"></div>
                     {adList.length === 0 ? (
-                        <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
-                            <p className="text-gray-500">Ovaj korisnik nema aktivnih oglasa.</p>
+                        <div className="text-center py-16 bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700">
+                            <p className="text-gray-500 dark:text-neutral-400">Ovaj korisnik nema aktivnih oglasa.</p>
                         </div>
                     ) : (
                         <>
@@ -181,7 +181,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                     <button
                                         onClick={loadMore}
                                         disabled={loading}
-                                        className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
+                                        className="inline-flex items-center gap-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-neutral-700 hover:border-orange-300 transition disabled:opacity-50"
                                     >
                                         {loading && (
                                             <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">
@@ -197,29 +197,29 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                     )}
 
                     {/* ── Reviews section ── */}
-                    <div id="recenzije" className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mt-8">
+                    <div id="recenzije" className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-6 mt-8">
                             <div className="flex items-center justify-between mb-4">
-                                <h2 className="text-base font-bold text-gray-900">
+                                <h2 className="text-base font-bold text-gray-900 dark:text-neutral-100">
                                     Recenzije
                                     {reviewsTotal > 0 && (
-                                        <span className="ml-2 text-sm font-normal text-gray-400">({reviewsTotal})</span>
+                                        <span className="ml-2 text-sm font-normal text-gray-400 dark:text-neutral-500">({reviewsTotal})</span>
                                     )}
                                 </h2>
                                 {avgRating !== null && (
                                     <div className="flex items-center gap-2">
                                         <StarRating value={Math.round(avgRating)} readOnly />
-                                        <span className="text-sm font-bold text-gray-700">{avgRating}</span>
+                                        <span className="text-sm font-bold text-gray-700 dark:text-neutral-300">{avgRating}</span>
                                     </div>
                                 )}
                             </div>
 
                             {flash?.success && (
-                                <div className="mb-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg px-4 py-3 text-sm">
+                                <div className="mb-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 rounded-lg px-4 py-3 text-sm">
                                     {flash.success}
                                 </div>
                             )}
                             {flash?.error && (
-                                <div className="mb-4 bg-red-50 border border-red-200 text-red-800 rounded-lg px-4 py-3 text-sm">
+                                <div className="mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-300 rounded-lg px-4 py-3 text-sm">
                                     {flash.error}
                                 </div>
                             )}
@@ -230,7 +230,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                 {!isOwnProfile && (
                                     <div className="space-y-4">
                                         {ownReview && (
-                                            <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+                                            <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-4">
                                                 <div className="flex items-center justify-between mb-2">
                                                     <p className="text-xs font-semibold text-orange-500 uppercase tracking-wide">Vaša recenzija</p>
                                                     {!editingOwn && (
@@ -267,7 +267,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                                             value={ownComment}
                                                             onChange={e => setOwnComment(e.target.value)}
                                                             maxLength={1000}
-                                                            className="w-full border border-orange-200 bg-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
+                                                            className="w-full border border-orange-200 dark:border-orange-800 bg-white dark:bg-neutral-700 dark:text-neutral-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
                                                         />
                                                         <div className="flex items-center gap-2">
                                                             <button
@@ -300,8 +300,8 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                         {!ownReview && canReview && <ReviewForm userSlug={user.slug} />}
 
                                         {!auth?.user && (
-                                            <div className="rounded-xl border border-gray-200 p-5 text-center">
-                                                <p className="text-sm text-gray-500 mb-3">Prijavite se da biste ostavili recenziju</p>
+                                            <div className="rounded-xl border border-gray-200 dark:border-neutral-700 p-5 text-center">
+                                                <p className="text-sm text-gray-500 dark:text-neutral-400 mb-3">Prijavite se da biste ostavili recenziju</p>
                                                 <Link
                                                     href={`/korisnik/${user.slug}/recenzija-prijava`}
                                                     className="inline-flex items-center gap-2 px-4 py-2 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition"
@@ -316,7 +316,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                 {/* Right: reviews list */}
                                 <div className={!isOwnProfile ? 'lg:col-span-2' : ''}>
                                     {reviewsList.length === 0 ? (
-                                        <p className="text-sm text-gray-400 py-2">{isOwnProfile ? 'Još nema recenzija.' : 'Još nema recenzija. Budite prvi!'}</p>
+                                        <p className="text-sm text-gray-400 dark:text-neutral-500 py-2">{isOwnProfile ? 'Još nema recenzija.' : 'Još nema recenzija. Budite prvi!'}</p>
                                     ) : (
                                         <>
                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -332,7 +332,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                                     <button
                                                         onClick={loadMoreReviews}
                                                         disabled={reviewsLoading}
-                                                        className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-5 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
+                                                        className="inline-flex items-center gap-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 px-5 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-neutral-700 hover:border-orange-300 transition disabled:opacity-50"
                                                     >
                                                         {reviewsLoading && (
                                                             <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">

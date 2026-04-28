@@ -50,9 +50,9 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds,
 
                     {/* Page header */}
                     <div className="mb-6">
-                        <h1 className="text-2xl font-bold text-gray-900">Sačuvani oglasi</h1>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100">Sačuvani oglasi</h1>
                         {adList.length > 0 && (
-                            <p className="text-sm text-gray-500 mt-0.5">{ads.total} sačuvan{ads.total === 1 ? '' : 'ih'} oglas{ads.total === 1 ? '' : 'a'}</p>
+                            <p className="text-sm text-gray-500 dark:text-neutral-400 mt-0.5">{ads.total} sačuvan{ads.total === 1 ? '' : 'ih'} oglas{ads.total === 1 ? '' : 'a'}</p>
                         )}
                     </div>
 
@@ -63,22 +63,22 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds,
                             value={search}
                             onChange={handleSearchChange}
                             placeholder="Pretraži sačuvane oglase…"
-                            className="w-full sm:w-80 px-4 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                            className="w-full sm:w-80 px-4 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                         />
                     </div>
 
                     {adList.length === 0 ? (
-                        <div className="text-center py-20 bg-white rounded-xl border border-gray-200">
-                            <svg className="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="text-center py-20 bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700">
+                            <svg className="w-12 h-12 text-gray-300 dark:text-neutral-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                                     d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                             </svg>
                             {search ? (
-                                <p className="text-gray-500 font-medium mb-1">Nema sačuvanih oglasa koji odgovaraju pretrazi.</p>
+                                <p className="text-gray-500 dark:text-neutral-400 font-medium mb-1">Nema sačuvanih oglasa koji odgovaraju pretrazi.</p>
                             ) : (
                                 <>
-                                    <p className="text-gray-500 font-medium mb-1">Nemate sačuvanih oglasa.</p>
-                                    <p className="text-sm text-gray-400 mb-4">Sačuvajte oglase koji vas zanimaju da biste ih lako pronašli.</p>
+                                    <p className="text-gray-500 dark:text-neutral-400 font-medium mb-1">Nemate sačuvanih oglasa.</p>
+                                    <p className="text-sm text-gray-400 dark:text-neutral-500 mb-4">Sačuvajte oglase koji vas zanimaju da biste ih lako pronašli.</p>
                                     <Link href="/" className="inline-flex items-center gap-1.5 px-4 py-2 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition">
                                         Pretraži oglase
                                     </Link>
@@ -98,7 +98,7 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds,
                                     <button
                                         onClick={loadMore}
                                         disabled={loading}
-                                        className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
+                                        className="inline-flex items-center gap-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-neutral-700 hover:border-orange-300 transition disabled:opacity-50"
                                     >
                                         {loading && (
                                             <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">

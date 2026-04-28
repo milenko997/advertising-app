@@ -13,7 +13,7 @@ export default function GuestLayout({ children }) {
                     <span className="text-xl font-bold text-white tracking-tight">AdBoard</span>
                 </Link>
             </div>
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
+            <div className="w-full max-w-md bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl p-8">
                 {children}
             </div>
         </div>

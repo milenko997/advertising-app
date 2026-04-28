@@ -20,7 +20,7 @@ export function StarRating({ value, onChange, readOnly = false }) {
                 >
                     <svg
                         viewBox="0 0 24 24"
-                        className={`w-full h-full transition-colors ${star <= display ? 'text-amber-400' : 'text-gray-200'}`}
+                        className={`w-full h-full transition-colors ${star <= display ? 'text-amber-400' : 'text-gray-200 dark:text-neutral-600'}`}
                         fill="currentColor"
                     >
                         <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
@@ -37,8 +37,8 @@ export function ReviewCard({ review, variant = 'card' }) {
 
     return (
         <div className={isList
-            ? 'flex flex-col gap-3 py-4 border-b border-gray-100 last:border-0'
-            : 'bg-white rounded-xl border border-gray-200 p-5'
+            ? 'flex flex-col gap-3 py-4 border-b border-gray-100 dark:border-neutral-700 last:border-0'
+            : 'bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 p-5'
         }>
             <div className={`flex items-start justify-between ${isList ? 'gap-3' : 'gap-4'}`}>
                 <div className={`flex items-center ${isList ? 'gap-2.5' : 'gap-3'}`}>
@@ -59,20 +59,20 @@ export function ReviewCard({ review, variant = 'card' }) {
                         {review.reviewer.slug ? (
                             <Link
                                 href={`/korisnik/${review.reviewer.slug}`}
-                                className="text-sm font-semibold text-gray-800 hover:text-orange-600 transition-colors"
+                                className="text-sm font-semibold text-gray-800 dark:text-neutral-200 hover:text-orange-600 transition-colors"
                             >
                                 {review.reviewer.name}
                             </Link>
                         ) : (
-                            <span className="text-sm font-semibold text-gray-400">{review.reviewer.name}</span>
+                            <span className="text-sm font-semibold text-gray-400 dark:text-neutral-500">{review.reviewer.name}</span>
                         )}
-                        <p className="text-xs text-gray-400">{review.created_at}</p>
+                        <p className="text-xs text-gray-400 dark:text-neutral-500">{review.created_at}</p>
                     </div>
                 </div>
                 <StarRating value={review.rating} readOnly />
             </div>
             {review.comment && (
-                <p className={`${isList ? '' : 'mt-3'} text-sm text-gray-600 leading-relaxed`}>{review.comment}</p>
+                <p className={`${isList ? '' : 'mt-3'} text-sm text-gray-600 dark:text-neutral-400 leading-relaxed`}>{review.comment}</p>
             )}
         </div>
     );
@@ -101,20 +101,20 @@ export function ReviewForm({ userSlug, variant = 'card' }) {
         <form
             onSubmit={submit}
             className={isMinimal
-                ? 'mt-4 pt-4 border-t border-gray-100'
-                : 'bg-white rounded-xl border border-gray-200 p-5'
+                ? 'mt-4 pt-4 border-t border-gray-100 dark:border-neutral-700'
+                : 'bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 p-5'
             }
         >
             <h4 className={isMinimal
-                ? 'text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3'
-                : 'text-sm font-semibold text-gray-700 mb-4'
+                ? 'text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wide mb-3'
+                : 'text-sm font-semibold text-gray-700 dark:text-neutral-300 mb-4'
             }>
                 Ostavi recenziju
             </h4>
 
             <div className={isMinimal ? 'mb-3' : 'mb-4'}>
                 {!isMinimal && (
-                    <label className="block text-xs font-medium text-gray-500 mb-2">Tvoja ocena</label>
+                    <label className="block text-xs font-medium text-gray-500 dark:text-neutral-400 mb-2">Tvoja ocena</label>
                 )}
                 <StarRating value={rating} onChange={setRating} />
                 {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
@@ -122,8 +122,8 @@ export function ReviewForm({ userSlug, variant = 'card' }) {
 
             <div className={isMinimal ? '' : 'mb-4'}>
                 {!isMinimal && (
-                    <label className="block text-xs font-medium text-gray-500 mb-1.5">
-                        Komentar <span className="text-gray-400">(opciono)</span>
+                    <label className="block text-xs font-medium text-gray-500 dark:text-neutral-400 mb-1.5">
+                        Komentar <span className="text-gray-400 dark:text-neutral-500">(opciono)</span>
                     </label>
                 )}
                 <textarea
@@ -132,10 +132,10 @@ export function ReviewForm({ userSlug, variant = 'card' }) {
                     onChange={e => setComment(e.target.value)}
                     maxLength={1000}
                     placeholder="Podelite vaše iskustvo… (opciono)"
-                    className={`w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none ${isMinimal ? 'mb-3' : ''}`}
+                    className={`w-full border border-gray-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none ${isMinimal ? 'mb-3' : ''}`}
                 />
                 {!isMinimal && (
-                    <p className="text-xs text-gray-400 mt-1 text-right">{comment.length}/1000</p>
+                    <p className="text-xs text-gray-400 dark:text-neutral-500 mt-1 text-right">{comment.length}/1000</p>
                 )}
             </div>
 

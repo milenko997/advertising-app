@@ -40,15 +40,15 @@ export default function About() {
                 {/* Mission */}
                 <section id="section-about-mission" className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">Naša misija</h2>
-                        <p className="text-gray-600 leading-relaxed mb-4">
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-neutral-100 mb-4">Naša misija</h2>
+                        <p className="text-gray-600 dark:text-neutral-400 leading-relaxed mb-4">
                             Transportna industrija u Srbiji dugo je bila rascepkana — vozači, firme i vlasnici tereta oslanjali su se na posrednike, lične kontakte ili zastarele kanale oglašavanja.
                         </p>
-                        <p className="text-gray-600 leading-relaxed">
+                        <p className="text-gray-600 dark:text-neutral-400 leading-relaxed">
                             AdBoard je nastao s ciljem da to promeni. Pružamo centralnu tačku gde profesionalci iz transporta mogu da se predstave, a korisnici lako pronađu pravo vozilo ili uslugu — bez posrednika i bez komplikacija.
                         </p>
                     </div>
-                    <div className="bg-orange-50 rounded-2xl p-8 flex items-center justify-center">
+                    <div className="bg-orange-50 dark:bg-orange-900/20 rounded-2xl p-8 flex items-center justify-center">
                         <svg className="w-24 h-24 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.2}
                                 d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
@@ -57,8 +57,8 @@ export default function About() {
                 </section>
 
                 {/* Stats */}
-                <section id="section-about-stats" className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">AdBoard u brojevima</h2>
+                <section id="section-about-stats" className="bg-white dark:bg-neutral-800 rounded-2xl border border-gray-200 dark:border-neutral-700 shadow-sm p-8">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-neutral-100 mb-8 text-center">AdBoard u brojevima</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
                         {[
                             { value: '60+',    label: 'Kategorija vozila' },
@@ -68,7 +68,7 @@ export default function About() {
                         ].map(stat => (
                             <div key={stat.label} className="text-center">
                                 <p className="text-3xl font-bold text-orange-600 mb-1">{stat.value}</p>
-                                <p className="text-sm text-gray-500">{stat.label}</p>
+                                <p className="text-sm text-gray-500 dark:text-neutral-400">{stat.label}</p>
                             </div>
                         ))}
                     </div>
@@ -76,7 +76,7 @@ export default function About() {
 
                 {/* Values */}
                 <section id="section-about-values">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Naše vrednosti</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-neutral-100 mb-8 text-center">Naše vrednosti</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                         {[
                             {
@@ -104,14 +104,14 @@ export default function About() {
                                 desc: 'Izgrađujemo zajednicu profesionalaca koji međusobno sarađuju i grade bolje poslove.',
                             },
                         ].map(item => (
-                            <div key={item.title} className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-                                <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center mb-4">
+                            <div key={item.title} className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 p-6 shadow-sm">
+                                <div className="w-10 h-10 bg-orange-50 dark:bg-orange-900/20 rounded-lg flex items-center justify-center mb-4">
                                     <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         {item.icon}
                                     </svg>
                                 </div>
-                                <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
-                                <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+                                <h3 className="font-semibold text-gray-900 dark:text-neutral-100 mb-2">{item.title}</h3>
+                                <p className="text-sm text-gray-500 dark:text-neutral-400 leading-relaxed">{item.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -119,7 +119,7 @@ export default function About() {
 
                 {/* How it works */}
                 <section id="section-about-how-it-works">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Kako funkcioniše</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-neutral-100 mb-8 text-center">Kako funkcioniše</h2>
                     <div className="space-y-4">
                         {[
                             { step: '01', title: 'Registrujte se besplatno', desc: 'Kreirajte nalog za manje od minut — potrebni su samo ime, email i lozinka.' },
@@ -127,11 +127,11 @@ export default function About() {
                             { step: '03', title: 'Pronađite partnere', desc: 'Korisnici pretražuju oglase po kategoriji i lokaciji i direktno vas kontaktiraju telefonom.' },
                             { step: '04', title: 'Obnovite po potrebi', desc: 'Kada oglas istekne, jednim klikom ga obnavljate na još 60 dana.' },
                         ].map((item, i) => (
-                            <div key={i} className="flex gap-5 bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+                            <div key={i} className="flex gap-5 bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-5">
                                 <span className="text-2xl font-bold text-orange-200 shrink-0 w-10 text-right">{item.step}</span>
                                 <div>
-                                    <h3 className="font-semibold text-gray-900 mb-1">{item.title}</h3>
-                                    <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+                                    <h3 className="font-semibold text-gray-900 dark:text-neutral-100 mb-1">{item.title}</h3>
+                                    <p className="text-sm text-gray-500 dark:text-neutral-400 leading-relaxed">{item.desc}</p>
                                 </div>
                             </div>
                         ))}

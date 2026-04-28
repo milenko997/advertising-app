@@ -52,7 +52,7 @@ export default function ImageUpload({ value, onChange, currentImage, onRemove })
 
     return (
         <div className="mb-5">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Fotografija</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-2">Fotografija</label>
 
             {displayImage ? (
                 <div className="relative inline-block">
@@ -70,13 +70,13 @@ export default function ImageUpload({ value, onChange, currentImage, onRemove })
                 <button
                     type="button"
                     onClick={() => inputRef.current?.click()}
-                    className="w-40 h-32 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center hover:border-orange-400 hover:bg-orange-50 transition"
+                    className="w-40 h-32 border-2 border-dashed border-gray-300 dark:border-neutral-600 rounded-lg flex flex-col items-center justify-center hover:border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition"
                 >
-                    <svg className="w-8 h-8 text-gray-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-8 h-8 text-gray-400 dark:text-neutral-500 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                             d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span className="text-xs text-gray-500">Kliknite za otpremanje</span>
+                    <span className="text-xs text-gray-500 dark:text-neutral-400">Kliknite za otpremanje</span>
                 </button>
             )}
 

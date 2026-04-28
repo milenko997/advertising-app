@@ -48,26 +48,26 @@ export default function CustomersEdit({ customer }) {
                     {/* Page header */}
                     <div className="flex items-center justify-between mb-6">
                         <div>
-                            <h1 className="text-xl font-bold text-gray-900">Izmeni korisnika</h1>
-                            <p className="text-sm text-gray-500 mt-0.5">{customer.name}</p>
+                            <h1 className="text-xl font-bold text-gray-900 dark:text-neutral-100">Izmeni korisnika</h1>
+                            <p className="text-sm text-gray-500 dark:text-neutral-400 mt-0.5">{customer.name}</p>
                         </div>
-                        <Link href="/admin/korisnici" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+                        <Link href="/admin/korisnici" className="text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
                             ← Nazad
                         </Link>
                     </div>
 
-                    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+                    <div className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-6">
                         <form onSubmit={submit} className="space-y-5">
 
                             {/* Avatar */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Profilna slika</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-2">Profilna slika</label>
                                 <div className="flex items-center gap-4">
-                                    <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100 border border-gray-200 flex items-center justify-center shrink-0">
+                                    <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100 dark:bg-neutral-700 border border-gray-200 dark:border-neutral-600 flex items-center justify-center shrink-0">
                                         {preview ? (
                                             <img src={preview} alt="Avatar" className="w-full h-full object-cover" />
                                         ) : (
-                                            <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg className="w-8 h-8 text-gray-300 dark:text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                             </svg>
                                         )}
@@ -76,7 +76,7 @@ export default function CustomersEdit({ customer }) {
                                         <button
                                             type="button"
                                             onClick={() => fileRef.current?.click()}
-                                            className="text-sm px-3 py-1.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition text-gray-700"
+                                            className="text-sm px-3 py-1.5 border border-gray-300 dark:border-neutral-600 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition text-gray-700 dark:text-neutral-300"
                                         >
                                             Odaberi sliku
                                         </button>
@@ -103,39 +103,39 @@ export default function CustomersEdit({ customer }) {
 
                             {/* Name */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Ime</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Ime</label>
                                 <input
                                     type="text"
                                     value={data.name}
                                     onChange={e => setData('name', e.target.value)}
                                     required
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                                 />
                                 {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
                             </div>
 
                             {/* Email */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Email adresa</label>
                                 <input
                                     type="email"
                                     value={data.email}
                                     onChange={e => setData('email', e.target.value)}
                                     required
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                                 />
                                 {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
                             </div>
 
                             {/* Phone */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Telefon</label>
                                 <input
                                     type="text"
                                     value={data.phone}
                                     onChange={e => setData('phone', e.target.value)}
                                     placeholder="+381 60 123 4567"
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                                 />
                                 {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
                             </div>
@@ -143,11 +143,11 @@ export default function CustomersEdit({ customer }) {
                             {/* Role — only super admins can change this */}
                             {isSuperAdmin ? (
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Uloga</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Uloga</label>
                                     <select
                                         value={data.role}
                                         onChange={e => setData('role', e.target.value)}
-                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                                     >
                                         <option value="customer">Korisnik</option>
                                         <option value="admin">Admin</option>
@@ -166,7 +166,7 @@ export default function CustomersEdit({ customer }) {
                                 >
                                     Sačuvaj izmene
                                 </button>
-                                <Link href="/admin/korisnici" className="text-sm text-gray-500 hover:text-gray-700">
+                                <Link href="/admin/korisnici" className="text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-700 dark:hover:text-gray-300">
                                     Otkaži
                                 </Link>
                             </div>

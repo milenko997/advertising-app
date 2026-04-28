@@ -13,14 +13,17 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
     const [loading, setLoading] = useState(false);
     const [locationValue, setLocationValue] = useState(location ?? '');
 
+    const pathname = url.split('?')[0];
+
     const loadMore = async () => {
         if (loading || !hasMore) return;
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const params = new URLSearchParams(window.location.search);
+            const params = new URLSearchParams();
+            if (locationValue) params.set('location', locationValue);
             params.set('page', nextPage);
-            const { data } = await axios.get(`${window.location.pathname}?${params}`);
+            const { data } = await axios.get(`${pathname}?${params}`);
             setAdList(prev => [...prev, ...data.ads]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);
@@ -31,7 +34,7 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
 
     const handleSearch = (e) => {
         e.preventDefault();
-        router.get(window.location.pathname, { location: locationValue }, { preserveState: false });
+        router.get(pathname, { location: locationValue }, { preserveState: false });
     };
 
     return (
@@ -89,7 +92,7 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
                                     {locationValue && (
                                         <button
                                             type="button"
-                                            onClick={() => { setLocationValue(''); router.get(window.location.pathname); }}
+                                            onClick={() => { setLocationValue(''); router.get(pathname); }}
                                             className="shrink-0 flex items-center gap-1 text-xs text-gray-400 dark:text-neutral-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                                         >
                                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

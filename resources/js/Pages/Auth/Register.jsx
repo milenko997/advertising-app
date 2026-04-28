@@ -1,5 +1,6 @@
 import { useForm, Link } from '@inertiajs/react';
 import GuestLayout from '@/Layouts/GuestLayout';
+import PasswordInput from '@/Components/PasswordInput';
 
 export default function Register() {
     const { data, setData, post, processing, errors } = useForm({
@@ -56,26 +57,24 @@ export default function Register() {
 
                 <div>
                     <label htmlFor="register-password" className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Lozinka</label>
-                    <input
+                    <PasswordInput
                         id="register-password"
-                        type="password"
                         value={data.password}
                         onChange={e => setData('password', e.target.value)}
-                        required autoComplete="new-password"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
+                        autoComplete="new-password"
+                        required
                     />
                     {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
                 </div>
 
                 <div>
                     <label htmlFor="register-password-confirmation" className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Potvrda lozinke</label>
-                    <input
+                    <PasswordInput
                         id="register-password-confirmation"
-                        type="password"
                         value={data.password_confirmation}
                         onChange={e => setData('password_confirmation', e.target.value)}
-                        required autoComplete="new-password"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
+                        autoComplete="new-password"
+                        required
                     />
                 </div>
 

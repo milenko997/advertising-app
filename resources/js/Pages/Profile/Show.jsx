@@ -139,14 +139,14 @@ export default function ProfileShow({ user }) {
                             </div>
 
                             <div className="mb-5">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Broj telefona</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Broj telefona</label>
                                 <input
                                     type="tel"
                                     value={data.phone}
                                     onChange={handlePhone}
                                     placeholder="+381 62 123 4567"
                                     maxLength={20}
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                                 />
                                 <p className="mt-1 text-xs text-gray-400 dark:text-neutral-500">Samo cifre, razmaci, +, -, ( )</p>
                                 {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
@@ -174,35 +174,35 @@ export default function ProfileShow({ user }) {
 
                         <form onSubmit={submitPassword} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Trenutna lozinka</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Trenutna lozinka</label>
                                 <input
                                     type="password"
                                     value={pwData.current_password}
                                     onChange={e => setPwData('current_password', e.target.value)}
                                     required autoComplete="current-password"
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100"
                                 />
                                 {pwErrors.current_password && <p className="mt-1 text-xs text-red-600">{pwErrors.current_password}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Nova lozinka</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Nova lozinka</label>
                                 <input
                                     type="password"
                                     value={pwData.password}
                                     onChange={e => setPwData('password', e.target.value)}
                                     required autoComplete="new-password" minLength={8}
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100"
                                 />
                                 {pwErrors.password && <p className="mt-1 text-xs text-red-600">{pwErrors.password}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Potvrda nove lozinke</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Potvrda nove lozinke</label>
                                 <input
                                     type="password"
                                     value={pwData.password_confirmation}
                                     onChange={e => setPwData('password_confirmation', e.target.value)}
                                     required autoComplete="new-password"
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100"
                                 />
                             </div>
                             <button

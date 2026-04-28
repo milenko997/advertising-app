@@ -136,7 +136,7 @@ export default function Navigation() {
     };
 
     return (
-        <nav id="navbar" className="bg-neutral-900 border-b border-neutral-800 sticky top-0 z-50">
+        <nav id="navbar" className="bg-black border-b border-neutral-800 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
 
@@ -411,7 +411,7 @@ export default function Navigation() {
 
             {/* Mobile menu */}
             {open && (
-                <div id="navbar-mobile-menu" className="lg:hidden border-t border-neutral-800 bg-neutral-900">
+                <div id="navbar-mobile-menu" className="lg:hidden border-t border-neutral-800 bg-black">
                     <div className="px-4 py-3 space-y-0.5">
                         {!user?.isAdmin && (
                             <MobileNavLink href="/postavi-oglas">Postavi oglas</MobileNavLink>

@@ -77,12 +77,12 @@ export default function Footer() {
                             {!auth?.user && (
                                 <>
                                     <li>
-                                        <Link href="/register" className="text-sm text-neutral-400 hover:text-white transition-colors">
+                                        <Link href="/registracija" className="text-sm text-neutral-400 hover:text-white transition-colors">
                                             Napravi nalog
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/login" className="text-sm text-neutral-400 hover:text-white transition-colors">
+                                        <Link href="/prijava" className="text-sm text-neutral-400 hover:text-white transition-colors">
                                             Prijavi se
                                         </Link>
                                     </li>

@@ -11,7 +11,7 @@ export default function ResetPassword({ token, email }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post('/reset-password');
+        post('/resetovanje-lozinke');
     };
 
     return (

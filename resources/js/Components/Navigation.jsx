@@ -388,6 +388,11 @@ export default function Navigation() {
                         </Link>
                     )}
 
+                    {/* Mobile theme toggle */}
+                    <div className="lg:hidden">
+                        <ThemeToggle />
+                    </div>
+
                     {/* Mobile hamburger */}
                     <button
                         onClick={() => setOpen(!open)}
@@ -446,9 +451,6 @@ export default function Navigation() {
                                 </MobileNavLink>
                             </>
                         )}
-                        <div className="pt-1">
-                            <ThemeToggle />
-                        </div>
                     </div>
                     {user ? (
                         <div className="px-4 py-3 border-t border-neutral-800">

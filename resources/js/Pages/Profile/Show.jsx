@@ -56,16 +56,16 @@ export default function ProfileShow({ user }) {
             <div id="page-profile" className="py-4 sm:py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
                     <div className="mb-2">
-                        <h1 className="text-2xl font-bold text-gray-900">Moj profil</h1>
-                        <p className="text-sm text-gray-500 mt-0.5">Upravljajte podacima naloga i bezbednosnim podešavanjima.</p>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100">Moj profil</h1>
+                        <p className="text-sm text-gray-500 dark:text-neutral-400 mt-0.5">Upravljajte podacima naloga i bezbednosnim podešavanjima.</p>
                     </div>
 
                     {/* Profile Information */}
-                    <div id="section-profile-info" className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                        <h3 className="text-base font-semibold text-gray-900 mb-5">Podaci profila</h3>
+                    <div id="section-profile-info" className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-6">
+                        <h3 className="text-base font-semibold text-gray-900 dark:text-neutral-100 mb-5">Podaci profila</h3>
 
                         {recentlySuccessful && (
-                            <div className="mb-4 bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 text-sm">
+                            <div className="mb-4 bg-green-50 dark:bg-emerald-900/20 border border-green-200 dark:border-emerald-800 text-green-700 dark:text-emerald-300 rounded-lg px-4 py-3 text-sm">
                                 Profil je uspešno ažuriran.
                             </div>
                         )}
@@ -78,10 +78,10 @@ export default function ProfileShow({ user }) {
                                         <img
                                             src={previewUrl}
                                             alt={user.name}
-                                            className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
+                                            className="w-20 h-20 rounded-full object-cover border-2 border-gray-200 dark:border-neutral-700"
                                         />
                                     ) : (
-                                        <div className="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center border-2 border-gray-200">
+                                        <div className="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center border-2 border-gray-200 dark:border-neutral-700">
                                             <span className="text-3xl font-bold text-orange-600">
                                                 {user.name.charAt(0).toUpperCase()}
                                             </span>
@@ -89,8 +89,8 @@ export default function ProfileShow({ user }) {
                                     )}
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <label className="cursor-pointer inline-flex items-center gap-2 px-3 py-2.5 text-sm font-medium bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition w-fit min-h-[44px]">
-                                        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <label className="cursor-pointer inline-flex items-center gap-2 px-3 py-2.5 text-sm font-medium bg-white dark:bg-neutral-700 border border-gray-300 dark:border-neutral-600 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-600 transition w-fit min-h-[44px] text-gray-700 dark:text-neutral-300">
+                                        <svg className="w-4 h-4 text-gray-500 dark:text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                                         </svg>
                                         Otpremi sliku
@@ -108,31 +108,31 @@ export default function ProfileShow({ user }) {
                                             Ukloni sliku
                                         </button>
                                     )}
-                                    <p className="text-xs text-gray-400">JPEG, PNG, GIF, WEBP — maks. 4 MB</p>
+                                    <p className="text-xs text-gray-400 dark:text-neutral-500">JPEG, PNG, GIF, WEBP — maks. 4 MB</p>
                                     {avatarError && <p className="text-xs text-red-600">{avatarError}</p>}
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Ime i prezime</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Ime i prezime</label>
                                     <input
                                         type="text"
                                         value={data.name}
                                         onChange={e => setData('name', e.target.value)}
                                         required
-                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                                     />
                                     {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Email adresa</label>
                                     <input
                                         type="email"
                                         value={data.email}
                                         onChange={e => setData('email', e.target.value)}
                                         required
-                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                                     />
                                     {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
                                 </div>
@@ -148,7 +148,7 @@ export default function ProfileShow({ user }) {
                                     maxLength={20}
                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
                                 />
-                                <p className="mt-1 text-xs text-gray-400">Samo cifre, razmaci, +, -, ( )</p>
+                                <p className="mt-1 text-xs text-gray-400 dark:text-neutral-500">Samo cifre, razmaci, +, -, ( )</p>
                                 {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
                             </div>
 
@@ -163,11 +163,11 @@ export default function ProfileShow({ user }) {
                     </div>
 
                     {/* Change Password */}
-                    <div id="section-profile-password" className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                        <h3 className="text-base font-semibold text-gray-900 mb-5">Promena lozinke</h3>
+                    <div id="section-profile-password" className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-6">
+                        <h3 className="text-base font-semibold text-gray-900 dark:text-neutral-100 mb-5">Promena lozinke</h3>
 
                         {pwSuccess && (
-                            <div className="mb-4 bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 text-sm">
+                            <div className="mb-4 bg-green-50 dark:bg-emerald-900/20 border border-green-200 dark:border-emerald-800 text-green-700 dark:text-emerald-300 rounded-lg px-4 py-3 text-sm">
                                 Lozinka je uspešno promenjena.
                             </div>
                         )}

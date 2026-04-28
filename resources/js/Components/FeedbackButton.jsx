@@ -65,17 +65,17 @@ export default function FeedbackButton() {
             {/* Popup */}
             {open && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-                <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+                <div className="w-full max-w-lg bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-neutral-700 overflow-hidden">
                     {/* Header */}
-                    <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+                    <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-neutral-700">
                         <div>
-                            <h3 className="text-sm font-semibold text-gray-900">Pošaljite povratnu informaciju</h3>
-                            <p className="text-xs text-gray-400 mt-0.5">Pomozite nam da poboljšamo aplikaciju</p>
+                            <h3 className="text-sm font-semibold text-gray-900 dark:text-neutral-100">Pošaljite povratnu informaciju</h3>
+                            <p className="text-xs text-gray-400 dark:text-neutral-500 mt-0.5">Pomozite nam da poboljšamo aplikaciju</p>
                         </div>
                         <button
                             onClick={close}
                             aria-label="Zatvori"
-                            className="text-gray-400 hover:text-gray-600 transition-colors"
+                            className="text-gray-400 dark:text-neutral-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -91,8 +91,8 @@ export default function FeedbackButton() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <p className="text-sm font-semibold text-gray-900">Hvala!</p>
-                            <p className="text-xs text-gray-500 mt-1">Vaša poruka je primljena.</p>
+                            <p className="text-sm font-semibold text-gray-900 dark:text-neutral-100">Hvala!</p>
+                            <p className="text-xs text-gray-500 dark:text-neutral-400 mt-1">Vaša poruka je primljena.</p>
                         </div>
                     ) : (
                         <form onSubmit={submit} className="px-5 py-4">
@@ -102,7 +102,7 @@ export default function FeedbackButton() {
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
                                     placeholder="Vaša email adresa (opciono)…"
-                                    className="w-full text-sm border border-gray-200 rounded-xl px-3 py-2.5 mb-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-400"
+                                    className="w-full text-sm border border-gray-200 dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 rounded-xl px-3 py-2.5 mb-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-400"
                                 />
                             )}
                             <textarea
@@ -111,13 +111,13 @@ export default function FeedbackButton() {
                                 placeholder="Šta mislite o aplikaciji? Prijavite grešku ili predložite poboljšanje…"
                                 rows={7}
                                 maxLength={1000}
-                                className="w-full text-sm border border-gray-200 rounded-xl px-3 py-2.5 resize-none focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-400"
+                                className="w-full text-sm border border-gray-200 dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 rounded-xl px-3 py-2.5 resize-none focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-400"
                             />
                             {status === 'error' && (
                                 <p className="text-xs text-red-500 mt-1.5">Greška. Pokušajte ponovo.</p>
                             )}
                             <div className="mt-3 flex items-center justify-between">
-                                <span className="text-xs text-gray-400">{message.length}/1000</span>
+                                <span className="text-xs text-gray-400 dark:text-neutral-500">{message.length}/1000</span>
                                 <button
                                     type="submit"
                                     disabled={!message.trim() || message.length > 1000 || status === 'sending'}

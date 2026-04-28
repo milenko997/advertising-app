@@ -12,14 +12,14 @@ function StatCard({ label, value, sub, color = 'indigo', icon }) {
     };
 
     return (
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 sm:p-5 flex items-start gap-3 sm:gap-4">
+        <div className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-4 sm:p-5 flex items-start gap-3 sm:gap-4">
             <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shrink-0 ${colors[color]}`}>
                 {icon}
             </div>
             <div className="min-w-0">
-                <p className="text-xs font-medium text-gray-500 truncate">{label}</p>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight mt-0.5">{value}</p>
-                {sub && <p className="text-xs text-gray-400 mt-0.5 leading-snug">{sub}</p>}
+                <p className="text-xs font-medium text-gray-500 dark:text-neutral-400 truncate">{label}</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-neutral-100 leading-tight mt-0.5">{value}</p>
+                {sub && <p className="text-xs text-gray-400 dark:text-neutral-500 mt-0.5 leading-snug">{sub}</p>}
             </div>
         </div>
     );
@@ -35,10 +35,10 @@ function InboxCard({ label, count, href, color }) {
     return (
         <Link
             href={href}
-            className="flex items-center justify-between bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-3.5 hover:border-gray-300 transition-colors group"
+            className="flex items-center justify-between bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm px-4 py-3.5 hover:border-gray-300 dark:hover:border-gray-600 transition-colors group"
         >
-            <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900">{label}</span>
-            <span className={`inline-flex items-center justify-center min-w-[28px] h-7 px-2 rounded-full text-xs font-bold ${count > 0 ? colors[color] : 'text-gray-400 bg-gray-100'}`}>
+            <span className="text-sm font-medium text-gray-700 dark:text-neutral-300 group-hover:text-gray-900 dark:group-hover:text-gray-100">{label}</span>
+            <span className={`inline-flex items-center justify-center min-w-[28px] h-7 px-2 rounded-full text-xs font-bold ${count > 0 ? colors[color] : 'text-gray-400 dark:text-neutral-500 bg-gray-100 dark:bg-neutral-700'}`}>
                 {count}
             </span>
         </Link>
@@ -81,11 +81,11 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                     {/* Header */}
                     <div className="flex flex-wrap items-start justify-between gap-3">
                         <div>
-                            <h1 className="text-xl font-bold text-gray-900">Statistika</h1>
-                            <p className="text-sm text-gray-500 mt-0.5">Statistike i aktivnost platforme</p>
+                            <h1 className="text-xl font-bold text-gray-900 dark:text-neutral-100">Statistika</h1>
+                            <p className="text-sm text-gray-500 dark:text-neutral-400 mt-0.5">Statistike i aktivnost platforme</p>
                         </div>
                         {totalInbox > 0 && (
-                            <span className="inline-flex items-center gap-1.5 text-sm text-orange-600 font-medium bg-orange-50 px-3 py-1.5 rounded-full border border-orange-200">
+                            <span className="inline-flex items-center gap-1.5 text-sm text-orange-600 font-medium bg-orange-50 dark:bg-orange-900/20 px-3 py-1.5 rounded-full border border-orange-200 dark:border-orange-800">
                                 <span className="w-2 h-2 rounded-full bg-orange-500 inline-block" />
                                 {totalInbox} nepročitano
                             </span>
@@ -135,21 +135,21 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
 
                         {/* Chart */}
-                        <div id="section-dashboard-chart" className="md:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm p-4 sm:p-5">
+                        <div id="section-dashboard-chart" className="md:col-span-2 bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-4 sm:p-5">
                             <div className="flex items-center justify-between mb-4">
-                                <h2 className="text-sm font-semibold text-gray-800">Novi oglasi — poslednjih 30 dana</h2>
-                                <span className="text-xs text-gray-400 shrink-0 ml-2">{chartData.reduce((s, d) => s + d.count, 0)} ukupno</span>
+                                <h2 className="text-sm font-semibold text-gray-800 dark:text-neutral-200">Novi oglasi — poslednjih 30 dana</h2>
+                                <span className="text-xs text-gray-400 dark:text-neutral-500 shrink-0 ml-2">{chartData.reduce((s, d) => s + d.count, 0)} ukupno</span>
                             </div>
                             <MiniBar data={chartData} />
                             <div className="flex justify-between mt-2">
-                                <span className="text-xs text-gray-400">{chartData[0]?.date}</span>
-                                <span className="text-xs text-gray-400">{chartData[chartData.length - 1]?.date}</span>
+                                <span className="text-xs text-gray-400 dark:text-neutral-500">{chartData[0]?.date}</span>
+                                <span className="text-xs text-gray-400 dark:text-neutral-500">{chartData[chartData.length - 1]?.date}</span>
                             </div>
                         </div>
 
                         {/* Inbox */}
                         <div id="section-dashboard-inbox" className="flex flex-col gap-3">
-                            <h2 className="text-sm font-semibold text-gray-800">Primljene poruke</h2>
+                            <h2 className="text-sm font-semibold text-gray-800 dark:text-neutral-200">Primljene poruke</h2>
                             <InboxCard label="Prijave" count={stats.inbox.reports} href="/admin/prijave" color="red" />
                             <InboxCard label="Kontakt poruke" count={stats.inbox.messages} href="/admin/poruke" color="orange" />
                             <InboxCard label="Povratne informacije" count={stats.inbox.feedbacks} href="/admin/utisci" color="indigo" />
@@ -160,11 +160,11 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
 
                         {/* Top categories */}
-                        <div id="section-dashboard-categories" className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 sm:p-5">
-                            <h2 className="text-sm font-semibold text-gray-800 mb-0.5">Kategorije</h2>
-                            <p className="text-xs text-gray-400 mb-4">Aktivni oglasi i pregledi po kategoriji</p>
+                        <div id="section-dashboard-categories" className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-4 sm:p-5">
+                            <h2 className="text-sm font-semibold text-gray-800 dark:text-neutral-200 mb-0.5">Kategorije</h2>
+                            <p className="text-xs text-gray-400 dark:text-neutral-500 mb-4">Aktivni oglasi i pregledi po kategoriji</p>
                             {topCategories.length === 0 ? (
-                                <p className="text-sm text-gray-400">Nema podataka.</p>
+                                <p className="text-sm text-gray-400 dark:text-neutral-500">Nema podataka.</p>
                             ) : (
                                 <div className="space-y-3">
                                     {(() => {
@@ -172,16 +172,16 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                                         return topCategories.map((cat, i) => (
                                             <div key={i}>
                                                 <div className="flex items-center justify-between gap-2 mb-1">
-                                                    <span className="text-xs font-medium text-gray-700 truncate">{cat.name}</span>
+                                                    <span className="text-xs font-medium text-gray-700 dark:text-neutral-300 truncate">{cat.name}</span>
                                                     <div className="flex items-center gap-2 shrink-0">
-                                                        <span className="text-xs text-gray-400 tabular-nums" title="Pregledi">
+                                                        <span className="text-xs text-gray-400 dark:text-neutral-500 tabular-nums" title="Pregledi">
                                                             <svg className="w-3 h-3 inline mr-0.5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                                                             {cat.views.toLocaleString()}
                                                         </span>
-                                                        <span className="text-xs font-semibold text-gray-600 tabular-nums" title="Oglasi">{cat.count}</span>
+                                                        <span className="text-xs font-semibold text-gray-600 dark:text-neutral-400 tabular-nums" title="Oglasi">{cat.count}</span>
                                                     </div>
                                                 </div>
-                                                <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                                <div className="h-1.5 bg-gray-100 dark:bg-neutral-700 rounded-full overflow-hidden">
                                                     <div
                                                         className="h-full bg-orange-400 rounded-full"
                                                         style={{ width: `${(cat.count / maxCount) * 100}%` }}
@@ -195,20 +195,20 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                         </div>
 
                         {/* Recent ads */}
-                        <div id="section-dashboard-recent-ads" className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 sm:p-5">
+                        <div id="section-dashboard-recent-ads" className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-4 sm:p-5">
                             <div className="flex items-center justify-between mb-4">
-                                <h2 className="text-sm font-semibold text-gray-800">Najnoviji oglasi</h2>
+                                <h2 className="text-sm font-semibold text-gray-800 dark:text-neutral-200">Najnoviji oglasi</h2>
                                 <Link href="/admin/oglasi" className="text-xs text-orange-600 hover:text-orange-700">Svi →</Link>
                             </div>
                             {recentAds.length === 0 ? (
-                                <p className="text-sm text-gray-400">Nema oglasa.</p>
+                                <p className="text-sm text-gray-400 dark:text-neutral-500">Nema oglasa.</p>
                             ) : (
-                                <div className="divide-y divide-gray-50">
+                                <div className="divide-y divide-gray-50 dark:divide-neutral-700">
                                     {recentAds.map(ad => (
                                         <div key={ad.id} className="py-2.5 first:pt-0 last:pb-0">
                                             <Link
                                                 href={`/oglas/${ad.slug}`}
-                                                className="text-sm font-medium text-gray-800 hover:text-orange-600 transition-colors line-clamp-1"
+                                                className="text-sm font-medium text-gray-800 dark:text-neutral-200 hover:text-orange-600 transition-colors line-clamp-1"
                                             >
                                                 {ad.is_pinned && (
                                                     <svg className="inline-block mr-1 w-3 h-3 text-orange-500 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -219,12 +219,12 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                                             </Link>
                                             <div className="flex items-center gap-1.5 mt-0.5">
                                                 {ad.user_name && (
-                                                    <Link href={`/korisnik/${ad.user_slug}`} className="text-xs text-gray-400 hover:text-orange-500 transition-colors truncate">
+                                                    <Link href={`/korisnik/${ad.user_slug}`} className="text-xs text-gray-400 dark:text-neutral-500 hover:text-orange-500 transition-colors truncate">
                                                         {ad.user_name}
                                                     </Link>
                                                 )}
-                                                <span className="text-gray-300 shrink-0">·</span>
-                                                <span className="text-xs text-gray-400 shrink-0">{ad.created_at}</span>
+                                                <span className="text-gray-300 dark:text-neutral-600 shrink-0">·</span>
+                                                <span className="text-xs text-gray-400 dark:text-neutral-500 shrink-0">{ad.created_at}</span>
                                             </div>
                                         </div>
                                     ))}
@@ -233,15 +233,15 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                         </div>
 
                         {/* Recent users — spans full width on md (2-col), normal on lg (3-col) */}
-                        <div id="section-dashboard-recent-users" className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 sm:p-5 md:col-span-2 lg:col-span-1">
+                        <div id="section-dashboard-recent-users" className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-4 sm:p-5 md:col-span-2 lg:col-span-1">
                             <div className="flex items-center justify-between mb-4">
-                                <h2 className="text-sm font-semibold text-gray-800">Novi korisnici</h2>
+                                <h2 className="text-sm font-semibold text-gray-800 dark:text-neutral-200">Novi korisnici</h2>
                                 <Link href="/admin/korisnici" className="text-xs text-orange-600 hover:text-orange-700">Svi →</Link>
                             </div>
                             {recentUsers.length === 0 ? (
-                                <p className="text-sm text-gray-400">Nema korisnika.</p>
+                                <p className="text-sm text-gray-400 dark:text-neutral-500">Nema korisnika.</p>
                             ) : (
-                                <div className="divide-y divide-gray-50">
+                                <div className="divide-y divide-gray-50 dark:divide-neutral-700">
                                     {recentUsers.map(u => (
                                         <div key={u.id} className="flex items-center gap-3 py-2.5 first:pt-0 last:pb-0">
                                             {u.avatar ? (
@@ -258,11 +258,11 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                                             <div className="min-w-0 flex-1">
                                                 <Link
                                                     href={`/korisnik/${u.slug}`}
-                                                    className="text-sm font-medium text-gray-800 hover:text-orange-600 transition-colors truncate block"
+                                                    className="text-sm font-medium text-gray-800 dark:text-neutral-200 hover:text-orange-600 transition-colors truncate block"
                                                 >
                                                     {u.name}
                                                 </Link>
-                                                <p className="text-xs text-gray-400">{u.created_at}</p>
+                                                <p className="text-xs text-gray-400 dark:text-neutral-500">{u.created_at}</p>
                                             </div>
                                         </div>
                                     ))}

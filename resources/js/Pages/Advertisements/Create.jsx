@@ -6,12 +6,12 @@ import LocationAutocomplete from '@/Components/LocationAutocomplete';
 import CategoryPicker from '@/Components/CategoryPicker';
 import { getPayloadConfig } from '@/config/categoryFields';
 
-const inputClass = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent';
-const labelClass = 'block text-sm font-medium text-gray-700 mb-1';
+const inputClass = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400';
+const labelClass = 'block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1';
 
 function SectionTitle({ children }) {
     return (
-        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4 mt-6 first:mt-0">
+        <h3 className="text-xs font-semibold text-gray-400 dark:text-neutral-500 uppercase tracking-widest mb-4 mt-6 first:mt-0">
             {children}
         </h3>
     );
@@ -66,20 +66,20 @@ export default function Create({ categories }) {
 
                     {/* Page header */}
                     <div className="mb-6">
-                        <Link href="/moji-oglasi" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-orange-600 transition-colors mb-3">
+                        <Link href="/moji-oglasi" className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-neutral-400 hover:text-orange-600 transition-colors mb-3">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
                             Moji oglasi
                         </Link>
-                        <h1 className="text-2xl font-bold text-gray-900">Postavi oglas</h1>
-                        <p className="text-sm text-gray-500 mt-1">Popunite podatke ispod da biste oglasili vozilo ili transportnu uslugu.</p>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100">Postavi oglas</h1>
+                        <p className="text-sm text-gray-500 dark:text-neutral-400 mt-1">Popunite podatke ispod da biste oglasili vozilo ili transportnu uslugu.</p>
                     </div>
 
-                    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+                    <div className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-6">
 
                         {Object.keys(errors).length > 0 && (
-                            <div className="mb-5 bg-red-50 border border-red-200 rounded-lg p-4">
+                            <div className="mb-5 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
                                 <ul className="text-sm text-red-600 space-y-1 list-disc list-inside">
                                     {Object.values(errors).map((msg, i) => <li key={i}>{msg}</li>)}
                                 </ul>
@@ -94,7 +94,7 @@ export default function Create({ categories }) {
                             <div className="mb-4">
                                 <label className={labelClass}>Naslov <span className="text-red-500">*</span></label>
                                 <input type="text" value={data.title} onChange={e => setData('title', e.target.value)} minLength={5} maxLength={255} className={inputClass} placeholder="npr. Mercedes Actros dostupan za dugopruge" />
-                                <p className="mt-1 text-xs text-gray-400">{data.title.length}/255</p>
+                                <p className="mt-1 text-xs text-gray-400 dark:text-neutral-500">{data.title.length}/255</p>
                                 {errors.title && <p className="mt-1 text-xs text-red-600">{errors.title}</p>}
                             </div>
 
@@ -102,11 +102,11 @@ export default function Create({ categories }) {
                             <div className="mb-4">
                                 <label className={labelClass}>Opis <span className="text-red-500">*</span></label>
                                 <textarea rows={8} value={data.description} onChange={e => setData('description', e.target.value)} minLength={10} maxLength={5000} className={inputClass} placeholder="Opišite vozilo, usluge, dostupnost, itd." />
-                                <p className="mt-1 text-xs text-gray-400">{data.description.length}/5000</p>
+                                <p className="mt-1 text-xs text-gray-400 dark:text-neutral-500">{data.description.length}/5000</p>
                                 {errors.description && <p className="mt-1 text-xs text-red-600">{errors.description}</p>}
                             </div>
 
-                            <div className="border-t border-gray-100 my-6" />
+                            <div className="border-t border-gray-100 dark:border-neutral-700 my-6" />
                             <SectionTitle>Detalji vozila</SectionTitle>
 
                             {/* Availability */}
@@ -142,14 +142,14 @@ export default function Create({ categories }) {
                                 {errors.category_id && <p className="mt-1 text-xs text-red-600">{errors.category_id}</p>}
                             </div>
 
-                            <div className="border-t border-gray-100 my-6" />
+                            <div className="border-t border-gray-100 dark:border-neutral-700 my-6" />
                             <SectionTitle>Cena i kontakt</SectionTitle>
 
                             {/* Price */}
                             <div className="mb-4">
                                 <label className={labelClass}>Cena</label>
                                 <input type="text" value={data.price} onChange={e => setData('price', e.target.value)} placeholder="npr. 0.5 EUR/km, 50 EUR/h" className={inputClass} />
-                                <p className="mt-1 text-xs text-gray-400">Ostavite prazno za prikaz "Cena na upit"</p>
+                                <p className="mt-1 text-xs text-gray-400 dark:text-neutral-500">Ostavite prazno za prikaz "Cena na upit"</p>
                                 {errors.price && <p className="mt-1 text-xs text-red-600">{errors.price}</p>}
                             </div>
 
@@ -158,7 +158,7 @@ export default function Create({ categories }) {
                                 <div>
                                     <label className={labelClass}>Telefon <span className="text-red-500">*</span></label>
                                     <input type="tel" value={data.phone} onChange={handlePhone} maxLength={15} placeholder="+381 62 123 4567" className={inputClass} />
-                                    <p className="mt-1 text-xs text-gray-400">Samo cifre, razmaci, +, -, ( )</p>
+                                    <p className="mt-1 text-xs text-gray-400 dark:text-neutral-500">Samo cifre, razmaci, +, -, ( )</p>
                                     {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
                                 </div>
                                 <div>
@@ -173,7 +173,7 @@ export default function Create({ categories }) {
                                 </div>
                             </div>
 
-                            <div className="border-t border-gray-100 my-6" />
+                            <div className="border-t border-gray-100 dark:border-neutral-700 my-6" />
                             <SectionTitle>Fotografije</SectionTitle>
 
                             {/* Cover image */}
@@ -185,12 +185,12 @@ export default function Create({ categories }) {
 
                             {/* Gallery images */}
                             <div className="mt-5">
-                                <p className="text-xs text-gray-500 mb-2">Dodatne fotografije</p>
+                                <p className="text-xs text-gray-500 dark:text-neutral-400 mb-2">Dodatne fotografije</p>
                                 {imagePreviews.length > 0 && (
                                     <div className="flex flex-wrap gap-2 mb-3">
                                         {imagePreviews.map((src, i) => (
                                             <div key={i} className="relative group">
-                                                <img src={src} alt="" className="w-24 h-20 object-cover rounded-lg border border-gray-200" />
+                                                <img src={src} alt="" className="w-24 h-20 object-cover rounded-lg border border-gray-200 dark:border-neutral-700" />
                                                 <button
                                                     type="button"
                                                     onClick={() => removeGalleryImage(i)}
@@ -215,7 +215,7 @@ export default function Create({ categories }) {
                                 <button
                                     type="button"
                                     onClick={() => galleryInputRef.current?.click()}
-                                    className="inline-flex items-center gap-1.5 px-3 py-2 border border-gray-300 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-50 transition"
+                                    className="inline-flex items-center gap-1.5 px-3 py-2 border border-gray-300 dark:border-neutral-600 rounded-lg text-xs font-medium text-gray-600 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -224,7 +224,7 @@ export default function Create({ categories }) {
                                 </button>
                             </div>
 
-                            <div className="mt-6 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                            <div className="mt-6 pt-6 border-t border-gray-100 dark:border-neutral-700 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                                 <button
                                     type="submit"
                                     disabled={processing}
@@ -232,7 +232,7 @@ export default function Create({ categories }) {
                                 >
                                     {processing ? 'Postavljanje…' : 'Postavi oglas'}
                                 </button>
-                                <Link href="/moji-oglasi" className="w-full sm:w-auto text-center py-3 text-sm text-gray-500 hover:text-gray-700 border border-gray-200 rounded-lg sm:border-0 sm:py-0">
+                                <Link href="/moji-oglasi" className="w-full sm:w-auto text-center py-3 text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-700 dark:hover:text-gray-200 border border-gray-200 dark:border-neutral-700 rounded-lg sm:border-0 sm:py-0">
                                     Otkaži
                                 </Link>
                             </div>

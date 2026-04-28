@@ -57,8 +57,8 @@ export default function ReportButton({ advertisementId }) {
             </button>
 
             {open && (
-                <div role="menu" className="absolute right-0 top-full mt-2 w-56 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-30">
-                    <p className="px-3 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wide border-b border-gray-100">
+                <div role="menu" className="absolute right-0 top-full mt-2 w-56 bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-xl shadow-lg py-1 z-30">
+                    <p className="px-3 py-2 text-xs font-semibold text-gray-400 dark:text-neutral-500 uppercase tracking-wide border-b border-gray-100 dark:border-neutral-700">
                         Odaberi razlog
                     </p>
                     {REPORT_TYPES.map(({ value, label }) => (
@@ -66,7 +66,7 @@ export default function ReportButton({ advertisementId }) {
                             key={value}
                             role="menuitem"
                             onClick={() => submit(value)}
-                            className="w-full text-left px-3 py-2.5 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors"
+                            className="w-full text-left px-3 py-2.5 text-sm text-gray-700 dark:text-neutral-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 transition-colors"
                         >
                             {label}
                         </button>

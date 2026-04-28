@@ -1,7 +1,7 @@
 import { Head, useForm, Link } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 
-const inputClass = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent';
+const inputClass = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400';
 
 export default function CustomersCreate() {
     const { data, setData, post, processing, errors } = useForm({
@@ -27,19 +27,19 @@ export default function CustomersCreate() {
                     {/* Page header */}
                     <div className="flex items-center justify-between mb-6">
                         <div>
-                            <h1 className="text-xl font-bold text-gray-900">Novi korisnik</h1>
-                            <p className="text-sm text-gray-500 mt-0.5">Kreirajte novi korisnički nalog</p>
+                            <h1 className="text-xl font-bold text-gray-900 dark:text-neutral-100">Novi korisnik</h1>
+                            <p className="text-sm text-gray-500 dark:text-neutral-400 mt-0.5">Kreirajte novi korisnički nalog</p>
                         </div>
-                        <Link href="/admin/korisnici" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+                        <Link href="/admin/korisnici" className="text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
                             ← Nazad
                         </Link>
                     </div>
 
-                    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+                    <div className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-6">
                         <form onSubmit={submit} className="space-y-5">
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Ime</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Ime</label>
                                 <input
                                     type="text"
                                     value={data.name}
@@ -51,7 +51,7 @@ export default function CustomersCreate() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Email adresa</label>
                                 <input
                                     type="email"
                                     value={data.email}
@@ -63,7 +63,7 @@ export default function CustomersCreate() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Lozinka</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Lozinka</label>
                                 <input
                                     type="password"
                                     value={data.password}
@@ -75,7 +75,7 @@ export default function CustomersCreate() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Potvrda lozinke</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Potvrda lozinke</label>
                                 <input
                                     type="password"
                                     value={data.password_confirmation}
@@ -86,7 +86,7 @@ export default function CustomersCreate() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Telefon</label>
                                 <input
                                     type="text"
                                     value={data.phone}
@@ -98,7 +98,7 @@ export default function CustomersCreate() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Uloga</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Uloga</label>
                                 <select
                                     value={data.role}
                                     onChange={e => setData('role', e.target.value)}
@@ -118,7 +118,7 @@ export default function CustomersCreate() {
                                 >
                                     Kreiraj korisnika
                                 </button>
-                                <Link href="/admin/korisnici" className="text-sm text-gray-500 hover:text-gray-700">
+                                <Link href="/admin/korisnici" className="text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-700 dark:hover:text-gray-300">
                                     Otkaži
                                 </Link>
                             </div>

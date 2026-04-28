@@ -61,7 +61,7 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
                         <div id="page-by-category" className="flex-1 min-w-0">
 
                             <div className="mb-6 space-y-3">
-                                <h1 className="text-xl font-bold text-gray-900">{category.name}</h1>
+                                <h1 className="text-xl font-bold text-gray-900 dark:text-neutral-100">{category.name}</h1>
 
                                 {/* Location filter */}
                                 <form onSubmit={handleSearch} className="flex items-center gap-2">
@@ -77,7 +77,7 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
                                             value={locationValue}
                                             onChange={e => setLocationValue(e.target.value)}
                                             placeholder="Lokacija…"
-                                            className="w-full sm:w-40 border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                            className="w-full sm:w-40 border border-gray-200 dark:border-neutral-600 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400"
                                         />
                                     </div>
                                     <button
@@ -90,7 +90,7 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
                                         <button
                                             type="button"
                                             onClick={() => { setLocationValue(''); router.get(window.location.pathname); }}
-                                            className="shrink-0 flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                                            className="shrink-0 flex items-center gap-1 text-xs text-gray-400 dark:text-neutral-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                                         >
                                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -108,20 +108,20 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
                                         <svg className="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
                                         </svg>
-                                        <span className="text-sm font-semibold text-gray-700">Istaknuti oglasi</span>
+                                        <span className="text-sm font-semibold text-gray-700 dark:text-neutral-300">Istaknuti oglasi</span>
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                                         {pinnedCategoryAds.map(ad => (
                                             <AdCard key={ad.id} ad={ad} favoritedIds={favoritedIds} showCategoryPin />
                                         ))}
                                     </div>
-                                    <div className="mt-8 border-t border-gray-200" />
+                                    <div className="mt-8 border-t border-gray-200 dark:border-neutral-700" />
                                 </div>
                             )}
 
                             {adList.length === 0 && pinnedCategoryAds.length === 0 ? (
-                                <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
-                                    <p className="text-gray-500">Nema oglasa u ovoj kategoriji.</p>
+                                <div className="text-center py-16 bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700">
+                                    <p className="text-gray-500 dark:text-neutral-400">Nema oglasa u ovoj kategoriji.</p>
                                 </div>
                             ) : adList.length > 0 ? (
                                 <>
@@ -136,7 +136,7 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
                                             <button
                                                 onClick={loadMore}
                                                 disabled={loading}
-                                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                                className="inline-flex items-center gap-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-neutral-700 hover:border-orange-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
                                             >
                                                 {loading && (
                                                     <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">

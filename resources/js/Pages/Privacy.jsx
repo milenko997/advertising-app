@@ -4,11 +4,11 @@ import AppLayout from '@/Layouts/AppLayout';
 function Section({ title, children }) {
     return (
         <section className="mb-10">
-            <h2 className="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+            <h2 className="text-base font-bold text-slate-900 dark:text-neutral-100 mb-3 flex items-center gap-2">
                 <span className="w-1.5 h-5 rounded-full bg-orange-500 inline-block shrink-0" />
                 {title}
             </h2>
-            <div className="text-sm text-slate-500 leading-relaxed space-y-3">{children}</div>
+            <div className="text-sm text-slate-500 dark:text-neutral-400 leading-relaxed space-y-3">{children}</div>
         </section>
     );
 }
@@ -49,10 +49,10 @@ export default function Privacy() {
             {/* Content */}
             <div className="py-14">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm px-8 py-10">
+                    <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-slate-100 dark:border-neutral-700 shadow-sm px-8 py-10">
 
-                        <p className="text-sm text-slate-500 leading-relaxed mb-10">
-                            U <strong className="text-slate-700">AdBoard</strong>-u, vaša privatnost nam je važna. Ova Politika privatnosti objašnjava koje lične podatke prikupljamo, kako ih koristimo i koja prava imate u pogledu vaših podataka. Korišćenjem AdBoard-a, pristajete na prakse opisane u ovoj politici.
+                        <p className="text-sm text-slate-500 dark:text-neutral-400 leading-relaxed mb-10">
+                            U <strong className="text-slate-700 dark:text-neutral-200">AdBoard</strong>-u, vaša privatnost nam je važna. Ova Politika privatnosti objašnjava koje lične podatke prikupljamo, kako ih koristimo i koja prava imate u pogledu vaših podataka. Korišćenjem AdBoard-a, pristajete na prakse opisane u ovoj politici.
                         </p>
 
                         <Section title="1. Ko smo mi">
@@ -64,40 +64,40 @@ export default function Privacy() {
                         <Section title="2. Podaci koje prikupljamo">
                             <p>Prikupljamo sledeće kategorije ličnih podataka:</p>
 
-                            <div className="rounded-xl border border-slate-100 overflow-hidden">
+                            <div className="rounded-xl border border-slate-100 dark:border-neutral-700 overflow-hidden">
                                 <table className="w-full text-xs">
-                                    <thead className="bg-slate-50">
+                                    <thead className="bg-slate-50 dark:bg-neutral-800/50">
                                         <tr>
-                                            <th scope="col" className="text-left px-4 py-2.5 font-semibold text-slate-600">Tip podataka</th>
-                                            <th scope="col" className="text-left px-4 py-2.5 font-semibold text-slate-600">Primeri</th>
-                                            <th scope="col" className="text-left px-4 py-2.5 font-semibold text-slate-600">Svrha</th>
+                                            <th scope="col" className="text-left px-4 py-2.5 font-semibold text-slate-600 dark:text-neutral-400">Tip podataka</th>
+                                            <th scope="col" className="text-left px-4 py-2.5 font-semibold text-slate-600 dark:text-neutral-400">Primeri</th>
+                                            <th scope="col" className="text-left px-4 py-2.5 font-semibold text-slate-600 dark:text-neutral-400">Svrha</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-slate-100">
+                                    <tbody className="divide-y divide-slate-100 dark:divide-neutral-700">
                                         <tr>
-                                            <td className="px-4 py-2.5 font-medium text-slate-700">Podaci o nalogu</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Ime, email, lozinka (hešovana)</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Autentifikacija, upravljanje nalogom</td>
+                                            <td className="px-4 py-2.5 font-medium text-slate-700 dark:text-neutral-300">Podaci o nalogu</td>
+                                            <td className="px-4 py-2.5 text-slate-500 dark:text-neutral-400">Ime, email, lozinka (hešovana)</td>
+                                            <td className="px-4 py-2.5 text-slate-500 dark:text-neutral-400">Autentifikacija, upravljanje nalogom</td>
                                         </tr>
                                         <tr>
-                                            <td className="px-4 py-2.5 font-medium text-slate-700">Podaci profila</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Broj telefona, profilna fotografija</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Prikazuje se na vašem javnom profilu</td>
+                                            <td className="px-4 py-2.5 font-medium text-slate-700 dark:text-neutral-300">Podaci profila</td>
+                                            <td className="px-4 py-2.5 text-slate-500 dark:text-neutral-400">Broj telefona, profilna fotografija</td>
+                                            <td className="px-4 py-2.5 text-slate-500 dark:text-neutral-400">Prikazuje se na vašem javnom profilu</td>
                                         </tr>
                                         <tr>
-                                            <td className="px-4 py-2.5 font-medium text-slate-700">Sadržaj oglasa</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Naslov, opis, lokacija, slike, kontakt telefon</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Objavljivanje vaših oglasa</td>
+                                            <td className="px-4 py-2.5 font-medium text-slate-700 dark:text-neutral-300">Sadržaj oglasa</td>
+                                            <td className="px-4 py-2.5 text-slate-500 dark:text-neutral-400">Naslov, opis, lokacija, slike, kontakt telefon</td>
+                                            <td className="px-4 py-2.5 text-slate-500 dark:text-neutral-400">Objavljivanje vaših oglasa</td>
                                         </tr>
                                         <tr>
-                                            <td className="px-4 py-2.5 font-medium text-slate-700">Podaci o korišćenju</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Posećene stranice, broj pregleda oglasa, IP adresa</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Analitika, sprečavanje prevara</td>
+                                            <td className="px-4 py-2.5 font-medium text-slate-700 dark:text-neutral-300">Podaci o korišćenju</td>
+                                            <td className="px-4 py-2.5 text-slate-500 dark:text-neutral-400">Posećene stranice, broj pregleda oglasa, IP adresa</td>
+                                            <td className="px-4 py-2.5 text-slate-500 dark:text-neutral-400">Analitika, sprečavanje prevara</td>
                                         </tr>
                                         <tr>
-                                            <td className="px-4 py-2.5 font-medium text-slate-700">Tehnički podaci</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Tip pretraživača, uređaj, kolačići sesije</td>
-                                            <td className="px-4 py-2.5 text-slate-500">Funkcionalnost platforme, bezbednost</td>
+                                            <td className="px-4 py-2.5 font-medium text-slate-700 dark:text-neutral-300">Tehnički podaci</td>
+                                            <td className="px-4 py-2.5 text-slate-500 dark:text-neutral-400">Tip pretraživača, uređaj, kolačići sesije</td>
+                                            <td className="px-4 py-2.5 text-slate-500 dark:text-neutral-400">Funkcionalnost platforme, bezbednost</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -116,7 +116,7 @@ export default function Privacy() {
                                 <li>Unapređivali platformu kroz agregiranu analitiku.</li>
                             </ul>
                             <p>
-                                Mi <strong className="text-slate-700">ne</strong> prodajemo vaše lične podatke trećim stranama. Ne koristimo vaše podatke za ciljano oglašavanje.
+                                Mi <strong className="text-slate-700 dark:text-neutral-200">ne</strong> prodajemo vaše lične podatke trećim stranama. Ne koristimo vaše podatke za ciljano oglašavanje.
                             </p>
                         </Section>
 
@@ -128,7 +128,7 @@ export default function Privacy() {
                                 <li>Vaša javna stranica profila uključujući primljene recenzije.</li>
                             </ul>
                             <p>
-                                Vaša <strong className="text-slate-700">email adresa</strong> nikada nije javno prikazana. Koristi se isključivo za autentifikaciju naloga i sistemska obaveštenja.
+                                Vaša <strong className="text-slate-700 dark:text-neutral-200">email adresa</strong> nikada nije javno prikazana. Koristi se isključivo za autentifikaciju naloga i sistemska obaveštenja.
                             </p>
                         </Section>
 
@@ -143,7 +143,7 @@ export default function Privacy() {
 
                         <Section title="6. Čuvanje podataka">
                             <p>
-                                Čuvamo vaše lične podatke sve dok je vaš nalog aktivan. Ukoliko obrišete nalog, vaši lični podaci (ime, email, telefon) biće izbrisani u roku od <strong className="text-slate-700">30 dana</strong>. Vaši objavljeni oglasi će takođe biti uklonjeni.
+                                Čuvamo vaše lične podatke sve dok je vaš nalog aktivan. Ukoliko obrišete nalog, vaši lični podaci (ime, email, telefon) biće izbrisani u roku od <strong className="text-slate-700 dark:text-neutral-200">30 dana</strong>. Vaši objavljeni oglasi će takođe biti uklonjeni.
                             </p>
                             <p>
                                 Anonimizovani podaci o korišćenju (broj pregleda, agregatne statistike) mogu se čuvati neograničeno jer se ne mogu povezati sa pojedincem.
@@ -170,11 +170,11 @@ export default function Privacy() {
                                 Prema primenjivom zakonu o zaštiti podataka, imate sledeća prava u pogledu vaših ličnih podataka:
                             </p>
                             <ul className="list-disc list-inside space-y-1.5 pl-2">
-                                <li><strong className="text-slate-700">Pristup</strong> — zatražite kopiju podataka koje čuvamo o vama.</li>
-                                <li><strong className="text-slate-700">Ispravka</strong> — ažurirajte netačne podatke putem stranice profila.</li>
-                                <li><strong className="text-slate-700">Brisanje</strong> — zatražite da obrišemo vaš nalog i lične podatke.</li>
-                                <li><strong className="text-slate-700">Prenosivost</strong> — zatražite vaše podatke u strukturiranom, mašinski čitljivom formatu.</li>
-                                <li><strong className="text-slate-700">Prigovor</strong> — uložite prigovor na određene aktivnosti obrade.</li>
+                                <li><strong className="text-slate-700 dark:text-neutral-200">Pristup</strong> — zatražite kopiju podataka koje čuvamo o vama.</li>
+                                <li><strong className="text-slate-700 dark:text-neutral-200">Ispravka</strong> — ažurirajte netačne podatke putem stranice profila.</li>
+                                <li><strong className="text-slate-700 dark:text-neutral-200">Brisanje</strong> — zatražite da obrišemo vaš nalog i lične podatke.</li>
+                                <li><strong className="text-slate-700 dark:text-neutral-200">Prenosivost</strong> — zatražite vaše podatke u strukturiranom, mašinski čitljivom formatu.</li>
+                                <li><strong className="text-slate-700 dark:text-neutral-200">Prigovor</strong> — uložite prigovor na određene aktivnosti obrade.</li>
                             </ul>
                             <p>
                                 Da biste ostvarili bilo koje od ovih prava, pišite nam na <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a>. Odgovorićemo u roku od 30 dana.
@@ -193,7 +193,7 @@ export default function Privacy() {
                             </p>
                         </Section>
 
-                        <div className="mt-10 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-400">
+                        <div className="mt-10 pt-8 border-t border-slate-100 dark:border-neutral-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-400 dark:text-neutral-500">
                             <span>Pitanja? <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a></span>
                             <div className="flex items-center gap-4">
                                 <Link href="/uslovi-koriscenja" className="hover:text-slate-600 transition-colors">Uslovi korišćenja</Link>

@@ -36,15 +36,15 @@ export default function Error({ status }) {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen bg-gray-50 dark:bg-neutral-900 flex flex-col">
             <Head title={`${status} — ${title}`} />
             <Navigation />
 
             <main className="flex-1 flex items-center justify-center px-4 py-24">
                 <div className="text-center">
                     <p className="text-8xl font-extrabold text-orange-600">{status}</p>
-                    <h1 className="mt-4 text-2xl font-bold text-gray-900">{title}</h1>
-                    <p className="mt-2 text-gray-500 max-w-sm mx-auto">{description}</p>
+                    <h1 className="mt-4 text-2xl font-bold text-gray-900 dark:text-neutral-100">{title}</h1>
+                    <p className="mt-2 text-gray-500 dark:text-neutral-400 max-w-sm mx-auto">{description}</p>
                     <Link
                         href="/"
                         className="mt-8 inline-block px-6 py-2.5 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 transition"

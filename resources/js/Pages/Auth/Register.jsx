@@ -16,62 +16,62 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <h1 className="text-xl font-semibold text-gray-900 mb-6">Kreirajte nalog</h1>
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-neutral-100 mb-6">Kreirajte nalog</h1>
 
             <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <label htmlFor="register-name" className="block text-sm font-medium text-gray-700 mb-1">Ime i prezime</label>
+                    <label htmlFor="register-name" className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Ime i prezime</label>
                     <input
                         id="register-name"
                         type="text"
                         value={data.name}
                         onChange={e => setData('name', e.target.value)}
                         required autoFocus
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                     />
                     {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
                 </div>
 
                 <div>
-                    <label htmlFor="register-email" className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
+                    <label htmlFor="register-email" className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Email adresa</label>
                     <input
                         id="register-email"
                         type="email"
                         value={data.email}
                         onChange={e => setData('email', e.target.value)}
                         required
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                     />
                     {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
                 </div>
 
                 <div>
-                    <label htmlFor="register-password" className="block text-sm font-medium text-gray-700 mb-1">Lozinka</label>
+                    <label htmlFor="register-password" className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Lozinka</label>
                     <input
                         id="register-password"
                         type="password"
                         value={data.password}
                         onChange={e => setData('password', e.target.value)}
                         required autoComplete="new-password"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                     />
                     {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
                 </div>
 
                 <div>
-                    <label htmlFor="register-password-confirmation" className="block text-sm font-medium text-gray-700 mb-1">Potvrda lozinke</label>
+                    <label htmlFor="register-password-confirmation" className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Potvrda lozinke</label>
                     <input
                         id="register-password-confirmation"
                         type="password"
                         value={data.password_confirmation}
                         onChange={e => setData('password_confirmation', e.target.value)}
                         required autoComplete="new-password"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                     />
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
-                    <Link href="/login" className="text-sm text-gray-500 hover:text-orange-600">
+                    <Link href="/login" className="text-sm text-gray-500 dark:text-neutral-400 hover:text-orange-600">
                         Već imate nalog?
                     </Link>
                     <button

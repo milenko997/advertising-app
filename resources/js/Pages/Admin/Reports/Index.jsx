@@ -12,17 +12,17 @@ const TYPE_COLORS = {
 
 function ReportRow({ report, onToggleResolve, onDestroy }) {
     return (
-        <tr className={`hover:bg-gray-50 transition-colors ${report.resolved ? 'opacity-60' : ''}`}>
+        <tr className={`hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors ${report.resolved ? 'opacity-60' : ''}`}>
             <td className="px-4 py-3">
                 <input
                     type="checkbox"
                     checked={report.resolved}
                     onChange={() => onToggleResolve(report.id)}
-                    className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
+                    className="w-4 h-4 rounded border-gray-300 dark:border-neutral-600 text-orange-600 focus:ring-orange-500 cursor-pointer"
                 />
             </td>
             <td className="px-4 py-3">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${TYPE_COLORS[report.type] ?? 'bg-gray-100 text-gray-700'}`}>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${TYPE_COLORS[report.type] ?? 'bg-gray-100 dark:bg-neutral-700 text-gray-700 dark:text-neutral-300'}`}>
                     {report.label}
                 </span>
             </td>
@@ -36,13 +36,13 @@ function ReportRow({ report, onToggleResolve, onDestroy }) {
                         {report.advertisement.title}
                     </Link>
                 ) : (
-                    <span className="text-sm text-gray-400 italic">Oglas obrisan</span>
+                    <span className="text-sm text-gray-400 dark:text-neutral-500 italic">Oglas obrisan</span>
                 )}
             </td>
-            <td className="px-4 py-3 text-sm text-gray-600">
+            <td className="px-4 py-3 text-sm text-gray-600 dark:text-neutral-400">
                 {report.reporter?.name ?? 'Anonimni korisnik'}
             </td>
-            <td className="px-4 py-3 text-sm text-gray-400 whitespace-nowrap">
+            <td className="px-4 py-3 text-sm text-gray-400 dark:text-neutral-500 whitespace-nowrap">
                 {report.created_at}
             </td>
             <td className="px-4 py-3 text-right">
@@ -51,7 +51,7 @@ function ReportRow({ report, onToggleResolve, onDestroy }) {
                         onClick={() => onToggleResolve(report.id)}
                         className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition ${
                             report.resolved
-                                ? 'border-gray-300 text-gray-600 hover:bg-gray-50'
+                                ? 'border-gray-300 dark:border-neutral-600 text-gray-600 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-700'
                                 : 'border-emerald-300 text-emerald-700 hover:bg-emerald-50'
                         }`}
                     >
@@ -117,8 +117,8 @@ export default function AdminReportsIndex({ reports: initialReports }) {
 
                     <div className="flex items-center justify-between">
                         <div>
-                            <h1 className="text-2xl font-bold text-gray-900">Prijave</h1>
-                            <p className="text-sm text-gray-500 mt-0.5">
+                            <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100">Prijave</h1>
+                            <p className="text-sm text-gray-500 dark:text-neutral-400 mt-0.5">
                                 {pending.length} na čekanju · {resolved.length} rešenih
                             </p>
                         </div>
@@ -137,21 +137,21 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                         </div>
                         {/* Desktop table */}
                         <div className="hidden md:block">
-                        <table className="min-w-full divide-y divide-gray-100">
-                            <thead className="bg-gray-50">
+                        <table className="min-w-full divide-y divide-gray-100 dark:divide-neutral-700">
+                            <thead className="bg-gray-50 dark:bg-neutral-800">
                                 <tr>
                                     <th className="px-4 py-2.5 w-8" />
-                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Tip</th>
-                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Oglas</th>
-                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Prijavio</th>
-                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Datum</th>
+                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Tip</th>
+                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Oglas</th>
+                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Prijavio</th>
+                                    <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Datum</th>
                                     <th className="px-4 py-2.5" />
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-100">
+                            <tbody className="divide-y divide-gray-100 dark:divide-neutral-700">
                                 {pending.length === 0 ? (
                                     <tr>
-                                        <td colSpan={6} className="px-4 py-10 text-center text-sm text-gray-400">
+                                        <td colSpan={6} className="px-4 py-10 text-center text-sm text-gray-400 dark:text-neutral-500">
                                             Nema prijava na čekanju.
                                         </td>
                                     </tr>
@@ -160,16 +160,16 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                         </table>
                         </div>
                         {/* Mobile cards */}
-                        <div className="md:hidden divide-y divide-gray-100">
+                        <div className="md:hidden divide-y divide-gray-100 dark:divide-neutral-700">
                             {pending.length === 0 ? (
-                                <p className="px-4 py-10 text-center text-sm text-gray-400">Nema prijava na čekanju.</p>
+                                <p className="px-4 py-10 text-center text-sm text-gray-400 dark:text-neutral-500">Nema prijava na čekanju.</p>
                             ) : pending.map(r => (
                                 <div key={r.id} className={`p-4 ${r.resolved ? 'opacity-60' : ''}`}>
                                     <div className="flex items-center justify-between gap-2 mb-2">
-                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${TYPE_COLORS[r.type] ?? 'bg-gray-100 text-gray-700'}`}>
+                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${TYPE_COLORS[r.type] ?? 'bg-gray-100 dark:bg-neutral-700 text-gray-700 dark:text-neutral-300'}`}>
                                             {r.label}
                                         </span>
-                                        <span className="text-xs text-gray-400">{r.created_at}</span>
+                                        <span className="text-xs text-gray-400 dark:text-neutral-500">{r.created_at}</span>
                                     </div>
                                     <div className="mb-3">
                                         {r.advertisement ? (
@@ -177,9 +177,9 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                                 {r.advertisement.title}
                                             </Link>
                                         ) : (
-                                            <span className="text-sm text-gray-400 italic">Oglas obrisan</span>
+                                            <span className="text-sm text-gray-400 dark:text-neutral-500 italic">Oglas obrisan</span>
                                         )}
-                                        <p className="text-xs text-gray-500 mt-0.5">Prijavio: {r.reporter?.name ?? 'Anonimni korisnik'}</p>
+                                        <p className="text-xs text-gray-500 dark:text-neutral-400 mt-0.5">Prijavio: {r.reporter?.name ?? 'Anonimni korisnik'}</p>
                                     </div>
                                     <div className="flex gap-2">
                                         <button
@@ -202,15 +202,15 @@ export default function AdminReportsIndex({ reports: initialReports }) {
 
                     {/* Resolved */}
                     {resolved.length > 0 && (
-                        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                            <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
+                        <div className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm overflow-hidden">
+                            <div className="px-5 py-3 border-b border-gray-100 dark:border-neutral-700 flex items-center gap-2">
                                 <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
-                                <h2 className="text-sm font-semibold text-gray-700">Rešene</h2>
+                                <h2 className="text-sm font-semibold text-gray-700 dark:text-neutral-300">Rešene</h2>
                             </div>
                             {/* Desktop table */}
                             <div className="hidden md:block">
-                            <table className="min-w-full divide-y divide-gray-100">
-                                <thead className="bg-gray-50">
+                            <table className="min-w-full divide-y divide-gray-100 dark:divide-neutral-700">
+                                <thead className="bg-gray-50 dark:bg-neutral-800">
                                     <tr>
                                         <th className="px-4 py-2.5 w-8" />
                                         <th className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Tip</th>
@@ -220,20 +220,20 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                         <th className="px-4 py-2.5" />
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-100">
+                                <tbody className="divide-y divide-gray-100 dark:divide-neutral-700">
                                     {resolved.map(r => <ReportRow key={r.id} report={r} onToggleResolve={toggleResolve} onDestroy={destroy} />)}
                                 </tbody>
                             </table>
                             </div>
                             {/* Mobile cards */}
-                            <div className="md:hidden divide-y divide-gray-100">
+                            <div className="md:hidden divide-y divide-gray-100 dark:divide-neutral-700">
                                 {resolved.map(r => (
                                     <div key={r.id} className="p-4 opacity-60">
                                         <div className="flex items-center justify-between gap-2 mb-2">
-                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${TYPE_COLORS[r.type] ?? 'bg-gray-100 text-gray-700'}`}>
+                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${TYPE_COLORS[r.type] ?? 'bg-gray-100 dark:bg-neutral-700 text-gray-700 dark:text-neutral-300'}`}>
                                                 {r.label}
                                             </span>
-                                            <span className="text-xs text-gray-400">{r.created_at}</span>
+                                            <span className="text-xs text-gray-400 dark:text-neutral-500">{r.created_at}</span>
                                         </div>
                                         <div className="mb-3">
                                             {r.advertisement ? (
@@ -248,7 +248,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                                         <div className="flex gap-2">
                                             <button
                                                 onClick={() => toggleResolve(r.id)}
-                                                className="flex-1 text-center px-3 py-2 text-xs font-medium rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 transition"
+                                                className="flex-1 text-center px-3 py-2 text-xs font-medium rounded-lg border border-gray-300 dark:border-neutral-600 text-gray-600 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                                             >
                                                 Ponovo otvori
                                             </button>
@@ -270,7 +270,7 @@ export default function AdminReportsIndex({ reports: initialReports }) {
                             <button
                                 onClick={loadMore}
                                 disabled={loading}
-                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
+                                className="inline-flex items-center gap-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-neutral-700 hover:border-orange-300 transition disabled:opacity-50"
                             >
                                 {loading && (
                                     <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">

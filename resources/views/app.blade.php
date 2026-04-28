@@ -21,6 +21,16 @@
         <meta name="twitter:description" content="{{ $meta['description'] ?? 'Srpski marketplace za oglase.' }}" />
         @inertiaHead
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+        <script>
+            (function(){
+                var t = localStorage.getItem('theme');
+                if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            })();
+        </script>
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.jsx'])
     </head>

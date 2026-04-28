@@ -15,37 +15,37 @@ export default function Login({ status }) {
 
     return (
         <GuestLayout>
-            <h1 className="text-xl font-semibold text-gray-900 mb-6">Prijavite se na nalog</h1>
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-neutral-100 mb-6">Prijavite se na nalog</h1>
 
             {status && (
-                <div className="mb-4 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-3">
+                <div className="mb-4 text-sm text-green-700 bg-green-50 dark:bg-emerald-900/20 border border-green-200 dark:border-emerald-800 rounded-lg px-4 py-3">
                     {status}
                 </div>
             )}
 
             <form onSubmit={submit} className="space-y-4">
                 <div>
-                    <label htmlFor="login-email" className="block text-sm font-medium text-gray-700 mb-1">Email adresa</label>
+                    <label htmlFor="login-email" className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Email adresa</label>
                     <input
                         id="login-email"
                         type="email"
                         value={data.email}
                         onChange={e => setData('email', e.target.value)}
                         required autoFocus
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                     />
                     {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
                 </div>
 
                 <div>
-                    <label htmlFor="login-password" className="block text-sm font-medium text-gray-700 mb-1">Lozinka</label>
+                    <label htmlFor="login-password" className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Lozinka</label>
                     <input
                         id="login-password"
                         type="password"
                         value={data.password}
                         onChange={e => setData('password', e.target.value)}
                         required autoComplete="current-password"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                     />
                     {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
                 </div>
@@ -56,13 +56,13 @@ export default function Login({ status }) {
                         type="checkbox"
                         checked={data.remember}
                         onChange={e => setData('remember', e.target.checked)}
-                        className="rounded border-gray-300 text-orange-600 focus:ring-orange-500"
+                        className="rounded border-gray-300 dark:border-neutral-600 text-orange-600 focus:ring-orange-500 dark:bg-neutral-700"
                     />
-                    <label htmlFor="remember" className="ml-2 text-sm text-gray-600">Zapamti me</label>
+                    <label htmlFor="remember" className="ml-2 text-sm text-gray-600 dark:text-neutral-400">Zapamti me</label>
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
-                    <Link href="/forgot-password" className="text-sm text-gray-500 hover:text-orange-600">
+                    <Link href="/forgot-password" className="text-sm text-gray-500 dark:text-neutral-400 hover:text-orange-600">
                         Zaboravili ste lozinku?
                     </Link>
                     <button
@@ -75,7 +75,7 @@ export default function Login({ status }) {
                 </div>
             </form>
 
-            <p className="mt-6 text-center text-sm text-gray-500">
+            <p className="mt-6 text-center text-sm text-gray-500 dark:text-neutral-400">
                 Nemate nalog?{' '}
                 <Link href="/register" className="text-orange-600 hover:underline font-medium">
                     Registrujte se

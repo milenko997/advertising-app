@@ -43,22 +43,22 @@ export default function Trash({ ads: initialAds }) {
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     <div className="mb-6">
-                        <h1 className="text-2xl font-bold text-gray-900">Obrisani oglasi</h1>
-                        <p className="text-sm text-gray-500 mt-0.5">Obrisani oglasi se trajno uklanjaju nakon 30 dana.</p>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100">Obrisani oglasi</h1>
+                        <p className="text-sm text-gray-500 dark:text-neutral-400 mt-0.5">Obrisani oglasi se trajno uklanjaju nakon 30 dana.</p>
                     </div>
                     {adList.length === 0 ? (
-                        <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
+                        <div className="text-center py-16 bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700">
                             <svg className="w-14 h-14 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
-                            <p className="text-gray-500">Otpad je prazan.</p>
+                            <p className="text-gray-500 dark:text-neutral-400">Otpad je prazan.</p>
                         </div>
                     ) : (
                         <>
                             <div className="space-y-3">
                                 {adList.map(ad => (
-                                    <div key={ad.id} className="bg-white border border-gray-200 rounded-xl p-4 opacity-75">
+                                    <div key={ad.id} className="bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-xl p-4 opacity-75">
                                         {/* Top row: thumbnail + info */}
                                         <div className="flex gap-3">
                                             {ad.image ? (
@@ -69,7 +69,7 @@ export default function Trash({ ads: initialAds }) {
                                                     className="w-20 h-16 sm:w-24 sm:h-20 object-cover rounded-lg shrink-0 grayscale"
                                                 />
                                             ) : (
-                                                <div className="w-20 h-16 sm:w-24 sm:h-20 bg-gray-100 rounded-lg flex items-center justify-center shrink-0">
+                                                <div className="w-20 h-16 sm:w-24 sm:h-20 bg-gray-100 dark:bg-neutral-700 rounded-lg flex items-center justify-center shrink-0">
                                                     <svg className="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                                                             d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -78,17 +78,17 @@ export default function Trash({ ads: initialAds }) {
                                             )}
 
                                             <div className="flex-1 min-w-0">
-                                                <p className="font-semibold text-gray-700 text-sm sm:text-base line-clamp-1">{ad.title}</p>
-                                                <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">{ad.description}</p>
+                                                <p className="font-semibold text-gray-700 dark:text-neutral-200 text-sm sm:text-base line-clamp-1">{ad.title}</p>
+                                                <p className="text-xs text-gray-400 dark:text-neutral-500 mt-0.5 line-clamp-1">{ad.description}</p>
                                                 <p className="text-xs text-red-500 mt-1.5">Obrisano: {ad.deleted_at}</p>
                                             </div>
                                         </div>
 
                                         {/* Bottom row: actions */}
-                                        <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
+                                        <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100 dark:border-neutral-700">
                                             <button
                                                 onClick={() => restore(ad.id)}
-                                                className="px-3 py-1.5 text-xs font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                                                className="px-3 py-1.5 text-xs font-medium border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                                             >
                                                 Vrati
                                             </button>
@@ -108,7 +108,7 @@ export default function Trash({ ads: initialAds }) {
                                     <button
                                         onClick={loadMore}
                                         disabled={loading}
-                                        className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
+                                        className="inline-flex items-center gap-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-neutral-700 hover:border-orange-300 transition disabled:opacity-50"
                                     >
                                         {loading && (
                                             <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">

@@ -29,7 +29,7 @@ export default function AdminFeedbacksIndex({ feedbacks: initialFeedbacks }) {
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     <div className="flex items-center justify-between mb-6">
-                        <h1 className="text-xl font-bold text-gray-900">Povratne informacije</h1>
+                        <h1 className="text-xl font-bold text-gray-900 dark:text-neutral-100">Povratne informacije</h1>
                         {unreadCount > 0 && (
                             <span className="inline-flex items-center gap-1.5 text-sm text-orange-600 font-medium">
                                 <span className="w-2 h-2 rounded-full bg-orange-500 inline-block" />
@@ -39,20 +39,20 @@ export default function AdminFeedbacksIndex({ feedbacks: initialFeedbacks }) {
                     </div>
 
                     {list.length === 0 ? (
-                        <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
-                            <svg className="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="text-center py-16 bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700">
+                            <svg className="w-12 h-12 text-gray-300 dark:text-neutral-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                                     d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                             </svg>
-                            <p className="text-gray-500">Nema povratnih informacija.</p>
+                            <p className="text-gray-500 dark:text-neutral-400">Nema povratnih informacija.</p>
                         </div>
                     ) : (
                         <div className="space-y-3">
                             {list.map(fb => (
                                 <div
                                     key={fb.id}
-                                    className={`bg-white rounded-xl border shadow-sm p-5 transition-colors ${
-                                        fb.read ? 'border-gray-200' : 'border-orange-200'
+                                    className={`bg-white dark:bg-neutral-800 rounded-xl border shadow-sm p-5 transition-colors ${
+                                        fb.read ? 'border-gray-200 dark:border-neutral-700' : 'border-orange-200 dark:border-orange-800'
                                     }`}
                                 >
                                     {/* Meta row */}
@@ -63,26 +63,26 @@ export default function AdminFeedbacksIndex({ feedbacks: initialFeedbacks }) {
                                             )}
                                             <div>
                                                 {fb.user ? (
-                                                    <span className="text-sm font-semibold text-gray-900">{fb.user.name}</span>
+                                                    <span className="text-sm font-semibold text-gray-900 dark:text-neutral-100">{fb.user.name}</span>
                                                 ) : (
-                                                    <span className="text-sm text-gray-400 italic">Anonimni korisnik</span>
+                                                    <span className="text-sm text-gray-400 dark:text-neutral-500 italic">Anonimni korisnik</span>
                                                 )}
                                                 {fb.email && (
                                                     <p className="text-xs text-orange-500 mt-0.5">{fb.email}</p>
                                                 )}
                                                 {fb.page && (
-                                                    <p className="text-xs text-gray-400 mt-0.5">{fb.page}</p>
+                                                    <p className="text-xs text-gray-400 dark:text-neutral-500 mt-0.5">{fb.page}</p>
                                                 )}
                                             </div>
                                         </div>
-                                        <span className="text-xs text-gray-400 shrink-0">{fb.created_at}</span>
+                                        <span className="text-xs text-gray-400 dark:text-neutral-500 shrink-0">{fb.created_at}</span>
                                     </div>
 
                                     {/* Message */}
-                                    <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">{fb.message}</p>
+                                    <p className="text-sm text-gray-700 dark:text-neutral-300 leading-relaxed whitespace-pre-wrap">{fb.message}</p>
 
                                     {/* Actions */}
-                                    <div className="flex items-center justify-end gap-3 mt-4 pt-3 border-t border-gray-100">
+                                    <div className="flex items-center justify-end gap-3 mt-4 pt-3 border-t border-gray-100 dark:border-neutral-700">
                                         {!fb.read && (
                                             <button
                                                 onClick={() => markRead(fb.id)}
@@ -109,17 +109,17 @@ export default function AdminFeedbacksIndex({ feedbacks: initialFeedbacks }) {
                             <button
                                 onClick={() => router.get(initialFeedbacks.prev_page_url)}
                                 disabled={!initialFeedbacks.prev_page_url}
-                                className="px-4 py-2 text-sm font-medium border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                                className="px-4 py-2 text-sm font-medium border border-gray-300 dark:border-neutral-600 rounded-lg text-gray-700 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-700 disabled:opacity-40 disabled:cursor-not-allowed transition"
                             >
                                 ← Prethodna
                             </button>
-                            <span className="text-sm text-gray-500">
+                            <span className="text-sm text-gray-500 dark:text-neutral-400">
                                 Strana {initialFeedbacks.current_page} od {initialFeedbacks.last_page}
                             </span>
                             <button
                                 onClick={() => router.get(initialFeedbacks.next_page_url)}
                                 disabled={!initialFeedbacks.next_page_url}
-                                className="px-4 py-2 text-sm font-medium border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                                className="px-4 py-2 text-sm font-medium border border-gray-300 dark:border-neutral-600 rounded-lg text-gray-700 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-700 disabled:opacity-40 disabled:cursor-not-allowed transition"
                             >
                                 Sledeća →
                             </button>

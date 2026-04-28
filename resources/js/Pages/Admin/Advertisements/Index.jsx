@@ -125,8 +125,8 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                     {/* Header */}
                     <div className="flex flex-wrap items-start justify-between gap-3 mb-8">
                         <div>
-                            <h1 className="text-2xl font-bold text-gray-900">Oglasi</h1>
-                            <p className="text-sm text-gray-500 mt-0.5">Svi aktivni oglasi</p>
+                            <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100">Oglasi</h1>
+                            <p className="text-sm text-gray-500 dark:text-neutral-400 mt-0.5">Svi aktivni oglasi</p>
                         </div>
                     </div>
 
@@ -136,14 +136,14 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                             value={search}
                             onChange={handleSearchChange}
                             placeholder="Pretraži po naslovu, korisniku, kategoriji, lokaciji…"
-                            className="w-full sm:w-96 px-4 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                            className="w-full sm:w-96 px-4 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                         />
                     </div>
 
                     {/* Bulk toolbar */}
                     {someSelected && (
-                        <div className="mb-4 flex items-center gap-3 bg-orange-50 border border-orange-200 rounded-xl px-4 py-3">
-                            <span className="text-sm font-semibold text-orange-700">
+                        <div className="mb-4 flex items-center gap-3 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl px-4 py-3">
+                            <span className="text-sm font-semibold text-orange-700 dark:text-orange-300">
                                 {selected.size} izabrano
                             </span>
                             <div className="flex items-center gap-2 ml-auto">
@@ -158,7 +158,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                 </button>
                                 <button
                                     onClick={() => bulkAction('unpin')}
-                                    className="px-3 py-1.5 text-xs font-semibold border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition"
+                                    className="px-3 py-1.5 text-xs font-semibold border border-gray-300 dark:border-neutral-600 text-gray-600 dark:text-neutral-400 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                                 >
                                     Otkači izabrane
                                 </button>
@@ -170,7 +170,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                 </button>
                                 <button
                                     onClick={() => setSelected(new Set())}
-                                    className="ml-1 text-gray-400 hover:text-gray-600 transition"
+                                    className="ml-1 text-gray-400 dark:text-neutral-500 hover:text-gray-600 dark:hover:text-gray-400 transition"
                                     aria-label="Poništi selekciju"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,11 +181,11 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                         </div>
                     )}
 
-                    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm overflow-hidden">
                         {/* Desktop table */}
                         <div className="hidden md:block">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
+                        <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                            <thead className="bg-gray-50 dark:bg-neutral-800">
                                 <tr>
                                     <th className="px-4 py-3 w-10">
                                         <input
@@ -193,28 +193,28 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                             checked={allSelected}
                                             onChange={toggleAll}
                                             aria-label={allSelected ? 'Poništi selekciju' : 'Izaberi sve'}
-                                            className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
+                                            className="w-4 h-4 rounded border-gray-300 dark:border-neutral-600 text-orange-600 focus:ring-orange-500 cursor-pointer"
                                         />
                                     </th>
-                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider w-48">Naslov</th>
-                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Kategorija</th>
-                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Korisnik</th>
-                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Cena</th>
-                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Datum</th>
+                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider w-48">Naslov</th>
+                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Kategorija</th>
+                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Korisnik</th>
+                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Cena</th>
+                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Datum</th>
                                     <th className="px-6 py-3" />
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-100">
+                            <tbody className="divide-y divide-gray-100 dark:divide-neutral-700">
                                 {adList.length === 0 ? (
                                     <tr>
-                                        <td colSpan={7} className="px-6 py-16 text-center text-gray-500">
+                                        <td colSpan={7} className="px-6 py-16 text-center text-gray-500 dark:text-neutral-400">
                                             {search ? 'Nema oglasa koji odgovaraju pretrazi.' : 'Nema oglasa.'}
                                         </td>
                                     </tr>
                                 ) : adList.map(ad => (
                                     <tr
                                         key={ad.id}
-                                        className={`hover:bg-gray-50 transition-colors ${selected.has(ad.id) ? 'bg-orange-50' : ''}`}
+                                        className={`hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors ${selected.has(ad.id) ? 'bg-orange-50 dark:bg-orange-900/20' : ''}`}
                                     >
                                         <td className="px-4 py-4">
                                             <input
@@ -222,17 +222,17 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                 checked={selected.has(ad.id)}
                                                 onChange={() => toggleOne(ad.id)}
                                                 aria-label={`Izaberi: ${ad.title}`}
-                                                className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
+                                                className="w-4 h-4 rounded border-gray-300 dark:border-neutral-600 text-orange-600 focus:ring-orange-500 cursor-pointer"
                                             />
                                         </td>
                                         <td className="px-4 py-4 w-48">
-                                            <p className="font-medium text-gray-900 text-sm truncate max-w-[11rem]">{ad.title}</p>
-                                            <p className="text-xs text-gray-400 mt-0.5 truncate max-w-[11rem]">{ad.description}</p>
+                                            <p className="font-medium text-gray-900 dark:text-neutral-100 text-sm truncate max-w-[11rem]">{ad.title}</p>
+                                            <p className="text-xs text-gray-400 dark:text-neutral-500 mt-0.5 truncate max-w-[11rem]">{ad.description}</p>
                                         </td>
-                                        <td className="px-4 py-4 text-sm text-gray-600">{ad.category?.name}</td>
-                                        <td className="px-4 py-4 text-sm text-gray-600">{ad.user?.name}</td>
+                                        <td className="px-4 py-4 text-sm text-gray-600 dark:text-neutral-400">{ad.category?.name}</td>
+                                        <td className="px-4 py-4 text-sm text-gray-600 dark:text-neutral-400">{ad.user?.name}</td>
                                         <td className="px-4 py-4 text-sm font-semibold text-orange-600 whitespace-nowrap">{ad.price || '—'}</td>
-                                        <td className="px-4 py-4 text-sm text-gray-400 whitespace-nowrap">{ad.created_at}</td>
+                                        <td className="px-4 py-4 text-sm text-gray-400 dark:text-neutral-500 whitespace-nowrap">{ad.created_at}</td>
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 {/* Global pin */}
@@ -244,7 +244,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                         className={`px-2 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed ${
                                                             ad.is_pinned
                                                                 ? 'bg-amber-100 text-amber-700 border border-amber-300 hover:bg-amber-200'
-                                                                : 'border border-gray-300 text-gray-500 hover:bg-gray-50'
+                                                                : 'border border-gray-300 dark:border-neutral-600 text-gray-500 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-700'
                                                         }`}
                                                     >
                                                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
@@ -265,7 +265,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                         className={`px-2 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed ${
                                                             ad.is_pinned_category
                                                                 ? 'bg-blue-100 text-blue-700 border border-blue-300 hover:bg-blue-200'
-                                                                : 'border border-gray-300 text-gray-500 hover:bg-gray-50'
+                                                                : 'border border-gray-300 dark:border-neutral-600 text-gray-500 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-700'
                                                         }`}
                                                     >
                                                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
@@ -279,7 +279,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                 </div>
                                                 <Link
                                                     href={`/admin/oglasi/${ad.id}/edit`}
-                                                    className="px-3 py-1.5 text-sm font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                                                    className="px-3 py-1.5 text-sm font-medium border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                                                 >
                                                     Izmeni
                                                 </Link>
@@ -300,53 +300,53 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                         {/* Mobile cards */}
                         <div className="md:hidden">
                             {adList.length > 0 && (
-                                <div className="px-4 py-2.5 border-b border-gray-100 flex items-center gap-2 bg-gray-50">
+                                <div className="px-4 py-2.5 border-b border-gray-100 dark:border-neutral-700 flex items-center gap-2 bg-gray-50 dark:bg-neutral-800">
                                     <input
                                         type="checkbox"
                                         checked={allSelected}
                                         onChange={toggleAll}
                                         aria-label={allSelected ? 'Poništi selekciju' : 'Izaberi sve'}
-                                        className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
+                                        className="w-4 h-4 rounded border-gray-300 dark:border-neutral-600 text-orange-600 focus:ring-orange-500 cursor-pointer"
                                     />
-                                    <span className="text-xs text-gray-500">Izaberi sve</span>
+                                    <span className="text-xs text-gray-500 dark:text-neutral-400">Izaberi sve</span>
                                 </div>
                             )}
-                            <div className="divide-y divide-gray-100">
+                            <div className="divide-y divide-gray-100 dark:divide-neutral-700">
                                 {adList.length === 0 ? (
-                                    <p className="px-4 py-10 text-center text-sm text-gray-400">
+                                    <p className="px-4 py-10 text-center text-sm text-gray-400 dark:text-neutral-500">
                                         {search ? 'Nema oglasa koji odgovaraju pretrazi.' : 'Nema oglasa.'}
                                     </p>
                                 ) : adList.map(ad => (
-                                    <div key={ad.id} className={`p-4 ${selected.has(ad.id) ? 'bg-orange-50' : ''}`}>
+                                    <div key={ad.id} className={`p-4 ${selected.has(ad.id) ? 'bg-orange-50 dark:bg-orange-900/20' : ''}`}>
                                         <div className="flex items-start gap-3 mb-3">
                                             <input
                                                 type="checkbox"
                                                 checked={selected.has(ad.id)}
                                                 onChange={() => toggleOne(ad.id)}
                                                 aria-label={`Izaberi: ${ad.title}`}
-                                                className="w-4 h-4 mt-0.5 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer shrink-0"
+                                                className="w-4 h-4 mt-0.5 rounded border-gray-300 dark:border-neutral-600 text-orange-600 focus:ring-orange-500 cursor-pointer shrink-0"
                                             />
                                             <div className="flex-1 min-w-0">
-                                                <p className="font-medium text-gray-900 text-sm truncate">{ad.title}</p>
-                                                <p className="text-xs text-gray-400 truncate mt-0.5">{ad.description}</p>
+                                                <p className="font-medium text-gray-900 dark:text-neutral-100 text-sm truncate">{ad.title}</p>
+                                                <p className="text-xs text-gray-400 dark:text-neutral-500 truncate mt-0.5">{ad.description}</p>
                                             </div>
                                         </div>
                                         <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs mb-3 ml-7">
                                             <div>
-                                                <p className="text-gray-400">Kategorija</p>
-                                                <p className="text-gray-700 font-medium">{ad.category?.name ?? '—'}</p>
+                                                <p className="text-gray-400 dark:text-neutral-500">Kategorija</p>
+                                                <p className="text-gray-700 dark:text-neutral-300 font-medium">{ad.category?.name ?? '—'}</p>
                                             </div>
                                             <div>
-                                                <p className="text-gray-400">Korisnik</p>
-                                                <p className="text-gray-700 font-medium">{ad.user?.name ?? '—'}</p>
+                                                <p className="text-gray-400 dark:text-neutral-500">Korisnik</p>
+                                                <p className="text-gray-700 dark:text-neutral-300 font-medium">{ad.user?.name ?? '—'}</p>
                                             </div>
                                             <div>
-                                                <p className="text-gray-400">Cena</p>
+                                                <p className="text-gray-400 dark:text-neutral-500">Cena</p>
                                                 <p className="font-semibold text-orange-600">{ad.price || '—'}</p>
                                             </div>
                                             <div>
-                                                <p className="text-gray-400">Datum</p>
-                                                <p className="text-gray-500">{ad.created_at}</p>
+                                                <p className="text-gray-400 dark:text-neutral-500">Datum</p>
+                                                <p className="text-gray-500 dark:text-neutral-400">{ad.created_at}</p>
                                             </div>
                                         </div>
                                         <div className="flex flex-wrap gap-2 ml-7">
@@ -354,7 +354,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                 onClick={() => togglePin(ad.id)}
                                                 disabled={pinning.has(`pin-${ad.id}`)}
                                                 className={`px-2.5 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 disabled:opacity-50 ${
-                                                    ad.is_pinned ? 'bg-amber-100 text-amber-700 border border-amber-300' : 'border border-gray-300 text-gray-500'
+                                                    ad.is_pinned ? 'bg-amber-100 text-amber-700 border border-amber-300' : 'border border-gray-300 dark:border-neutral-600 text-gray-500 dark:text-neutral-400'
                                                 }`}
                                             >
                                                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
@@ -364,7 +364,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                 onClick={() => togglePinCategory(ad.id)}
                                                 disabled={pinning.has(`cat-${ad.id}`)}
                                                 className={`px-2.5 py-1.5 text-xs font-medium rounded-lg transition inline-flex items-center gap-1 disabled:opacity-50 ${
-                                                    ad.is_pinned_category ? 'bg-blue-100 text-blue-700 border border-blue-300' : 'border border-gray-300 text-gray-500'
+                                                    ad.is_pinned_category ? 'bg-blue-100 text-blue-700 border border-blue-300' : 'border border-gray-300 dark:border-neutral-600 text-gray-500 dark:text-neutral-400'
                                                 }`}
                                             >
                                                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
@@ -372,7 +372,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                             </button>
                                             <Link
                                                 href={`/admin/oglasi/${ad.id}/edit`}
-                                                className="px-3 py-1.5 text-xs font-medium border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                                                className="px-3 py-1.5 text-xs font-medium border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                                             >
                                                 Izmeni
                                             </Link>
@@ -394,7 +394,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                             <button
                                 onClick={loadMore}
                                 disabled={loading}
-                                className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-orange-300 transition disabled:opacity-50"
+                                className="inline-flex items-center gap-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-neutral-700 hover:border-orange-300 transition disabled:opacity-50"
                             >
                                 {loading && (
                                     <svg className="w-4 h-4 animate-spin text-orange-600" fill="none" viewBox="0 0 24 24">

@@ -114,7 +114,7 @@ export default function LocationAutocomplete({ value, onChange, className, place
                     id={listboxId}
                     role="listbox"
                     aria-label="Predlozi lokacija"
-                    className="absolute z-50 left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto"
+                    className="absolute z-50 left-0 right-0 top-full mt-1 bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-lg shadow-lg max-h-60 overflow-y-auto"
                 >
                     {suggestions.map((city, i) => (
                         <li
@@ -126,11 +126,11 @@ export default function LocationAutocomplete({ value, onChange, className, place
                             onPointerDown={() => select(city)}
                             onMouseEnter={() => setActiveIndex(i)}
                             className={`px-3 py-2 text-sm cursor-pointer transition-colors ${
-                                i === activeIndex ? 'bg-orange-50' : 'hover:bg-orange-50'
+                                i === activeIndex ? 'bg-orange-50 dark:bg-orange-900/20' : 'hover:bg-orange-50 dark:hover:bg-orange-900/20'
                             }`}
                         >
-                            <p className="font-medium text-gray-800">{city.name}</p>
-                            <p className="text-xs text-gray-400">{city.region}</p>
+                            <p className="font-medium text-gray-800 dark:text-neutral-200">{city.name}</p>
+                            <p className="text-xs text-gray-400 dark:text-neutral-500">{city.region}</p>
                         </li>
                     ))}
                 </ul>

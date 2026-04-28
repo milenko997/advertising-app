@@ -62,8 +62,8 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                     {/* Page header */}
                     {!search && (
                         <div className="mb-5">
-                            <h1 className="text-xl font-bold text-slate-900">Transport oglasi u Srbiji</h1>
-                            <p className="text-sm text-slate-500 mt-0.5">Pronađite pouzdane prevoznike i transportne usluge širom Srbije.</p>
+                            <h1 className="text-xl font-bold text-slate-900 dark:text-neutral-100">Transport oglasi u Srbiji</h1>
+                            <p className="text-sm text-slate-500 dark:text-neutral-400 mt-0.5">Pronađite pouzdane prevoznike i transportne usluge širom Srbije.</p>
                         </div>
                     )}
 
@@ -90,7 +90,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                         value={searchValue}
                                         onChange={e => setSearchValue(e.target.value)}
                                         placeholder="Pretraži oglase…"
-                                        className="w-full border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                        className="w-full border border-gray-200 dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                     />
                                 </div>
                                 {/* Row 2 (mobile) / items 2-4 (desktop): location + buttons */}
@@ -107,7 +107,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                             value={locationValue}
                                             onChange={e => setLocationValue(e.target.value)}
                                             placeholder="Lokacija…"
-                                            className="w-full sm:w-36 border border-gray-200 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                            className="w-full sm:w-36 border border-gray-200 dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                         />
                                     </div>
                                     <button
@@ -138,31 +138,31 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                         <svg className="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
                                         </svg>
-                                        <span className="text-sm font-semibold text-gray-700">Istaknuti oglasi</span>
+                                        <span className="text-sm font-semibold text-gray-700 dark:text-neutral-300">Istaknuti oglasi</span>
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                                         {pinnedAds.map(ad => (
                                             <AdCard key={ad.id} ad={ad} favoritedIds={favoritedIds} />
                                         ))}
                                     </div>
-                                    <div className="mt-8 border-t border-gray-200" />
+                                    <div className="mt-8 border-t border-gray-200 dark:border-neutral-700" />
                                 </div>
                             )}
 
                             {search && (
-                                <p className="text-sm text-gray-500 mb-5">
-                                    <span className="font-semibold text-gray-700">{ads.total}</span> rezultat(a) za "
+                                <p className="text-sm text-gray-500 dark:text-neutral-400 mb-5">
+                                    <span className="font-semibold text-gray-700 dark:text-neutral-300">{ads.total}</span> rezultat(a) za "
                                     <span className="text-orange-600">{search}</span>"
                                 </p>
                             )}
 
                             {adList.length === 0 ? (
-                                <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
+                                <div className="text-center py-16 bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700">
                                     <svg className="w-14 h-14 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                                             d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                     </svg>
-                                    <p className="text-gray-500">
+                                    <p className="text-gray-500 dark:text-neutral-400">
                                         {search ? `Nema rezultata za "${search}".` : 'Još nema oglasa.'}
                                     </p>
                                 </div>
@@ -180,7 +180,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                                 id="btn-load-more"
                                                 onClick={loadMore}
                                                 disabled={loading}
-                                                className="w-full flex items-center justify-center gap-2 bg-white border border-gray-200 text-gray-600 px-6 py-3 rounded-xl text-sm font-medium hover:bg-orange-50 hover:border-orange-300 hover:text-orange-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                                className="w-full flex items-center justify-center gap-2 bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-neutral-300 px-6 py-3 rounded-xl text-sm font-medium hover:bg-orange-50 dark:hover:bg-orange-900/20 hover:border-orange-300 hover:text-orange-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
                                             >
                                                 {loading && (
                                                     <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">

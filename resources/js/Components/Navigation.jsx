@@ -236,7 +236,7 @@ export default function Navigation() {
                     <div id="navbar-right" className="hidden lg:flex items-center gap-3">
                         {!user?.isAdmin && (
                             <Link
-                                href={user ? "/postavi-oglas" : "/login"}
+                                href={user ? "/postavi-oglas" : "/prijava"}
                                 className="inline-flex items-center gap-1.5 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm"
                             >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -362,11 +362,11 @@ export default function Navigation() {
                             </div>
                         ) : (
                             <div className="flex items-center gap-3">
-                                <Link href="/login" className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
+                                <Link href="/prijava" className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">
                                     Prijava
                                 </Link>
                                 <Link
-                                    href="/register"
+                                    href="/registracija"
                                     className="text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition-colors shadow-sm"
                                 >
                                     Registracija
@@ -378,7 +378,7 @@ export default function Navigation() {
                     {/* Mobile: Postavi oglas button */}
                     {!user?.isAdmin && (
                         <Link
-                            href={user ? "/postavi-oglas" : "/login"}
+                            href={user ? "/postavi-oglas" : "/prijava"}
                             className="lg:hidden flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-3 py-2.5 rounded-lg transition-colors min-h-[44px]"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -414,7 +414,7 @@ export default function Navigation() {
                 <div id="navbar-mobile-menu" className="lg:hidden border-t border-neutral-800 bg-black">
                     <div className="px-4 py-3 space-y-0.5">
                         {!user?.isAdmin && (
-                            <MobileNavLink href={user ? "/postavi-oglas" : "/login"}>Postavi oglas</MobileNavLink>
+                            <MobileNavLink href={user ? "/postavi-oglas" : "/prijava"}>Postavi oglas</MobileNavLink>
                         )}
                         <MobileNavLink href="/">Oglasi</MobileNavLink>
                         {user && user.isAdmin && (
@@ -477,10 +477,10 @@ export default function Navigation() {
                         </div>
                     ) : (
                         <div className="px-4 py-3 border-t border-neutral-800 flex gap-3">
-                            <Link href="/login" className="flex-1 text-center py-2 text-sm font-medium text-neutral-300 border border-neutral-700 rounded-lg hover:bg-white/5 transition-colors">
+                            <Link href="/prijava" className="flex-1 text-center py-2 text-sm font-medium text-neutral-300 border border-neutral-700 rounded-lg hover:bg-white/5 transition-colors">
                                 Prijava
                             </Link>
-                            <Link href="/register" className="flex-1 text-center py-2 text-sm font-semibold bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
+                            <Link href="/registracija" className="flex-1 text-center py-2 text-sm font-semibold bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
                                 Registracija
                             </Link>
                         </div>

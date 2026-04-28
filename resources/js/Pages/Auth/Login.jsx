@@ -11,7 +11,7 @@ export default function Login({ status }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post('/login');
+        post('/prijava');
     };
 
     return (
@@ -62,7 +62,7 @@ export default function Login({ status }) {
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
-                    <Link href="/forgot-password" className="text-sm text-gray-500 dark:text-neutral-400 hover:text-orange-600">
+                    <Link href="/zaboravljena-lozinka" className="text-sm text-gray-500 dark:text-neutral-400 hover:text-orange-600">
                         Zaboravili ste lozinku?
                     </Link>
                     <button
@@ -77,7 +77,7 @@ export default function Login({ status }) {
 
             <p className="mt-6 text-center text-sm text-gray-500 dark:text-neutral-400">
                 Nemate nalog?{' '}
-                <Link href="/register" className="text-orange-600 hover:underline font-medium">
+                <Link href="/registracija" className="text-orange-600 hover:underline font-medium">
                     Registrujte se
                 </Link>
             </p>

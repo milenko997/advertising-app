@@ -146,7 +146,7 @@ export default function About() {
                     </p>
                     <div className="flex items-center justify-center gap-4 flex-wrap">
                         <Link
-                            href="/register"
+                            href="/registracija"
                             className="px-6 py-2.5 bg-white text-orange-600 font-semibold text-sm rounded-lg hover:bg-orange-50 transition-colors"
                         >
                             Napravi nalog

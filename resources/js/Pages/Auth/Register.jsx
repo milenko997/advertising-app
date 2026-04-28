@@ -19,7 +19,7 @@ export default function Register() {
 
     const submit = (e) => {
         e.preventDefault();
-        post('/register');
+        post('/registracija');
     };
 
     return (
@@ -79,7 +79,7 @@ export default function Register() {
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
-                    <Link href="/login" className="text-sm text-gray-500 dark:text-neutral-400 hover:text-orange-600">
+                    <Link href="/prijava" className="text-sm text-gray-500 dark:text-neutral-400 hover:text-orange-600">
                         Već imate nalog?
                     </Link>
                     <button

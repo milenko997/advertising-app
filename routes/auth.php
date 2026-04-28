@@ -11,29 +11,29 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
+    Route::get('registracija', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store'])
+    Route::post('registracija', [RegisteredUserController::class, 'store'])
                 ->middleware('throttle:5,60');
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
+    Route::get('prijava', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store'])
+    Route::post('prijava', [AuthenticatedSessionController::class, 'store'])
                 ->middleware('throttle:login');
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+    Route::get('zaboravljena-lozinka', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
 
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+    Route::post('zaboravljena-lozinka', [PasswordResetLinkController::class, 'store'])
                 ->middleware('throttle:password-reset')
                 ->name('password.email');
 
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+    Route::get('resetovanje-lozinke/{token}', [NewPasswordController::class, 'create'])
                 ->name('password.reset');
 
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
+    Route::post('resetovanje-lozinke', [NewPasswordController::class, 'store'])
                 ->name('password.update');
 });
 

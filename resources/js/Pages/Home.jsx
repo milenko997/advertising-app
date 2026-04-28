@@ -19,7 +19,9 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const params = new URLSearchParams(window.location.search);
+            const params = new URLSearchParams();
+            if (searchValue)   params.set('search',   searchValue);
+            if (locationValue) params.set('location', locationValue);
             params.set('page', nextPage);
             const { data } = await axios.get(`/?${params}`);
             setAdList(prev => [...prev, ...data.ads]);

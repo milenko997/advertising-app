@@ -33,7 +33,7 @@ export default function Privacy() {
             </Head>
 
             {/* Hero */}
-            <div className="bg-slate-900 py-14">
+            <div className="bg-black py-14">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/15 text-orange-400 text-xs font-semibold mb-4">
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,7 +42,7 @@ export default function Privacy() {
                         Pravno
                     </span>
                     <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Politika privatnosti</h1>
-                    <p className="text-slate-400 text-sm">Poslednje ažuriranje: April 2026</p>
+                    <p className="text-neutral-400 text-sm">Poslednje ažuriranje: April 2026</p>
                 </div>
             </div>
 
@@ -193,7 +193,7 @@ export default function Privacy() {
                             </p>
                         </Section>
 
-                        <div className="mt-10 pt-8 border-t border-slate-100 dark:border-neutral-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-400 dark:text-neutral-500">
+                        <div className="mt-10 pt-8 border-t border-slate-100 dark:border-neutral-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-neutral-400 dark:text-neutral-500">
                             <span>Pitanja? <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a></span>
                             <div className="flex items-center gap-4">
                                 <Link href="/uslovi-koriscenja" className="hover:text-slate-600 transition-colors">Uslovi korišćenja</Link>

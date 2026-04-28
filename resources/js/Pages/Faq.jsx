@@ -155,7 +155,7 @@ export default function Faq() {
             </Head>
 
             {/* Hero */}
-            <div className="bg-slate-900 py-14">
+            <div className="bg-black py-14">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/15 text-orange-400 text-xs font-semibold mb-4">
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,7 +166,7 @@ export default function Faq() {
                     <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                         Često postavljana pitanja
                     </h1>
-                    <p className="text-slate-400 text-base leading-relaxed">
+                    <p className="text-neutral-400 text-base leading-relaxed">
                         Sve što treba da znate o korišćenju AdBoard-a. Ne možete pronaći ono što tražite?{' '}
                         <a href="mailto:info@adboard.rs" className="text-orange-400 hover:text-orange-300 underline underline-offset-2 transition-colors">
                             Kontaktirajte nas
@@ -198,9 +198,9 @@ export default function Faq() {
                     ))}
 
                     {/* CTA */}
-                    <div className="bg-slate-900 rounded-2xl p-8 text-center">
+                    <div className="bg-black rounded-2xl p-8 text-center">
                         <h3 className="text-lg font-bold text-white mb-2">Imate još pitanja?</h3>
-                        <p className="text-slate-400 text-sm mb-5">Naš tim je tu da vam pomogne sa svim što nije pokriveno gore.</p>
+                        <p className="text-neutral-400 text-sm mb-5">Naš tim je tu da vam pomogne sa svim što nije pokriveno gore.</p>
                         <a
                             href="mailto:info@adboard.rs"
                             className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors"

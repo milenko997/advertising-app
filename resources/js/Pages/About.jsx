@@ -21,7 +21,7 @@ export default function About() {
             </Head>
 
             {/* Hero */}
-            <div id="section-about-hero" className="bg-slate-900 py-20">
+            <div id="section-about-hero" className="bg-black py-20">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full text-orange-400 text-xs font-semibold tracking-wide uppercase mb-6">
                         O nama
@@ -29,7 +29,7 @@ export default function About() {
                     <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight mb-6">
                         Spajamo transport<br className="hidden sm:block" /> i logistiku Srbije
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed max-w-2xl mx-auto">
+                    <p className="text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto">
                         AdBoard je specijalizovana platforma koja povezuje transportere, logističke kompanije i pošiljaoce tereta na jednom mestu — brzo, jednostavno i pouzdano.
                     </p>
                 </div>

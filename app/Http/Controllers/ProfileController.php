@@ -31,12 +31,14 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         $request->validate([
-            'name'   => 'required|string|min:2|max:255',
+            'name'   => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s\'\-]+$/u'],
             'email'  => 'required|email:rfc|max:255|unique:users,email,' . $user->id,
             'phone'  => ['nullable', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1900',
         ], [
             'name.min'    => 'Ime mora imati najmanje 2 karaktera.',
+            'name.max'    => 'Ime ne sme imati više od 50 karaktera.',
+            'name.regex'  => 'Ime sme sadržati samo slova, razmake, crtice i apostrofe.',
             'email.email' => 'Unesite ispravnu email adresu.',
             'phone.regex' => 'Unesite ispravan broj telefona (cifre, razmaci, +, -, zagrade).',
         ]);

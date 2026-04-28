@@ -3,6 +3,7 @@ import { usePage } from '@inertiajs/react';
 import Navigation from '@/Components/Navigation';
 import Footer from '@/Components/Footer';
 import FeedbackButton from '@/Components/FeedbackButton';
+import StarField from '@/Components/StarField';
 
 export default function AppLayout({ children, header }) {
     const { flash } = usePage().props;
@@ -10,7 +11,9 @@ export default function AppLayout({ children, header }) {
     const [errorDismissed, setErrorDismissed]     = useState(false);
 
     return (
-        <div id="app" className="min-h-screen bg-zinc-50 dark:bg-neutral-900">
+        <div id="app" className="relative min-h-screen bg-zinc-50 dark:bg-neutral-900">
+            <StarField />
+            <div className="relative z-10 flex flex-col min-h-screen">
             <Navigation />
 
             {flash?.success && !successDismissed && (
@@ -55,6 +58,7 @@ export default function AppLayout({ children, header }) {
             <main id="main-content">{children}</main>
             <Footer />
             <FeedbackButton />
+            </div>
         </div>
     );
 }

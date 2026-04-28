@@ -1,9 +1,11 @@
 import { Link } from '@inertiajs/react';
+import StarField from '@/Components/StarField';
 
 export default function GuestLayout({ children }) {
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-100 dark:bg-black px-4 py-12">
-            <div className="mb-6">
+        <div className="relative min-h-screen flex flex-col items-center justify-center bg-zinc-100 dark:bg-black px-4 py-12">
+            <StarField />
+            <div className="relative z-10 mb-6">
                 <Link href="/" className="flex items-center gap-2.5">
                     <span className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center shadow-sm">
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 24 24" style={{width:'18px',height:'18px'}} className="text-white">
@@ -13,7 +15,7 @@ export default function GuestLayout({ children }) {
                     <span className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">AdBoard</span>
                 </Link>
             </div>
-            <div className="w-full max-w-md bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl p-8">
+            <div className="relative z-10 w-full max-w-md bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl p-8">
                 {children}
             </div>
         </div>

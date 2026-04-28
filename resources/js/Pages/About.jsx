@@ -6,17 +6,17 @@ export default function About() {
     return (
         <AppLayout>
             <Head>
-                <title>O nama — AdBoard</title>
-                <meta name="description" content="Saznajte više o AdBoard platformi — srpskom marketplaceu za transport i logistiku." />
-                <meta property="og:title"       content="O nama — AdBoard" />
-                <meta property="og:description" content="Saznajte više o AdBoard platformi — srpskom marketplaceu za transport i logistiku." />
+                <title>O nama — Transporteri</title>
+                <meta name="description" content="Saznajte više o Transporteri platformi — srpskom marketplaceu za transport i logistiku." />
+                <meta property="og:title"       content="O nama — Transporteri" />
+                <meta property="og:description" content="Saznajte više o Transporteri platformi — srpskom marketplaceu za transport i logistiku." />
                 <meta property="og:type"        content="website" />
-                <meta property="og:site_name"   content="AdBoard" />
+                <meta property="og:site_name"   content="Transporteri" />
                 <meta property="og:image"       content={`${appUrl}/og-default.png`} />
                 <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
-                <meta name="twitter:title"       content="O nama — AdBoard" />
-                <meta name="twitter:description" content="Saznajte više o AdBoard platformi — srpskom marketplaceu za transport i logistiku." />
+                <meta name="twitter:title"       content="O nama — Transporteri" />
+                <meta name="twitter:description" content="Saznajte više o Transporteri platformi — srpskom marketplaceu za transport i logistiku." />
                 <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 
@@ -30,7 +30,7 @@ export default function About() {
                         Spajamo transport<br className="hidden sm:block" /> i logistiku Srbije
                     </h1>
                     <p className="text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto">
-                        AdBoard je specijalizovana platforma koja povezuje transportere, logističke kompanije i pošiljaoce tereta na jednom mestu — brzo, jednostavno i pouzdano.
+                        Transporteri je specijalizovana platforma koja povezuje transportere, logističke kompanije i pošiljaoce tereta na jednom mestu — brzo, jednostavno i pouzdano.
                     </p>
                 </div>
             </div>
@@ -45,7 +45,7 @@ export default function About() {
                             Transportna industrija u Srbiji dugo je bila rascepkana — vozači, firme i vlasnici tereta oslanjali su se na posrednike, lične kontakte ili zastarele kanale oglašavanja.
                         </p>
                         <p className="text-gray-600 dark:text-neutral-400 leading-relaxed">
-                            AdBoard je nastao s ciljem da to promeni. Pružamo centralnu tačku gde profesionalci iz transporta mogu da se predstave, a korisnici lako pronađu pravo vozilo ili uslugu — bez posrednika i bez komplikacija.
+                            Transporteri je nastao s ciljem da to promeni. Pružamo centralnu tačku gde profesionalci iz transporta mogu da se predstave, a korisnici lako pronađu pravo vozilo ili uslugu — bez posrednika i bez komplikacija.
                         </p>
                     </div>
                     <div className="bg-orange-50 dark:bg-orange-900/20 rounded-2xl p-8 flex items-center justify-center">
@@ -58,7 +58,7 @@ export default function About() {
 
                 {/* Stats */}
                 <section id="section-about-stats" className="bg-white dark:bg-neutral-800 rounded-2xl border border-gray-200 dark:border-neutral-700 shadow-sm p-8">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-neutral-100 mb-8 text-center">AdBoard u brojevima</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-neutral-100 mb-8 text-center">Transporteri u brojevima</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
                         {[
                             { value: '60+',    label: 'Kategorija vozila' },
@@ -140,7 +140,7 @@ export default function About() {
 
                 {/* CTA */}
                 {!auth?.user && <section id="section-about-cta" className="bg-orange-600 rounded-2xl p-10 text-center">
-                    <h2 className="text-2xl font-bold text-white mb-3">Pridružite se AdBoard zajednici</h2>
+                    <h2 className="text-2xl font-bold text-white mb-3">Pridružite se Transporteri zajednici</h2>
                     <p className="text-orange-200 mb-7 max-w-xl mx-auto">
                         Registracija je besplatna. Postavite oglas danas i dosegnite klijente širom Srbije.
                     </p>

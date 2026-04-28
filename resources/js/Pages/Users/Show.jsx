@@ -98,8 +98,8 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
         });
     };
 
-    const pageTitle  = `${user.name} — AdBoard`;
-    const pageDesc   = `Pogledajte profil korisnika ${user.name} na AdBoard-u — oglasi, recenzije i kontakt informacije.`;
+    const pageTitle  = `${user.name} — Transporteri`;
+    const pageDesc   = `Pogledajte profil korisnika ${user.name} na Transporterima — oglasi, recenzije i kontakt informacije.`;
     const avatarUrl  = user.avatar
         ? `${appUrl}/storage/${user.avatar}`
         : `${appUrl}/og-default.png`;
@@ -110,7 +110,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                 <title>{pageTitle}</title>
                 <meta name="description" content={pageDesc} />
                 <meta property="og:type"        content="profile" />
-                <meta property="og:site_name"   content="AdBoard" />
+                <meta property="og:site_name"   content="Transporteri" />
                 <meta property="og:title"       content={pageTitle} />
                 <meta property="og:description" content={pageDesc} />
                 <meta property="og:image"       content={avatarUrl} />

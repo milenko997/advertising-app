@@ -7,8 +7,8 @@ const faqs = [
         category: 'Početak',
         items: [
             {
-                q: 'Šta je AdBoard?',
-                a: 'AdBoard je marketplace za profesionalce iz oblasti transporta i teretnih usluga u Srbiji. Možete postavljati i pregledati oglase za kamione, kombije, prikolice i druga komercijalna vozila, kao i pronalaziti logističke partnere i prilike za prevoz tereta.',
+                q: 'Šta je Transporteri?',
+                a: 'Transporteri je marketplace za profesionalce iz oblasti transporta i teretnih usluga u Srbiji. Možete postavljati i pregledati oglase za kamione, kombije, prikolice i druga komercijalna vozila, kao i pronalaziti logističke partnere i prilike za prevoz tereta.',
             },
             {
                 q: 'Da li mi je potreban nalog da bih pregledao oglase?',
@@ -100,7 +100,7 @@ const faqs = [
             },
             {
                 q: 'Kako da obrišem nalog?',
-                a: 'Kontaktirajte nas na info@adboard.rs da biste zatražili brisanje naloga. Uklonićemo sve vaše podatke u roku od 30 dana.',
+                a: 'Kontaktirajte nas na info@transporteri.rs da biste zatražili brisanje naloga. Uklonićemo sve vaše podatke u roku od 30 dana.',
             },
         ],
     },
@@ -140,17 +140,17 @@ export default function Faq() {
     return (
         <AppLayout>
             <Head>
-                <title>Česta pitanja — AdBoard</title>
-                <meta name="description" content="Često postavljana pitanja o AdBoard-u — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
+                <title>Česta pitanja — Transporteri</title>
+                <meta name="description" content="Često postavljana pitanja o Transporterima — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
                 <meta property="og:type"        content="website" />
-                <meta property="og:site_name"   content="AdBoard" />
-                <meta property="og:title"       content="Česta pitanja — AdBoard" />
-                <meta property="og:description" content="Često postavljana pitanja o AdBoard-u — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
+                <meta property="og:site_name"   content="Transporteri" />
+                <meta property="og:title"       content="Česta pitanja — Transporteri" />
+                <meta property="og:description" content="Često postavljana pitanja o Transporterima — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
                 <meta property="og:image"       content={`${appUrl}/og-default.png`} />
                 <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
-                <meta name="twitter:title"       content="Česta pitanja — AdBoard" />
-                <meta name="twitter:description" content="Često postavljana pitanja o AdBoard-u — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
+                <meta name="twitter:title"       content="Česta pitanja — Transporteri" />
+                <meta name="twitter:description" content="Često postavljana pitanja o Transporterima — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
                 <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 
@@ -167,8 +167,8 @@ export default function Faq() {
                         Često postavljana pitanja
                     </h1>
                     <p className="text-neutral-400 text-base leading-relaxed">
-                        Sve što treba da znate o korišćenju AdBoard-a. Ne možete pronaći ono što tražite?{' '}
-                        <a href="mailto:info@adboard.rs" className="text-orange-400 hover:text-orange-300 underline underline-offset-2 transition-colors">
+                        Sve što treba da znate o korišćenju Transportera. Ne možete pronaći ono što tražite?{' '}
+                        <a href="mailto:info@transporteri.rs" className="text-orange-400 hover:text-orange-300 underline underline-offset-2 transition-colors">
                             Kontaktirajte nas
                         </a>.
                     </p>
@@ -202,7 +202,7 @@ export default function Faq() {
                         <h3 className="text-lg font-bold text-white mb-2">Imate još pitanja?</h3>
                         <p className="text-neutral-400 text-sm mb-5">Naš tim je tu da vam pomogne sa svim što nije pokriveno gore.</p>
                         <a
-                            href="mailto:info@adboard.rs"
+                            href="mailto:info@transporteri.rs"
                             className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

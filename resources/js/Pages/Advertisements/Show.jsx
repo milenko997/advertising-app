@@ -131,10 +131,10 @@ export default function Show({ ad, isSaved, reviews: initialReviews, hasMoreRevi
     const dateLabel = ad.created_at !== ad.updated_at ? 'Ažurirano' : 'Objavljeno';
     const dateValue = ad.created_at !== ad.updated_at ? ad.updated_at : ad.created_at;
 
-    const pageTitle   = `${ad.title} — AdBoard`;
+    const pageTitle   = `${ad.title} — Transporteri`;
     const description = ad.description
         ? ad.description.replace(/\s+/g, ' ').trim().slice(0, 160)
-        : `${ad.title} — available on AdBoard, the marketplace for transport and freight professionals in Serbia.`;
+        : `${ad.title} — available on Transporteri, the marketplace for transport and freight professionals in Serbia.`;
     const imageUrl    = ad.image
         ? `${appUrl}/storage/${ad.image}`
         : `${appUrl}/og-default.png`;
@@ -148,7 +148,7 @@ export default function Show({ ad, isSaved, reviews: initialReviews, hasMoreRevi
 
                 {/* Open Graph */}
                 <meta property="og:type"        content="product" />
-                <meta property="og:site_name"   content="AdBoard" />
+                <meta property="og:site_name"   content="Transporteri" />
                 <meta property="og:title"       content={pageTitle} />
                 <meta property="og:description" content={description} />
                 <meta property="og:image"       content={imageUrl} />

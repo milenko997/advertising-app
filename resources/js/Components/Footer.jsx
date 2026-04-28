@@ -18,7 +18,7 @@ export default function Footer() {
                                     <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
                                 </svg>
                             </span>
-                            <span className="text-base font-bold text-white tracking-tight">AdBoard</span>
+                            <span className="text-base font-bold text-white tracking-tight">Transporteri</span>
                         </Link>
                         <p className="text-sm text-neutral-400 leading-relaxed max-w-xs">
                             Oglasnik za transport i logistiku u Srbiji. Pronađite vozila, rute i logističke partnere.
@@ -152,14 +152,14 @@ export default function Footer() {
                         <h3 className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-4">Kontakt</h3>
                         <ul className="space-y-3">
                             <li>
-                                <a href="mailto:info@adboard.rs" className="flex items-center gap-2.5 text-sm text-neutral-400 hover:text-white transition-colors group">
+                                <a href="mailto:info@transporteri.rs" className="flex items-center gap-2.5 text-sm text-neutral-400 hover:text-white transition-colors group">
                                     <span className="w-7 h-7 rounded-md bg-neutral-800 group-hover:bg-neutral-700 flex items-center justify-center shrink-0 transition-colors">
                                         <svg className="w-3.5 h-3.5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                                 d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                         </svg>
                                     </span>
-                                    info@adboard.rs
+                                    info@transporteri.rs
                                 </a>
                             </li>
                             <li>
@@ -193,7 +193,7 @@ export default function Footer() {
                 {/* Bottom bar */}
                 <div className="border-t border-neutral-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-xs text-neutral-500">
-                        © {year} AdBoard. Sva prava zadržana.
+                        © {year} Transporteri. Sva prava zadržana.
                     </p>
                 </div>
 

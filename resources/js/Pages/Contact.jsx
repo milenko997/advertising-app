@@ -37,17 +37,17 @@ export default function Contact() {
     return (
         <AppLayout>
             <Head>
-                <title>Kontakt — AdBoard</title>
-                <meta name="description" content="Stupite u kontakt sa AdBoard timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
+                <title>Kontakt — Transporteri</title>
+                <meta name="description" content="Stupite u kontakt sa Transporteri timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
                 <meta property="og:type"        content="website" />
-                <meta property="og:site_name"   content="AdBoard" />
-                <meta property="og:title"       content="Kontakt — AdBoard" />
-                <meta property="og:description" content="Stupite u kontakt sa AdBoard timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
+                <meta property="og:site_name"   content="Transporteri" />
+                <meta property="og:title"       content="Kontakt — Transporteri" />
+                <meta property="og:description" content="Stupite u kontakt sa Transporteri timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
                 <meta property="og:image"       content={`${appUrl}/og-default.png`} />
                 <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
-                <meta name="twitter:title"       content="Kontakt — AdBoard" />
-                <meta name="twitter:description" content="Stupite u kontakt sa AdBoard timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
+                <meta name="twitter:title"       content="Kontakt — Transporteri" />
+                <meta name="twitter:description" content="Stupite u kontakt sa Transporteri timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
                 <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 
@@ -77,8 +77,8 @@ export default function Contact() {
                             <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-slate-100 dark:border-neutral-700 shadow-sm p-6 space-y-6">
                                 <InfoCard
                                     label="Email"
-                                    value="info@adboard.rs"
-                                    href="mailto:info@adboard.rs"
+                                    value="info@transporteri.rs"
+                                    href="mailto:info@transporteri.rs"
                                     icon={
                                         <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />

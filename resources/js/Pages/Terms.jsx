@@ -18,17 +18,17 @@ export default function Terms() {
     return (
         <AppLayout>
             <Head>
-                <title>Uslovi korišćenja — AdBoard</title>
-                <meta name="description" content="Pročitajte AdBoard uslove korišćenja koji pokrivaju registraciju naloga, pravila postavljanja oglasa, zabranjeni sadržaj i vaša prava kao korisnika." />
+                <title>Uslovi korišćenja — Transporteri</title>
+                <meta name="description" content="Pročitajte Transporteri uslove korišćenja koji pokrivaju registraciju naloga, pravila postavljanja oglasa, zabranjeni sadržaj i vaša prava kao korisnika." />
                 <meta property="og:type"        content="website" />
-                <meta property="og:site_name"   content="AdBoard" />
-                <meta property="og:title"       content="Uslovi korišćenja — AdBoard" />
-                <meta property="og:description" content="Pročitajte AdBoard uslove korišćenja koji pokrivaju registraciju naloga, pravila postavljanja oglasa, zabranjeni sadržaj i vaša prava kao korisnika." />
+                <meta property="og:site_name"   content="Transporteri" />
+                <meta property="og:title"       content="Uslovi korišćenja — Transporteri" />
+                <meta property="og:description" content="Pročitajte Transporteri uslove korišćenja koji pokrivaju registraciju naloga, pravila postavljanja oglasa, zabranjeni sadržaj i vaša prava kao korisnika." />
                 <meta property="og:image"       content={`${appUrl}/og-default.png`} />
                 <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
-                <meta name="twitter:title"       content="Uslovi korišćenja — AdBoard" />
-                <meta name="twitter:description" content="Pročitajte AdBoard uslove korišćenja koji pokrivaju registraciju naloga, pravila postavljanja oglasa, zabranjeni sadržaj i vaša prava kao korisnika." />
+                <meta name="twitter:title"       content="Uslovi korišćenja — Transporteri" />
+                <meta name="twitter:description" content="Pročitajte Transporteri uslove korišćenja koji pokrivaju registraciju naloga, pravila postavljanja oglasa, zabranjeni sadržaj i vaša prava kao korisnika." />
                 <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 
@@ -52,12 +52,12 @@ export default function Terms() {
                     <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-slate-100 dark:border-neutral-700 shadow-sm px-8 py-10">
 
                         <p className="text-sm text-slate-500 dark:text-neutral-400 leading-relaxed mb-10">
-                            Dobrodošli na <strong className="text-slate-700 dark:text-neutral-200">AdBoard</strong>. Pristupanjem ili korišćenjem naše platforme, slažete se da budete vezani ovim Uslovima korišćenja. Molimo vas da ih pažljivo pročitate pre korišćenja usluge. Ukoliko se ne slažete sa ovim uslovima, molimo vas da ne koristite AdBoard.
+                            Dobrodošli na <strong className="text-slate-700 dark:text-neutral-200">Transporteri</strong>. Pristupanjem ili korišćenjem naše platforme, slažete se da budete vezani ovim Uslovima korišćenja. Molimo vas da ih pažljivo pročitate pre korišćenja usluge. Ukoliko se ne slažete sa ovim uslovima, molimo vas da ne koristite Transporteri.
                         </p>
 
                         <Section title="1. Prihvatanje uslova">
                             <p>
-                                Registracijom naloga, postavljanjem oglasa ili jednostavnim pregledanjem AdBoard-a, potvrđujete da ste pročitali, razumeli i slažete se da poštujete ove Uslove korišćenja, kao i sve primenjive zakone i propise Republike Srbije.
+                                Registracijom naloga, postavljanjem oglasa ili jednostavnim pregledanjem Transportera, potvrđujete da ste pročitali, razumeli i slažete se da poštujete ove Uslove korišćenja, kao i sve primenjive zakone i propise Republike Srbije.
                             </p>
                             <p>
                                 Zadržavamo pravo da u bilo kom trenutku izmenimo ove uslove. Nastavak korišćenja platforme nakon objave izmena smatra se prihvatanjem izmenjenih uslova.
@@ -66,16 +66,16 @@ export default function Terms() {
 
                         <Section title="2. Prihvatljivost">
                             <p>
-                                Morate imati najmanje 18 godina da biste kreirali nalog ili postavljali oglase na AdBoard-u. Korišćenjem platforme, izjavljujete i garantujete da ispunjavate ovaj uslov.
+                                Morate imati najmanje 18 godina da biste kreirali nalog ili postavljali oglase na Transporterima. Korišćenjem platforme, izjavljujete i garantujete da ispunjavate ovaj uslov.
                             </p>
                             <p>
-                                Ukoliko koristite AdBoard u ime preduzeća ili pravnog lica, izjavljujete da imate ovlašćenje da obavežete to lice ovim uslovima.
+                                Ukoliko koristite Transporteri u ime preduzeća ili pravnog lica, izjavljujete da imate ovlašćenje da obavežete to lice ovim uslovima.
                             </p>
                         </Section>
 
                         <Section title="3. Korisnički nalozi">
                             <p>
-                                Odgovorni ste za čuvanje poverljivosti podataka za pristup nalogu i za sve aktivnosti koje se odvijaju na vašem nalogu. Odmah nas obavestite na <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a> ukoliko posumnjate u neovlašćeno korišćenje.
+                                Odgovorni ste za čuvanje poverljivosti podataka za pristup nalogu i za sve aktivnosti koje se odvijaju na vašem nalogu. Odmah nas obavestite na <a href="mailto:info@transporteri.rs" className="text-orange-500 hover:underline">info@transporteri.rs</a> ukoliko posumnjate u neovlašćeno korišćenje.
                             </p>
                             <p>
                                 Ne smete deliti nalog sa drugima, kreirati više naloga niti koristiti tuđi nalog bez dozvole. Zadržavamo pravo da suspendujemo ili ukinemo naloge koji krše ove uslove.
@@ -98,7 +98,7 @@ export default function Terms() {
                         </Section>
 
                         <Section title="5. Zabranjeni sadržaj">
-                            <p>Sledeće vrste sadržaja su strogo zabranjene na AdBoard-u:</p>
+                            <p>Sledeće vrste sadržaja su strogo zabranjene na Transporterima:</p>
                             <ul className="list-disc list-inside space-y-1.5 pl-2">
                                 <li>Lažni, obmanjujući ili prevarni oglasi.</li>
                                 <li>Duplikat ili spam listinzi.</li>
@@ -114,19 +114,19 @@ export default function Terms() {
 
                         <Section title="6. Intelektualna svojina">
                             <p>
-                                Sav sadržaj na AdBoard-u koji nije generisan od strane korisnika — uključujući logo, dizajn, kod i tekst — vlasništvo je AdBoard-a i zaštićen je autorskim pravom. Ne smete ga reprodukovati, distribuirati niti kreirati izvedena dela bez našeg pisanog pristanka.
+                                Sav sadržaj na Transporterima koji nije generisan od strane korisnika — uključujući logo, dizajn, kod i tekst — vlasništvo je Transportera i zaštićen je autorskim pravom. Ne smete ga reprodukovati, distribuirati niti kreirati izvedena dela bez našeg pisanog pristanka.
                             </p>
                             <p>
-                                Postavljanjem sadržaja na AdBoard, dajete nam neekskluzivnu, besplatnu licencu za prikazivanje, distribuciju i promociju tog sadržaja unutar platforme.
+                                Postavljanjem sadržaja na Transporteri, dajete nam neekskluzivnu, besplatnu licencu za prikazivanje, distribuciju i promociju tog sadržaja unutar platforme.
                             </p>
                         </Section>
 
                         <Section title="7. Ograničenje odgovornosti">
                             <p>
-                                AdBoard deluje kao neutralna platforma koja povezuje kupce i prodavce. Ne proveravamo tačnost oglasa, ne garantujemo kvalitet navedenih vozila ili usluga niti posredujemo u transakcijama između korisnika.
+                                Transporteri deluje kao neutralna platforma koja povezuje kupce i prodavce. Ne proveravamo tačnost oglasa, ne garantujemo kvalitet navedenih vozila ili usluga niti posredujemo u transakcijama između korisnika.
                             </p>
                             <p>
-                                U najvećoj meri dozvoljenoj zakonom, AdBoard neće biti odgovoran za bilo kakvu direktnu, indirektnu, slučajnu ili posledičnu štetu nastalu usled korišćenja ili nemogućnosti korišćenja naše platforme, ili iz transakcija između korisnika.
+                                U najvećoj meri dozvoljenoj zakonom, Transporteri neće biti odgovoran za bilo kakvu direktnu, indirektnu, slučajnu ili posledičnu štetu nastalu usled korišćenja ili nemogućnosti korišćenja naše platforme, ili iz transakcija između korisnika.
                             </p>
                         </Section>
 
@@ -141,7 +141,7 @@ export default function Terms() {
                                 Zadržavamo pravo da po sopstvenom nahođenju suspendujemo ili trajno ukinemo vaš nalog ukoliko smatramo da ste prekršili ove uslove, bavili se prevarnim aktivnostima ili naškodili drugim korisnicima platforme.
                             </p>
                             <p>
-                                Možete obrisati nalog u bilo kom trenutku kontaktiranjem na <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a>.
+                                Možete obrisati nalog u bilo kom trenutku kontaktiranjem na <a href="mailto:info@transporteri.rs" className="text-orange-500 hover:underline">info@transporteri.rs</a>.
                             </p>
                         </Section>
 
@@ -152,7 +152,7 @@ export default function Terms() {
                         </Section>
 
                         <div className="mt-10 pt-8 border-t border-slate-100 dark:border-neutral-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-neutral-400 dark:text-neutral-500">
-                            <span>Pitanja? <a href="mailto:info@adboard.rs" className="text-orange-500 hover:underline">info@adboard.rs</a></span>
+                            <span>Pitanja? <a href="mailto:info@transporteri.rs" className="text-orange-500 hover:underline">info@transporteri.rs</a></span>
                             <div className="flex items-center gap-4">
                                 <Link href="/politika-privatnosti" className="hover:text-slate-600 transition-colors">Politika privatnosti</Link>
                                 <Link href="/cesta-pitanja" className="hover:text-slate-600 transition-colors">Česta pitanja</Link>

@@ -152,7 +152,7 @@ export default function Contact() {
                                                     value={data.name}
                                                     onChange={e => setData('name', e.target.value)}
                                                     placeholder="Vaše ime"
-                                                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 dark:bg-neutral-700 dark:text-neutral-100 focus:bg-white dark:focus:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
+                                                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 dark:bg-neutral-700 dark:text-neutral-100 placeholder-slate-500 dark:placeholder-neutral-400 focus:bg-white dark:focus:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
                                                         errors.name ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 dark:border-neutral-600 focus:border-orange-400'
                                                     }`}
                                                 />
@@ -170,7 +170,7 @@ export default function Contact() {
                                                     value={data.email}
                                                     onChange={e => setData('email', e.target.value)}
                                                     placeholder="vas@primer.com"
-                                                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 dark:bg-neutral-700 dark:text-neutral-100 focus:bg-white dark:focus:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
+                                                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 dark:bg-neutral-700 dark:text-neutral-100 placeholder-slate-500 dark:placeholder-neutral-400 focus:bg-white dark:focus:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
                                                         errors.email ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 dark:border-neutral-600 focus:border-orange-400'
                                                     }`}
                                                 />
@@ -189,8 +189,8 @@ export default function Contact() {
                                                 value={data.subject}
                                                 onChange={e => setData('subject', e.target.value)}
                                                 placeholder="O čemu je vaša poruka?"
-                                                className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 dark:bg-neutral-700 dark:text-neutral-100 focus:bg-white dark:focus:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
-                                                    errors.subject ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
+                                                className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 dark:bg-neutral-700 dark:text-neutral-100 placeholder-slate-500 dark:placeholder-neutral-400 focus:bg-white dark:focus:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400/30 transition ${
+                                                    errors.subject ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 dark:border-neutral-600 focus:border-orange-400'
                                                 }`}
                                             />
                                             {errors.subject && <p className="mt-1.5 text-xs text-red-500">{errors.subject}</p>}
@@ -207,8 +207,8 @@ export default function Contact() {
                                                 value={data.message}
                                                 onChange={e => setData('message', e.target.value)}
                                                 placeholder="Napišite vašu poruku ovde…"
-                                                className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/30 resize-none transition ${
-                                                    errors.message ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 focus:border-orange-400'
+                                                className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-slate-50 dark:bg-neutral-700 dark:text-neutral-100 placeholder-slate-500 dark:placeholder-neutral-400 focus:bg-white dark:focus:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400/30 resize-none transition ${
+                                                    errors.message ? 'border-red-300 focus:ring-red-400/30' : 'border-slate-200 dark:border-neutral-600 focus:border-orange-400'
                                                 }`}
                                             />
                                             <div className="flex items-center justify-between mt-1">

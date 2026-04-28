@@ -10,11 +10,15 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        // ── Admin (keep as-is) ─────────────────────────────────────────
+        $adminEmail    = env('SEED_ADMIN_EMAIL', 'admin@example.com');
+        $adminPassword = env('SEED_ADMIN_PASSWORD', 'change-me-before-use');
+        $seedPassword  = env('SEED_USER_PASSWORD',  'change-me-before-use');
+
+        // ── Admin ──────────────────────────────────────────────────────
         User::forceCreate([
-            'name'     => 'Milenko Ilic',
-            'email'    => 'milenko.ilic997@gmail.com',
-            'password' => Hash::make('123456789'),
+            'name'     => 'Admin',
+            'email'    => $adminEmail,
+            'password' => Hash::make($adminPassword),
             'role'     => 'admin',
         ]);
 
@@ -22,77 +26,77 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'name'  => 'Marko Petrović',
-                'email' => 'marko.petrovic@gmail.com',
+                'email' => 'marko.petrovic@example.com',
                 'phone' => '0641234567',
             ],
             [
                 'name'  => 'Stefan Nikolić',
-                'email' => 'stefan.nikolic@gmail.com',
+                'email' => 'stefan.nikolic@example.com',
                 'phone' => '0652345678',
             ],
             [
                 'name'  => 'Dragan Jovanović',
-                'email' => 'dragan.jovanovic@yahoo.com',
+                'email' => 'dragan.jovanovic@example.com',
                 'phone' => '0603456789',
             ],
             [
                 'name'  => 'Nikola Đorđević',
-                'email' => 'nikola.djordjevic@gmail.com',
+                'email' => 'nikola.djordjevic@example.com',
                 'phone' => '0674567890',
             ],
             [
                 'name'  => 'Aleksandar Stojanović',
-                'email' => 'aleksandar.stojanovic@hotmail.com',
+                'email' => 'aleksandar.stojanovic@example.com',
                 'phone' => '0615678901',
             ],
             [
                 'name'  => 'Vladimir Milošević',
-                'email' => 'vladimir.milosevic@gmail.com',
+                'email' => 'vladimir.milosevic@example.com',
                 'phone' => '0626789012',
             ],
             [
                 'name'  => 'Zoran Stanković',
-                'email' => 'zoran.stankovic@gmail.com',
+                'email' => 'zoran.stankovic@example.com',
                 'phone' => '0637890123',
             ],
             [
                 'name'  => 'Dejan Pavlović',
-                'email' => 'dejan.pavlovic@gmail.com',
+                'email' => 'dejan.pavlovic@example.com',
                 'phone' => '0648901234',
             ],
             [
                 'name'  => 'Igor Tomić',
-                'email' => 'igor.tomic@gmail.com',
+                'email' => 'igor.tomic@example.com',
                 'phone' => '0659012345',
             ],
             [
                 'name'  => 'Miloš Živković',
-                'email' => 'milos.zivkovic@gmail.com',
+                'email' => 'milos.zivkovic@example.com',
                 'phone' => '0660123456',
             ],
             [
                 'name'  => 'Petar Marinković',
-                'email' => 'petar.marinkovic@gmail.com',
+                'email' => 'petar.marinkovic@example.com',
                 'phone' => '0671234567',
             ],
             [
                 'name'  => 'Jovan Radović',
-                'email' => 'jovan.radovic@gmail.com',
+                'email' => 'jovan.radovic@example.com',
                 'phone' => '0682345678',
             ],
             [
                 'name'  => 'Branko Lazović',
-                'email' => 'branko.lazovic@gmail.com',
+                'email' => 'branko.lazovic@example.com',
                 'phone' => '0693456789',
             ],
             [
                 'name'  => 'Slobodan Ilić',
-                'email' => 'slobodan.ilic@gmail.com',
+                'email' => 'slobodan.ilic@example.com',
                 'phone' => '0614567890',
             ],
             [
                 'name'  => 'Nenad Vasić',
-                'email' => 'nenad.vasic@gmail.com',
+                'email' => 'nenad.vasic@example.com',
                 'phone' => '0625678901',
             ],
         ];
@@ -101,7 +105,7 @@ class UserSeeder extends Seeder
             User::forceCreate([
                 'name'     => $u['name'],
                 'email'    => $u['email'],
-                'password' => Hash::make('123456789'),
+                'password' => Hash::make($seedPassword),
                 'role'     => 'customer',
                 'phone'    => $u['phone'],
             ]);

@@ -82,35 +82,35 @@ export default function AdCard({ ad, favoritedIds = [], showCategoryPin = false 
 
                 {/* Price — moved up for faster scanning */}
                 <div className="mb-2">
-                    <span className={`font-bold text-base ${ad.price ? 'text-slate-900 dark:text-neutral-100' : 'text-slate-300 dark:text-neutral-500 font-normal text-sm italic'}`}>
+                    <span className={`font-bold text-base ${ad.price ? 'text-slate-900 dark:text-neutral-100' : 'text-slate-400 dark:text-neutral-500 font-normal text-sm italic'}`}>
                         {ad.price || 'Cena na upit'}
                     </span>
                 </div>
 
                 {/* Description */}
-                <p className="text-sm text-slate-400 dark:text-neutral-500 line-clamp-2 mb-4 leading-relaxed">
+                <p className="text-sm text-slate-500 dark:text-neutral-400 line-clamp-2 mb-4 leading-relaxed">
                     {ad.description}
                 </p>
 
                 {/* Meta */}
                 <div className="mt-auto space-y-2">
                     {ad.payload && (
-                        <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-neutral-400">
-                            <svg className="w-3.5 h-3.5 text-slate-400 dark:text-neutral-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-neutral-400">
+                            <svg className="w-3.5 h-3.5 text-slate-500 dark:text-neutral-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                             </svg>
                             <span>{ad.payload}</span>
                         </div>
                     )}
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1.5 text-xs text-slate-400 dark:text-neutral-500">
+                        <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-neutral-400">
                             <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                             <span className="truncate max-w-[120px]">{ad.location}</span>
                         </div>
-                        <span className="text-xs text-slate-300 dark:text-neutral-600 shrink-0">{ad.created_at}</span>
+                        <span className="text-xs text-slate-400 dark:text-neutral-500 shrink-0">{ad.created_at}</span>
                     </div>
                 </div>
 

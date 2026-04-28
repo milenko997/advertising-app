@@ -10,13 +10,14 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        $adminEmail    = env('SEED_ADMIN_EMAIL', 'admin@example.com');
+        $adminName     = env('SEED_ADMIN_NAME',     'Admin');
+        $adminEmail    = env('SEED_ADMIN_EMAIL',    'admin@example.com');
         $adminPassword = env('SEED_ADMIN_PASSWORD', 'change-me-before-use');
         $seedPassword  = env('SEED_USER_PASSWORD',  'change-me-before-use');
 
         // ── Admin ──────────────────────────────────────────────────────
         User::forceCreate([
-            'name'     => 'Admin',
+            'name'     => $adminName,
             'email'    => $adminEmail,
             'password' => Hash::make($adminPassword),
             'role'     => 'admin',

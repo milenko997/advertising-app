@@ -52,7 +52,7 @@ export default function Contact() {
             </Head>
 
             {/* Hero */}
-            <div id="page-contact" className="bg-slate-900 py-14">
+            <div id="page-contact" className="bg-black py-14">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/15 text-orange-400 text-xs font-semibold mb-4">
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +61,7 @@ export default function Contact() {
                         Kontaktirajte nas
                     </span>
                     <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Kontakt</h1>
-                    <p className="text-slate-400 text-base leading-relaxed">
+                    <p className="text-neutral-400 text-base leading-relaxed">
                         Imate pitanje, primetili ste problem ili želite da saznate više? Rado ćemo vas čuti.
                     </p>
                 </div>
@@ -116,9 +116,9 @@ export default function Contact() {
                                 />
                             </div>
 
-                            <div className="bg-slate-900 rounded-2xl p-6">
+                            <div className="bg-black rounded-2xl p-6">
                                 <p className="text-sm font-semibold text-white mb-1.5">Vreme odgovora</p>
-                                <p className="text-sm text-slate-400 leading-relaxed">
+                                <p className="text-sm text-neutral-400 leading-relaxed">
                                     Obično odgovaramo na sve upite u roku od <span className="text-orange-400 font-medium">1 radnog dana</span>.
                                 </p>
                             </div>
@@ -216,7 +216,7 @@ export default function Contact() {
                                                     ? <p className="text-xs text-red-500">{errors.message}</p>
                                                     : <span />
                                                 }
-                                                <span className={`text-xs ${data.message.length > 2800 ? 'text-red-400' : data.message.length > 2000 ? 'text-amber-400' : 'text-slate-300'}`}>
+                                                <span className={`text-xs ${data.message.length > 2800 ? 'text-red-400' : data.message.length > 2000 ? 'text-amber-400' : 'text-neutral-300'}`}>
                                                     {data.message.length}/3000
                                                 </span>
                                             </div>

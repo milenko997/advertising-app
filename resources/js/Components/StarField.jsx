@@ -1,31 +1,39 @@
 import { useEffect, useRef } from 'react';
 
-export default function StarField() {
+export default function StarField({ count } = {}) {
     const canvasRef = useRef(null);
+    const countRef = useRef(count);
+    countRef.current = count;
 
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         let animId;
+        let stars = [];
 
-        const STAR_COUNT = 120;
         const MAX_DIST = 150;
         const SPEED = 0.4;
+
+        const getCount = () => {
+            if (countRef.current != null) return countRef.current;
+            return window.innerWidth < 768 ? 40 : 120;
+        };
 
         const resize = () => {
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
+            const n = getCount();
+            stars = Array.from({ length: n }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * SPEED,
+                vy: (Math.random() - 0.5) * SPEED,
+                r: Math.random() * 2.5 + 1.5,
+            }));
         };
+
         resize();
         window.addEventListener('resize', resize);
-
-        const stars = Array.from({ length: STAR_COUNT }, () => ({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * SPEED,
-            vy: (Math.random() - 0.5) * SPEED,
-            r: Math.random() * 2.5 + 1.5,
-        }));
 
         const draw = () => {
             const isDark = document.documentElement.classList.contains('dark');

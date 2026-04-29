@@ -24,7 +24,12 @@ class AdminCustomerController extends Controller
     {
         $search = $request->input('search', '');
 
-        $paginator = User::where('role', UserRole::Customer)
+        $isSuperAdmin = auth()->user()->isSuperAdmin();
+
+        $paginator = User::when($isSuperAdmin,
+                fn ($q) => $q->whereIn('role', [UserRole::Customer, UserRole::Admin]),
+                fn ($q) => $q->where('role', UserRole::Customer)
+            )
             ->when($search, fn ($q) => $q->where(fn ($q) => $q
                 ->where('name', 'like', "%{$search}%")
                 ->orWhere('email', 'like', "%{$search}%")

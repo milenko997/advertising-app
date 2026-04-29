@@ -6,6 +6,7 @@ use App\Http\Controllers\Concerns\HasPagination;
 use App\Models\Advertisement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class AdvertisementTrashController extends Controller
@@ -45,6 +46,8 @@ class AdvertisementTrashController extends Controller
         $this->authorize('forceDelete', $ad);
         $ad->forceDelete();
 
+        Cache::forget('nav_categories');
+
         return redirect()->route('advertisements.trash')->with('success', 'Oglas je trajno obrisan.');
     }
 
@@ -53,6 +56,8 @@ class AdvertisementTrashController extends Controller
         $ad = Advertisement::onlyTrashed()->findOrFail($id);
         $this->authorize('restore', $ad);
         $ad->restore();
+
+        Cache::forget('nav_categories');
 
         return redirect()->route('advertisements.trash')->with('success', 'Oglas je uspešno vraćen.');
     }

@@ -13,6 +13,7 @@ use App\Services\ImageService;
 use App\Services\SlugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class UserAdvertisementController extends Controller
@@ -84,6 +85,8 @@ class UserAdvertisementController extends Controller
             }
         }
 
+        Cache::forget('nav_categories');
+
         return redirect()->route('advertisements.user')->with('success', 'Oglas je uspešno kreiran.');
     }
 
@@ -142,6 +145,8 @@ class UserAdvertisementController extends Controller
             }
         }
 
+        Cache::forget('nav_categories');
+
         return redirect()->route('advertisements.show', $ad->slug)->with('success', 'Oglas je uspešno ažuriran.');
     }
 
@@ -150,6 +155,8 @@ class UserAdvertisementController extends Controller
         $ad = Advertisement::findOrFail($id);
         $this->authorize('delete', $ad);
         $ad->delete();
+
+        Cache::forget('nav_categories');
 
         return redirect()->route('advertisements.user')->with('success', 'Oglas je uspešno obrisan.');
     }

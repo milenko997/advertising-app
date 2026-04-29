@@ -10,10 +10,9 @@ class CategorySeeder extends Seeder
 {
     public function run()
     {
-        // Delete all categories (disable FK checks for SQLite)
-        DB::statement('PRAGMA foreign_keys = OFF');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
         Category::query()->forceDelete();
-        DB::statement('PRAGMA foreign_keys = ON');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
         $tree = [
             'Teretna vozila' => [
@@ -70,6 +69,18 @@ class CategorySeeder extends Seeder
                 'Prikolice za žitarice',
                 'Cisterne za vodu / đubrivo',
                 'Specijalni transport za poljoprivredu',
+            ],
+            'Autobusi' => [
+                'Minibus (do 22 sedišta)',
+                'Midi autobus (23–35 sedišta)',
+                'Gradski autobus',
+                'Prigradski autobus',
+                'Turistički autobus',
+                'Zglobni autobus',
+                'Dvokatni autobus',
+                'Školski autobus',
+                'Električni autobus',
+                'Autobus za posebne namene',
             ],
             'Ostali vidovi transporta' => [
                 // Železnički

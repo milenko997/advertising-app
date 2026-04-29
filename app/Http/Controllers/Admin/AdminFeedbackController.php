@@ -11,7 +11,7 @@ class AdminFeedbackController extends Controller
     public function index()
     {
         $feedbacks = Feedback::with('user')
-            ->orderByRaw('read ASC, created_at DESC')
+            ->orderByRaw('`read` ASC, created_at DESC')
             ->paginate(30)
             ->through(fn ($fb) => [
                 'id'         => $fb->id,

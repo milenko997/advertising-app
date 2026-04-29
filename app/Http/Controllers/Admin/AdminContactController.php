@@ -10,7 +10,7 @@ class AdminContactController extends Controller
 {
     public function index()
     {
-        $messages = ContactMessage::orderByRaw('read ASC, created_at DESC')
+        $messages = ContactMessage::orderByRaw('`read` ASC, created_at DESC')
             ->paginate(21);
 
         $messages->getCollection()->transform(fn ($m) => [

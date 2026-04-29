@@ -79,4 +79,27 @@ class ProfileController extends Controller
 
         return back()->with('password_success', 'Lozinka je uspešno promenjena.');
     }
+
+    public function destroy(Request $request)
+    {
+        $request->validate(['password' => 'required|string']);
+
+        $user = auth()->user();
+
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['delete_password' => 'Lozinka nije ispravna.']);
+        }
+
+        $user->advertisements()->withTrashed()->each(fn ($ad) => $ad->forceDelete());
+
+        $this->imageService->delete($user->avatar);
+
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        $user->forceDelete();
+
+        return redirect('/')->with('success', 'Vaš nalog je trajno obrisan.');
+    }
 }

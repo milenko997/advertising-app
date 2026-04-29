@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profil', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profil', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profil/lozinka', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::delete('/profil', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/sacuvani', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/sacuvani/{advertisement}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');

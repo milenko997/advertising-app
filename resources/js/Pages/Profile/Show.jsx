@@ -25,6 +25,17 @@ export default function ProfileShow({ user }) {
         password_confirmation: '',
     });
 
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const { data: delData, setData: setDelData, delete: deleteAccount, processing: delProcessing, errors: delErrors, reset: resetDel } = useForm({ password: '' });
+
+    const openDeleteModal = () => { resetDel(); setShowDeleteModal(true); };
+    const closeDeleteModal = () => setShowDeleteModal(false);
+
+    const submitDelete = (e) => {
+        e.preventDefault();
+        deleteAccount('/profil', { onError: () => {} });
+    };
+
     const handleAvatarChange = (file) => {
         setData('avatar', file);
         setData('remove_avatar', '0');
@@ -224,8 +235,67 @@ export default function ProfileShow({ user }) {
                         </form>
                     </div>
 
+                    {/* Delete Account */}
+                    <div id="section-delete-account" className="bg-white dark:bg-neutral-800 rounded-xl border border-red-200 dark:border-red-900/50 shadow-sm p-6">
+                        <h3 className="text-base font-semibold text-gray-900 dark:text-neutral-100 mb-1">Brisanje naloga</h3>
+                        <p className="text-sm text-gray-500 dark:text-neutral-400 mb-4">
+                            Trajno brisanje naloga ukloniće sve vaše podatke, oglase i slike. Ova radnja se ne može poništiti.
+                        </p>
+                        <button
+                            type="button"
+                            onClick={openDeleteModal}
+                            className="px-5 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition"
+                        >
+                            Obrišite nalog
+                        </button>
+                    </div>
+
                 </div>
             </div>
+
+            {/* Delete confirmation modal */}
+            {showDeleteModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-black/50" onClick={closeDeleteModal} />
+                    <div className="relative bg-white dark:bg-neutral-800 rounded-xl shadow-xl w-full max-w-md p-6">
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-neutral-100 mb-2">Potvrdite brisanje naloga</h2>
+                        <p className="text-sm text-gray-500 dark:text-neutral-400 mb-5">
+                            Unesite lozinku da biste potvrdili trajno brisanje naloga. Svi vaši oglasi, slike i podaci biće nepovratno obrisani.
+                        </p>
+                        <form onSubmit={submitDelete} className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Lozinka</label>
+                                <input
+                                    type="password"
+                                    value={delData.password}
+                                    onChange={e => setDelData('password', e.target.value)}
+                                    required
+                                    autoFocus
+                                    autoComplete="current-password"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100"
+                                />
+                                {delErrors.delete_password && <p className="mt-1 text-xs text-red-600">{delErrors.delete_password}</p>}
+                            </div>
+                            <div className="flex justify-end gap-3 pt-1">
+                                <button
+                                    type="button"
+                                    onClick={closeDeleteModal}
+                                    className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-neutral-300 bg-white dark:bg-neutral-700 border border-gray-300 dark:border-neutral-600 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-600 transition"
+                                >
+                                    Otkaži
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={delProcessing}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 disabled:opacity-50 transition"
+                                >
+                                    {delProcessing ? 'Brisanje...' : 'Obrišite nalog'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </AppLayout>
     );
 }

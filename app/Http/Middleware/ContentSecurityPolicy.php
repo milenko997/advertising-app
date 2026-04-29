@@ -9,6 +9,11 @@ class ContentSecurityPolicy
 {
     public function handle(Request $request, Closure $next)
     {
+        if (!app()->environment('local')) {
+            $nonce = base64_encode(random_bytes(16));
+            view()->share('cspNonce', $nonce);
+        }
+
         $response = $next($request);
 
         if (app()->environment('local')) {
@@ -17,7 +22,7 @@ class ContentSecurityPolicy
 
         $response->headers->set('Content-Security-Policy', implode('; ', [
             "default-src 'self'",
-            "script-src 'self'",
+            "script-src 'self' 'nonce-{$nonce}'",
             "style-src 'self' https://fonts.googleapis.com 'unsafe-inline'",
             "font-src 'self' https://fonts.gstatic.com",
             "img-src 'self' data: blob:",

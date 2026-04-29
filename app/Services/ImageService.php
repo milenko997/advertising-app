@@ -5,7 +5,8 @@ namespace App\Services;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 use Intervention\Image\Encoders\JpegEncoder;
 use Intervention\Image\ImageManager;
 
@@ -17,7 +18,7 @@ class ImageService
 
     public function store(UploadedFile $file, string $directory = 'ads'): string
     {
-        $manager = new ImageManager(new Driver());
+        $manager = new ImageManager(extension_loaded('imagick') ? new ImagickDriver() : new GdDriver());
         $image   = $manager->decodePath($file->getRealPath());
 
         // Scale down to max width while preserving aspect ratio

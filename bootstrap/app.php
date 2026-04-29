@@ -31,8 +31,12 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->respond(function (Response $response, \Throwable $e, Request $request) {
-            if (!$request->expectsJson() && in_array($response->getStatusCode(), [403, 404, 419, 429, 500, 503])) {
+        $exceptions->respond(function (Response $response, \Throwable $e, $request) {
+            if (!$request instanceof Request || $request->expectsJson()) {
+                return $response;
+            }
+
+            if (in_array($response->getStatusCode(), [403, 404, 419, 429, 500, 503])) {
                 return Inertia::render('Error', ['status' => $response->getStatusCode()])
                     ->toResponse($request)
                     ->setStatusCode($response->getStatusCode());

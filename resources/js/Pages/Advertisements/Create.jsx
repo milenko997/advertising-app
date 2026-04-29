@@ -33,12 +33,33 @@ export default function Create({ categories }) {
     });
 
     const [imagePreviews, setImagePreviews] = useState([]);
+    const [galleryError, setGalleryError] = useState(null);
     const galleryInputRef = useRef();
+
+    const MAX_FILE_MB = 20;
+    const MAX_TOTAL_MB = 40;
 
     const handleGalleryChange = (e) => {
         const files = Array.from(e.target.files);
         if (!files.length) return;
-        setData('images', [...data.images, ...files]);
+
+        const tooBig = files.find(f => f.size > MAX_FILE_MB * 1024 * 1024);
+        if (tooBig) {
+            setGalleryError(`Slika "${tooBig.name}" je prevelika. Maksimalna veličina po slici je ${MAX_FILE_MB} MB.`);
+            e.target.value = '';
+            return;
+        }
+
+        const allFiles = [...data.images, ...files];
+        const totalMB = allFiles.reduce((sum, f) => sum + f.size, 0) / 1024 / 1024;
+        if (totalMB > MAX_TOTAL_MB) {
+            setGalleryError(`Ukupna veličina svih slika ne sme biti veća od ${MAX_TOTAL_MB} MB.`);
+            e.target.value = '';
+            return;
+        }
+
+        setGalleryError(null);
+        setData('images', allFiles);
         const newPreviews = files.map(f => URL.createObjectURL(f));
         setImagePreviews(prev => [...prev, ...newPreviews]);
         e.target.value = '';
@@ -222,6 +243,8 @@ export default function Create({ categories }) {
                                     </svg>
                                     Dodaj fotografije
                                 </button>
+                                {galleryError && <p className="mt-2 text-xs text-red-600">{galleryError}</p>}
+                                {errors.images && <p className="mt-2 text-xs text-red-600">{errors.images}</p>}
                             </div>
 
                             <div className="mt-6 pt-6 border-t border-gray-100 dark:border-neutral-700 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">

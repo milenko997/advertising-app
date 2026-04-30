@@ -203,14 +203,14 @@ export default function Show({ ad, isSaved, reviews: initialReviews, hasMoreRevi
                                             </div>
                                         </div>
                                     </div>
-                                    {/* Thumbnail strip */}
+                                    {/* Thumbnail grid */}
                                     {allImages.length > 1 && (
-                                        <div className="flex gap-2 mt-2 overflow-x-auto pb-2 snap-x snap-mandatory scroll-smooth">
+                                        <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-2 mt-2">
                                             {allImages.map((img, i) => (
                                                 <button
                                                     key={i}
                                                     onClick={() => openCarousel(i)}
-                                                    className={`shrink-0 w-20 h-16 snap-start rounded-lg overflow-hidden border-2 transition ${
+                                                    className={`aspect-square rounded-lg overflow-hidden border-2 transition ${
                                                         i === 0 ? 'border-orange-500' : 'border-transparent hover:border-orange-300'
                                                     }`}
                                                 >

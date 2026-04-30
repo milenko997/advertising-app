@@ -76,6 +76,7 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
     const removeNewImage = (index) => {
         setData('images', data.images.filter((_, i) => i !== index));
         setNewPreviews(prev => prev.filter((_, i) => i !== index));
+        setGalleryError(null);
     };
 
     const deleteExistingImage = (imageId) => {
@@ -217,54 +218,9 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
                                 onRemove={() => { setData('image', null); setData('remove_image', '1'); }}
                             />
 
-                            {/* Existing gallery images */}
-                            {advertisement.images?.length > 0 && (
-                                <div className="mt-5">
-                                    <p className="text-xs text-gray-500 dark:text-neutral-400 mb-2">Galerija fotografija</p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {advertisement.images.map((img) => (
-                                            <div key={img.id} className="relative group">
-                                                <img
-                                                    src={`/storage/${img.path}`}
-                                                    alt=""
-                                                    className="w-24 h-20 object-cover rounded-lg border border-gray-200 dark:border-neutral-700"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    onClick={() => deleteExistingImage(img.id)}
-                                                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
-                                                >
-                                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Add more gallery images */}
+                            {/* Gallery images */}
                             <div className="mt-5">
-                                <p className="text-xs text-gray-500 dark:text-neutral-400 mb-2">Dodaj još fotografija</p>
-                                {newPreviews.length > 0 && (
-                                    <div className="flex flex-wrap gap-2 mb-3">
-                                        {newPreviews.map((src, i) => (
-                                            <div key={i} className="relative group">
-                                                <img src={src} alt="" className="w-24 h-20 object-cover rounded-lg border border-gray-200 dark:border-neutral-700" />
-                                                <button
-                                                    type="button"
-                                                    onClick={() => removeNewImage(i)}
-                                                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
-                                                >
-                                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
+                                <p className="text-xs text-gray-500 dark:text-neutral-400 mb-2">Galerija fotografija</p>
                                 <input
                                     ref={galleryInputRef}
                                     type="file"
@@ -273,17 +229,78 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
                                     onChange={handleGalleryChange}
                                     className="hidden"
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => galleryInputRef.current?.click()}
-                                    className="inline-flex items-center gap-1.5 px-3 py-2 border border-gray-300 dark:border-neutral-600 rounded-lg text-xs font-medium text-gray-600 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
-                                >
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                                    </svg>
-                                    Dodaj fotografije
-                                </button>
-                                {galleryError && <p className="mt-2 text-xs text-red-600">{galleryError}</p>}
+                                {(advertisement.images?.length > 0 || newPreviews.length > 0) ? (
+                                    <>
+                                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mb-2">
+                                            {advertisement.images?.map((img) => (
+                                                <div key={img.id} className="relative group aspect-square">
+                                                    <img
+                                                        src={`/storage/${img.path}`}
+                                                        alt=""
+                                                        className="w-full h-full object-cover rounded-lg border border-gray-200 dark:border-neutral-700"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => deleteExistingImage(img.id)}
+                                                        aria-label="Ukloni fotografiju"
+                                                        className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-red-400"
+                                                    >
+                                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            ))}
+                                            {newPreviews.map((src, i) => (
+                                                <div key={`new-${i}`} className="relative group aspect-square">
+                                                    <img
+                                                        src={src}
+                                                        alt=""
+                                                        className="w-full h-full object-cover rounded-lg border border-gray-200 dark:border-neutral-700"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => removeNewImage(i)}
+                                                        aria-label="Ukloni fotografiju"
+                                                        className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-red-400"
+                                                    >
+                                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            ))}
+                                            {(advertisement.images?.length ?? 0) + newPreviews.length < MAX_IMAGES && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => galleryInputRef.current?.click()}
+                                                    aria-label="Dodaj još fotografija"
+                                                    className="aspect-square rounded-lg border-2 border-dashed border-gray-300 dark:border-neutral-600 flex flex-col items-center justify-center gap-1 text-gray-400 dark:text-neutral-500 hover:border-orange-500 hover:text-orange-500 dark:hover:border-orange-500 dark:hover:text-orange-500 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                                >
+                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                                                    </svg>
+                                                    <span className="text-xs font-medium leading-none">Dodaj</span>
+                                                </button>
+                                            )}
+                                        </div>
+                                        <span className="text-xs text-gray-400 dark:text-neutral-500 tabular-nums">
+                                            {(advertisement.images?.length ?? 0) + newPreviews.length}<span className="text-gray-300 dark:text-neutral-600">/10</span>
+                                        </span>
+                                    </>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={() => galleryInputRef.current?.click()}
+                                        className="inline-flex items-center gap-1.5 px-3 py-2 border border-gray-300 dark:border-neutral-600 rounded-lg text-xs font-medium text-gray-600 dark:text-neutral-300 hover:border-orange-500 hover:text-orange-500 dark:hover:border-orange-500 dark:hover:text-orange-500 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                    >
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                                        </svg>
+                                        Dodaj fotografije
+                                    </button>
+                                )}
+                                {galleryError && <p className="mt-2 text-xs text-red-600 dark:text-red-400">{galleryError}</p>}
                                 {errors.images && <p className="mt-2 text-xs text-red-600">{errors.images}</p>}
                             </div>
 

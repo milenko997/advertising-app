@@ -113,10 +113,11 @@ class AdvertisementController extends Controller
         $reviewsTotal = 0;
 
         if ($ad->user) {
-            $reviewsTotal = Review::where('reviewed_user_id', $ad->user_id)->count();
-            $avgRating = $reviewsTotal > 0
-                ? round(Review::where('reviewed_user_id', $ad->user_id)->avg('rating'), 1)
-                : null;
+            $stats = Review::where('reviewed_user_id', $ad->user_id)
+                ->selectRaw('COUNT(*) as total, ROUND(AVG(rating), 1) as avg_rating')
+                ->first();
+            $reviewsTotal = (int) $stats->total;
+            $avgRating = $reviewsTotal > 0 ? (float) $stats->avg_rating : null;
 
             $initialReviews = Review::with(['reviewer' => fn ($q) => $q->withTrashed()])
                 ->where('reviewed_user_id', $ad->user_id)

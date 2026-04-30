@@ -58,7 +58,7 @@ export default function Trash({ ads: initialAds }) {
                         <>
                             <div className="space-y-3">
                                 {adList.map(ad => (
-                                    <div key={ad.id} className="bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-xl p-4 opacity-75">
+                                    <div key={ad.id} className="bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-xl p-4">
                                         {/* Top row: thumbnail + info */}
                                         <div className="flex gap-3">
                                             {ad.image ? (

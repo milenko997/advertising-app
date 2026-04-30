@@ -80,7 +80,7 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
                                             value={locationValue}
                                             onChange={e => setLocationValue(e.target.value)}
                                             placeholder="Lokacija…"
-                                            className="w-full sm:w-40 border border-gray-200 dark:border-neutral-600 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400"
+                                            className="w-full sm:w-40 border border-gray-200 dark:border-neutral-700 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400"
                                         />
                                     </div>
                                     <button

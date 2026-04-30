@@ -92,7 +92,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                         value={searchValue}
                                         onChange={e => setSearchValue(e.target.value)}
                                         placeholder="Pretraži oglase…"
-                                        className="w-full border border-gray-200 dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                        className="w-full border border-gray-200 dark:border-neutral-700 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                     />
                                 </div>
                                 {/* Row 2 (mobile) / items 2-4 (desktop): location + buttons */}
@@ -109,7 +109,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                                             value={locationValue}
                                             onChange={e => setLocationValue(e.target.value)}
                                             placeholder="Lokacija…"
-                                            className="w-full sm:w-36 border border-gray-200 dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                            className="w-full sm:w-36 border border-gray-200 dark:border-neutral-700 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-400 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                         />
                                     </div>
                                     <button

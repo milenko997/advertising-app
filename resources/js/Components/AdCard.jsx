@@ -5,7 +5,7 @@ export default function AdCard({ ad, favoritedIds = [], showCategoryPin = false 
     const isSaved = favoritedIds.includes(ad.id);
 
     return (
-        <div data-ad-id={ad.id} className="group bg-white dark:bg-neutral-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col border border-gray-100 dark:border-neutral-700">
+        <div data-ad-id={ad.id} className="group bg-white dark:bg-neutral-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col border border-gray-200 dark:border-neutral-700">
 
             {/* Image */}
             <div className="relative shrink-0">

@@ -34,12 +34,41 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
     });
 
     const [newPreviews, setNewPreviews] = useState([]);
+    const [galleryError, setGalleryError] = useState(null);
     const galleryInputRef = useRef();
+
+    const MAX_FILE_MB = 20;
+    const MAX_TOTAL_MB = 45;
+    const MAX_IMAGES = 10;
 
     const handleGalleryChange = (e) => {
         const files = Array.from(e.target.files);
         if (!files.length) return;
-        setData('images', [...data.images, ...files]);
+
+        const existingCount = advertisement.images?.length ?? 0;
+        if (existingCount + data.images.length + files.length > MAX_IMAGES) {
+            setGalleryError(`Možete dodati najviše ${MAX_IMAGES} dodatnih fotografija.`);
+            e.target.value = '';
+            return;
+        }
+
+        const tooBig = files.find(f => f.size > MAX_FILE_MB * 1024 * 1024);
+        if (tooBig) {
+            setGalleryError(`Slika "${tooBig.name}" je prevelika. Maksimalna veličina po slici je ${MAX_FILE_MB} MB.`);
+            e.target.value = '';
+            return;
+        }
+
+        const allFiles = [...data.images, ...files];
+        const totalMB = allFiles.reduce((sum, f) => sum + f.size, 0) / 1024 / 1024;
+        if (totalMB > MAX_TOTAL_MB) {
+            setGalleryError(`Ukupna veličina svih slika ne sme biti veća od ${MAX_TOTAL_MB} MB.`);
+            e.target.value = '';
+            return;
+        }
+
+        setGalleryError(null);
+        setData('images', allFiles);
         setNewPreviews(prev => [...prev, ...files.map(f => URL.createObjectURL(f))]);
         e.target.value = '';
     };
@@ -60,6 +89,16 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
 
     const submit = (e) => {
         e.preventDefault();
+
+        const coverSize = data.image?.size ?? 0;
+        const gallerySize = data.images.reduce((sum, f) => sum + f.size, 0);
+        const totalMB = (coverSize + gallerySize) / 1024 / 1024;
+
+        if (totalMB > MAX_TOTAL_MB) {
+            setGalleryError(`Ukupna veličina svih slika (${totalMB.toFixed(1)} MB) prelazi limit od ${MAX_TOTAL_MB} MB. Uklonite neke slike.`);
+            return;
+        }
+
         post(`/admin/oglasi/${advertisement.id}`, { forceFormData: true });
     };
 
@@ -244,6 +283,8 @@ export default function AdminAdvertisementsEdit({ advertisement, categories }) {
                                     </svg>
                                     Dodaj fotografije
                                 </button>
+                                {galleryError && <p className="mt-2 text-xs text-red-600">{galleryError}</p>}
+                                {errors.images && <p className="mt-2 text-xs text-red-600">{errors.images}</p>}
                             </div>
 
                             <div className="mt-6 pt-6 border-t border-gray-100 dark:border-neutral-700 flex items-center gap-3">

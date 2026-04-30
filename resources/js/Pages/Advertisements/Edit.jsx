@@ -39,11 +39,19 @@ export default function Edit({ ad, categories }) {
     const galleryInputRef = useRef();
 
     const MAX_FILE_MB = 20;
-    const MAX_TOTAL_MB = 40;
+    const MAX_TOTAL_MB = 45;
+    const MAX_IMAGES = 10;
 
     const handleGalleryChange = (e) => {
         const files = Array.from(e.target.files);
         if (!files.length) return;
+
+        const existingCount = ad.images?.length ?? 0;
+        if (existingCount + data.images.length + files.length > MAX_IMAGES) {
+            setGalleryError(`Možete dodati najviše ${MAX_IMAGES} dodatnih fotografija.`);
+            e.target.value = '';
+            return;
+        }
 
         const tooBig = files.find(f => f.size > MAX_FILE_MB * 1024 * 1024);
         if (tooBig) {
@@ -82,6 +90,16 @@ export default function Edit({ ad, categories }) {
 
     const submit = (e) => {
         e.preventDefault();
+
+        const coverSize = data.image?.size ?? 0;
+        const gallerySize = data.images.reduce((sum, f) => sum + f.size, 0);
+        const totalMB = (coverSize + gallerySize) / 1024 / 1024;
+
+        if (totalMB > MAX_TOTAL_MB) {
+            setGalleryError(`Ukupna veličina svih slika (${totalMB.toFixed(1)} MB) prelazi limit od ${MAX_TOTAL_MB} MB. Uklonite neke slike.`);
+            return;
+        }
+
         post(`/oglasi/${ad.slug}/azuriraj`, { forceFormData: true });
     };
 

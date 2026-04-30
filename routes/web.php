@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'isCustomer'])->group(function () {
     Route::get('/moji-oglasi', [UserAdvertisementController::class, 'userIndex'])->name('advertisements.user');
     Route::get('/postavi-oglas', [UserAdvertisementController::class, 'create'])->name('advertisements.create');
-    Route::post('/oglasi', [UserAdvertisementController::class, 'store'])->name('advertisements.store')->middleware('throttle:ad-creation');
+    Route::post('/oglasi', [UserAdvertisementController::class, 'store'])->name('advertisements.store');
     Route::get('/oglasi/uredi/{slug}', [UserAdvertisementController::class, 'edit'])->name('advertisements.edit');
     Route::put('/oglasi/{slug}/azuriraj', [UserAdvertisementController::class, 'update'])->name('advertisements.update');
     Route::delete('/oglasi/{id}', [UserAdvertisementController::class, 'destroy'])->name('advertisements.destroy');

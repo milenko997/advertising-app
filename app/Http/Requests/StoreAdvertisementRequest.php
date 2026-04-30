@@ -50,6 +50,7 @@ class StoreAdvertisementRequest extends FormRequest
             'images.*.image'        => 'Svaki fajl u galeriji mora biti slika.',
             'images.*.mimes'        => 'Slike u galeriji moraju biti JPEG, PNG ili GIF.',
             'images.*.max'          => 'Svaka slika u galeriji ne sme biti veća od 10 MB.',
+            'images.*.uploaded'     => 'Jedna ili više slika nisu uspešno otpremljene. Proverite veličinu i format fajla.',
             'phone.required'        => 'Broj telefona je obavezan.',
             'phone.regex'           => 'Unesite ispravan broj telefona (cifre, razmaci, +, -, zagrade).',
             'location.required'     => 'Lokacija je obavezna.',

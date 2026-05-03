@@ -9,6 +9,7 @@ use App\Notifications\AdDeletedByAdminNotification;
 use App\Notifications\AdUpdatedByAdminNotification;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class AdminAdvertisementController extends Controller
@@ -138,6 +139,8 @@ class AdminAdvertisementController extends Controller
             }
         }
 
+        Cache::forget('nav_categories');
+
         return redirect()->route('admin.oglasi.index')->with('success', 'Oglas je ažuriran.');
     }
 
@@ -172,6 +175,8 @@ class AdminAdvertisementController extends Controller
             $owner->notify(new AdDeletedByAdminNotification($title));
         }
 
+        Cache::forget('nav_categories');
+
         return redirect()->route('admin.oglasi.index')->with('success', 'Oglas je obrisan.');
     }
 
@@ -204,6 +209,10 @@ class AdminAdvertisementController extends Controller
             'pin'    => "Prikačeno {$count} oglasa.",
             'unpin'  => "Otkačeno {$count} oglasa.",
         };
+
+        if ($request->action === 'delete') {
+            Cache::forget('nav_categories');
+        }
 
         return back()->with('success', $label);
     }

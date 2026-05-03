@@ -76,28 +76,28 @@ class ProfileTest extends TestCase
 
     public function test_user_can_change_password(): void
     {
-        $user = User::factory()->customer()->create(['password' => bcrypt('old-password')]);
+        $user = User::factory()->customer()->create(['password' => bcrypt('OldPassword1')]);
 
         $this->actingAs($user)
             ->put(route('profile.password'), [
-                'current_password'      => 'old-password',
-                'password'              => 'new-password',
-                'password_confirmation' => 'new-password',
+                'current_password'      => 'OldPassword1',
+                'password'              => 'NewPassword1',
+                'password_confirmation' => 'NewPassword1',
             ])
             ->assertRedirect();
 
-        $this->assertTrue(\Illuminate\Support\Facades\Hash::check('new-password', $user->fresh()->password));
+        $this->assertTrue(\Illuminate\Support\Facades\Hash::check('NewPassword1', $user->fresh()->password));
     }
 
     public function test_wrong_current_password_is_rejected(): void
     {
-        $user = User::factory()->customer()->create(['password' => bcrypt('correct-password')]);
+        $user = User::factory()->customer()->create(['password' => bcrypt('CorrectPassword1')]);
 
         $this->actingAs($user)
             ->put(route('profile.password'), [
-                'current_password'      => 'wrong-password',
-                'password'              => 'new-password',
-                'password_confirmation' => 'new-password',
+                'current_password'      => 'WrongPassword1',
+                'password'              => 'NewPassword1',
+                'password_confirmation' => 'NewPassword1',
             ])
             ->assertSessionHasErrors('current_password');
     }

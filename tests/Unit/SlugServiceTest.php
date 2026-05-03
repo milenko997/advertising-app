@@ -25,7 +25,7 @@ class SlugServiceTest extends TestCase
     {
         $slug = $this->slugService->generate('Hello World');
 
-        $this->assertEquals('hello_world', $slug);
+        $this->assertEquals('hello-world', $slug);
     }
 
     public function test_generates_unique_slug_when_taken(): void
@@ -36,13 +36,13 @@ class SlugServiceTest extends TestCase
         Advertisement::factory()->create([
             'user_id'     => $user->id,
             'category_id' => $category->id,
-            'slug'        => 'test_ad',
+            'slug'        => 'test-ad',
             'title'       => 'Test Ad',
         ]);
 
         $slug = $this->slugService->generate('Test Ad');
 
-        $this->assertEquals('test_ad_1', $slug);
+        $this->assertEquals('test-ad-1', $slug);
     }
 
     public function test_excludes_current_ad_when_updating(): void
@@ -53,13 +53,13 @@ class SlugServiceTest extends TestCase
         $ad = Advertisement::factory()->create([
             'user_id'     => $user->id,
             'category_id' => $category->id,
-            'slug'        => 'my_ad',
+            'slug'        => 'my-ad',
             'title'       => 'My Ad',
         ]);
 
         $slug = $this->slugService->generate('My Ad', $ad->id);
 
-        $this->assertEquals('my_ad', $slug);
+        $this->assertEquals('my-ad', $slug);
     }
 
     public function test_includes_soft_deleted_slugs_in_uniqueness_check(): void
@@ -70,13 +70,13 @@ class SlugServiceTest extends TestCase
         $ad = Advertisement::factory()->create([
             'user_id'     => $user->id,
             'category_id' => $category->id,
-            'slug'        => 'deleted_ad',
+            'slug'        => 'deleted-ad',
             'title'       => 'Deleted Ad',
         ]);
         $ad->delete();
 
         $slug = $this->slugService->generate('Deleted Ad');
 
-        $this->assertEquals('deleted_ad_1', $slug);
+        $this->assertEquals('deleted-ad-1', $slug);
     }
 }

@@ -29,13 +29,19 @@ class ReportTest extends TestCase
         ]);
     }
 
-    public function test_guest_cannot_report_ad(): void
+    public function test_guest_can_report_ad_anonymously(): void
     {
         $owner = User::factory()->customer()->create();
         $ad    = $this->makeAd($owner);
 
         $this->post(route('advertisements.report', $ad), ['type' => 'duplicate_spam'])
-            ->assertRedirect(route('login'));
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('reports', [
+            'advertisement_id' => $ad->id,
+            'reporter_id'      => null,
+            'type'             => 'duplicate_spam',
+        ]);
     }
 
     public function test_user_can_report_ad(): void

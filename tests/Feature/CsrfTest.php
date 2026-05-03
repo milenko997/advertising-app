@@ -32,9 +32,9 @@ class CsrfTest extends TestCase
         $middleware = $kernel->getMiddlewareGroups()['web'] ?? [];
 
         $this->assertContains(
-            VerifyCsrfToken::class,
+            \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
             $middleware,
-            'VerifyCsrfToken must be present in the web middleware group.'
+            'ValidateCsrfToken must be present in the web middleware group.'
         );
     }
 

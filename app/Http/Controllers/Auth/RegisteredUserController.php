@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
@@ -40,7 +39,7 @@ class RegisteredUserController extends Controller
 
         $rules = [
             'name'         => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s\'\-]+$/u'],
-            'email'        => ['required', 'string', 'email', 'max:255', Rule::unique('users')->whereNull('deleted_at')],
+            'email'        => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'     => ['required', 'confirmed', Rules\Password::defaults()],
             'account_type' => ['sometimes', 'string', 'in:personal,company'],
         ];

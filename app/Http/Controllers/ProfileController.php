@@ -97,6 +97,9 @@ class ProfileController extends Controller
                     'website'      => $request->website ?: null,
                 ]
             );
+
+            $user->slug = User::generateUniqueSlug($request->company_name, $user->id);
+            $user->saveQuietly();
         }
 
         return back()->with('success', 'Profil je uspešno ažuriran.');

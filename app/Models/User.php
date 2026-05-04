@@ -4,7 +4,8 @@ namespace App\Models;
 
 use App\Enums\UserRole;
 use App\Models\Concerns\GeneratesSlug;
-use App\Notifications\ResetPasswordNotification;
+use App\Mail\ResetPasswordMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -108,6 +109,11 @@ class User extends Authenticatable
 
     public function sendPasswordResetNotification($token): void
     {
-        $this->notify(new ResetPasswordNotification($token));
+        $url = url(route('password.reset', [
+            'token' => $token,
+            'email' => $this->getEmailForPasswordReset(),
+        ], false));
+
+        Mail::to($this->email)->queue(new ResetPasswordMail($this->name, $url));
     }
 }

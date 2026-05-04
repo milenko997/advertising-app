@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminAdvertisementController;
-use App\Http\Controllers\Admin\AdminContactController;
 use App\Http\Controllers\Admin\AdminFeedbackController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FeedbackController;
@@ -91,9 +90,6 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::get('/prijave', [AdminReportController::class, 'index'])->name('reports.index');
     Route::patch('/prijave/{report}/resolve', [AdminReportController::class, 'resolve'])->name('reports.resolve');
     Route::delete('/prijave/{report}', [AdminReportController::class, 'destroy'])->name('reports.destroy');
-    Route::get('/poruke', [AdminContactController::class, 'index'])->name('messages.index');
-    Route::patch('/poruke/{message}/read', [AdminContactController::class, 'markRead'])->name('messages.read');
-    Route::delete('/poruke/{message}', [AdminContactController::class, 'destroy'])->name('messages.destroy');
     Route::get('/utisci', [AdminFeedbackController::class, 'index'])->name('feedbacks.index');
     Route::patch('/utisci/{feedback}/read', [AdminFeedbackController::class, 'markRead'])->name('feedbacks.read');
     Route::delete('/utisci/{feedback}', [AdminFeedbackController::class, 'destroy'])->name('feedbacks.destroy');

@@ -151,7 +151,6 @@ export default function AdminDashboard({ stats, chartData, topCategories, recent
                         <div id="section-dashboard-inbox" className="flex flex-col gap-3">
                             <h2 className="text-sm font-semibold text-gray-800 dark:text-neutral-200">Primljene poruke</h2>
                             <InboxCard label="Prijave" count={stats.inbox.reports} href="/admin/prijave" color="red" />
-                            <InboxCard label="Kontakt poruke" count={stats.inbox.messages} href="/admin/poruke" color="orange" />
                             <InboxCard label="Povratne informacije" count={stats.inbox.feedbacks} href="/admin/utisci" color="indigo" />
                         </div>
                     </div>

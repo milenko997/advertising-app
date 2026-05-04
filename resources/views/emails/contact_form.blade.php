@@ -3,7 +3,7 @@
 
 **Od:** {{ $senderName }} ({{ $senderEmail }})
 
-**Predmet:** {{ $subject }}
+**Predmet:** {{ $messageSubject }}
 
 ---
 

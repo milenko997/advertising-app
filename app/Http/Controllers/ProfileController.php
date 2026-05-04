@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AccountDeletedMail;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 
@@ -133,6 +135,9 @@ class ProfileController extends Controller
             return back()->withErrors(['delete_password' => 'Lozinka nije ispravna.']);
         }
 
+        $name  = $user->name;
+        $email = $user->email;
+
         $user->advertisements()->withTrashed()->each(fn ($ad) => $ad->forceDelete());
 
         $this->imageService->delete($user->avatar);
@@ -142,6 +147,10 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         $user->forceDelete();
+
+        try {
+            Mail::to($email)->send(new AccountDeletedMail($name));
+        } catch (\Exception) {}
 
         return redirect('/')->with('success', 'Vaš nalog je trajno obrisan.');
     }

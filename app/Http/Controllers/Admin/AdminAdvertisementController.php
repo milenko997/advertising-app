@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AdDeletedByAdminMail;
 use App\Models\Advertisement;
 use App\Models\Category;
 use App\Notifications\AdDeletedByAdminNotification;
@@ -10,6 +11,7 @@ use App\Notifications\AdUpdatedByAdminNotification;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class AdminAdvertisementController extends Controller
@@ -173,6 +175,10 @@ class AdminAdvertisementController extends Controller
 
         if ($owner) {
             $owner->notify(new AdDeletedByAdminNotification($title));
+
+            try {
+                Mail::to($owner->email)->send(new AdDeletedByAdminMail($owner->name, $title));
+            } catch (\Exception) {}
         }
 
         Cache::forget('nav_categories');
@@ -197,6 +203,10 @@ class AdminAdvertisementController extends Controller
                 $ad->delete();
                 if ($owner) {
                     $owner->notify(new AdDeletedByAdminNotification($title));
+
+                    try {
+                        Mail::to($owner->email)->send(new AdDeletedByAdminMail($owner->name, $title));
+                    } catch (\Exception) {}
                 }
             }),
             'pin'   => $ads->update(['is_pinned' => true,  'pinned_at' => now()]),

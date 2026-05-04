@@ -38,6 +38,7 @@ class User extends Authenticatable
         });
 
         static::updating(function (User $user) {
+            if ($user->account_type === 'company') return;
             if ($user->isDirty('name')) {
                 $user->slug = static::generateUniqueSlug($user->name, $user->id);
             }

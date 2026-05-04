@@ -69,6 +69,9 @@ class RegisteredUserController extends Controller
                 'city'         => $validated['city'],
                 'website'      => $validated['website'] ?? null,
             ]);
+
+            $user->slug = User::generateUniqueSlug($validated['company_name'], $user->id);
+            $user->saveQuietly();
         }
 
         event(new Registered($user));

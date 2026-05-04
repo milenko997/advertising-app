@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\AccountDeletedMail;
-use App\Models\Advertisement;
-use App\Models\AdvertisementImage;
-use App\Models\Favorite;
+use App\Jobs\DeleteUserDataJob;
 use App\Models\User;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 
@@ -140,45 +135,18 @@ class ProfileController extends Controller
             return back()->withErrors(['delete_password' => 'Lozinka nije ispravna.']);
         }
 
-        $name  = $user->name;
-        $email = $user->email;
+        $userId = $user->id;
+        $name   = $user->name;
+        $email  = $user->email;
+        $avatar = $user->avatar;
 
-        $adIds = $user->advertisements()->withTrashed()->pluck('id');
-
-        if ($adIds->isNotEmpty()) {
-            $mainImages    = Advertisement::withTrashed()->whereIn('id', $adIds)->pluck('image')->filter();
-            $galleryImages = AdvertisementImage::whereIn('advertisement_id', $adIds)->pluck('path')->filter();
-
-            $favUserIds = Favorite::whereIn('advertisement_id', $adIds)->pluck('user_id')->unique();
-            Favorite::whereIn('advertisement_id', $adIds)->delete();
-            foreach ($favUserIds as $uid) {
-                Cache::forget('favorite_ids_' . $uid);
-                Cache::forget('saved_ads_count_' . $uid);
-            }
-
-            AdvertisementImage::whereIn('advertisement_id', $adIds)->delete();
-
-            foreach ($galleryImages as $path) {
-                $this->imageService->delete($path);
-            }
-            foreach ($mainImages as $path) {
-                $this->imageService->delete($path);
-            }
-
-            Advertisement::withTrashed()->whereIn('id', $adIds)->forceDelete();
-        }
-
-        $this->imageService->delete($user->avatar);
+        $user->delete();
 
         auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        $user->forceDelete();
-
-        try {
-            Mail::to($email)->queue(new AccountDeletedMail($name));
-        } catch (\Exception) {}
+        DeleteUserDataJob::dispatch($userId, $name, $email, $avatar);
 
         return redirect('/')->with('success', 'Vaš nalog je trajno obrisan.');
     }

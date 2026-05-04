@@ -33,10 +33,14 @@ class AdvertisementResource extends JsonResource
                 'name' => $this->category->name,
             ] : null),
             'user'         => $this->whenLoaded('user', fn () => $this->user ? [
-                'id'     => $this->user->id,
-                'name'   => $this->user->name,
-                'slug'   => $this->user->isAdmin() ? null : $this->user->slug,
-                'avatar' => $this->user->avatar,
+                'id'           => $this->user->id,
+                'name'         => $this->user->name,
+                'slug'         => $this->user->isAdmin() ? null : $this->user->slug,
+                'avatar'       => $this->user->avatar,
+                'account_type' => $this->user->account_type ?? 'personal',
+                'company_name' => $this->user->account_type === 'company' && $this->user->relationLoaded('companyProfile')
+                    ? $this->user->companyProfile?->company_name
+                    : null,
             ] : null),
             'images'       => $this->whenLoaded('images', fn () =>
                 $this->images->map(fn ($img) => [

@@ -14,28 +14,53 @@ class ProfileController extends Controller
 
     public function show()
     {
-        $user = auth()->user();
+        $user = auth()->user()->load('companyProfile');
+
+        $cp = $user->companyProfile;
+
         return Inertia::render('Profile/Show', [
             'user' => [
-                'id'     => $user->id,
-                'name'   => $user->name,
-                'email'  => $user->email,
-                'phone'  => $user->phone,
-                'avatar' => $user->avatar,
+                'id'              => $user->id,
+                'name'            => $user->name,
+                'email'           => $user->email,
+                'phone'           => $user->phone,
+                'avatar'          => $user->avatar,
+                'account_type'    => $user->account_type ?? 'personal',
+                'company_profile' => $cp ? [
+                    'company_name' => $cp->company_name,
+                    'pib'          => $cp->pib,
+                    'maticni_broj' => $cp->maticni_broj,
+                    'address'      => $cp->address,
+                    'city'         => $cp->city,
+                    'website'      => $cp->website,
+                ] : null,
             ],
         ]);
     }
 
     public function update(Request $request)
     {
-        $user = auth()->user();
+        $user        = auth()->user();
+        $accountType = $request->input('account_type', 'personal');
 
-        $request->validate([
-            'name'   => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s\'\-]+$/u'],
-            'email'  => 'required|email:rfc|max:255|unique:users,email,' . $user->id,
-            'phone'  => ['nullable', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1900',
-        ], [
+        $rules = [
+            'name'         => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s\'\-]+$/u'],
+            'email'        => 'required|email:rfc|max:255|unique:users,email,' . $user->id,
+            'phone'        => ['nullable', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
+            'avatar'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1900',
+            'account_type' => ['sometimes', 'string', 'in:personal,company'],
+        ];
+
+        if ($accountType === 'company') {
+            $rules['company_name'] = ['required', 'string', 'max:255'];
+            $rules['pib']          = ['required', 'string', 'max:20'];
+            $rules['maticni_broj'] = ['required', 'string', 'max:20'];
+            $rules['address']      = ['required', 'string', 'max:255'];
+            $rules['city']         = ['required', 'string', 'max:100'];
+            $rules['website']      = ['nullable', 'url', 'max:255'];
+        }
+
+        $request->validate($rules, [
             'name.min'    => 'Ime mora imati najmanje 2 karaktera.',
             'name.max'    => 'Ime ne sme imati više od 50 karaktera.',
             'name.regex'  => 'Ime sme sadržati samo slova, razmake, crtice i apostrofe.',
@@ -43,9 +68,10 @@ class ProfileController extends Controller
             'phone.regex' => 'Unesite ispravan broj telefona (cifre, razmaci, +, -, zagrade).',
         ]);
 
-        $user->name  = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
+        $user->name         = $request->name;
+        $user->email        = $request->email;
+        $user->phone        = $request->phone;
+        $user->account_type = $accountType;
 
         if ($request->hasFile('avatar')) {
             $this->imageService->delete($user->avatar);
@@ -58,6 +84,20 @@ class ProfileController extends Controller
         }
 
         $user->save();
+
+        if ($accountType === 'company') {
+            $user->companyProfile()->updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'company_name' => $request->company_name,
+                    'pib'          => $request->pib,
+                    'maticni_broj' => $request->maticni_broj,
+                    'address'      => $request->address,
+                    'city'         => $request->city,
+                    'website'      => $request->website ?: null,
+                ]
+            );
+        }
 
         return back()->with('success', 'Profil je uspešno ažuriran.');
     }

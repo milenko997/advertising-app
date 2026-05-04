@@ -68,12 +68,20 @@ class UserController extends Controller
                 ->first()
             : null;
 
+        $user->loadMissing('companyProfile');
+
         return Inertia::render('Users/Show', [
             'user' => [
-                'id'     => $user->id,
-                'name'   => $user->name,
-                'slug'   => $user->slug,
-                'avatar' => $user->avatar,
+                'id'              => $user->id,
+                'name'            => $user->name,
+                'slug'            => $user->slug,
+                'avatar'          => $user->avatar,
+                'account_type'    => $user->account_type ?? 'personal',
+                'company_profile' => $user->account_type === 'company' ? [
+                    'company_name' => $user->companyProfile?->company_name,
+                    'city'         => $user->companyProfile?->city,
+                    'website'      => $user->companyProfile?->website,
+                ] : null,
             ],
             'ads'            => $this->paginationData($ads, $ads->map($formatAd)->values()->all()),
             'favoritedIds'   => $favoritedIds,

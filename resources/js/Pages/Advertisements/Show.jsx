@@ -364,20 +364,28 @@ export default function Show({ ad, isSaved, reviews: initialReviews, hasMoreRevi
                                 {/* Owner card */}
                                 {ad.user && (
                                     <div className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 p-5">
-                                        <p className="text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wide font-medium mb-3">Objavio</p>
+                                        <p className="text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wide font-medium mb-3">
+                                            {ad.user.account_type === 'company' ? 'Kompanija' : 'Objavio'}
+                                        </p>
                                         <Link href={`/korisnik/${ad.user.slug}`} className="flex items-center gap-3 group">
                                             <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
                                                 {ad.user.avatar ? (
                                                     <img src={`/storage/${ad.user.avatar}`} alt={ad.user.name} className="w-10 h-10 rounded-full object-cover" />
+                                                ) : ad.user.account_type === 'company' ? (
+                                                    <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                                    </svg>
                                                 ) : (
                                                     <span className="text-orange-600 font-bold text-sm">
                                                         {ad.user.name?.charAt(0)?.toUpperCase()}
                                                     </span>
                                                 )}
                                             </div>
-                                            <div>
-                                                <p className="text-sm font-semibold text-gray-800 dark:text-neutral-200 group-hover:text-orange-600 transition-colors">
-                                                    {ad.user.name}
+                                            <div className="min-w-0">
+                                                <p className="text-sm font-semibold text-gray-800 dark:text-neutral-200 group-hover:text-orange-600 transition-colors truncate">
+                                                    {ad.user.account_type === 'company' && ad.user.company_name
+                                                        ? ad.user.company_name
+                                                        : ad.user.name}
                                                 </p>
                                                 {avgRating !== null && (
                                                     <div className="flex items-center gap-1 mt-0.5">
@@ -389,7 +397,7 @@ export default function Show({ ad, isSaved, reviews: initialReviews, hasMoreRevi
                                                     <p className="text-xs text-gray-400 dark:text-neutral-500">Pogledaj profil</p>
                                                 )}
                                             </div>
-                                            <svg className="w-4 h-4 text-gray-300 ml-auto group-hover:text-orange-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg className="w-4 h-4 text-gray-300 ml-auto shrink-0 group-hover:text-orange-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                             </svg>
                                         </Link>
@@ -429,7 +437,7 @@ export default function Show({ ad, isSaved, reviews: initialReviews, hasMoreRevi
                                 <div className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 p-6">
                                     <div className="flex items-center justify-between mb-1">
                                         <h2 className="text-sm font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wide">
-                                            Recenzije prodavca
+                                            {ad.user?.account_type === 'company' ? 'Recenzije kompanije' : 'Recenzije prodavca'}
                                         </h2>
                                         <Link
                                             href={`/korisnik/${ad.user.slug}`}

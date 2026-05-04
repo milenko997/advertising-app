@@ -69,7 +69,7 @@ class AdvertisementController extends Controller
 
     public function show(Request $request, $slug)
     {
-        $ad = Advertisement::with('user', 'category', 'images')->where('slug', $slug)->firstOrFail();
+        $ad = Advertisement::with('user.companyProfile', 'category', 'images')->where('slug', $slug)->firstOrFail();
 
         if ($request->ajax() && !$request->hasHeader('X-Inertia') && $request->boolean('reviews')) {
             if (!$ad->user) {

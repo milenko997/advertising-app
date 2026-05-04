@@ -33,6 +33,6 @@ class ContactController extends Controller
             ));
         } catch (\Exception) {}
 
-        return back()->with('success', 'Vaša poruka je poslata. Javićemo vam se uskoro.');
+        return back();
     }
 }

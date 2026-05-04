@@ -149,7 +149,7 @@ class ProfileController extends Controller
         $user->forceDelete();
 
         try {
-            Mail::to($email)->send(new AccountDeletedMail($name));
+            Mail::to($email)->queue(new AccountDeletedMail($name));
         } catch (\Exception) {}
 
         return redirect('/')->with('success', 'Vaš nalog je trajno obrisan.');

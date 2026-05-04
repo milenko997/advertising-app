@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewReviewMail;
+use App\Mail\ReviewDeletedMail;
 use App\Models\Review;
 use App\Models\User;
 use App\Notifications\NewReviewNotification;
@@ -9,6 +11,7 @@ use App\Notifications\ReviewDeletedNotification;
 use App\Notifications\ReviewUpdatedNotification;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ReviewController extends Controller
 {
@@ -52,6 +55,15 @@ class ReviewController extends Controller
 
         $user->notify(new NewReviewNotification(auth()->user(), $validated['rating']));
 
+        try {
+            Mail::to($user->email)->queue(new NewReviewMail(
+                $user->name,
+                auth()->user()->name,
+                $validated['rating'],
+                $user->slug,
+            ));
+        } catch (\Exception) {}
+
         return back()->with('success', 'Recenzija je dodata.');
     }
 
@@ -89,6 +101,13 @@ class ReviewController extends Controller
 
         if ($reviewedUser) {
             $reviewedUser->notify(new ReviewDeletedNotification($reviewer));
+
+            try {
+                Mail::to($reviewedUser->email)->queue(new ReviewDeletedMail(
+                    $reviewedUser->name,
+                    $reviewer->name,
+                ));
+            } catch (\Exception) {}
         }
 
         return back()->with('success', 'Recenzija je obrisana.');

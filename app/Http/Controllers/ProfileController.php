@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\DeleteUserDataJob;
+use App\Mail\PasswordChangedMail;
 use App\Models\User;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 
@@ -121,6 +123,10 @@ class ProfileController extends Controller
         }
 
         $user->update(['password' => Hash::make($request->password)]);
+
+        try {
+            Mail::to($user->email)->queue(new PasswordChangedMail($user->name));
+        } catch (\Exception) {}
 
         return back()->with('password_success', 'Lozinka je uspešno promenjena.');
     }

@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Mail\ProfileUpdatedByAdminMail;
 use App\Models\User;
 use App\Notifications\ProfileUpdatedByAdminNotification;
 use App\Services\ImageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
@@ -133,6 +135,10 @@ class AdminCustomerController extends Controller
         $customer->save();
 
         $customer->notify(new ProfileUpdatedByAdminNotification());
+
+        try {
+            Mail::to($customer->email)->queue(new ProfileUpdatedByAdminMail($customer->name));
+        } catch (\Exception) {}
 
         return redirect()->route('admin.korisnici.index')->with('success', 'Korisnik je uspešno ažuriran.');
     }

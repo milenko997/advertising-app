@@ -11,7 +11,10 @@ Preostale oglase možete pregledati na stranici Moji oglasi.
 Moji oglasi
 @endcomponent
 
-Ukoliko smatrate da je ovo greška, kontaktirajte nas putem stranice za kontakt.
+Ukoliko smatrate da je ovo greška, kontaktirajte nas:
+
+- Email: [info@transporteri.rs](mailto:info@transporteri.rs)
+- Telefon: [+381 69 583 3352](tel:+38169583352)
 
 Srdačan pozdrav,
 Tim Transporteri

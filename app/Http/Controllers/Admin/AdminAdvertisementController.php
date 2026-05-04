@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\AdDeletedByAdminMail;
+use App\Mail\AdUpdatedByAdminMail;
 use App\Models\Advertisement;
 use App\Models\Category;
 use App\Notifications\AdDeletedByAdminNotification;
@@ -129,6 +130,14 @@ class AdminAdvertisementController extends Controller
 
         if ($advertisement->user) {
             $advertisement->user->notify(new AdUpdatedByAdminNotification($advertisement));
+
+            try {
+                Mail::to($advertisement->user->email)->queue(new AdUpdatedByAdminMail(
+                    $advertisement->user->name,
+                    $advertisement->title,
+                    $advertisement->slug,
+                ));
+            } catch (\Exception) {}
         }
 
         if ($request->hasFile('images')) {

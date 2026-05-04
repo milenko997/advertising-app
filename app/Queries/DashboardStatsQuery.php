@@ -5,7 +5,6 @@ namespace App\Queries;
 use App\Enums\UserRole;
 use App\Models\Advertisement;
 use App\Models\Category;
-use App\Models\ContactMessage;
 use App\Models\Feedback;
 use App\Models\Report;
 use App\Models\Review;
@@ -44,7 +43,6 @@ class DashboardStatsQuery
                     ],
                     'inbox' => [
                         'reports'   => Report::where('resolved', false)->count(),
-                        'messages'  => ContactMessage::where('read', false)->count(),
                         'feedbacks' => Feedback::where('read', false)->count(),
                     ],
                 ],

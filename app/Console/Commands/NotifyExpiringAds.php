@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\AdExpiringMail;
 use App\Models\Advertisement;
 use App\Notifications\AdExpiringNotification;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class NotifyExpiringAds extends Command
 {
@@ -20,9 +22,18 @@ class NotifyExpiringAds extends Command
             ->whereDate('expires_at', $target)
             ->chunkById(100, function ($ads) {
                 foreach ($ads as $ad) {
-                    if ($ad->user) {
-                        $ad->user->notify(new AdExpiringNotification($ad));
-                    }
+                    if (!$ad->user) continue;
+
+                    $ad->user->notify(new AdExpiringNotification($ad));
+
+                    try {
+                        Mail::to($ad->user->email)->send(new AdExpiringMail(
+                            $ad->user->name,
+                            $ad->title,
+                            $ad->slug,
+                            $ad->expires_at->format('d.m.Y'),
+                        ));
+                    } catch (\Exception) {}
                 }
             });
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Jobs\DeleteUserDataJob;
 use App\Mail\ProfileUpdatedByAdminMail;
 use App\Models\User;
 use App\Notifications\ProfileUpdatedByAdminNotification;
@@ -148,7 +149,7 @@ class AdminCustomerController extends Controller
         abort_if($customer->isSuperAdmin(), 403);
         abort_if($customer->role === UserRole::Admin && !auth()->user()->isSuperAdmin(), 403);
 
-        $customer->delete();
+        DeleteUserDataJob::dispatch($customer->id, $customer->name, $customer->email, $customer->avatar);
 
         return redirect()->route('admin.korisnici.index')->with('success', 'Korisnik je uspešno obrisan.');
     }

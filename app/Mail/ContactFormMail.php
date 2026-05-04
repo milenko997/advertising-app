@@ -11,14 +11,14 @@ class ContactFormMail extends Mailable
     public function __construct(
         public string $senderName,
         public string $senderEmail,
-        public string $subject,
+        public string $messageSubject,
         public string $messageBody,
     ) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Kontakt forma: ' . $this->subject,
+            subject: 'Kontakt forma: ' . $this->messageSubject,
             replyTo: [$this->senderEmail],
         );
     }

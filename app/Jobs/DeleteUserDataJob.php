@@ -56,7 +56,7 @@ class DeleteUserDataJob implements ShouldQueue
         User::withTrashed()->where('id', $this->userId)->forceDelete();
 
         try {
-            Mail::to($this->email)->send(new AccountDeletedMail($this->name));
+            Mail::to($this->email)->queue(new AccountDeletedMail($this->name));
         } catch (\Exception) {}
     }
 }

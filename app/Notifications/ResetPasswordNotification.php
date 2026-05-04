@@ -2,8 +2,9 @@
 
 namespace App\Notifications;
 
+use App\Mail\ResetPasswordMail;
 use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Mail;
 
 class ResetPasswordNotification extends Notification
 {
@@ -14,20 +15,16 @@ class ResetPasswordNotification extends Notification
         return ['mail'];
     }
 
-    public function toMail(object $notifiable): MailMessage
+    public function toMail(object $notifiable): void
     {
         $url = url(route('password.reset', [
             'token' => $this->token,
             'email' => $notifiable->getEmailForPasswordReset(),
         ], false));
 
-        return (new MailMessage)
-            ->subject('Resetovanje lozinke — Transporteri')
-            ->greeting('Poštovani ' . $notifiable->name . ',')
-            ->line('Primili smo zahtev za resetovanje lozinke Vašeg naloga.')
-            ->action('Resetujte lozinku', $url)
-            ->line('Ovaj link će isteći za 60 minuta.')
-            ->line('Ukoliko niste Vi zatražili resetovanje lozinke, možete ignorisati ovaj email.')
-            ->salutation('Srdačan pozdrav, Tim Transporteri');
+        Mail::to($notifiable->email)->queue(new ResetPasswordMail(
+            $notifiable->name,
+            $url,
+        ));
     }
 }

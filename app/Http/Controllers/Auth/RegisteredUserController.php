@@ -81,7 +81,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         try {
-            Mail::to($user->email)->send(new WelcomeMail($user->name));
+            Mail::to($user->email)->queue(new WelcomeMail($user->name));
         } catch (\Exception) {}
 
         return redirect()->intended('/');

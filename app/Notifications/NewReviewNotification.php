@@ -4,13 +4,10 @@ namespace App\Notifications;
 
 use App\Models\Review;
 use App\Models\User;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class NewReviewNotification extends Notification implements ShouldQueue
+class NewReviewNotification extends Notification
 {
-    use Queueable;
 
     public function __construct(private User $reviewer, private int $rating) {}
 

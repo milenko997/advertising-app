@@ -39,7 +39,7 @@ class RegisteredUserController extends Controller
 
         $rules = [
             'name'         => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s\'\-]+$/u'],
-            'email'        => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email'        => ['required', 'string', 'email', 'max:255', Rules\Rule::unique('users')->whereNull('deleted_at')],
             'password'     => ['required', 'confirmed', Rules\Password::defaults()],
             'account_type' => ['sometimes', 'string', 'in:personal,company'],
         ];

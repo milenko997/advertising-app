@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Models\Category;
-use App\Models\ContactMessage;
 use App\Models\Favorite;
 use App\Models\Feedback;
 use App\Models\Report;
@@ -46,9 +45,6 @@ class HandleInertiaRequests extends Middleware
             ],
             'pendingReportsCount' => $user?->isAdmin()
                 ? Cache::remember('badge_reports', 60, fn () => Report::where('resolved', false)->count())
-                : 0,
-            'unreadMessagesCount' => $user?->isAdmin()
-                ? Cache::remember('badge_messages', 60, fn () => ContactMessage::where('read', false)->count())
                 : 0,
             'unreadFeedbackCount' => $user?->isAdmin()
                 ? Cache::remember('badge_feedback', 60, fn () => Feedback::where('read', false)->count())

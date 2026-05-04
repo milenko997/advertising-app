@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContactMessage;
+use App\Mail\ContactFormMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class ContactController extends Controller
@@ -23,7 +24,14 @@ class ContactController extends Controller
             'message' => 'required|string|min:10|max:3000',
         ]);
 
-        ContactMessage::create($validated);
+        try {
+            Mail::to('info@transporteri.rs')->queue(new ContactFormMail(
+                $validated['name'],
+                $validated['email'],
+                $validated['subject'],
+                $validated['message'],
+            ));
+        } catch (\Exception) {}
 
         return back()->with('success', 'Vaša poruka je poslata. Javićemo vam se uskoro.');
     }

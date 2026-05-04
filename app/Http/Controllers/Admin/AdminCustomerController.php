@@ -6,6 +6,7 @@ use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Jobs\DeleteUserDataJob;
+use App\Mail\AdminCreatedAccountMail;
 use App\Mail\ProfileUpdatedByAdminMail;
 use App\Models\User;
 use App\Notifications\ProfileUpdatedByAdminNotification;
@@ -81,13 +82,21 @@ class AdminCustomerController extends Controller
 
         abort_if($validated['role'] === 'admin' && !auth()->user()->isSuperAdmin(), 403);
 
-        User::create([
+        $user = User::create([
             'name'     => $validated['name'],
             'email'    => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role'     => UserRole::from($validated['role']),
             'phone'    => $validated['phone'] ?? null,
         ]);
+
+        try {
+            Mail::to($user->email)->queue(new AdminCreatedAccountMail(
+                $user->name,
+                $user->email,
+                $validated['password'],
+            ));
+        } catch (\Exception) {}
 
         return redirect()->route('admin.korisnici.index')->with('success', 'Korisnik je uspešno kreiran.');
     }

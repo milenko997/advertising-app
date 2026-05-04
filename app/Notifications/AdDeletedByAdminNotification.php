@@ -2,13 +2,10 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class AdDeletedByAdminNotification extends Notification implements ShouldQueue
+class AdDeletedByAdminNotification extends Notification
 {
-    use Queueable;
 
     public function __construct(private string $adTitle) {}
 

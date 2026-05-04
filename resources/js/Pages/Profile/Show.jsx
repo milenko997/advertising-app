@@ -3,15 +3,28 @@ import { Head, useForm } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import ImageUpload from '@/Components/ImageUpload';
 
+const inputClass = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400';
+
 export default function ProfileShow({ user }) {
+    const cp = user.company_profile || {};
+
     const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
         _method: 'PUT',
+        account_type: user.account_type || 'personal',
         name: user.name,
         email: user.email,
         phone: user.phone ?? '',
         avatar: null,
         remove_avatar: '0',
+        company_name: cp.company_name || '',
+        pib: cp.pib || '',
+        maticni_broj: cp.maticni_broj || '',
+        address: cp.address || '',
+        city: cp.city || '',
+        website: cp.website || '',
     });
+
+    const isCompany = data.account_type === 'company';
 
     const [previewUrl, setPreviewUrl] = useState(
         user.avatar ? `/storage/${user.avatar}` : null
@@ -89,6 +102,35 @@ export default function ProfileShow({ user }) {
                         )}
 
                         <form onSubmit={submitProfile}>
+                            {/* Account type switcher */}
+                            <div className="mb-6">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Tip naloga</label>
+                                <div className="flex rounded-lg border border-gray-300 dark:border-neutral-600 overflow-hidden">
+                                    <button
+                                        type="button"
+                                        onClick={() => setData('account_type', 'personal')}
+                                        className={`flex-1 py-2 px-4 text-sm font-medium transition-colors ${
+                                            !isCompany
+                                                ? 'bg-orange-600 text-white'
+                                                : 'bg-white dark:bg-neutral-700 text-gray-600 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-600'
+                                        }`}
+                                    >
+                                        Privatno lice
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setData('account_type', 'company')}
+                                        className={`flex-1 py-2 px-4 text-sm font-medium transition-colors ${
+                                            isCompany
+                                                ? 'bg-orange-600 text-white'
+                                                : 'bg-white dark:bg-neutral-700 text-gray-600 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-600'
+                                        }`}
+                                    >
+                                        Firma
+                                    </button>
+                                </div>
+                            </div>
+
                             {/* Avatar */}
                             <div className="flex items-center gap-5 mb-6">
                                 <div className="shrink-0">
@@ -133,7 +175,7 @@ export default function ProfileShow({ user }) {
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Ime i prezime</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">{isCompany ? 'Ime kontakt osobe' : 'Ime i prezime'}</label>
                                     <input
                                         type="text"
                                         value={data.name}
@@ -166,11 +208,103 @@ export default function ProfileShow({ user }) {
                                     onChange={handlePhone}
                                     placeholder="+381 62 123 4567"
                                     maxLength={20}
-                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
+                                    className={inputClass}
                                 />
                                 <p className="mt-1 text-xs text-gray-400 dark:text-neutral-500">Samo cifre, razmaci, +, -, ( )</p>
                                 {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
                             </div>
+
+                            {/* Company fields */}
+                            {isCompany && (
+                                <div className="mb-5 space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Naziv firme</label>
+                                        <input
+                                            type="text"
+                                            value={data.company_name}
+                                            onChange={e => setData('company_name', e.target.value)}
+                                            required
+                                            maxLength={255}
+                                            placeholder="Naziv firme d.o.o."
+                                            className={inputClass}
+                                        />
+                                        {errors.company_name && <p className="mt-1 text-xs text-red-600">{errors.company_name}</p>}
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">PIB</label>
+                                            <input
+                                                type="text"
+                                                value={data.pib}
+                                                onChange={e => setData('pib', e.target.value)}
+                                                required
+                                                maxLength={20}
+                                                placeholder="123456789"
+                                                className={inputClass}
+                                            />
+                                            {errors.pib && <p className="mt-1 text-xs text-red-600">{errors.pib}</p>}
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Matični broj</label>
+                                            <input
+                                                type="text"
+                                                value={data.maticni_broj}
+                                                onChange={e => setData('maticni_broj', e.target.value)}
+                                                required
+                                                maxLength={20}
+                                                placeholder="12345678"
+                                                className={inputClass}
+                                            />
+                                            {errors.maticni_broj && <p className="mt-1 text-xs text-red-600">{errors.maticni_broj}</p>}
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Adresa</label>
+                                            <input
+                                                type="text"
+                                                value={data.address}
+                                                onChange={e => setData('address', e.target.value)}
+                                                required
+                                                maxLength={255}
+                                                placeholder="Ulica i broj"
+                                                className={inputClass}
+                                            />
+                                            {errors.address && <p className="mt-1 text-xs text-red-600">{errors.address}</p>}
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Grad</label>
+                                            <input
+                                                type="text"
+                                                value={data.city}
+                                                onChange={e => setData('city', e.target.value)}
+                                                required
+                                                maxLength={100}
+                                                placeholder="Beograd"
+                                                className={inputClass}
+                                            />
+                                            {errors.city && <p className="mt-1 text-xs text-red-600">{errors.city}</p>}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">
+                                            Website <span className="font-normal text-gray-400 dark:text-neutral-500">(opciono)</span>
+                                        </label>
+                                        <input
+                                            type="url"
+                                            value={data.website}
+                                            onChange={e => setData('website', e.target.value)}
+                                            maxLength={255}
+                                            placeholder="https://www.firma.rs"
+                                            className={inputClass}
+                                        />
+                                        {errors.website && <p className="mt-1 text-xs text-red-600">{errors.website}</p>}
+                                    </div>
+                                </div>
+                            )}
 
                             <button
                                 type="submit"

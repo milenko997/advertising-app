@@ -329,10 +329,10 @@ export default function Navigation() {
                                         />
                                     ) : (
                                         <span className="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-bold text-sm">
-                                            {user.name.charAt(0).toUpperCase()}
+                                            {(user.account_type === 'company' && user.company_name ? user.company_name : user.name).charAt(0).toUpperCase()}
                                         </span>
                                     )}
-                                    <span>{user.name}</span>
+                                    <span>{user.account_type === 'company' && user.company_name ? user.company_name : user.name}</span>
                                     <svg className="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                     </svg>
@@ -459,11 +459,13 @@ export default function Navigation() {
                                     <img src={`/storage/${user.avatar}`} alt={user.name} className="w-9 h-9 rounded-full object-cover ring-2 ring-neutral-700" />
                                 ) : (
                                     <span className="w-9 h-9 rounded-full bg-orange-500 text-white flex items-center justify-center font-bold text-sm">
-                                        {user.name.charAt(0).toUpperCase()}
+                                        {(user.account_type === 'company' && user.company_name ? user.company_name : user.name).charAt(0).toUpperCase()}
                                     </span>
                                 )}
                                 <div>
-                                    <p className="text-sm font-semibold text-white">{user.name}</p>
+                                    <p className="text-sm font-semibold text-white">
+                                        {user.account_type === 'company' && user.company_name ? user.company_name : user.name}
+                                    </p>
                                     <p className="text-xs text-neutral-400">{user.email}</p>
                                 </div>
                             </div>

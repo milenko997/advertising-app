@@ -26,6 +26,7 @@ class User extends Authenticatable
         'slug',
         'phone',
         'avatar',
+        'account_type',
     ];
 
     protected static function boot()
@@ -91,5 +92,15 @@ class User extends Authenticatable
     public function favorites()
     {
         return $this->hasMany(\App\Models\Favorite::class);
+    }
+
+    public function companyProfile()
+    {
+        return $this->hasOne(CompanyProfile::class);
+    }
+
+    public function isCompany(): bool
+    {
+        return $this->account_type === 'company';
     }
 }

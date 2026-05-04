@@ -123,7 +123,7 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
             <div id="page-user-profile" className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                    {/* User card */}
+                    {/* User / Company card */}
                     <div id="section-user-header" className="bg-white dark:bg-neutral-800 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-sm p-6 mb-8">
                         <div className="flex items-center gap-5">
                             {user.avatar ? (
@@ -132,16 +132,52 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                                     alt={user.name}
                                     className="w-20 h-20 rounded-full object-cover shrink-0"
                                 />
+                            ) : user.account_type === 'company' ? (
+                                <div className="w-20 h-20 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
+                                    <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    </svg>
+                                </div>
                             ) : (
                                 <div className="w-20 h-20 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-2xl shrink-0">
                                     {user.name.charAt(0).toUpperCase()}
                                 </div>
                             )}
                             <div>
-                                <h1 className="text-xl font-bold text-gray-900 dark:text-neutral-100">{user.name}</h1>
+                                {user.account_type === 'company' && (
+                                    <span className="inline-block px-2 py-0.5 bg-orange-50 dark:bg-orange-900/20 text-orange-600 text-xs font-semibold rounded mb-1.5">
+                                        Kompanija
+                                    </span>
+                                )}
+                                <h1 className="text-xl font-bold text-gray-900 dark:text-neutral-100">
+                                    {user.account_type === 'company' && user.company_profile?.company_name
+                                        ? user.company_profile.company_name
+                                        : user.name}
+                                </h1>
+                                {user.account_type === 'company' && (
+                                    <div className="flex items-center gap-2 flex-wrap mt-0.5">
+                                        {user.company_profile?.city && (
+                                            <span className="text-sm text-gray-500 dark:text-neutral-400">{user.company_profile.city}</span>
+                                        )}
+                                        {user.company_profile?.city && user.company_profile?.website && (
+                                            <span className="text-gray-300 dark:text-neutral-600">·</span>
+                                        )}
+                                        {user.company_profile?.website && (
+                                            <a
+                                                href={user.company_profile.website}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-sm text-orange-600 hover:underline"
+                                                onClick={e => e.stopPropagation()}
+                                            >
+                                                {user.company_profile.website.replace(/^https?:\/\//, '')}
+                                            </a>
+                                        )}
+                                    </div>
+                                )}
                                 <div className="flex items-center gap-3 mt-1 flex-wrap">
                                     <p className="text-sm text-gray-500 dark:text-neutral-400">
-                                        {ads.total} {ads.total === 1 ? 'oglas objavljen' : 'oglasa objavljeno'} 
+                                        {ads.total} {ads.total === 1 ? 'oglas objavljen' : 'oglasa objavljeno'}
                                     </p>
                                     {avgRating !== null && (
                                         <>

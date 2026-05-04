@@ -33,17 +33,43 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s\'\-]+$/u'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        $accountType = $request->input('account_type', 'personal');
+
+        $rules = [
+            'name'         => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s\'\-]+$/u'],
+            'email'        => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'     => ['required', 'confirmed', Rules\Password::defaults()],
+            'account_type' => ['sometimes', 'string', 'in:personal,company'],
+        ];
+
+        if ($accountType === 'company') {
+            $rules['company_name'] = ['required', 'string', 'max:255'];
+            $rules['pib']          = ['required', 'string', 'max:20'];
+            $rules['maticni_broj'] = ['required', 'string', 'max:20'];
+            $rules['address']      = ['required', 'string', 'max:255'];
+            $rules['city']         = ['required', 'string', 'max:100'];
+            $rules['website']      = ['nullable', 'url', 'max:255'];
+        }
+
+        $validated = $request->validate($rules);
 
         $user = User::create([
-            'name' => trim($request->name),
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name'         => trim($validated['name']),
+            'email'        => $validated['email'],
+            'password'     => Hash::make($validated['password']),
+            'account_type' => $accountType,
         ]);
+
+        if ($accountType === 'company') {
+            $user->companyProfile()->create([
+                'company_name' => $validated['company_name'],
+                'pib'          => $validated['pib'],
+                'maticni_broj' => $validated['maticni_broj'],
+                'address'      => $validated['address'],
+                'city'         => $validated['city'],
+                'website'      => $validated['website'] ?? null,
+            ]);
+        }
 
         event(new Registered($user));
 

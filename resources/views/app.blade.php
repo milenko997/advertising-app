@@ -19,7 +19,16 @@
         @endisset
         <meta name="twitter:title"      content="{{ $meta['title'] ?? config('app.name') }}" />
         <meta name="twitter:description" content="{{ $meta['description'] ?? 'Srpski marketplace za oglase.' }}" />
+        {{-- Favicons --}}
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
         @inertiaHead
+        {{-- Default OG / Twitter image — placed after @inertiaHead so page-specific images take precedence --}}
+        <meta property="og:image" content="{{ url('/og-default.png') }}" />
+        <meta name="twitter:image" content="{{ url('/og-default.png') }}" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
         <script @isset($cspNonce) nonce="{{ $cspNonce }}" @endisset>
             (function(){

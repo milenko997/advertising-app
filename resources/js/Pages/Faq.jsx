@@ -100,7 +100,7 @@ const faqs = [
             },
             {
                 q: 'Kako da obrišem nalog?',
-                a: 'Kontaktirajte nas na info@transporteri.rs da biste zatražili brisanje naloga. Uklonićemo sve vaše podatke u roku od 30 dana.',
+                a: 'Idite na stranicu vašeg profila, skrolujte do odeljka "Brisanje naloga" i pratite uputstvo. Brisanje je trajno — svi vaši oglasi i podaci biće odmah uklonjeni.',
             },
         ],
     },

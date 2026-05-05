@@ -42,7 +42,7 @@ export default function Terms() {
                         Pravno
                     </span>
                     <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Uslovi korišćenja</h1>
-                    <p className="text-neutral-400 text-sm">Poslednje ažuriranje: April 2026</p>
+                    <p className="text-neutral-400 text-sm">Poslednje ažuriranje: Maj 2026</p>
                 </div>
             </div>
 
@@ -141,7 +141,7 @@ export default function Terms() {
                                 Zadržavamo pravo da po sopstvenom nahođenju suspendujemo ili trajno ukinemo vaš nalog ukoliko smatramo da ste prekršili ove uslove, bavili se prevarnim aktivnostima ili naškodili drugim korisnicima platforme.
                             </p>
                             <p>
-                                Možete obrisati nalog u bilo kom trenutku kontaktiranjem na <a href="mailto:info@transporteri.rs" className="text-orange-500 hover:underline">info@transporteri.rs</a>.
+                                Možete obrisati nalog u bilo kom trenutku direktno sa stranice vašeg profila. Brisanje je trajno i odmah uklanja sve vaše podatke i oglase.
                             </p>
                         </Section>
 

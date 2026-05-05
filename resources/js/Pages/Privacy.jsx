@@ -42,7 +42,7 @@ export default function Privacy() {
                         Pravno
                     </span>
                     <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Politika privatnosti</h1>
-                    <p className="text-neutral-400 text-sm">Poslednje ažuriranje: April 2026</p>
+                    <p className="text-neutral-400 text-sm">Poslednje ažuriranje: Maj 2026</p>
                 </div>
             </div>
 
@@ -143,7 +143,7 @@ export default function Privacy() {
 
                         <Section title="6. Čuvanje podataka">
                             <p>
-                                Čuvamo vaše lične podatke sve dok je vaš nalog aktivan. Ukoliko obrišete nalog, vaši lični podaci (ime, email, telefon) biće izbrisani u roku od <strong className="text-slate-700 dark:text-neutral-200">30 dana</strong>. Vaši objavljeni oglasi će takođe biti uklonjeni.
+                                Čuvamo vaše lične podatke sve dok je vaš nalog aktivan. Ukoliko obrišete nalog, vaši lični podaci (ime, email, telefon), svi oglasi i slike biće <strong className="text-slate-700 dark:text-neutral-200">odmah trajno uklonjeni</strong>.
                             </p>
                             <p>
                                 Anonimizovani podaci o korišćenju (broj pregleda, agregatne statistike) mogu se čuvati neograničeno jer se ne mogu povezati sa pojedincem.

@@ -18,5 +18,6 @@ Za hitne slučajeve, dostupni smo na:
 **info@transporteri.rs** · **+381 69 583 3352**
 
 Srdačan pozdrav,
+
 **Tim Transporteri**
 @endcomponent

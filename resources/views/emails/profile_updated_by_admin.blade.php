@@ -16,5 +16,6 @@ Ukoliko niste očekivali ovu izmenu ili smatrate da je došlo do greške, odmah 
 @endcomponent
 
 Srdačan pozdrav,
+
 **Tim Transporteri**
 @endcomponent

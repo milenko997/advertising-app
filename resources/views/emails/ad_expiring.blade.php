@@ -12,5 +12,6 @@ Pogledajte oglas
 Obnovu možete izvršiti sa stranice **Moji oglasi** — oglas ostaje aktivan još 60 dana od momenta obnavljanja.
 
 Srdačan pozdrav,
+
 **Tim Transporteri**
 @endcomponent

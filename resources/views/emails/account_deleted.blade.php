@@ -14,5 +14,6 @@ Registrujte se ponovo
 Hvala što ste koristili Transporteri. Nadamo se da ćemo Vas ponovo videti.
 
 Srdačan pozdrav,
+
 **Tim Transporteri**
 @endcomponent

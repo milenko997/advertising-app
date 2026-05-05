@@ -16,6 +16,7 @@ Ukoliko niste Vi zatražili resetovanje lozinke, možete ignorisati ovaj email �
 @endcomponent
 
 Srdačan pozdrav,
+
 **Tim Transporteri**
 
 @component('mail::subcopy')

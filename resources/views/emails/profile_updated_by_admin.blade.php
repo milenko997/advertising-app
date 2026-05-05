@@ -1,19 +1,20 @@
 @component('mail::message')
-# Profil izmenjen od strane administratora
+# Profil je izmenjen od strane administratora
 
-Poštovani {{ $displayName }},
+Zdravo **{{ $displayName }}**,
 
-Administrator je izvršio izmene na Vašem profilu na platformi Transporteri.
+Administrator platforme Transporteri je izvršio izmene na Vašem profilu.
 
 @component('mail::button', ['url' => config('app.url') . '/profil'])
 Pogledajte profil
 @endcomponent
 
-Ukoliko imate pitanja ili smatrate da je ovo greška, kontaktirajte nas:
+@component('mail::panel')
+Ukoliko niste očekivali ovu izmenu ili smatrate da je došlo do greške, odmah nas kontaktirajte:
 
-- Email: [info@transporteri.rs](mailto:info@transporteri.rs)
-- Telefon: [+381 69 583 3352](tel:+38169583352)
+**info@transporteri.rs** · **+381 69 583 3352**
+@endcomponent
 
 Srdačan pozdrav,
-Tim Transporteri
+**Tim Transporteri**
 @endcomponent

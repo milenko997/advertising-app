@@ -1,18 +1,16 @@
 @component('mail::message')
-# Vaš oglas ističe za 7 dana
+# Vaš oglas uskoro ističe
 
-Poštovani {{ $displayName }},
+Zdravo **{{ $displayName }}**,
 
-Obaveštavamo vas da vaš oglas **{{ $adTitle }}** ističe **{{ $expiresAt }}**.
-
-Nakon isteka oglas neće biti vidljiv posjetiocima platforme. Obnovite ga na vreme kako bi ostao aktivan.
+Vaš oglas **"{{ $adTitle }}"** ističe **{{ $expiresAt }}**. Nakon isteka oglas neće biti vidljiv posetiocima platforme.
 
 @component('mail::button', ['url' => config('app.url') . '/oglas/' . $adSlug])
-Pogledaj oglas
+Pogledajte oglas
 @endcomponent
 
-Obnovu možete izvršiti sa stranice **Moji oglasi**.
+Obnovu možete izvršiti sa stranice **Moji oglasi** — oglas ostaje aktivan još 60 dana od momenta obnavljanja.
 
 Srdačan pozdrav,
-Tim Transporteri
+**Tim Transporteri**
 @endcomponent

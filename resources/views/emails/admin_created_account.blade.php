@@ -1,24 +1,24 @@
 @component('mail::message')
-# Nalog je kreiran
+# Nalog je kreiran za Vas
 
-Poštovani {{ $displayName }},
+Zdravo **{{ $displayName }}**,
 
-Administrator platforme Transporteri kreirao je nalog za Vas. Možete se prijaviti koristeći sledeće podatke:
+Administrator platforme Transporteri kreirao je nalog za Vas. Možete se odmah prijaviti koristeći sledeće podatke:
 
-- **Email:** {{ $email }}
-- **Lozinka:** {{ $password }}
+@component('mail::panel')
+**Email:** {{ $email }}
+**Lozinka:** {{ $password }}
+@endcomponent
 
 @component('mail::button', ['url' => config('app.url') . '/prijava'])
 Prijavite se
 @endcomponent
 
-Preporučujemo da promenite lozinku nakon prve prijave.
+Preporučujemo da **odmah promenite lozinku** nakon prve prijave — idite na Podešavanja profila.
 
-Ukoliko imate pitanja, kontaktirajte nas:
-
-- Email: [info@transporteri.rs](mailto:info@transporteri.rs)
-- Telefon: [+381 69 583 3352](tel:+38169583352)
+Ukoliko imate pitanja, dostupni smo na:
+**info@transporteri.rs** · **+381 69 583 3352**
 
 Srdačan pozdrav,
-Tim Transporteri
+**Tim Transporteri**
 @endcomponent

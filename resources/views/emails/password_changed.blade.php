@@ -1,19 +1,22 @@
 @component('mail::message')
-# Lozinka je promenjena
+# Lozinka je uspešno promenjena
 
-Poštovani {{ $displayName }},
+Zdravo **{{ $displayName }}**,
 
-Lozinka Vašeg naloga na platformi Transporteri je uspešno promenjena.
+Lozinka Vašeg naloga na platformi Transporteri je upravo uspešno promenjena.
 
-Ukoliko niste Vi izvršili ovu promenu, odmah nas kontaktirajte:
-
-- Email: [info@transporteri.rs](mailto:info@transporteri.rs)
-- Telefon: [+381 69 583 3352](tel:+38169583352)
+@component('mail::panel')
+**Niste Vi izvršili ovu promenu?**
+Ukoliko niste Vi inicirali promenu lozinke, odmah nas kontaktirajte — Vaš nalog može biti kompromitovan.
+@endcomponent
 
 @component('mail::button', ['url' => config('app.url') . '/profil'])
 Moj nalog
 @endcomponent
 
+Za hitne slučajeve, dostupni smo na:
+**info@transporteri.rs** · **+381 69 583 3352**
+
 Srdačan pozdrav,
-Tim Transporteri
+**Tim Transporteri**
 @endcomponent

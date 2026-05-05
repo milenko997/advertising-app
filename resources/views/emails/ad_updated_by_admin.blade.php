@@ -1,19 +1,18 @@
 @component('mail::message')
-# Oglas izmenjen od strane administratora
+# Oglas je izmenjen od strane administratora
 
-Poštovani {{ $displayName }},
+Zdravo **{{ $displayName }}**,
 
-Administrator je izvršio izmene na Vašem oglasu **"{{ $adTitle }}"**.
+Administrator platforme Transporteri je izvršio izmene na Vašem oglasu **"{{ $adTitle }}"**.
 
 @component('mail::button', ['url' => config('app.url') . '/oglas/' . $adSlug])
 Pogledajte oglas
 @endcomponent
 
-Ukoliko imate pitanja, kontaktirajte nas:
+Ukoliko smatrate da izmene nisu opravdane ili imate pitanja, slobodno nas kontaktirajte:
 
-- Email: [info@transporteri.rs](mailto:info@transporteri.rs)
-- Telefon: [+381 69 583 3352](tel:+38169583352)
+**info@transporteri.rs** · **+381 69 583 3352**
 
 Srdačan pozdrav,
-Tim Transporteri
+**Tim Transporteri**
 @endcomponent

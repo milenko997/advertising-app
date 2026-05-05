@@ -1,18 +1,18 @@
 @component('mail::message')
 # Nalog je trajno obrisan
 
-Poštovani {{ $displayName }},
+Zdravo **{{ $displayName }}**,
 
-Potvrđujemo da je vaš nalog na platformi Transporteri trajno obrisan zajedno sa svim vašim oglasima i podacima.
+Vaš nalog na platformi Transporteri je trajno obrisan zajedno sa svim Vašim oglasima, slikama i ličnim podacima. Ova akcija je nepovratna.
 
-Ako se predomislite, uvek možete napraviti novi nalog.
+Ako se predomislite u budućnosti, uvek možete napraviti novi nalog — registracija je besplatna i traje manje od minut.
 
 @component('mail::button', ['url' => config('app.url') . '/registracija'])
 Registrujte se ponovo
 @endcomponent
 
-Hvala što ste koristili Transporteri.
+Hvala što ste koristili Transporteri. Nadamo se da ćemo Vas ponovo videti.
 
 Srdačan pozdrav,
-Tim Transporteri
+**Tim Transporteri**
 @endcomponent

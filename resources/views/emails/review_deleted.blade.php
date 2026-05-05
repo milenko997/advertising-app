@@ -1,7 +1,7 @@
 @component('mail::message')
-# Recenzija obrisana
+# Recenzija je obrisana
 
-Poštovani {{ $displayName }},
+Zdravo **{{ $displayName }}**,
 
 Korisnik **{{ $reviewerName }}** je obrisao/la svoju recenziju sa Vašeg profila.
 
@@ -10,5 +10,5 @@ Moj profil
 @endcomponent
 
 Srdačan pozdrav,
-Tim Transporteri
+**Tim Transporteri**
 @endcomponent

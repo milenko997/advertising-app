@@ -1,7 +1,7 @@
 @component('mail::message')
 # Resetovanje lozinke
 
-Poštovani {{ $displayName }},
+Zdravo **{{ $displayName }}**,
 
 Primili smo zahtev za resetovanje lozinke Vašeg naloga. Kliknite na dugme ispod da biste postavili novu lozinku.
 
@@ -9,12 +9,14 @@ Primili smo zahtev za resetovanje lozinke Vašeg naloga. Kliknite na dugme ispod
 Resetujte lozinku
 @endcomponent
 
-Ovaj link će isteći za 60 minuta.
+@component('mail::panel')
+Ovaj link važi **60 minuta** od trenutka slanja. Nakon isteka, potrebno je podneti novi zahtev.
 
-Ukoliko niste Vi zatražili resetovanje lozinke, možete ignorisati ovaj email.
+Ukoliko niste Vi zatražili resetovanje lozinke, možete ignorisati ovaj email — Vaš nalog ostaje bezbedan.
+@endcomponent
 
 Srdačan pozdrav,
-Tim Transporteri
+**Tim Transporteri**
 
 @component('mail::subcopy')
 Ukoliko ne možete kliknuti na dugme "Resetujte lozinku", kopirajte i nalepite sledeći URL u Vaš pretraživač: [{{ $resetUrl }}]({{ $resetUrl }})

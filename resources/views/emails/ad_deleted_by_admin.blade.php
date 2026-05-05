@@ -1,21 +1,20 @@
 @component('mail::message')
 # Vaš oglas je uklonjen
 
-Poštovani {{ $displayName }},
+Zdravo **{{ $displayName }}**,
 
-Obaveštavamo vas da je vaš oglas **{{ $adTitle }}** uklonjen od strane administratora platforme Transporteri zbog kršenja pravila korišćenja.
+Obaveštavamo Vas da je Vaš oglas **"{{ $adTitle }}"** uklonjen od strane administratora platforme Transporteri zbog kršenja pravila korišćenja.
 
-Preostale oglase možete pregledati na stranici Moji oglasi.
+@component('mail::panel')
+Ukoliko smatrate da je ovo greška ili želite da razjasnite razloge uklanjanja, kontaktirajte nas:
+
+**info@transporteri.rs** · **+381 69 583 3352**
+@endcomponent
 
 @component('mail::button', ['url' => config('app.url') . '/moji-oglasi'])
 Moji oglasi
 @endcomponent
 
-Ukoliko smatrate da je ovo greška, kontaktirajte nas:
-
-- Email: [info@transporteri.rs](mailto:info@transporteri.rs)
-- Telefon: [+381 69 583 3352](tel:+38169583352)
-
 Srdačan pozdrav,
-Tim Transporteri
+**Tim Transporteri**
 @endcomponent

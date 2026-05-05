@@ -21,7 +21,6 @@ Transporteri
 {{-- Footer --}}
 <x-slot:footer>
 <x-mail::footer>
-© {{ date('Y') }} Transporteri. Sva prava zadržana.
 </x-mail::footer>
 </x-slot:footer>
 </x-mail::layout>

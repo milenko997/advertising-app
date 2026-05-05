@@ -14,5 +14,6 @@ Pogledajte recenziju
 @endcomponent
 
 Srdačan pozdrav,
+
 **Tim Transporteri**
 @endcomponent

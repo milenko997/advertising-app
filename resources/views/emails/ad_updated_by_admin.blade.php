@@ -14,5 +14,6 @@ Ukoliko smatrate da izmene nisu opravdane ili imate pitanja, slobodno nas kontak
 **info@transporteri.rs** · **+381 69 583 3352**
 
 Srdačan pozdrav,
+
 **Tim Transporteri**
 @endcomponent

@@ -10,5 +10,6 @@ Moj profil
 @endcomponent
 
 Srdačan pozdrav,
+
 **Tim Transporteri**
 @endcomponent

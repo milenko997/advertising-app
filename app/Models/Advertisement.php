@@ -29,9 +29,11 @@ class Advertisement extends Model
     ];
 
     protected $casts = [
-        'expires_at'         => 'datetime',
-        'pinned_at'          => 'datetime',
-        'pinned_category_at' => 'datetime',
+        'expires_at'          => 'datetime',
+        'pinned_at'           => 'datetime',
+        'pinned_category_at'  => 'datetime',
+        'is_pinned'           => 'boolean',
+        'is_pinned_category'  => 'boolean',
     ];
 
     protected static function booted(): void

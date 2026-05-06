@@ -93,7 +93,7 @@ export default function Navigation() {
 
     const handleDropdownView = (n) => {
         if (!n.read_at) {
-            axios.patch(`/obaveštenja/${n.id}/procitano`);
+            axios.patch(`/obavestenja/${n.id}/procitano`);
             setLocalNotifications(prev => prev.map(x => x.id === n.id ? { ...x, read_at: 'now' } : x));
         }
         setBellOpen(false);
@@ -101,7 +101,7 @@ export default function Navigation() {
     };
 
     const handleMarkAllRead = () => {
-        router.post('/obaveštenja/procitaj-sve', {}, {
+        router.post('/obavestenja/procitaj-sve', {}, {
             preserveScroll: true,
             only: ['unreadNotificationsCount', 'recentNotifications'],
             onSuccess: () => setLocalNotifications(prev => prev.map(n => ({ ...n, read_at: n.read_at ?? 'now' }))),
@@ -285,7 +285,7 @@ export default function Navigation() {
 
                                         <div className="px-4 py-3 border-t border-gray-100 dark:border-neutral-700">
                                             <Link
-                                                href="/obaveštenja"
+                                                href="/obavestenja"
                                                 onClick={() => setBellOpen(false)}
                                                 className="block text-center text-sm text-orange-600 hover:text-orange-700 font-medium"
                                             >
@@ -424,7 +424,7 @@ export default function Navigation() {
                                     Sačuvani {localSavedCount > 0 && `(${localSavedCount})`}
                                 </MobileNavLink>
                                 <MobileNavLink href="/obrisani-oglasi">Obrisani</MobileNavLink>
-                                <MobileNavLink href="/obaveštenja">
+                                <MobileNavLink href="/obavestenja">
                                     Obaveštenja {unreadNotificationsCount > 0 && `(${unreadNotificationsCount})`}
                                 </MobileNavLink>
                             </>

@@ -17,7 +17,7 @@ Disallow: /obrisani-oglasi
 Disallow: /oglasi/uredi/
 
 # Notifications
-Disallow: /obave
+Disallow: /obavestenja
 
 # Admin
 Disallow: /admin/

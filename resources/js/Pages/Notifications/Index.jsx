@@ -58,7 +58,7 @@ export default function NotificationsIndex({ notifications: initialData }) {
     const [loading, setLoading] = useState(false);
 
     const markRead = (id) => {
-        router.patch(`/obaveštenja/${id}/procitano`, {}, {
+        router.patch(`/obavestenja/${id}/procitano`, {}, {
             preserveScroll: true,
             only: ['unreadNotificationsCount', 'recentNotifications'],
             onSuccess: () => setList(prev => prev.map(n => n.id === id ? { ...n, read_at: 'now' } : n)),
@@ -68,21 +68,21 @@ export default function NotificationsIndex({ notifications: initialData }) {
     const handleView = (id, url) => {
         const n = list.find(n => n.id === id);
         if (n && !n.read_at) {
-            axios.patch(`/obaveštenja/${id}/procitano`);
+            axios.patch(`/obavestenja/${id}/procitano`);
             setList(prev => prev.map(n => n.id === id ? { ...n, read_at: 'now' } : n));
         }
         router.visit(url);
     };
 
     const markAllRead = () => {
-        router.post('/obaveštenja/procitaj-sve', {}, {
+        router.post('/obavestenja/procitaj-sve', {}, {
             preserveScroll: true,
             onSuccess: () => setList(prev => prev.map(n => ({ ...n, read_at: n.read_at ?? 'now' }))),
         });
     };
 
     const destroy = (id) => {
-        router.delete(`/obaveštenja/${id}`, {
+        router.delete(`/obavestenja/${id}`, {
             preserveScroll: true,
             onSuccess: () => setList(prev => prev.filter(n => n.id !== id)),
         });
@@ -93,7 +93,7 @@ export default function NotificationsIndex({ notifications: initialData }) {
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/obaveštenja?page=${nextPage}`);
+            const { data } = await axios.get(`/obavestenja?page=${nextPage}`);
             setList(prev => [...prev, ...data.notifications]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);

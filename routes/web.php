@@ -48,10 +48,10 @@ Route::get('/sitemap-categories.xml',    [SitemapController::class, 'categories'
 Route::get('/sitemap-advertisements.xml', [SitemapController::class, 'advertisements'])->name('sitemap.advertisements');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/obaveštenja', [NotificationController::class, 'index'])->name('notifications.index');
-    Route::patch('/obaveštenja/{id}/procitano', [NotificationController::class, 'markRead'])->name('notifications.read');
-    Route::post('/obaveštenja/procitaj-sve', [NotificationController::class, 'markAllRead'])->name('notifications.readAll');
-    Route::delete('/obaveštenja/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+    Route::get('/obavestenja', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::patch('/obavestenja/{id}/procitano', [NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::post('/obavestenja/procitaj-sve', [NotificationController::class, 'markAllRead'])->name('notifications.readAll');
+    Route::delete('/obavestenja/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 
     Route::get('/profil', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profil', [ProfileController::class, 'update'])->name('profile.update');

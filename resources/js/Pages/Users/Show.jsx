@@ -109,7 +109,8 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
             <Head>
                 <title>{pageTitle}</title>
                 <meta name="description" content={pageDesc} />
-                <meta property="og:type"        content="profile" />
+                <meta property="og:type"            content="profile" />
+                <meta property="og:profile:username" content={user.slug} />
                 <meta property="og:site_name"   content="Transporteri" />
                 <meta property="og:title"       content={pageTitle} />
                 <meta property="og:description" content={pageDesc} />
@@ -119,6 +120,22 @@ export default function UserShow({ user, ads, favoritedIds: initialFavoritedIds,
                 <meta name="twitter:title"       content={pageTitle} />
                 <meta name="twitter:description" content={pageDesc} />
                 <meta name="twitter:image"       content={avatarUrl} />
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": user.account_type === 'company' ? "Organization" : "Person",
+                    "name": user.name,
+                    "url": `${appUrl}/korisnik/${user.slug}`,
+                    ...(user.avatar ? { "image": `${appUrl}/storage/${user.avatar}` } : {}),
+                    ...(avgRating && reviewsTotal ? {
+                        "aggregateRating": {
+                            "@type": "AggregateRating",
+                            "ratingValue": avgRating,
+                            "reviewCount": reviewsTotal,
+                            "bestRating": 5,
+                            "worstRating": 1
+                        }
+                    } : {})
+                }) }} />
             </Head>
             <div id="page-user-profile" className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

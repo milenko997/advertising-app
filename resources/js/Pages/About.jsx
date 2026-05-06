@@ -6,16 +6,16 @@ export default function About() {
     return (
         <AppLayout>
             <Head>
-                <title>O nama — Transporteri</title>
+                <title>O nama — Transporteri, srpski marketplace za transport</title>
                 <meta name="description" content="Saznajte više o Transporteri platformi — srpskom marketplaceu za transport i logistiku." />
-                <meta property="og:title"       content="O nama — Transporteri" />
+                <meta property="og:title"       content="O nama — Transporteri, srpski marketplace za transport" />
                 <meta property="og:description" content="Saznajte više o Transporteri platformi — srpskom marketplaceu za transport i logistiku." />
                 <meta property="og:type"        content="website" />
                 <meta property="og:site_name"   content="Transporteri" />
                 <meta property="og:image"       content={`${appUrl}/og-default.png`} />
                 <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
-                <meta name="twitter:title"       content="O nama — Transporteri" />
+                <meta name="twitter:title"       content="O nama — Transporteri, srpski marketplace za transport" />
                 <meta name="twitter:description" content="Saznajte više o Transporteri platformi — srpskom marketplaceu za transport i logistiku." />
                 <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>

@@ -57,17 +57,28 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                 <meta name="twitter:title"       content="Transporteri — Oglasi za transport i logistiku u Srbiji" />
                 <meta name="twitter:description" content="Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite sopstveni oglas na Transporterima." />
                 <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "name": "Transporteri",
+                    "url": appUrl,
+                    "potentialAction": {
+                        "@type": "SearchAction",
+                        "target": { "@type": "EntryPoint", "urlTemplate": `${appUrl}/?search={search_term_string}` },
+                        "query-input": "required name=search_term_string"
+                    }
+                }) }} />
             </Head>
 
             <div id="page-home" className="py-4 sm:py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Page header */}
-                    {!search && (
-                        <div className="mb-5">
-                            <h1 className="text-xl font-bold text-slate-900 dark:text-neutral-100">Transport oglasi u Srbiji</h1>
-                            <p className="text-sm text-slate-500 dark:text-neutral-400 mt-0.5">Pronađite pouzdane prevoznike i transportne usluge širom Srbije.</p>
-                        </div>
-                    )}
+                    <div className="mb-5">
+                        <h1 className="text-xl font-bold text-slate-900 dark:text-neutral-100">
+                            {search ? `Rezultati pretrage: "${search}"` : 'Transport oglasi u Srbiji'}
+                        </h1>
+                        <p className="text-sm text-slate-500 dark:text-neutral-400 mt-0.5">Pronađite pouzdane prevoznike i transportne usluge širom Srbije.</p>
+                    </div>
 
                     <div className="flex flex-col lg:flex-row gap-6 items-start">
 

@@ -5,12 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         @php $meta = view()->shared('meta', []); @endphp
         <title>{{ $meta['title'] ?? config('app.name') }}</title>
-        <meta name="description" content="{{ $meta['description'] ?? 'Srpski marketplace za oglase.' }}" />
+        <meta name="description" content="{{ $meta['description'] ?? 'Transporteri je srpski marketplace za oglase o kamionima, kombijima, prikolicama i logističkim uslugama. Pronađite pouzdane prevoznike ili postavite oglas besplatno.' }}" />
         <meta property="og:site_name"   content="{{ config('app.name') }}" />
         <meta property="og:type"        content="{{ $meta['type'] ?? 'website' }}" />
         <meta property="og:title"       content="{{ $meta['title'] ?? config('app.name') }}" />
-        <meta property="og:description" content="{{ $meta['description'] ?? 'Srpski marketplace za oglase.' }}" />
+        <meta property="og:description" content="{{ $meta['description'] ?? 'Transporteri je srpski marketplace za oglase o kamionima, kombijima, prikolicama i logističkim uslugama. Pronađite pouzdane prevoznike ili postavite oglas besplatno.' }}" />
         <meta property="og:url"         content="{{ $meta['url'] ?? url()->current() }}" />
+        <link rel="canonical"           href="{{ $meta['url'] ?? url()->current() }}" />
         @isset($meta['image'])
         <meta property="og:image"       content="{{ $meta['image'] }}" />
         <meta name="twitter:card"       content="summary_large_image" />
@@ -18,7 +19,7 @@
         <meta name="twitter:card"       content="summary" />
         @endisset
         <meta name="twitter:title"      content="{{ $meta['title'] ?? config('app.name') }}" />
-        <meta name="twitter:description" content="{{ $meta['description'] ?? 'Srpski marketplace za oglase.' }}" />
+        <meta name="twitter:description" content="{{ $meta['description'] ?? 'Transporteri je srpski marketplace za oglase o kamionima, kombijima, prikolicama i logističkim uslugama. Pronađite pouzdane prevoznike ili postavite oglas besplatno.' }}" />
         {{-- Favicons --}}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg">
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">

@@ -58,6 +58,14 @@ class AdvertisementController extends Controller
             ]);
         }
 
+        view()->share('meta', [
+            'title'       => $search
+                ? '"' . $search . '" — Transporteri'
+                : 'Transporteri — Oglasi za transport i logistiku u Srbiji',
+            'description' => 'Pregledajte kamione, kombije, prikolice i logističke usluge širom Srbije. Pronađite pouzdane prevoznike ili postavite oglas besplatno.',
+            'url'         => url('/'),
+        ]);
+
         return Inertia::render('Home', [
             'ads'          => $this->paginationData($ads, $this->formatAds($ads)),
             'pinnedAds'    => $pinnedAds,
@@ -190,8 +198,8 @@ class AdvertisementController extends Controller
         }
 
         view()->share('meta', [
-            'title'       => $category->name . ' — ' . config('app.name'),
-            'description' => 'Pregledajte oglase u kategoriji ' . $category->name . ' na ' . config('app.name') . '.',
+            'title'       => $category->name . ' — oglasi za transport u Srbiji',
+            'description' => $ads->total() . ' ' . ($ads->total() === 1 ? 'oglas' : 'oglasa') . ' u kategoriji ' . $category->name . ' — kamioni, kombiji i teretna vozila dostupna širom Srbije na Transporterima.',
             'url'         => url()->current(),
         ]);
 

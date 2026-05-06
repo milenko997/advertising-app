@@ -38,7 +38,7 @@ export default function Trash({ ads: initialAds }) {
 
     return (
         <AppLayout>
-            <Head title="Obrisani oglasi" />
+            <Head title="Obrisani oglasi"><meta name="robots" content="noindex, nofollow" /></Head>
             <div id="page-trash" className="py-8">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 

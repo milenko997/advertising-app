@@ -44,7 +44,7 @@ export default function FavoritesIndex({ ads, favoritedIds: initialFavoritedIds,
 
     return (
         <AppLayout>
-            <Head title="Sačuvani oglasi" />
+            <Head title="Sačuvani oglasi"><meta name="robots" content="noindex, nofollow" /></Head>
             <div id="page-favorites" className="py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 

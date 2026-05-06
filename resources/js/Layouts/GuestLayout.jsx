@@ -1,9 +1,11 @@
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import StarField from '@/Components/StarField';
 import Logo from '@/Components/Logo';
 
 export default function GuestLayout({ children }) {
     return (
+        <>
+        <Head><meta name="robots" content="noindex, nofollow" /></Head>
         <div className="relative min-h-screen flex flex-col items-center justify-center bg-zinc-100 dark:bg-black px-4 py-12">
             <StarField />
             <div className="relative z-10 mb-6">
@@ -15,5 +17,6 @@ export default function GuestLayout({ children }) {
                 {children}
             </div>
         </div>
+        </>
     );
 }

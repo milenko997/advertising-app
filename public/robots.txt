@@ -1,2 +1,26 @@
 User-agent: *
-Disallow:
+
+# Auth pages
+Disallow: /prijava
+Disallow: /registracija
+Disallow: /zaboravljena-lozinka
+Disallow: /resetovanje-lozinke/
+Disallow: /verify-email
+Disallow: /confirm-password
+
+# Authenticated user pages
+Disallow: /profil
+Disallow: /sacuvani
+Disallow: /moji-oglasi
+Disallow: /postavi-oglas
+Disallow: /obrisani-oglasi
+Disallow: /oglasi/uredi/
+
+# Notifications
+Disallow: /obave
+
+# Admin
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://transporteri.rs/sitemap.xml

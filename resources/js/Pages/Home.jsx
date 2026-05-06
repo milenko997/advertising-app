@@ -74,9 +74,7 @@ export default function Home({ ads, pinnedAds = [], search, location, favoritedI
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Page header */}
                     <div className="mb-5">
-                        <h1 className="text-xl font-bold text-slate-900 dark:text-neutral-100">
-                            {search ? `Rezultati pretrage: "${search}"` : 'Transport oglasi u Srbiji'}
-                        </h1>
+                        <h1 className="text-xl font-bold text-slate-900 dark:text-neutral-100">Transport oglasi u Srbiji</h1>
                         <p className="text-sm text-slate-500 dark:text-neutral-400 mt-0.5">Pronađite pouzdane prevoznike i transportne usluge širom Srbije.</p>
                     </div>
 

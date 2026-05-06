@@ -159,6 +159,21 @@ export default function Show({ ad, isSaved, reviews: initialReviews, hasMoreRevi
                 <meta name="twitter:title"       content={pageTitle} />
                 <meta name="twitter:description" content={description} />
                 <meta name="twitter:image"       content={imageUrl} />
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "Product",
+                    "name": ad.title,
+                    "description": description,
+                    "image": imageUrl,
+                    "url": pageUrl,
+                    ...(ad.user?.name ? {
+                        "brand": {
+                            "@type": "Person",
+                            "name": ad.user.name,
+                            ...(ad.user?.slug ? { "url": `${appUrl}/korisnik/${ad.user.slug}` } : {})
+                        }
+                    } : {})
+                }) }} />
             </Head>
 
             <div id="page-ad-detail" className="py-4 sm:py-8">

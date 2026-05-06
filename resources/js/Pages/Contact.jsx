@@ -37,16 +37,16 @@ export default function Contact() {
     return (
         <AppLayout>
             <Head>
-                <title>Kontakt — Transporteri</title>
+                <title>Kontaktirajte nas — Transporteri</title>
                 <meta name="description" content="Stupite u kontakt sa Transporteri timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
                 <meta property="og:type"        content="website" />
                 <meta property="og:site_name"   content="Transporteri" />
-                <meta property="og:title"       content="Kontakt — Transporteri" />
+                <meta property="og:title"       content="Kontaktirajte nas — Transporteri" />
                 <meta property="og:description" content="Stupite u kontakt sa Transporteri timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
                 <meta property="og:image"       content={`${appUrl}/og-default.png`} />
                 <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
-                <meta name="twitter:title"       content="Kontakt — Transporteri" />
+                <meta name="twitter:title"       content="Kontaktirajte nas — Transporteri" />
                 <meta name="twitter:description" content="Stupite u kontakt sa Transporteri timom. Rado ćemo vam pomoći sa svim pitanjima o našem transportnom marketplaceu." />
                 <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>

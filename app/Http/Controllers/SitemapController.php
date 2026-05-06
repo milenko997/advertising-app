@@ -52,7 +52,7 @@ class SitemapController extends Controller
                 ]);
             }
 
-            return ['loc' => $loc, 'changefreq' => 'daily', 'priority' => '0.8'];
+            return ['loc' => $loc, 'changefreq' => 'daily', 'priority' => '0.8', 'lastmod' => $category->updated_at->toDateString()];
         })->all();
 
         return response()

@@ -151,6 +151,15 @@ export default function Faq() {
                 <meta name="twitter:card"        content="summary_large_image" />
                 <meta name="twitter:title"       content="Česta pitanja — Transporteri" />
                 <meta name="twitter:description" content="Često postavljana pitanja o Transporterima — kako da postavljate oglase, pretražujete vozila, obnavljate listinge i više." />
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "FAQPage",
+                    "mainEntity": faqs.flatMap(cat => cat.items.map(item => ({
+                        "@type": "Question",
+                        "name": item.q,
+                        "acceptedAnswer": { "@type": "Answer", "text": item.a }
+                    })))
+                }) }} />
                 <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 

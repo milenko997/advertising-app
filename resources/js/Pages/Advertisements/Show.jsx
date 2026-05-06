@@ -134,7 +134,7 @@ export default function Show({ ad, isSaved, reviews: initialReviews, hasMoreRevi
     const pageTitle   = `${ad.title} — Transporteri`;
     const description = ad.description
         ? ad.description.replace(/\s+/g, ' ').trim().slice(0, 160)
-        : `${ad.title} — available on Transporteri, the marketplace for transport and freight professionals in Serbia.`;
+        : `${ad.title} — oglas objavljen na Transporterima, portalu za transport i logistiku u Srbiji.`;
     const imageUrl    = ad.image
         ? `${appUrl}/storage/${ad.image}`
         : `${appUrl}/og-default.png`;

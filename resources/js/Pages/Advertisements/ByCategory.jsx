@@ -39,17 +39,17 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
 
     return (
         <AppLayout>
-            <Head title={category.name}>
-                <meta name="description" content={`Pregledajte oglase u kategoriji ${category.name} na Transporterima — srpskom marketplaceu za transport i teretne usluge.`} />
-                <meta property="og:title"       content={`${category.name} — Transporteri`} />
-                <meta property="og:description" content={`Pregledajte oglase u kategoriji ${category.name} na Transporterima — srpskom marketplaceu za transport i teretne usluge.`} />
+            <Head title={`${category.name} — oglasi za transport u Srbiji`}>
+                <meta name="description" content={`${ads.total} ${ads.total === 1 ? 'oglas' : 'oglasa'} u kategoriji ${category.name} — kamioni, kombiji i teretna vozila dostupna širom Srbije na Transporterima.`} />
+                <meta property="og:title"       content={`${category.name} — oglasi za transport u Srbiji`} />
+                <meta property="og:description" content={`${ads.total} ${ads.total === 1 ? 'oglas' : 'oglasa'} u kategoriji ${category.name} — kamioni, kombiji i teretna vozila dostupna širom Srbije na Transporterima.`} />
                 <meta property="og:type"        content="website" />
                 <meta property="og:site_name"   content="Transporteri" />
                 <meta property="og:image"       content={`${appUrl}/og-default.png`} />
                 <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
-                <meta name="twitter:title"       content={`${category.name} — Transporteri`} />
-                <meta name="twitter:description" content={`Pregledajte oglase u kategoriji ${category.name} na Transporterima — srpskom marketplaceu za transport i teretne usluge.`} />
+                <meta name="twitter:title"       content={`${category.name} — oglasi za transport u Srbiji`} />
+                <meta name="twitter:description" content={`${ads.total} ${ads.total === 1 ? 'oglas' : 'oglasa'} u kategoriji ${category.name} — kamioni, kombiji i teretna vozila dostupna širom Srbije na Transporterima.`} />
                 <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 

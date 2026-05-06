@@ -64,7 +64,31 @@ export default function Privacy() {
                         <Section title="2. Podaci koje prikupljamo">
                             <p>Prikupljamo sledeće kategorije ličnih podataka:</p>
 
-                            <div className="rounded-xl border border-slate-100 dark:border-neutral-700 overflow-hidden">
+                            {/* Mobile: stacked cards */}
+                            <div className="sm:hidden space-y-3">
+                                {[
+                                    { tip: 'Podaci o nalogu',     primeri: 'Ime, email, lozinka (hešovana)',                          svrha: 'Autentifikacija, upravljanje nalogom' },
+                                    { tip: 'Podaci profila',      primeri: 'Broj telefona, profilna fotografija',                     svrha: 'Prikazuje se na vašem javnom profilu' },
+                                    { tip: 'Sadržaj oglasa',      primeri: 'Naslov, opis, lokacija, slike, kontakt telefon',          svrha: 'Objavljivanje vaših oglasa' },
+                                    { tip: 'Podaci o korišćenju', primeri: 'Posećene stranice, broj pregleda oglasa, IP adresa',      svrha: 'Analitika, sprečavanje prevara' },
+                                    { tip: 'Tehnički podaci',     primeri: 'Tip pretraživača, uređaj, kolačići sesije',               svrha: 'Funkcionalnost platforme, bezbednost' },
+                                ].map(({ tip, primeri, svrha }) => (
+                                    <div key={tip} className="rounded-xl border border-slate-100 dark:border-neutral-700 divide-y divide-slate-100 dark:divide-neutral-700 overflow-hidden">
+                                        <div className="bg-slate-50 dark:bg-neutral-800/50 px-4 py-2.5 text-xs font-semibold text-slate-700 dark:text-neutral-300">{tip}</div>
+                                        <div className="px-4 py-2.5 text-xs">
+                                            <span className="font-semibold text-slate-600 dark:text-neutral-400">Primeri: </span>
+                                            <span className="text-slate-500 dark:text-neutral-400">{primeri}</span>
+                                        </div>
+                                        <div className="px-4 py-2.5 text-xs">
+                                            <span className="font-semibold text-slate-600 dark:text-neutral-400">Svrha: </span>
+                                            <span className="text-slate-500 dark:text-neutral-400">{svrha}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* sm+: table */}
+                            <div className="hidden sm:block rounded-xl border border-slate-100 dark:border-neutral-700 overflow-hidden">
                                 <table className="w-full text-xs">
                                     <thead className="bg-slate-50 dark:bg-neutral-800/50">
                                         <tr>

@@ -99,7 +99,7 @@ export default function Create({ categories }) {
 
     return (
         <AppLayout>
-            <Head title="Postavi oglas" />
+            <Head title="Postavi oglas"><meta name="robots" content="noindex, nofollow" /></Head>
             <div className="py-4 sm:py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
 

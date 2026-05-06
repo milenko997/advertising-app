@@ -83,7 +83,7 @@ export default function ProfileShow({ user }) {
 
     return (
         <AppLayout>
-            <Head title="Moj profil" />
+            <Head title="Moj profil"><meta name="robots" content="noindex, nofollow" /></Head>
             <div id="page-profile" className="py-4 sm:py-8">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
                     <div className="mb-2">

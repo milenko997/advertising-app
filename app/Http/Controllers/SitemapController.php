@@ -23,9 +23,12 @@ class SitemapController extends Controller
     public function static()
     {
         $urls = [
-            ['loc' => url('/'),         'changefreq' => 'daily',   'priority' => '1.0'],
-            ['loc' => url('/login'),    'changefreq' => 'monthly', 'priority' => '0.3'],
-            ['loc' => url('/register'), 'changefreq' => 'monthly', 'priority' => '0.3'],
+            ['loc' => url('/'),                        'changefreq' => 'daily',   'priority' => '1.0'],
+            ['loc' => url('/o-nama'),                  'changefreq' => 'monthly', 'priority' => '0.5'],
+            ['loc' => url('/kontakt'),                 'changefreq' => 'monthly', 'priority' => '0.4'],
+            ['loc' => url('/cesta-pitanja'),           'changefreq' => 'monthly', 'priority' => '0.5'],
+            ['loc' => url('/uslovi-koriscenja'),       'changefreq' => 'yearly',  'priority' => '0.3'],
+            ['loc' => url('/politika-privatnosti'),    'changefreq' => 'yearly',  'priority' => '0.3'],
         ];
 
         return response()

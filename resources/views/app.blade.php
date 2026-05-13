@@ -12,14 +12,11 @@
         <meta property="og:description" content="{{ $meta['description'] ?? 'Transporteri je srpski marketplace za oglase o kamionima, kombijima, prikolicama i logističkim uslugama. Pronađite pouzdane prevoznike ili postavite oglas besplatno.' }}" />
         <meta property="og:url"         content="{{ $meta['url'] ?? url()->current() }}" />
         <link rel="canonical"           href="{{ $meta['url'] ?? url()->current() }}" />
-        @isset($meta['image'])
-        <meta property="og:image"       content="{{ $meta['image'] }}" />
-        <meta name="twitter:card"       content="summary_large_image" />
-        @else
-        <meta name="twitter:card"       content="summary" />
-        @endisset
-        <meta name="twitter:title"      content="{{ $meta['title'] ?? config('app.name') }}" />
+        <meta property="og:image"        content="{{ $meta['image'] ?? url('/og-default.png') }}" />
+        <meta name="twitter:card"        content="summary_large_image" />
+        <meta name="twitter:title"       content="{{ $meta['title'] ?? config('app.name') }}" />
         <meta name="twitter:description" content="{{ $meta['description'] ?? 'Transporteri je srpski marketplace za oglase o kamionima, kombijima, prikolicama i logističkim uslugama. Pronađite pouzdane prevoznike ili postavite oglas besplatno.' }}" />
+        <meta name="twitter:image"       content="{{ $meta['image'] ?? url('/og-default.png') }}" />
         {{-- Favicons --}}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg">
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">

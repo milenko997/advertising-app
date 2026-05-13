@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ContactFormMail;
+use App\Rules\RecaptchaToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
@@ -18,10 +19,11 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'    => 'required|string|min:2|max:100',
-            'email'   => 'required|email:rfc',
-            'subject' => 'required|string|min:3|max:150',
-            'message' => 'required|string|min:10|max:3000',
+            'name'            => 'required|string|min:2|max:100',
+            'email'           => 'required|email:rfc',
+            'subject'         => 'required|string|min:3|max:150',
+            'message'         => 'required|string|min:10|max:3000',
+            'recaptcha_token' => ['nullable', new RecaptchaToken('contact')],
         ]);
 
         try {

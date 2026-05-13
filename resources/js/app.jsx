@@ -1,7 +1,13 @@
 import './bootstrap';
 
 import { createRoot } from 'react-dom/client';
-import { createInertiaApp } from '@inertiajs/react';
+import { createInertiaApp, router } from '@inertiajs/react';
+
+router.on('navigate', () => {
+    if (window.gtag && window.gaId) {
+        window.gtag('config', window.gaId, { page_path: window.location.pathname });
+    }
+});
 
 createInertiaApp({
     title: (title) => title ? `${title} — Transporteri` : 'Transporteri',

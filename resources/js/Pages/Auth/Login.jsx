@@ -1,16 +1,24 @@
+import { useRef } from 'react';
 import { useForm, Link } from '@inertiajs/react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import PasswordInput from '@/Components/PasswordInput';
+import { useRecaptcha } from '@/hooks/useRecaptcha';
 
 export default function Login({ status }) {
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing, errors, transform } = useForm({
         email: '',
         password: '',
         remember: false,
     });
 
-    const submit = (e) => {
+    const tokenRef = useRef('');
+    const getToken = useRecaptcha('login');
+
+    transform(d => ({ ...d, recaptcha_token: tokenRef.current }));
+
+    const submit = async (e) => {
         e.preventDefault();
+        tokenRef.current = await getToken();
         post('/prijava');
     };
 

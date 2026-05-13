@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Mail\WelcomeMail;
 use App\Models\User;
+use App\Rules\RecaptchaToken;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,10 +39,11 @@ class RegisteredUserController extends Controller
         $accountType = $request->input('account_type', 'personal');
 
         $rules = [
-            'name'         => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s\'\-]+$/u'],
-            'email'        => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password'     => ['required', 'confirmed', Rules\Password::defaults()],
-            'account_type' => ['sometimes', 'string', 'in:personal,company'],
+            'name'            => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s\'\-]+$/u'],
+            'email'           => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'        => ['required', 'confirmed', Rules\Password::defaults()],
+            'account_type'    => ['sometimes', 'string', 'in:personal,company'],
+            'recaptcha_token' => ['nullable', new RecaptchaToken('register')],
         ];
 
         if ($accountType === 'company') {

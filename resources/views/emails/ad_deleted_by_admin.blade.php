@@ -3,7 +3,7 @@
 
 Zdravo **{{ $displayName }}**,
 
-Obaveštavamo Vas da je Vaš oglas **"{{ $adTitle }}"** uklonjen od strane administratora platforme Transporteri zbog kršenja pravila korišćenja.
+Obaveštavamo Vas da je Vaš oglas **"{{ $adTitle }}"** uklonjen od strane administratora platforme Transporteri.
 
 @component('mail::panel')
 Ukoliko smatrate da je ovo greška ili želite da razjasnite razloge uklanjanja, kontaktirajte nas:

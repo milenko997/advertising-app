@@ -158,7 +158,10 @@ export default function Privacy() {
 
                         <Section title="5. Kolačići">
                             <p>
-                                Transporteri koristi kolačiće da vas drži prijavljenim (kolačić sesije) i da zaštiti forme od falsifikovanja međustraničnih zahteva (CSRF kolačić). Ovo su neophodni kolačići potrebni za funkcionisanje platforme — ne koriste se kolačići za praćenje niti za oglašavanje.
+                                Transporteri koristi kolačiće da vas drži prijavljenim (kolačić sesije) i da zaštiti forme od falsifikovanja međustraničnih zahteva (CSRF kolačić). Ovo su neophodni kolačići potrebni za funkcionisanje platforme.
+                            </p>
+                            <p>
+                                Pored toga, Google Analytics i Google reCAPTCHA (opisani u odeljku 9) mogu postavljati sopstvene kolačiće radi anonimnog praćenja poseta i procene bezbednosti obrazaca. Ovi kolačići su kontrolisani od strane Google-a i podležu <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:underline">Google politici privatnosti</a>.
                             </p>
                             <p>
                                 Možete onemogućiti kolačiće u podešavanjima pretraživača, ali to će vas sprečiti da se prijavite ili koristite većinu funkcija Transportera.
@@ -183,6 +186,7 @@ export default function Privacy() {
                                 <li>HTTPS enkripcija za sve podatke u prenosu.</li>
                                 <li>CSRF zaštita na svim formama.</li>
                                 <li>Ograničenje brzine za sprečavanje brute-force napada.</li>
+                                <li>Google reCAPTCHA v3 zaštita na formama za prijavu, registraciju i kontakt.</li>
                             </ul>
                             <p>
                                 Nijedan sistem nije potpuno bezbedan. Ukoliko smatrate da je vaš nalog kompromitovan, kontaktirajte nas odmah.
@@ -206,8 +210,17 @@ export default function Privacy() {
                         </Section>
 
                         <Section title="9. Usluge trećih strana">
+                            <p>Transporteri koristi sledeće usluge trećih strana:</p>
+                            <ul className="list-disc list-inside space-y-1.5 pl-2">
+                                <li>
+                                    <strong className="text-slate-700 dark:text-neutral-200">Google Analytics 4</strong> — koristimo GA4 za anonimno praćenje poseta stranicama i razumevanje načina korišćenja platforme (npr. koje stranice su najposećenije). Google Analytics ne prikuplja vaše lično ime niti email adresu. Prikupljeni podaci obrađuju se od strane Google-a u skladu sa <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:underline">Google politikom privatnosti</a>. Analitiku možete onemogućiti korišćenjem <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:underline">Google Analytics Opt-out dodatka</a>.
+                                </li>
+                                <li>
+                                    <strong className="text-slate-700 dark:text-neutral-200">Google reCAPTCHA v3</strong> — koristimo reCAPTCHA v3 na formama za prijavu, registraciju i kontakt radi zaštite od automatizovanih botova i spam napada. reCAPTCHA analizira ponašanje korisnika u pozadini (bez checkbox-a) i šalje ocenu Google-u. Ova usluga podleže <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:underline">Google politici privatnosti</a> i <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:underline">Uslovima korišćenja</a>.
+                                </li>
+                            </ul>
                             <p>
-                                Transporteri ne deli vaše podatke sa analitičkim, reklamnim ili uslugama praćenja trećih strana. Platforma je samostalno hostovana i ne učitava eksterne skripte od Google-a, Facebook-a ili sličnih provajdera.
+                                Transporteri ne koristi usluge Facebook-a, reklamnih mreža niti bilo kog drugog provajdera za praćenje ili ciljano oglašavanje.
                             </p>
                         </Section>
 

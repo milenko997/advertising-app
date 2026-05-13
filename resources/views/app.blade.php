@@ -38,6 +38,21 @@
                 }
             })();
         </script>
+        @if(config('services.google_analytics.id'))
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google_analytics.id') }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '{{ config('services.google_analytics.id') }}');
+            window.gaId = '{{ config('services.google_analytics.id') }}';
+        </script>
+        @endif
+        @if(config('services.recaptcha.site_key'))
+        <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}" async defer></script>
+        <script>window.recaptchaSiteKey = '{{ config('services.recaptcha.site_key') }}';</script>
+        <style>.grecaptcha-badge{visibility:hidden}</style>
+        @endif
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.jsx'])
     </head>

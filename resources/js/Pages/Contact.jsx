@@ -1,5 +1,7 @@
+import { useRef } from 'react';
 import { useForm, Head, usePage } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
+import { useRecaptcha } from '@/hooks/useRecaptcha';
 
 function InfoCard({ icon, label, value, href }) {
     const content = (
@@ -22,15 +24,21 @@ function InfoCard({ icon, label, value, href }) {
 
 export default function Contact() {
     const { url, props: { appUrl } } = usePage();
-    const { data, setData, post, processing, errors, reset, wasSuccessful } = useForm({
+    const { data, setData, post, processing, errors, reset, wasSuccessful, transform } = useForm({
         name: '',
         email: '',
         subject: '',
         message: '',
     });
 
-    const submit = (e) => {
+    const tokenRef = useRef('');
+    const getToken = useRecaptcha('contact');
+
+    transform(d => ({ ...d, recaptcha_token: tokenRef.current }));
+
+    const submit = async (e) => {
         e.preventDefault();
+        tokenRef.current = await getToken();
         post('/kontakt', { onSuccess: () => reset() });
     };
 

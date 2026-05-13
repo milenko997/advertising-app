@@ -1,11 +1,13 @@
+import { useRef } from 'react';
 import { useForm, Link } from '@inertiajs/react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import PasswordInput from '@/Components/PasswordInput';
+import { useRecaptcha } from '@/hooks/useRecaptcha';
 
 const inputClass = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400';
 
 export default function Register() {
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing, errors, transform } = useForm({
         account_type: 'personal',
         name: '',
         email: '',
@@ -19,6 +21,11 @@ export default function Register() {
         password_confirmation: '',
     });
 
+    const tokenRef = useRef('');
+    const getToken = useRecaptcha('register');
+
+    transform(d => ({ ...d, recaptcha_token: tokenRef.current }));
+
     const isCompany = data.account_type === 'company';
 
     const handleName = (e) => {
@@ -28,8 +35,9 @@ export default function Register() {
         setData('name', cleaned);
     };
 
-    const submit = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
+        tokenRef.current = await getToken();
         post('/registracija');
     };
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -53,7 +54,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::orderBy('name')->get(['id', 'name', 'parent_id']);
+        $categories = Category::whereNull('parent_id')->orderBy('name')->get(['id', 'name']);
 
         return Inertia::render('Admin/Categories/Create', compact('categories'));
     }
@@ -68,10 +69,12 @@ class CategoryController extends Controller
     {
         $validatedData = $request->validate([
             'name'      => 'required|unique:categories|max:255',
-            'parent_id' => ['nullable', 'exists:categories,id', Rule::notIn([])],
+            'parent_id' => ['nullable', Rule::exists('categories', 'id')->whereNull('parent_id')],
         ]);
 
         Category::create($validatedData);
+
+        Cache::forget('nav_categories');
 
         return redirect()->route('admin.kategorije.index')->with('success', 'Kategorija je uspešno kreirana.');
     }
@@ -95,7 +98,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories = Category::where('id', '!=', $category->id)->orderBy('name')->get(['id', 'name', 'parent_id']);
+        $categories = Category::whereNull('parent_id')->where('id', '!=', $category->id)->orderBy('name')->get(['id', 'name']);
 
         return Inertia::render('Admin/Categories/Edit', [
             'category'   => [
@@ -119,10 +122,12 @@ class CategoryController extends Controller
     {
         $validatedData = $request->validate([
             'name'      => 'required|unique:categories,name,' . $category->id . '|max:255',
-            'parent_id' => ['nullable', 'exists:categories,id', Rule::notIn([$category->id])],
+            'parent_id' => ['nullable', Rule::exists('categories', 'id')->whereNull('parent_id')->where('id', '!=', $category->id)],
         ]);
 
         $category->update($validatedData);
+
+        Cache::forget('nav_categories');
 
         return redirect()->route('admin.kategorije.index')->with('success', 'Kategorija je uspešno ažurirana.');
     }
@@ -136,6 +141,8 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
+
+        Cache::forget('nav_categories');
 
         return redirect()->route('admin.kategorije.index')->with('success', 'Kategorija je uspešno obrisana.');
     }

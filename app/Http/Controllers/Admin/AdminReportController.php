@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class AdminReportController extends Controller
@@ -51,12 +52,16 @@ class AdminReportController extends Controller
     {
         $report->update(['resolved' => !$report->resolved]);
 
+        Cache::forget('badge_reports');
+
         return back()->with('success', $report->resolved ? 'Prijava je označena kao rešena.' : 'Prijava je ponovo otvorena.');
     }
 
     public function destroy(Report $report)
     {
         $report->delete();
+
+        Cache::forget('badge_reports');
 
         return back()->with('success', 'Prijava je obrisana.');
     }

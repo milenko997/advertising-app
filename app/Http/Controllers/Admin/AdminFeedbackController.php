@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Feedback;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class AdminFeedbackController extends Controller
@@ -32,12 +33,16 @@ class AdminFeedbackController extends Controller
     {
         $feedback->update(['read' => true]);
 
+        Cache::forget('badge_feedback');
+
         return back();
     }
 
     public function destroy(Feedback $feedback)
     {
         $feedback->delete();
+
+        Cache::forget('badge_feedback');
 
         return back()->with('success', 'Povratna informacija je obrisana.');
     }

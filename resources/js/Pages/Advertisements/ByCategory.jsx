@@ -5,7 +5,7 @@ import AdCard from '@/Components/AdCard';
 import Sidebar from '@/Components/Sidebar';
 import axios from 'axios';
 
-export default function ByCategory({ category, ads, pinnedCategoryAds = [], location, favoritedIds }) {
+export default function ByCategory({ category, ads, pinnedCategoryAds = [], location, city = null, favoritedIds }) {
     const { url, props: { appUrl } } = usePage();
     const [adList, setAdList] = useState(ads.data);
     const [currentPage, setCurrentPage] = useState(ads.current_page);
@@ -39,17 +39,26 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
 
     return (
         <AppLayout>
-            <Head title={`${category.name} — oglasi za transport u Srbiji`}>
-                <meta name="description" content={`${ads.total} ${ads.total === 1 ? 'oglas' : 'oglasa'} u kategoriji ${category.name} — kamioni, kombiji i teretna vozila dostupna širom Srbije na Transporterima.`} />
-                <meta property="og:title"       content={`${category.name} — oglasi za transport u Srbiji`} />
-                <meta property="og:description" content={`${ads.total} ${ads.total === 1 ? 'oglas' : 'oglasa'} u kategoriji ${category.name} — kamioni, kombiji i teretna vozila dostupna širom Srbije na Transporterima.`} />
+            <Head title={city ? `${category.name} u ${city.name} — oglasi` : `${category.name} — oglasi za transport u Srbiji`}>
+                <meta name="description" content={city
+                    ? `${ads.total} ${ads.total === 1 ? 'oglas' : 'oglasa'} u kategoriji ${category.name} u ${city.name} — pronađite pouzdane prevoznike na Transporterima.`
+                    : `${ads.total} ${ads.total === 1 ? 'oglas' : 'oglasa'} u kategoriji ${category.name} — kamioni, kombiji i teretna vozila dostupna širom Srbije na Transporterima.`
+                } />
+                <meta property="og:title"       content={city ? `${category.name} u ${city.name} — oglasi` : `${category.name} — oglasi za transport u Srbiji`} />
+                <meta property="og:description" content={city
+                    ? `${ads.total} ${ads.total === 1 ? 'oglas' : 'oglasa'} u kategoriji ${category.name} u ${city.name} — pronađite pouzdane prevoznike na Transporterima.`
+                    : `${ads.total} ${ads.total === 1 ? 'oglas' : 'oglasa'} u kategoriji ${category.name} — kamioni, kombiji i teretna vozila dostupna širom Srbije na Transporterima.`
+                } />
                 <meta property="og:type"        content="website" />
                 <meta property="og:site_name"   content="Transporteri" />
                 <meta property="og:image"       content={`${appUrl}/og-default.png`} />
                 <meta property="og:url"         content={`${appUrl}${url}`} />
                 <meta name="twitter:card"        content="summary_large_image" />
-                <meta name="twitter:title"       content={`${category.name} — oglasi za transport u Srbiji`} />
-                <meta name="twitter:description" content={`${ads.total} ${ads.total === 1 ? 'oglas' : 'oglasa'} u kategoriji ${category.name} — kamioni, kombiji i teretna vozila dostupna širom Srbije na Transporterima.`} />
+                <meta name="twitter:title"       content={city ? `${category.name} u ${city.name} — oglasi` : `${category.name} — oglasi za transport u Srbiji`} />
+                <meta name="twitter:description" content={city
+                    ? `${ads.total} ${ads.total === 1 ? 'oglas' : 'oglasa'} u kategoriji ${category.name} u ${city.name} — pronađite pouzdane prevoznike na Transporterima.`
+                    : `${ads.total} ${ads.total === 1 ? 'oglas' : 'oglasa'} u kategoriji ${category.name} — kamioni, kombiji i teretna vozila dostupna širom Srbije na Transporterima.`
+                } />
                 <meta name="twitter:image"       content={`${appUrl}/og-default.png`} />
             </Head>
 
@@ -64,10 +73,12 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
                         <div id="page-by-category" className="flex-1 min-w-0">
 
                             <div className="mb-6 space-y-3">
-                                <h1 className="text-xl font-bold text-gray-900 dark:text-neutral-100">{category.name}</h1>
+                                <h1 className="text-xl font-bold text-gray-900 dark:text-neutral-100">
+                                    {city ? `${category.name} u ${city.name}` : category.name}
+                                </h1>
 
-                                {/* Location filter */}
-                                <form onSubmit={handleSearch} className="flex items-center gap-2">
+                                {/* Location filter — hidden on city-specific pages */}
+                                {!city && <form onSubmit={handleSearch} className="flex items-center gap-2">
                                     <div className="relative flex-1 sm:flex-none">
                                         <label htmlFor="bycategory-location" className="sr-only">Lokacija</label>
                                         <svg className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -101,7 +112,7 @@ export default function ByCategory({ category, ads, pinnedCategoryAds = [], loca
                                             Obriši
                                         </button>
                                     )}
-                                </form>
+                                </form>}
                             </div>
 
                             {/* Pinned category ads */}

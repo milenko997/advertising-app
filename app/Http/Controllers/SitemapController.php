@@ -12,6 +12,7 @@ class SitemapController extends Controller
         $sitemaps = [
             ['loc' => url('/sitemap-static.xml'),         'lastmod' => now()->toDateString()],
             ['loc' => url('/sitemap-categories.xml'),     'lastmod' => now()->toDateString()],
+            ['loc' => url('/sitemap-cities.xml'),         'lastmod' => now()->toDateString()],
             ['loc' => url('/sitemap-advertisements.xml'), 'lastmod' => now()->toDateString()],
         ];
 
@@ -54,6 +55,46 @@ class SitemapController extends Controller
 
             return ['loc' => $loc, 'changefreq' => 'daily', 'priority' => '0.8', 'lastmod' => $category->updated_at->toDateString()];
         })->all();
+
+        return response()
+            ->view('sitemaps.urlset', compact('urls'))
+            ->header('Content-Type', 'application/xml');
+    }
+
+    public function cities()
+    {
+        $cities = config('cities');
+        $parentCategories = Category::whereNull('parent_id')->get(['id', 'slug']);
+
+        // Load only location + resolved parent_id for active, non-deleted ads.
+        $counts = Advertisement::active()
+            ->join('categories', 'advertisements.category_id', '=', 'categories.id')
+            ->whereNotNull('advertisements.location')
+            ->selectRaw('COALESCE(categories.parent_id, categories.id) AS parent_id, advertisements.location')
+            ->get();
+
+        $tally = [];
+        foreach ($counts as $row) {
+            foreach ($cities as $slug => $name) {
+                if (mb_stripos($row->location, $name) !== false) {
+                    $tally[$row->parent_id][$slug] = ($tally[$row->parent_id][$slug] ?? 0) + 1;
+                }
+            }
+        }
+
+        $urls = [];
+        foreach ($parentCategories as $category) {
+            foreach ($cities as $slug => $name) {
+                if (($tally[$category->id][$slug] ?? 0) > 0) {
+                    $urls[] = [
+                        'loc'        => route('advertisements.byCategoryCity', ['parent' => $category->slug, 'city' => $slug]),
+                        'changefreq' => 'daily',
+                        'priority'   => '0.7',
+                        'lastmod'    => now()->toDateString(),
+                    ];
+                }
+            }
+        }
 
         return response()
             ->view('sitemaps.urlset', compact('urls'))

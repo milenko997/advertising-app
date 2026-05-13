@@ -20,7 +20,7 @@ export default function Footer() {
                             Oglasnik za transport i logistiku u Srbiji. Pronađite vozila, rute i logističke partnere.
                         </p>
                         {/* Social icons */}
-                        <div className="flex items-center gap-3 mt-5">
+                        {/* <div className="flex items-center gap-3 mt-5">
                             <a href="#" aria-label="Facebook" className="w-11 h-11 rounded-lg bg-neutral-800 hover:bg-neutral-700 flex items-center justify-center transition-colors">
                                 <svg className="w-4 h-4 text-neutral-400" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
@@ -39,7 +39,7 @@ export default function Footer() {
                                     <circle cx="4" cy="4" r="2"/>
                                 </svg>
                             </a>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Platform links */}
@@ -168,18 +168,6 @@ export default function Footer() {
                                     </span>
                                     +381 69 583 3352
                                 </a>
-                            </li>
-                            <li>
-                                <span className="flex items-center gap-2.5 text-sm text-neutral-400">
-                                    <span className="w-7 h-7 rounded-md bg-neutral-800 flex items-center justify-center shrink-0">
-                                        <svg className="w-3.5 h-3.5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                    </span>
-                                    Beograd, Srbija
-                                </span>
                             </li>
                         </ul>
                     </div>

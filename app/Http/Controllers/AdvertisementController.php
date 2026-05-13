@@ -212,6 +212,81 @@ class AdvertisementController extends Controller
         ]);
     }
 
+    public function byCategoryCity(Request $request, string $parent, string $city)
+    {
+        $parentCategory = Category::where('slug', $parent)->firstOrFail();
+        if (Category::where('slug', $city)->where('parent_id', $parentCategory->id)->exists()) {
+            return $this->byCategory($request, $parent, $city);
+        }
+        return $this->byCategoryWithCity($request, $parent, null, $city);
+    }
+
+    public function byCategoryChildCity(Request $request, string $parent, string $child, string $city)
+    {
+        return $this->byCategoryWithCity($request, $parent, $child, $city);
+    }
+
+    private function byCategoryWithCity(Request $request, string $parent, ?string $child, string $citySlug)
+    {
+        $cities = config('cities');
+
+        $cityName = $cities[$citySlug] ?? Str::title(str_replace('-', ' ', $citySlug));
+
+        $parentCategory = Category::where('slug', $parent)->firstOrFail();
+        $category = $child
+            ? Category::where('slug', $child)->where('parent_id', $parentCategory->id)->firstOrFail()
+            : $parentCategory;
+
+        $categoryIds = $child
+            ? [$category->id]
+            : $parentCategory->children()->pluck('id')->prepend($category->id)->all();
+
+        $pinnedCategoryAds = Advertisement::whereIn('category_id', $categoryIds)
+            ->active()
+            ->where('is_pinned_category', true)
+            ->where('location', 'like', '%' . $cityName . '%')
+            ->with('user', 'category')
+            ->latest()
+            ->get()
+            ->map(fn ($ad) => $this->formatAd($ad))
+            ->values()
+            ->all();
+
+        $pinnedCategoryIds = collect($pinnedCategoryAds)->pluck('id')->all();
+
+        $ads = Advertisement::whereIn('category_id', $categoryIds)
+            ->with('user', 'category')
+            ->active()
+            ->where('location', 'like', '%' . $cityName . '%')
+            ->when(!empty($pinnedCategoryIds), fn ($q) => $q->whereNotIn('id', $pinnedCategoryIds))
+            ->latest()
+            ->paginate(21);
+
+        if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
+            return response()->json([
+                'ads'     => $this->formatAds($ads),
+                'hasMore' => $ads->hasMorePages(),
+            ]);
+        }
+
+        $total = $ads->total();
+
+        view()->share('meta', [
+            'title'       => $category->name . ' u ' . $cityName . ' — oglasi | Transporteri',
+            'description' => $total . ' ' . ($total === 1 ? 'oglas' : 'oglasa') . ' u kategoriji ' . $category->name . ' u ' . $cityName . ' — pronađite pouzdane prevoznike na Transporterima.',
+            'url'         => url()->current(),
+        ]);
+
+        return Inertia::render('Advertisements/ByCategory', [
+            'category'          => ['id' => $category->id, 'name' => $category->name, 'slug' => $category->slug],
+            'ads'               => $this->paginationData($ads, $this->formatAds($ads)),
+            'pinnedCategoryAds' => $pinnedCategoryAds,
+            'location'          => $cityName,
+            'city'              => ['slug' => $citySlug, 'name' => $cityName],
+            'favoritedIds'      => Favorite::idsForUser(Auth::id()),
+        ]);
+    }
+
     private function formatAd($ad): array
     {
         return AdvertisementResource::make($ad)->resolve();

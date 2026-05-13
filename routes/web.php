@@ -46,6 +46,7 @@ Route::get('/sitemap.xml',               [SitemapController::class, 'index'])->n
 Route::get('/sitemap-static.xml',        [SitemapController::class, 'static'])->name('sitemap.static');
 Route::get('/sitemap-categories.xml',    [SitemapController::class, 'categories'])->name('sitemap.categories');
 Route::get('/sitemap-advertisements.xml', [SitemapController::class, 'advertisements'])->name('sitemap.advertisements');
+Route::get('/sitemap-cities.xml',        [SitemapController::class, 'cities'])->name('sitemap.cities');
 
 Route::middleware('auth')->group(function () {
     Route::get('/obavestenja', [NotificationController::class, 'index'])->name('notifications.index');
@@ -106,6 +107,10 @@ Route::get('/korisnik/{user}/recenzija-prijava', [ReviewController::class, 'logi
 Route::post('/korisnik/{user}/recenzije', [ReviewController::class, 'store'])->middleware(['auth', 'throttle:review'])->name('reviews.store');
 Route::put('/recenzije/{review}', [ReviewController::class, 'update'])->middleware(['auth', 'throttle:review'])->name('reviews.update');
 Route::delete('/recenzije/{review}', [ReviewController::class, 'destroy'])->middleware('auth')->name('reviews.destroy');
+Route::get('/kategorija/{parent}/{child}/{city}', [AdvertisementController::class, 'byCategoryChildCity'])
+    ->name('advertisements.byCategoryChildCity');
+Route::get('/kategorija/{parent}/{city}', [AdvertisementController::class, 'byCategoryCity'])
+    ->name('advertisements.byCategoryCity');
 Route::get('/kategorija/{parent}/{child?}', [AdvertisementController::class, 'byCategory'])
     ->name('advertisements.byCategory');
 

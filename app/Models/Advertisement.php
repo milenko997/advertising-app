@@ -83,6 +83,9 @@ class Advertisement extends Model
         $this->created_at = now();
         $this->expires_at = now()->addDays(self::EXPIRY_DAYS);
         $this->save();
+
+        // The nav only lists categories with active ads, and this ad is active again
+        Cache::forget('nav_categories');
     }
 
     public function scopeActive($query)

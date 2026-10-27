@@ -65,6 +65,8 @@ class UserAdvertisementController extends Controller
             return back()->withErrors(['rate_limit' => "Dostigli ste limit od 5 oglasa po satu. Pokušajte ponovo za {$minutes} min."]);
         }
 
+        RateLimiter::hit($key, 3600);
+
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $this->imageService->store($request->file('image'));
@@ -93,8 +95,6 @@ class UserAdvertisementController extends Controller
                 ]);
             }
         }
-
-        RateLimiter::hit('ad-creation:' . Auth::id(), 3600);
 
         Cache::forget('nav_categories');
 

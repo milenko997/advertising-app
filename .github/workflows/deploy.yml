@@ -152,6 +152,7 @@ jobs:
           rel="releases/$2"
           release="$1/$rel"
           switched=false
+          previous=$(readlink current || true)
           # Never leave a half-built release behind; the live site is untouched until the switch
           trap '[ "$switched" = true ] || rm -rf "$release"' EXIT
 
@@ -188,6 +189,36 @@ jobs:
           # PHP-FPM caches resolved paths and opcode for a while; a graceful reload serves the new release at once
           sudo -n /usr/bin/systemctl reload php8.3-fpm \
             || echo "::warning::Could not reload php8.3-fpm; the previous release may be served for up to 2 minutes."
+
+          # Health check against this server's nginx (not through Cloudflare, which may challenge
+          # requests from the server itself). HTTPS first, plain HTTP if nginx only listens on 80.
+          url=$(php -r '$c = require "current/bootstrap/cache/config.php"; echo $c["app"]["url"];')
+          host=${url#*://}; host=${host%%/*}
+          status() {
+            local code
+            code=$(curl -sk -o /dev/null -m 10 -w '%{http_code}' --resolve "$host:443:127.0.0.1" "https://$host$1" || true)
+            [ "$code" = 000 ] && code=$(curl -s -o /dev/null -m 10 -w '%{http_code}' -H "Host: $host" "http://127.0.0.1$1" || true)
+            echo "$code"
+          }
+          healthy=false
+          for attempt in 1 2 3 4 5; do
+            home=$(status /); login=$(status /prijava)
+            if [ "$home" = 200 ] && [ "$login" = 200 ]; then healthy=true; break; fi
+            sleep 3
+          done
+
+          if [ "$healthy" != true ]; then
+            echo "::error::Health check failed after the switch: / returned $home, /prijava returned $login."
+            if [ -n "$previous" ] && [ -d "$previous" ]; then
+              ln -sfn "$previous" current.new
+              mv -Tf current.new current
+              sudo -n /usr/bin/systemctl reload php8.3-fpm || true
+              php current/artisan queue:restart
+              switched=false # the trap removes the broken release
+              echo "::error::Rolled back to $previous. Migrations of the failed release stay applied; the database copy from before them is shared/backups/pre-deploy-$2.sql."
+            fi
+            exit 1
+          fi
 
           # Keep the 5 newest releases for rollbacks
           ls -1d releases/*/ | sort -r | tail -n +6 | xargs -r rm -rf

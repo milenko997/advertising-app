@@ -241,6 +241,10 @@ There is no maintenance mode. Each deploy is prepared in its own directory next 
 
 A deploy uploads the code with the frontend already built (the server needs no Node.js), links `shared/.env` and `shared/storage`, runs `composer install --no-dev`, caches config/routes/views, runs `migrate --force` and only then points `current` at the new release and restarts queue workers. If anything fails before the switch, the half-built release is deleted and visitors keep getting the previous version. Migrations run while the previous release is still serving, so they must not break it (add columns before using them, drop them in a later deploy).
 
+Right before `migrate --force` the deploy saves a copy of the database to `shared/backups/pre-deploy-<release>.sql` (the last 5 are kept), so a bad migration can be undone by restoring that file.
+
+After the switch the deploy checks that `/` and `/prijava` answer 200 from the server's own nginx. If they don't, it points `current` back at the previous release, deletes the broken one and fails the run. The code is rolled back, the database is not: the failed release's migrations stay applied.
+
 **Rollback:** `cd /var/www/advertising-app && ln -sfn releases/<older-release> current.new && mv -Tf current.new current`.
 
 #### One-time server setup

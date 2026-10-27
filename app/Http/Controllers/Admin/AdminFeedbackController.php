@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\AdminAction;
 use App\Http\Controllers\Controller;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Cache;
@@ -40,6 +41,7 @@ class AdminFeedbackController extends Controller
 
     public function destroy(Feedback $feedback)
     {
+        AdminAction::record('feedback_deleted', 'Utisak #' . $feedback->id . ($feedback->email ? " ({$feedback->email})" : '') . ': ' . \Illuminate\Support\Str::limit($feedback->message, 120));
         $feedback->delete();
 
         Cache::forget('badge_feedback');

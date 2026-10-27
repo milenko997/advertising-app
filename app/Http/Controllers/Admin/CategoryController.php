@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\AdminAction;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -72,7 +73,9 @@ class CategoryController extends Controller
             'parent_id' => ['nullable', Rule::exists('categories', 'id')->whereNull('parent_id')],
         ]);
 
-        Category::create($validatedData);
+        $category = Category::create($validatedData);
+
+        AdminAction::record('category_created', "Kategorija „{$category->name}“");
 
         Cache::forget('nav_categories');
 
@@ -125,7 +128,10 @@ class CategoryController extends Controller
             'parent_id' => ['nullable', Rule::exists('categories', 'id')->whereNull('parent_id')->where('id', '!=', $category->id)],
         ]);
 
+        $oldName = $category->name;
         $category->update($validatedData);
+
+        AdminAction::record('category_updated', "Kategorija „{$oldName}“" . ($oldName !== $category->name ? " → „{$category->name}“" : ''));
 
         Cache::forget('nav_categories');
 
@@ -150,6 +156,8 @@ class CategoryController extends Controller
         }
 
         $category->delete();
+
+        AdminAction::record('category_deleted', "Kategorija „{$category->name}“");
 
         Cache::forget('nav_categories');
 

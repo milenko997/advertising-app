@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\AdminAction;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCustomerRequest;
@@ -91,6 +92,8 @@ class AdminCustomerController extends Controller
             'phone'    => $validated['phone'] ?? null,
         ]);
 
+        AdminAction::record('user_created', "Korisnik {$user->name} ({$user->email}), uloga {$user->role->value}");
+
         try {
             // Never put the password in the email (or the queued job); send a set-password link instead.
             Mail::to($user->email)->queue(new AdminCreatedAccountMail(
@@ -149,6 +152,8 @@ class AdminCustomerController extends Controller
         }
         $customer->save();
 
+        AdminAction::record('user_updated', "Korisnik {$customer->name} ({$customer->email})");
+
         $customer->notify(new ProfileUpdatedByAdminNotification());
 
         try {
@@ -165,6 +170,8 @@ class AdminCustomerController extends Controller
 
         // Disable the account right away; the job purges the data whenever the queue gets to it.
         $customer->delete();
+
+        AdminAction::record('user_deleted', "Korisnik {$customer->name} ({$customer->email})");
 
         DeleteUserDataJob::dispatch($customer->id, $customer->name, $customer->email, $customer->avatar);
 

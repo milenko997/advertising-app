@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\AdminAction;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
 use Illuminate\Http\Request;
@@ -48,9 +49,18 @@ class AdminReportController extends Controller
         ]);
     }
 
+    private function describe(Report $report): string
+    {
+        $label = Report::typeLabels()[$report->type] ?? $report->type;
+
+        return "Prijava #{$report->id} ({$label})" . ($report->advertisement ? " za oglas „{$report->advertisement->title}“" : '');
+    }
+
     public function resolve(Report $report)
     {
         $report->update(['resolved' => !$report->resolved]);
+
+        AdminAction::record($report->resolved ? 'report_resolved' : 'report_reopened', $this->describe($report));
 
         Cache::forget('badge_reports');
 
@@ -59,6 +69,7 @@ class AdminReportController extends Controller
 
     public function destroy(Report $report)
     {
+        AdminAction::record('report_deleted', $this->describe($report));
         $report->delete();
 
         Cache::forget('badge_reports');

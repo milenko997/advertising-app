@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\AdminAction;
 use App\Http\Controllers\Controller;
 use App\Mail\AdDeletedByAdminMail;
 use App\Mail\AdRenewedByAdminMail;
@@ -221,6 +222,8 @@ class AdminAdvertisementController extends Controller
 
         $advertisement->save();
 
+        AdminAction::record('ad_updated', $this->describe($advertisement));
+
         if ($advertisement->user) {
             $advertisement->user->notify(new AdUpdatedByAdminNotification($advertisement));
 
@@ -255,6 +258,8 @@ class AdminAdvertisementController extends Controller
         $advertisement->pinned_at = $pinning ? now() : null;
         $advertisement->save();
 
+        AdminAction::record($pinning ? 'ad_pinned' : 'ad_unpinned', $this->describe($advertisement) . ' — globalno');
+
         return back()->with('success', $pinning ? 'Oglas je globalno prikačen.' : 'Oglas je otkačen.');
     }
 
@@ -264,6 +269,8 @@ class AdminAdvertisementController extends Controller
         $advertisement->is_pinned_category = $pinning;
         $advertisement->pinned_category_at = $pinning ? now() : null;
         $advertisement->save();
+
+        AdminAction::record($pinning ? 'ad_pinned' : 'ad_unpinned', $this->describe($advertisement) . ' — u kategoriji');
 
         return back()->with('success', $pinning ? 'Oglas je prikačen u kategoriji.' : 'Oglas je otkačen iz kategorije.');
     }
@@ -275,9 +282,15 @@ class AdminAdvertisementController extends Controller
         }
 
         $advertisement->renew();
+        AdminAction::record('ad_renewed', $this->describe($advertisement));
         $this->notifyRenewed($advertisement);
 
         return back()->with('success', 'Oglas je obnovljen na još ' . Advertisement::EXPIRY_DAYS . ' dana.');
+    }
+
+    private function describe(Advertisement $ad): string
+    {
+        return "Oglas „{$ad->title}“ (#{$ad->id}" . ($ad->user ? ", korisnik {$ad->user->name}" : '') . ')';
     }
 
     private function notifyRenewed(Advertisement $ad): void
@@ -303,6 +316,7 @@ class AdminAdvertisementController extends Controller
         $owner = $advertisement->user;
         $title = $advertisement->title;
 
+        AdminAction::record('ad_deleted', $this->describe($advertisement));
         $advertisement->delete();
 
         if ($owner) {
@@ -332,6 +346,7 @@ class AdminAdvertisementController extends Controller
             'delete' => $ads->with('user')->get()->each(function ($ad) {
                 $owner = $ad->user;
                 $title = $ad->title;
+                AdminAction::record('ad_deleted', $this->describe($ad));
                 $ad->delete();
                 if ($owner) {
                     $owner->notify(new AdDeletedByAdminNotification($title));
@@ -344,6 +359,7 @@ class AdminAdvertisementController extends Controller
             // Only expired ads may be renewed, the rest of the selection is left alone
             'renew' => $renewed = $ads->with('user')->get()->filter->isExpired()->each(function ($ad) {
                 $ad->renew();
+                AdminAction::record('ad_renewed', $this->describe($ad));
                 $this->notifyRenewed($ad);
             }),
             'pin'   => $ads->update(['is_pinned' => true,  'pinned_at' => now()]),
@@ -351,6 +367,11 @@ class AdminAdvertisementController extends Controller
         };
 
         $count = count($request->ids);
+
+        if (in_array($request->action, ['pin', 'unpin'], true)) {
+            $titles = Advertisement::whereIn('id', $request->ids)->pluck('title')->map(fn ($t) => "„{$t}“")->implode(', ');
+            AdminAction::record($request->action === 'pin' ? 'ad_pinned' : 'ad_unpinned', "Grupno ({$count}): {$titles} — globalno");
+        }
         $label = match ($request->action) {
             'delete' => "Obrisano {$count} oglasa.",
             'pin'    => "Prikačeno {$count} oglasa.",

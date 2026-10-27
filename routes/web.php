@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminActionController;
 use App\Http\Controllers\Admin\AdminAdvertisementController;
 use App\Http\Controllers\Admin\AdminFeedbackController;
 use App\Http\Controllers\ContactController;
@@ -92,6 +93,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::patch('/prijave/{report}/resolve', [AdminReportController::class, 'resolve'])->name('reports.resolve');
     Route::delete('/prijave/{report}', [AdminReportController::class, 'destroy'])->name('reports.destroy');
     Route::get('/utisci', [AdminFeedbackController::class, 'index'])->name('feedbacks.index');
+    Route::get('/dnevnik', [AdminActionController::class, 'index'])->name('actions.index');
     Route::patch('/utisci/{feedback}/read', [AdminFeedbackController::class, 'markRead'])->name('feedbacks.read');
     Route::delete('/utisci/{feedback}', [AdminFeedbackController::class, 'destroy'])->name('feedbacks.destroy');
 });

@@ -157,6 +157,7 @@ export default function Navigation() {
                                     <NavLink href="/admin/oglasi" active={currentPath.startsWith('/admin/oglasi')}>Oglasi</NavLink>
                                     <NavLink href="/admin/kategorije" active={currentPath.startsWith('/admin/kategorije')}>Kategorije</NavLink>
                                     <NavLink href="/admin/korisnici" active={currentPath.startsWith('/admin/korisnici')}>Korisnici</NavLink>
+                                    <NavLink href="/admin/dnevnik" active={currentPath.startsWith('/admin/dnevnik')}>Dnevnik</NavLink>
                                     <Link
                                         href="/admin/prijave"
                                         className={`relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
@@ -410,6 +411,7 @@ export default function Navigation() {
                                 <MobileNavLink href="/admin/oglasi">Oglasi</MobileNavLink>
                                 <MobileNavLink href="/admin/kategorije">Kategorije</MobileNavLink>
                                 <MobileNavLink href="/admin/korisnici">Korisnici</MobileNavLink>
+                                <MobileNavLink href="/admin/dnevnik">Dnevnik</MobileNavLink>
                                 <MobileNavLink href="/admin/prijave">
                                     Prijave {pendingReportsCount > 0 && `(${pendingReportsCount})`}
                                 </MobileNavLink>

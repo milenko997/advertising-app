@@ -3,12 +3,14 @@
 namespace Tests\Feature\Admin;
 
 use App\Enums\UserRole;
+use App\Jobs\DeleteUserDataJob;
 use App\Mail\AdminCreatedAccountMail;
 use App\Models\User;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class AdminCustomerTest extends TestCase
@@ -161,5 +163,18 @@ class AdminCustomerTest extends TestCase
 
             return true;
         });
+    }
+
+    public function test_deleted_customer_is_disabled_before_the_purge_job_runs(): void
+    {
+        Queue::fake();
+        $customer = $this->customer();
+
+        $this->actingAs($this->admin())
+            ->delete(route('admin.korisnici.destroy', $customer))
+            ->assertRedirect(route('admin.korisnici.index'));
+
+        $this->assertSoftDeleted($customer);
+        Queue::assertPushed(DeleteUserDataJob::class);
     }
 }

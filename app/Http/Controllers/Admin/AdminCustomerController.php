@@ -163,6 +163,9 @@ class AdminCustomerController extends Controller
         abort_if($customer->isSuperAdmin(), 403);
         abort_if($customer->role === UserRole::Admin && !auth()->user()->isSuperAdmin(), 403);
 
+        // Disable the account right away; the job purges the data whenever the queue gets to it.
+        $customer->delete();
+
         DeleteUserDataJob::dispatch($customer->id, $customer->name, $customer->email, $customer->avatar);
 
         return redirect()->route('admin.korisnici.index')->with('success', 'Korisnik je uspešno obrisan.');

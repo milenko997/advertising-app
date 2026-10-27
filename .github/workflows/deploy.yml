@@ -1,0 +1,188 @@
+name: Deploy to prod
+
+# Direct pushes to main deploy automatically. Pushes that come from a merged pull
+# request wait for a manual approval ("Review deployments" -> "Approve and deploy")
+# through the protected `production-approval` environment.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  test:
+    name: Tests and build
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: '8.3'
+          extensions: gd, pdo_sqlite, mbstring
+          coverage: none
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Run tests
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          php artisan test
+
+      - name: Upload built assets
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: build
+          path: public/build
+          retention-days: 7
+
+  route:
+    name: Auto or approval
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      environment: ${{ steps.pick.outputs.environment }}
+    steps:
+      - name: Pick environment
+        id: pick
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          api() { curl -fsSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/$1"; }
+
+          # A commit that is the merge commit of a merged PR came in through a merge, not a direct push
+          merged_prs=$(api "repos/$REPO/commits/$SHA/pulls" | jq --arg sha "$SHA" '[.[] | select(.merged_at != null and .merge_commit_sha == $sha)] | length')
+
+          if [ "$EVENT" = "push" ] && [ "$merged_prs" -gt 0 ]; then
+            # Fail closed: if the approval environment is missing or unprotected, GitHub would
+            # create it on the fly and deploy without asking.
+            reviewers=$(api "repos/$REPO/environments/production-approval" | jq '[.protection_rules[]? | select(.type == "required_reviewers")] | length' || echo 0)
+            if [ "$reviewers" -eq 0 ]; then
+              echo "::error::Environment 'production-approval' must exist and have required reviewers (Settings -> Environments)."
+              exit 1
+            fi
+            echo "environment=production-approval" >> "$GITHUB_OUTPUT"
+            echo "Merged pull request: deploy waits for manual approval." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "environment=production" >> "$GITHUB_OUTPUT"
+            echo "Direct push or manual run: deploying automatically." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  deploy:
+    name: Deploy
+    needs: [test, route]
+    runs-on: ubuntu-24.04
+    environment: ${{ needs.route.outputs.environment }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Download built assets
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: build
+          path: public/build
+
+      - name: Set up SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      # Zero-downtime layout on the server (DEPLOY_PATH):
+      #   releases/<time>-<sha>/  one directory per deploy, the last 5 are kept
+      #   shared/.env, shared/storage/  survive across releases
+      #   current -> releases/...  what the web server serves (root: current/public)
+      # The new release is fully prepared next to the live one; the site only switches
+      # when `current` is swapped at the very end, so visitors never see a half-deployed app.
+      - name: Deploy
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          for name in SSH_HOST SSH_USER DEPLOY_PATH; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Secret $name is not set (Settings -> Secrets and variables -> Actions)."
+              exit 1
+            fi
+          done
+
+          SSH="ssh -i $HOME/.ssh/id_deploy -p $SSH_PORT -o StrictHostKeyChecking=yes"
+          TARGET="$SSH_USER@$SSH_HOST"
+          RELEASE="$(date -u +%Y%m%d%H%M%S)-${SHA::7}"
+
+          tar -czf - --exclude=./.git --exclude=./node_modules --exclude=./tests --exclude=./storage --exclude=./.env . \
+            | $SSH "$TARGET" "mkdir -p '$DEPLOY_PATH/releases/$RELEASE' && tar -xzf - -C '$DEPLOY_PATH/releases/$RELEASE'"
+
+          $SSH "$TARGET" bash -s -- "$DEPLOY_PATH" "$RELEASE" <<'REMOTE'
+          set -euo pipefail
+          cd "$1"
+          rel="releases/$2"
+          release="$1/$rel"
+          switched=false
+          # Never leave a half-built release behind; the live site is untouched until the switch
+          trap '[ "$switched" = true ] || rm -rf "$release"' EXIT
+
+          for path in shared/.env shared/storage; do
+            if [ ! -e "$path" ]; then
+              echo "::error::$1/$path is missing. See README, Automatic deploys, one-time server setup."
+              exit 1
+            fi
+          done
+
+          ln -sfn ../../shared/.env "$release/.env"
+          ln -sfn ../../shared/storage "$release/storage"
+          ln -sfn ../storage/app/public "$release/public/storage"
+
+          cd "$release"
+          composer install --no-dev --no-interaction --no-progress --prefer-dist --optimize-autoloader
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          # Runs while the previous release still serves traffic, so migrations must not break it
+          php artisan migrate --force
+          cd "$1"
+
+          ln -sfn "$rel" current.new
+          mv -Tf current.new current
+          switched=true
+
+          php current/artisan queue:restart
+
+          # Keep the 5 newest releases for rollbacks
+          ls -1d releases/*/ | sort -r | tail -n +6 | xargs -r rm -rf
+          REMOTE
+
+          echo "Deployed $SHA to production as release $RELEASE." >> "$GITHUB_STEP_SUMMARY"

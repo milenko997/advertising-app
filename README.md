@@ -220,6 +220,66 @@ server {
 </VirtualHost>
 ```
 
+### 6. Automatic deploys (GitHub Actions)
+
+`.github/workflows/deploy.yml` ("Deploy to prod") deploys every change on `main` without downtime:
+
+- **Direct push to `main`** → tests run, then it deploys automatically.
+- **Merged pull request** → tests run, then the deploy waits until someone opens the run in the Actions tab and clicks **Review deployments → Approve and deploy**.
+- **Manual run** → Actions → *Deploy to prod* → **Run workflow** deploys the current `main`.
+
+There is no maintenance mode. Each deploy is prepared in its own directory next to the live site, and the site switches over in one step at the end:
+
+```
+/var/www/advertising-app/          <- DEPLOY_PATH
+├── current -> releases/20261027163000-449096f
+├── releases/                      <- last 5 deploys, for rollbacks
+└── shared/
+    ├── .env
+    └── storage/                   <- uploaded images, logs, sessions
+```
+
+A deploy uploads the code with the frontend already built (the server needs no Node.js), links `shared/.env` and `shared/storage`, runs `composer install --no-dev`, caches config/routes/views, runs `migrate --force` and only then points `current` at the new release and restarts queue workers. If anything fails before the switch, the half-built release is deleted and visitors keep getting the previous version. Migrations run while the previous release is still serving, so they must not break it (add columns before using them, drop them in a later deploy).
+
+**Rollback:** `cd /var/www/advertising-app && ln -sfn releases/<older-release> current.new && mv -Tf current.new current`.
+
+#### One-time server setup
+
+1. Create the layout and move the existing `.env` and `storage/` into `shared/` (adjust the old path if your app lives elsewhere):
+
+   ```bash
+   cd /var/www/advertising-app
+   mkdir -p releases shared
+   cp .env shared/.env
+   cp -a storage shared/storage
+   ```
+
+2. Run the first deploy (push to `main` or **Run workflow**). It creates `current`.
+3. Point the web server at `current/public` and reload it. With Nginx keep `$realpath_root` in `fastcgi_param SCRIPT_FILENAME` (as in the config above), so PHP-FPM picks up each new release immediately:
+
+   ```nginx
+   root /var/www/advertising-app/current/public;
+   ```
+
+4. Copy anything uploaded since step 1 (`cp -a storage/. shared/storage/`), then update the cron entry and queue worker (Supervisor) to use `/var/www/advertising-app/current/artisan`. Once the site works from `current`, the old app files in `/var/www/advertising-app` (everything except `current`, `releases` and `shared`) can be removed.
+
+#### One-time GitHub setup (repository **Settings**)
+
+1. **Secrets and variables → Actions → New repository secret**:
+
+   | Secret | Value |
+   |---|---|
+   | `SSH_HOST` | Server hostname or IP |
+   | `SSH_USER` | User that owns the app directory (not root) |
+   | `SSH_PORT` | Optional, defaults to `22` |
+   | `SSH_PRIVATE_KEY` | Private key of a deploy-only key pair (see below) |
+   | `SSH_KNOWN_HOSTS` | Output of `ssh-keyscan -p <port> <host>`, so the runner only trusts your server |
+   | `DEPLOY_PATH` | Base directory on the server, e.g. `/var/www/advertising-app` |
+
+2. **Environments → New environment** `production-approval` → enable **Required reviewers** and add yourself. Without it, merged pull requests are refused instead of deployed. The `production` environment needs no rules (GitHub creates it on the first deploy).
+
+Deploy key: run `ssh-keygen -t ed25519 -f deploy_key -N ""` locally, append `deploy_key.pub` to `~/.ssh/authorized_keys` of `SSH_USER` on the server, and paste `deploy_key` into the `SSH_PRIVATE_KEY` secret. The server needs PHP and Composer on the `PATH` of that user; it does not need git or Node.js.
+
 ---
 
 ## Image Storage

@@ -113,6 +113,6 @@ class AdminCustomerTest extends TestCase
             ->delete(route('admin.korisnici.destroy', $customer))
             ->assertRedirect(route('admin.korisnici.index'));
 
-        $this->assertSoftDeleted('users', ['id' => $customer->id]);
+        $this->assertDatabaseMissing('users', ['id' => $customer->id]);
     }
 }

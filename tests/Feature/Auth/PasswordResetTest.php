@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Mail\ResetPasswordMail;
 use App\Models\User;
-use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class PasswordResetTest extends TestCase
@@ -21,51 +21,52 @@ class PasswordResetTest extends TestCase
 
     public function test_reset_password_link_can_be_requested()
     {
-        Notification::fake();
+        Mail::fake();
 
         $user = User::factory()->create();
 
         $this->post(route('password.email'), ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class);
+        Mail::assertQueued(ResetPasswordMail::class, fn ($mail) => $mail->hasTo($user->email));
     }
 
     public function test_reset_password_screen_can_be_rendered()
     {
-        Notification::fake();
+        Mail::fake();
 
         $user = User::factory()->create();
 
         $this->post(route('password.email'), ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class, function ($notification) {
-            $response = $this->get(route('password.reset', ['token' => $notification->token]));
+        $token = $this->queuedResetToken();
 
-            $response->assertStatus(200);
-
-            return true;
-        });
+        $this->get(route('password.reset', ['token' => $token]))->assertStatus(200);
     }
 
     public function test_password_can_be_reset_with_valid_token()
     {
-        Notification::fake();
+        Mail::fake();
 
         $user = User::factory()->create();
 
         $this->post(route('password.email'), ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
-            $response = $this->post(route('password.update'), [
-                'token' => $notification->token,
-                'email' => $user->email,
-                'password' => 'Password1234',
-                'password_confirmation' => 'Password1234',
-            ]);
+        $response = $this->post(route('password.update'), [
+            'token' => $this->queuedResetToken(),
+            'email' => $user->email,
+            'password' => 'Password1234',
+            'password_confirmation' => 'Password1234',
+        ]);
 
-            $response->assertSessionHasNoErrors();
+        $response->assertSessionHasNoErrors();
+    }
 
-            return true;
-        });
+    private function queuedResetToken(): string
+    {
+        $mail = Mail::queued(ResetPasswordMail::class)->first();
+
+        $this->assertNotNull($mail, 'ResetPasswordMail was not queued.');
+
+        return basename(parse_url($mail->resetUrl, PHP_URL_PATH));
     }
 }

@@ -35,12 +35,19 @@ jobs:
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
           set -euo pipefail
+          for name in SSH_HOST SSH_USER DEPLOY_PATH; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Secret $name is not set (Settings -> Secrets and variables -> Actions)."
+              exit 1
+            fi
+          done
+
           ssh -i ~/.ssh/id_deploy -p "$SSH_PORT" -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" \
             bash -s -- "$DEPLOY_PATH" <<'REMOTE' | tee snapshots.txt
           set -euo pipefail
-          APP="$1" bash "$1/current/deploy/backup.sh"
-          set -a; . ~/.config/transporteri-backup.env; set +a
-          restic snapshots --tag nightly --latest 5
+          APP="$1" BACKUP_TAG=manual bash "$1/current/deploy/backup.sh"
+          set -a; . "${BACKUP_CONFIG:-$HOME/.config/transporteri-backup.env}"; set +a
+          restic snapshots --latest 5
           REMOTE
 
           {

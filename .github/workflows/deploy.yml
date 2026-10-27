@@ -171,6 +171,10 @@ jobs:
           php artisan config:cache
           php artisan route:cache
           php artisan view:cache
+          # Database copy right before migrating, so a bad migration can be undone (last 5 kept)
+          mkdir -p "$1/shared/backups"
+          (umask 077 && php artisan backup:dump-database "$1/shared/backups/pre-deploy-$2.sql")
+          ls -1 "$1"/shared/backups/pre-deploy-*.sql | sort -r | tail -n +6 | xargs -r rm -f
           # Runs while the previous release still serves traffic, so migrations must not break it
           php artisan migrate --force
           cd "$1"

@@ -36,6 +36,7 @@ const NOTIF_ICONS = {
     review_updated:           'edit',
     review_deleted:           'trash',
     ad_updated_by_admin:      'edit',
+    ad_renewed_by_admin:      'clock',
     ad_deleted_by_admin:      'trash',
     profile_updated_by_admin: 'user',
 };

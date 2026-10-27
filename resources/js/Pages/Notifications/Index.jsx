@@ -9,6 +9,7 @@ const TYPE_CONFIG = {
     review_updated:           { icon: 'edit',    color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-900/20' },
     review_deleted:           { icon: 'trash',   color: 'text-gray-500',   bg: 'bg-gray-50 dark:bg-neutral-700' },
     ad_updated_by_admin:      { icon: 'edit',    color: 'text-blue-500',   bg: 'bg-blue-50 dark:bg-blue-900/20' },
+    ad_renewed_by_admin:      { icon: 'clock',   color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
     ad_deleted_by_admin:      { icon: 'trash',   color: 'text-red-500',    bg: 'bg-red-50 dark:bg-red-900/20' },
     profile_updated_by_admin: { icon: 'user',    color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20' },
 };

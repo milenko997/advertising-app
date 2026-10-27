@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\AdDeletedByAdminMail;
+use App\Mail\AdRenewedByAdminMail;
 use App\Mail\AdUpdatedByAdminMail;
 use App\Models\Advertisement;
 use App\Models\Category;
 use App\Models\User;
 use App\Notifications\AdDeletedByAdminNotification;
+use App\Notifications\AdRenewedByAdminNotification;
 use App\Notifications\AdUpdatedByAdminNotification;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
@@ -273,8 +275,27 @@ class AdminAdvertisementController extends Controller
         }
 
         $advertisement->renew();
+        $this->notifyRenewed($advertisement);
 
         return back()->with('success', 'Oglas je obnovljen na još ' . Advertisement::EXPIRY_DAYS . ' dana.');
+    }
+
+    private function notifyRenewed(Advertisement $ad): void
+    {
+        if (!$ad->user) {
+            return;
+        }
+
+        $ad->user->notify(new AdRenewedByAdminNotification($ad));
+
+        try {
+            Mail::to($ad->user->email)->queue(new AdRenewedByAdminMail(
+                $ad->user->name,
+                $ad->title,
+                $ad->slug,
+                $ad->expires_at->format('d.m.Y'),
+            ));
+        } catch (\Exception) {}
     }
 
     public function destroy(Advertisement $advertisement)

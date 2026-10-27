@@ -3,6 +3,7 @@
 namespace Tests\Feature\Admin;
 
 use App\Mail\AdDeletedByAdminMail;
+use App\Mail\AdRenewedByAdminMail;
 use App\Models\Advertisement;
 use App\Models\Category;
 use App\Models\User;
@@ -242,6 +243,7 @@ class AdminAdvertisementTest extends TestCase
 
     public function test_admin_can_renew_expired_ad(): void
     {
+        Mail::fake();
         $ad = Advertisement::factory()->create();
         $ad->forceFill(['created_at' => now()->subDays(70), 'expires_at' => now()->subDays(10)])->save();
 
@@ -252,6 +254,8 @@ class AdminAdvertisementTest extends TestCase
 
         $ad->refresh();
         $this->assertTrue($ad->expires_at->gt(now()->addDays(Advertisement::EXPIRY_DAYS - 1)));
+        Mail::assertQueued(AdRenewedByAdminMail::class, fn ($mail) => $mail->hasTo($ad->user->email));
+        $this->assertSame('ad_renewed_by_admin', $ad->user->notifications()->first()->data['type']);
         $this->assertTrue($ad->created_at->gt(now()->subMinute()));
     }
 

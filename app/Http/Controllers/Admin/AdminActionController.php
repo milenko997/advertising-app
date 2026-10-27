@@ -11,7 +11,7 @@ class AdminActionController extends Controller
 {
     public function index(Request $request)
     {
-        $action = array_key_exists($request->input('action'), AdminAction::LABELS) ? $request->input('action') : '';
+        $action = in_array($request->input('action'), array_keys(AdminAction::LABELS), true) ? $request->input('action') : '';
 
         $actions = AdminAction::query()
             ->when($action, fn ($q) => $q->where('action', $action))

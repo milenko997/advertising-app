@@ -41,7 +41,8 @@ class AdminAction extends Model
             'admin_id'    => $admin?->id,
             'admin_name'  => $admin?->name ?? 'sistem',
             'action'      => $action,
-            'description' => Str::limit($description, 1000),
+            // 997 + the "..." Str::limit appends fits the 1000-character column
+            'description' => Str::limit($description, 997),
         ]);
     }
 

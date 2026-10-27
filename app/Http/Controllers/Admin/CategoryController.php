@@ -140,6 +140,15 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        // The DB cascades would permanently wipe every ad in the category (and its subcategories), bypassing soft deletes.
+        if ($category->children()->exists()) {
+            return back()->with('error', 'Kategorija ima podkategorije. Prvo obrišite ili premestite podkategorije.');
+        }
+
+        if ($category->advertisements()->withTrashed()->exists()) {
+            return back()->with('error', 'Kategorija sadrži oglase. Prvo premestite ili obrišite oglase iz ove kategorije.');
+        }
+
         $category->delete();
 
         Cache::forget('nav_categories');

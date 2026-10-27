@@ -29,7 +29,11 @@ export default function CategoriesIndex({ categories: initialCategories, search:
     const destroy = (slug) => {
         if (!confirm('Da li ste sigurni?')) return;
         router.delete(`/admin/kategorije/${slug}`, {
-            onSuccess: () => setCategoryList(prev => prev.filter(c => c.slug !== slug)),
+            onSuccess: (page) => {
+                if (!page.props.flash?.error) {
+                    setCategoryList(prev => prev.filter(c => c.slug !== slug));
+                }
+            },
         });
     };
 

@@ -59,7 +59,7 @@ function UserFilterLink({ ad, onFilter }) {
     );
 }
 
-export default function AdminAdvertisementsIndex({ ads: initialAds, search: initialSearch = '', status = '', counts = {}, category = null, categories = [], user = null, users = [] }) {
+export default function AdminAdvertisementsIndex({ ads: initialAds, search: initialSearch = '', status = '', counts = {}, category = null, categories = [], user = null, users = [], expiryDays = 60 }) {
     const [adList, setAdList] = useState(initialAds.data);
     const [currentPage, setCurrentPage] = useState(initialAds.current_page);
     const [hasMore, setHasMore] = useState(initialAds.current_page < initialAds.last_page);
@@ -123,12 +123,28 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
         });
     };
 
-    // Full reload of props so the status badge and filter counts follow the new expiry date
+    // Updates the row in place (a full reload would drop the ads loaded by infinite scroll);
+    // only the filter counts come back from the server
     const renew = (id) => {
         if (pinning.has(`renew-${id}`)) return;
         setPinning(prev => new Set(prev).add(`renew-${id}`));
         router.patch(`/admin/oglasi/${id}/obnovi`, {}, {
             preserveScroll: true,
+            only: ['flash', 'counts'],
+            onSuccess: (page) => {
+                // The server refuses ads that aren't expired; leave the row as it is then
+                if (page.props.flash?.error) return;
+                const fmt =(d) => `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
+                const now = new Date();
+                const expires = new Date(now); expires.setDate(expires.getDate() + expiryDays);
+                setAdList(prev => {
+                    const ad = prev.find(a => a.id === id);
+                    const rest = prev.filter(a => a.id !== id);
+                    // Renewed ads leave the "expired" filter and move to the top of the newest-first list
+                    if (!ad || status === 'expired') return rest;
+                    return [{ ...ad, status: 'active', created_at: fmt(now), expires_at: fmt(expires) }, ...rest];
+                });
+            },
             onFinish: () => setPinning(prev => { const n = new Set(prev); n.delete(`renew-${id}`); return n; }),
         });
     };
@@ -411,7 +427,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                     <button
                                                         onClick={() => renew(ad.id)}
                                                         disabled={pinning.has(`renew-${ad.id}`)}
-                                                        title="Obnovi oglas na još 60 dana"
+                                                        title={`Obnovi oglas na još ${expiryDays} dana`}
                                                         className="px-3 py-1.5 text-sm font-medium bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
                                                     >
                                                         Obnovi

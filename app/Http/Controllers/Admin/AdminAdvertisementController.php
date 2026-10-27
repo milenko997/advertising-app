@@ -94,6 +94,7 @@ class AdminAdvertisementController extends Controller
             'user'       => $user?->id,
             'users'      => $users->map(fn ($u) => ['id' => $u->id, 'name' => $u->name, 'email' => $u->email]),
             'categories' => $this->categoriesWithAds($categories, $category),
+            'expiryDays' => Advertisement::EXPIRY_DAYS,
         ]);
     }
 

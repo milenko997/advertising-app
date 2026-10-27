@@ -58,6 +58,7 @@ class AdminAdvertisementController extends Controller
         $ads = $paginator->getCollection()->map(fn ($ad) => [
             'id'          => $ad->id,
             'title'       => $ad->title,
+            'slug'        => $ad->slug,
             'description' => $ad->description,
             'price'       => $ad->price,
             'is_pinned'          => (bool) $ad->is_pinned,

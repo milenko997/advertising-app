@@ -30,6 +30,21 @@ const FILTERS = [
     { value: 'expired',  label: 'Istekli' },
 ];
 
+// Opens in a new tab so the filtered admin list stays where it was
+function AdTitleLink({ ad }) {
+    return (
+        <a
+            href={`/oglas/${ad.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Otvori oglas u novom tabu"
+            className="hover:text-orange-600 hover:underline"
+        >
+            {ad.title}
+        </a>
+    );
+}
+
 function UserFilterLink({ ad, onFilter }) {
     if (!ad.user) return '—';
     return (
@@ -340,7 +355,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                             />
                                         </td>
                                         <td className="px-4 py-4 w-48">
-                                            <p className="font-medium text-gray-900 dark:text-neutral-100 text-sm truncate max-w-[11rem]">{ad.title}</p>
+                                            <p className="font-medium text-gray-900 dark:text-neutral-100 text-sm truncate max-w-[11rem]"><AdTitleLink ad={ad} /></p>
                                             <p className="text-xs text-gray-400 dark:text-neutral-500 mt-0.5 truncate max-w-[11rem]">{ad.description}</p>
                                         </td>
                                         <td className="px-4 py-4 text-sm text-gray-600 dark:text-neutral-400">{ad.category?.name}</td>
@@ -452,7 +467,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                 className="w-4 h-4 mt-0.5 rounded border-gray-300 dark:border-neutral-600 text-orange-600 focus:ring-orange-500 cursor-pointer shrink-0"
                                             />
                                             <div className="flex-1 min-w-0">
-                                                <p className="font-medium text-gray-900 dark:text-neutral-100 text-sm truncate">{ad.title}</p>
+                                                <p className="font-medium text-gray-900 dark:text-neutral-100 text-sm truncate"><AdTitleLink ad={ad} /></p>
                                                 <p className="text-xs text-gray-400 dark:text-neutral-500 truncate mt-0.5">{ad.description}</p>
                                             </div>
                                         </div>

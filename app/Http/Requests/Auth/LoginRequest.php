@@ -15,6 +15,11 @@ use Illuminate\Validation\ValidationException;
 class LoginRequest extends FormRequest
 {
     /**
+     * Bcrypt hash checked when the email is unknown, so both failure paths take the same time.
+     */
+    private const DUMMY_HASH = '$2y$10$198Ht5WOyvXN2Y0Zyz4sb.tA3/FVk3EE0HDbMXsQyp4pjK4xcXqSO';
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -51,17 +56,13 @@ class LoginRequest extends FormRequest
 
         $user = User::where('email', $this->input('email'))->first();
 
-        if (! $user) {
-            RateLimiter::hit($this->throttleKey());
-            throw ValidationException::withMessages([
-                'email' => 'Ne postoji nalog sa ovom email adresom.',
-            ]);
-        }
+        // Same message (and a hash check either way) so the form doesn't reveal which emails have accounts.
+        $passwordMatches = Hash::check($this->input('password'), $user?->password ?? self::DUMMY_HASH);
 
-        if (! Hash::check($this->input('password'), $user->password)) {
+        if (! $user || ! $passwordMatches) {
             RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([
-                'password' => 'Pogrešna lozinka.',
+                'email' => 'Pogrešna email adresa ili lozinka.',
             ]);
         }
 

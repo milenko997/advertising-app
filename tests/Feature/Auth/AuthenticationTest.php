@@ -41,4 +41,18 @@ class AuthenticationTest extends TestCase
 
         $this->assertGuest();
     }
+
+    public function test_unknown_email_and_wrong_password_get_the_same_error()
+    {
+        $user = User::factory()->create();
+
+        $this->post(route('login'), ['email' => 'nobody@example.com', 'password' => 'password']);
+        $unknownEmail = session('errors')->getBag('default')->toArray();
+
+        $this->post(route('login'), ['email' => $user->email, 'password' => 'wrong-password']);
+        $wrongPassword = session('errors')->getBag('default')->toArray();
+
+        $this->assertSame($unknownEmail, $wrongPassword);
+        $this->assertGuest();
+    }
 }

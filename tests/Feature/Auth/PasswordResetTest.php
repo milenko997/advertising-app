@@ -61,6 +61,17 @@ class PasswordResetTest extends TestCase
         $response->assertSessionHasNoErrors();
     }
 
+    public function test_reset_link_request_does_not_reveal_unknown_emails()
+    {
+        Mail::fake();
+
+        $this->post(route('password.email'), ['email' => 'nobody@example.com'])
+            ->assertSessionHasNoErrors()
+            ->assertSessionHas('status');
+
+        Mail::assertNothingQueued();
+    }
+
     private function queuedResetToken(): string
     {
         $mail = Mail::queued(ResetPasswordMail::class)->first();

@@ -9,7 +9,7 @@ trait GeneratesSlug
 {
     public static function generateUniqueSlug(string $name, ?int $excludeId = null): string
     {
-        $base    = Str::slug($name);
+        $base    = Str::slug($name) ?: Str::lower(class_basename(static::class));
         $slug    = $base;
         $counter = 1;
 

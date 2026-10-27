@@ -9,7 +9,7 @@ class SlugService
 {
     public function generate(string $title, ?int $excludeId = null): string
     {
-        $base = Str::slug($title);
+        $base = Str::slug($title) ?: 'oglas';
         $slug = $base;
         $counter = 1;
 

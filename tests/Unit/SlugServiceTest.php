@@ -79,4 +79,11 @@ class SlugServiceTest extends TestCase
 
         $this->assertEquals('deleted-ad-1', $slug);
     }
+
+    public function test_falls_back_when_title_has_no_sluggable_characters(): void
+    {
+        $slug = $this->slugService->generate('!!!!!');
+
+        $this->assertEquals('oglas', $slug);
+    }
 }

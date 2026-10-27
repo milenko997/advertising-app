@@ -123,8 +123,20 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
         });
     };
 
-    // Updates the row in place (a full reload would drop the ads loaded by infinite scroll);
-    // only the filter counts come back from the server
+    // Updates renewed rows in place (a full reload would drop the ads loaded by infinite scroll).
+    // Renewed ads leave the "expired" filter and move to the top of the newest-first list.
+    const markRenewed = (ids) => {
+        const fmt = (d) => `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
+        const now = new Date();
+        const expires = new Date(now); expires.setDate(expires.getDate() + expiryDays);
+        setAdList(prev => {
+            const renewed = prev.filter(a => ids.includes(a.id));
+            const rest = prev.filter(a => !ids.includes(a.id));
+            if (status === 'expired') return rest;
+            return [...renewed.map(a => ({ ...a, status: 'active', created_at: fmt(now), expires_at: fmt(expires) })), ...rest];
+        });
+    };
+
     const renew = (id) => {
         if (pinning.has(`renew-${id}`)) return;
         setPinning(prev => new Set(prev).add(`renew-${id}`));
@@ -134,16 +146,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
             onSuccess: (page) => {
                 // The server refuses ads that aren't expired; leave the row as it is then
                 if (page.props.flash?.error) return;
-                const fmt =(d) => `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
-                const now = new Date();
-                const expires = new Date(now); expires.setDate(expires.getDate() + expiryDays);
-                setAdList(prev => {
-                    const ad = prev.find(a => a.id === id);
-                    const rest = prev.filter(a => a.id !== id);
-                    // Renewed ads leave the "expired" filter and move to the top of the newest-first list
-                    if (!ad || status === 'expired') return rest;
-                    return [{ ...ad, status: 'active', created_at: fmt(now), expires_at: fmt(expires) }, ...rest];
-                });
+                markRenewed([id]);
             },
             onFinish: () => setPinning(prev => { const n = new Set(prev); n.delete(`renew-${id}`); return n; }),
         });
@@ -180,11 +183,16 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
     const bulkAction = (action) => {
         const ids = [...selected];
         if (action === 'delete' && !confirm(`Obrisati ${ids.length} izabrani oglas(e)?`)) return;
+        // The server only renews the expired ones among the selected ads
+        const expiredIds = adList.filter(a => ids.includes(a.id) && a.status === 'expired').map(a => a.id);
         router.post('/admin/oglasi/bulk-action', { action, ids }, {
             preserveScroll: true,
+            ...(action === 'renew' ? { only: ['flash', 'counts'] } : {}),
             onSuccess: () => {
                 if (action === 'delete') {
                     setAdList(prev => prev.filter(a => !ids.includes(a.id)));
+                } else if (action === 'renew') {
+                    markRenewed(expiredIds);
                 } else {
                     setAdList(prev => prev.map(a => ids.includes(a.id) ? { ...a, is_pinned: action === 'pin' } : a));
                 }
@@ -305,6 +313,13 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                     className="px-3 py-1.5 text-xs font-semibold border border-gray-300 dark:border-neutral-600 text-gray-600 dark:text-neutral-400 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
                                 >
                                     Otkači izabrane
+                                </button>
+                                <button
+                                    onClick={() => bulkAction('renew')}
+                                    title="Obnavlja samo istekle među izabranim oglasima"
+                                    className="px-3 py-1.5 text-xs font-semibold bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition"
+                                >
+                                    Obnovi istekle
                                 </button>
                                 <button
                                     onClick={() => bulkAction('delete')}

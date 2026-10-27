@@ -321,7 +321,7 @@ class AdminAdvertisementController extends Controller
     public function bulkAction(Request $request)
     {
         $request->validate([
-            'action' => 'required|in:delete,pin,unpin',
+            'action' => 'required|in:delete,pin,unpin,renew',
             'ids'    => 'required|array|min:1|max:100',
             'ids.*'  => 'integer|exists:advertisements,id',
         ]);
@@ -341,6 +341,11 @@ class AdminAdvertisementController extends Controller
                     } catch (\Exception) {}
                 }
             }),
+            // Only expired ads may be renewed, the rest of the selection is left alone
+            'renew' => $renewed = $ads->with('user')->get()->filter->isExpired()->each(function ($ad) {
+                $ad->renew();
+                $this->notifyRenewed($ad);
+            }),
             'pin'   => $ads->update(['is_pinned' => true,  'pinned_at' => now()]),
             'unpin' => $ads->update(['is_pinned' => false, 'pinned_at' => null]),
         };
@@ -350,6 +355,9 @@ class AdminAdvertisementController extends Controller
             'delete' => "Obrisano {$count} oglasa.",
             'pin'    => "Prikačeno {$count} oglasa.",
             'unpin'  => "Otkačeno {$count} oglasa.",
+            'renew'  => $renewed->isEmpty()
+                ? 'Nijedan od izabranih oglasa nije istekao.'
+                : "Obnovljeno {$renewed->count()} od {$count} izabranih oglasa.",
         };
 
         if ($request->action === 'delete') {

@@ -301,4 +301,21 @@ class AdminAdvertisementTest extends TestCase
                 $this->assertNotContains($unused->id, $children);
             });
     }
+
+    public function test_bulk_renew_only_renews_expired_ads(): void
+    {
+        Mail::fake();
+        $expired = Advertisement::factory()->create();
+        $expired->forceFill(['expires_at' => now()->subDay()])->save();
+        $active = Advertisement::factory()->create();
+        $active->forceFill(['created_at' => now()->subDays(10), 'expires_at' => now()->addDays(50)])->save();
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.advertisements.bulk'), ['action' => 'renew', 'ids' => [$expired->id, $active->id]])
+            ->assertSessionHas('success', 'Obnovljeno 1 od 2 izabranih oglasa.');
+
+        $this->assertFalse($expired->fresh()->isExpired());
+        $this->assertTrue($active->fresh()->created_at->lt(now()->subDays(9)));
+        Mail::assertQueued(AdRenewedByAdminMail::class, 1);
+    }
 }

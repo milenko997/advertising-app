@@ -237,4 +237,45 @@ class AdminAdvertisementTest extends TestCase
                 ->has('ads.data', 3)
             );
     }
+
+    // ── Renew ─────────────────────────────────────────────────────────────────
+
+    public function test_admin_can_renew_expired_ad(): void
+    {
+        $ad = Advertisement::factory()->create();
+        $ad->forceFill(['created_at' => now()->subDays(70), 'expires_at' => now()->subDays(10)])->save();
+
+        $this->actingAs($this->admin())
+            ->patch(route('admin.advertisements.renew', $ad))
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        $ad->refresh();
+        $this->assertTrue($ad->expires_at->gt(now()->addDays(Advertisement::EXPIRY_DAYS - 1)));
+        $this->assertTrue($ad->created_at->gt(now()->subMinute()));
+    }
+
+    public function test_admin_cannot_renew_active_ad(): void
+    {
+        $ad = Advertisement::factory()->create();
+        $ad->forceFill(['created_at' => now()->subDays(10), 'expires_at' => now()->addDays(50)])->save();
+
+        $this->actingAs($this->admin())
+            ->patch(route('admin.advertisements.renew', $ad))
+            ->assertSessionHas('error');
+
+        $this->assertTrue($ad->fresh()->created_at->lt(now()->subDays(9)));
+    }
+
+    public function test_customer_cannot_use_admin_renew(): void
+    {
+        $ad = Advertisement::factory()->create();
+        $ad->forceFill(['expires_at' => now()->subDay()])->save();
+
+        $this->actingAs($this->customer())
+            ->patch(route('admin.advertisements.renew', $ad))
+            ->assertForbidden();
+
+        $this->assertTrue($ad->fresh()->isExpired());
+    }
 }

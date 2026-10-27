@@ -72,9 +72,7 @@ class AdvertisementTrashController extends Controller
             return back()->with('error', 'Samo istekli oglasi mogu da se obnove.');
         }
 
-        $ad->created_at = now();
-        $ad->expires_at = now()->addDays(Advertisement::EXPIRY_DAYS);
-        $ad->save();
+        $ad->renew();
 
         return back()->with('success', 'Oglas je obnovljen na još ' . Advertisement::EXPIRY_DAYS . ' dana.');
     }

@@ -75,6 +75,16 @@ class Advertisement extends Model
         return $this->expires_at !== null && $this->expires_at->isPast();
     }
 
+    /**
+     * Renewing moves the ad back to the top of listings, so callers only renew expired ads.
+     */
+    public function renew(): void
+    {
+        $this->created_at = now();
+        $this->expires_at = now()->addDays(self::EXPIRY_DAYS);
+        $this->save();
+    }
+
     public function scopeActive($query)
     {
         return $query->where(function ($q) {

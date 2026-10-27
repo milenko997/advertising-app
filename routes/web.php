@@ -83,6 +83,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::resource('/oglasi', AdminAdvertisementController::class)->except(['show', 'create', 'store'])->parameters(['oglasi' => 'advertisement']);
     Route::patch('/oglasi/{advertisement}/pin', [AdminAdvertisementController::class, 'togglePin'])->name('advertisements.pin');
     Route::patch('/oglasi/{advertisement}/pin-category', [AdminAdvertisementController::class, 'togglePinCategory'])->name('advertisements.pin-category');
+    Route::patch('/oglasi/{advertisement}/obnovi', [AdminAdvertisementController::class, 'renew'])->name('advertisements.renew');
     Route::post('/oglasi/bulk-action', [AdminAdvertisementController::class, 'bulkAction'])->name('advertisements.bulk');
     Route::resource('/korisnici', AdminCustomerController::class)
         ->except(['show'])

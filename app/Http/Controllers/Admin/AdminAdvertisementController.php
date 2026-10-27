@@ -244,6 +244,17 @@ class AdminAdvertisementController extends Controller
         return back()->with('success', $pinning ? 'Oglas je prikačen u kategoriji.' : 'Oglas je otkačen iz kategorije.');
     }
 
+    public function renew(Advertisement $advertisement)
+    {
+        if (!$advertisement->isExpired()) {
+            return back()->with('error', 'Samo istekli oglasi mogu da se obnove.');
+        }
+
+        $advertisement->renew();
+
+        return back()->with('success', 'Oglas je obnovljen na još ' . Advertisement::EXPIRY_DAYS . ' dana.');
+    }
+
     public function destroy(Advertisement $advertisement)
     {
         $owner = $advertisement->user;

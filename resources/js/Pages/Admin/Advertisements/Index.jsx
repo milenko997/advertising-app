@@ -105,6 +105,16 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
         });
     };
 
+    // Full reload of props so the status badge and filter counts follow the new expiry date
+    const renew = (id) => {
+        if (pinning.has(`renew-${id}`)) return;
+        setPinning(prev => new Set(prev).add(`renew-${id}`));
+        router.patch(`/admin/oglasi/${id}/obnovi`, {}, {
+            preserveScroll: true,
+            onFinish: () => setPinning(prev => { const n = new Set(prev); n.delete(`renew-${id}`); return n; }),
+        });
+    };
+
     const togglePin = (id) => {
         if (pinning.has(`pin-${id}`)) return;
         setPinning(prev => new Set(prev).add(`pin-${id}`));
@@ -379,6 +389,16 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                         <span className="text-[10px] text-blue-600">{ad.pinned_category_at ?? '—'}</span>
                                                     )}
                                                 </div>
+                                                {ad.status === 'expired' && (
+                                                    <button
+                                                        onClick={() => renew(ad.id)}
+                                                        disabled={pinning.has(`renew-${ad.id}`)}
+                                                        title="Obnovi oglas na još 60 dana"
+                                                        className="px-3 py-1.5 text-sm font-medium bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    >
+                                                        Obnovi
+                                                    </button>
+                                                )}
                                                 <Link
                                                     href={`/admin/oglasi/${ad.id}/edit`}
                                                     className="px-3 py-1.5 text-sm font-medium border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition"
@@ -476,6 +496,15 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
                                                 Kategorija{ad.is_pinned_category && ad.pinned_category_at ? ` · ${ad.pinned_category_at}` : ''}
                                             </button>
+                                            {ad.status === 'expired' && (
+                                                <button
+                                                    onClick={() => renew(ad.id)}
+                                                    disabled={pinning.has(`renew-${ad.id}`)}
+                                                    className="px-3 py-1.5 text-xs font-medium bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition disabled:opacity-50"
+                                                >
+                                                    Obnovi
+                                                </button>
+                                            )}
                                             <Link
                                                 href={`/admin/oglasi/${ad.id}/edit`}
                                                 className="px-3 py-1.5 text-xs font-medium border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-neutral-300 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition"

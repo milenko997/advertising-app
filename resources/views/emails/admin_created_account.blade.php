@@ -3,18 +3,13 @@
 
 Zdravo **{{ $displayName }}**,
 
-Administrator platforme Transporteri kreirao je nalog za Vas. Možete se odmah prijaviti koristeći sledeće podatke:
+Administrator platforme Transporteri kreirao je nalog za Vas sa email adresom **{{ $email }}**. Kliknite na dugme ispod da postavite svoju lozinku:
 
-@component('mail::panel')
-**Email:** {{ $email }}
-**Lozinka:** {{ $password }}
+@component('mail::button', ['url' => $setPasswordUrl])
+Postavite lozinku
 @endcomponent
 
-@component('mail::button', ['url' => config('app.url') . '/prijava'])
-Prijavite se
-@endcomponent
-
-Preporučujemo da **odmah promenite lozinku** nakon prve prijave — idite na Podešavanja profila.
+Link važi {{ config('auth.passwords.users.expire') }} minuta. Ako je istekao, lozinku možete postaviti preko opcije „Zaboravili ste lozinku?“ na stranici za prijavu.
 
 Ukoliko imate pitanja, dostupni smo na:
 **info@transporteri.rs** · **+381 69 583 3352**

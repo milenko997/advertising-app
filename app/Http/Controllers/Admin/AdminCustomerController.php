@@ -15,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password as PasswordBroker;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
@@ -91,10 +92,14 @@ class AdminCustomerController extends Controller
         ]);
 
         try {
+            // Never put the password in the email (or the queued job); send a set-password link instead.
             Mail::to($user->email)->queue(new AdminCreatedAccountMail(
                 $user->name,
                 $user->email,
-                $validated['password'],
+                url(route('password.reset', [
+                    'token' => PasswordBroker::createToken($user),
+                    'email' => $user->email,
+                ], false)),
             ));
         } catch (\Exception) {}
 

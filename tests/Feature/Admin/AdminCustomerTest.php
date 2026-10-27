@@ -3,9 +3,12 @@
 namespace Tests\Feature\Admin;
 
 use App\Enums\UserRole;
+use App\Mail\AdminCreatedAccountMail;
 use App\Models\User;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Tests\TestCase;
 
 class AdminCustomerTest extends TestCase
@@ -133,5 +136,30 @@ class AdminCustomerTest extends TestCase
             ->assertSessionHasNoErrors();
 
         $this->assertSame(UserRole::Admin, User::where('email', 'novi.admin@example.com')->first()->role);
+    }
+
+    public function test_created_account_email_contains_set_password_link_not_password(): void
+    {
+        Mail::fake();
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.korisnici.store'), [
+                'name'                  => 'Novi Korisnik',
+                'email'                 => 'novi@example.com',
+                'password'              => 'TajnaLozinka123',
+                'password_confirmation' => 'TajnaLozinka123',
+                'role'                  => 'customer',
+            ])
+            ->assertSessionHasNoErrors();
+
+        Mail::assertQueued(AdminCreatedAccountMail::class, function (AdminCreatedAccountMail $mail) {
+            $this->assertStringNotContainsString('TajnaLozinka123', $mail->render());
+            $this->assertStringContainsString('/resetovanje-lozinke/', $mail->setPasswordUrl);
+
+            $token = basename(parse_url($mail->setPasswordUrl, PHP_URL_PATH));
+            $this->assertTrue(Password::tokenExists(User::where('email', 'novi@example.com')->first(), $token));
+
+            return true;
+        });
     }
 }

@@ -9,22 +9,30 @@ set -a
 . "${BACKUP_CONFIG:-$HOME/.config/transporteri-backup.env}"
 set +a
 
+# The dump and restic cache hold the whole database: keep them private to this user
+umask 077
 # Fixed path, so every snapshot stores the dump at the same place and restores are predictable
 dump_dir="$HOME/backup"
 mkdir -p "$dump_dir"
+# Cron and the "Backup now" workflow share the dump path and the repository: one run at a time
+exec 9>"$dump_dir/.lock"
+flock 9
 trap 'rm -f "$dump_dir/database.sql"' EXIT
 
 php "$APP/current/artisan" backup:dump-database "$dump_dir/database.sql"
 
-restic backup --quiet --tag nightly \
+# "manual" for the Backup now workflow, so manual runs don't take the place of nightly snapshots
+tag=${BACKUP_TAG:-nightly}
+
+restic backup --quiet --tag "$tag" \
     "$dump_dir/database.sql" \
     "$APP/shared/.env" \
     "$APP/shared/storage/app"
 
-restic forget --quiet --tag nightly --prune \
-    --keep-daily 14 --keep-weekly 8 --keep-monthly 12
+restic forget --quiet --tag nightly --keep-daily 14 --keep-weekly 8 --keep-monthly 12
+restic forget --quiet --tag manual --keep-last 10 --prune
 
-# Optional dead man's switch: healthchecks.io mails you when this ping stops arriving
-if [ -n "${HEALTHCHECK_URL:-}" ]; then
+# Optional dead man's switch: healthchecks.io mails you when the nightly ping stops arriving
+if [ -n "${HEALTHCHECK_URL:-}" ] && [ "$tag" = nightly ]; then
     curl -fsS -m 10 --retry 3 -o /dev/null "$HEALTHCHECK_URL" || true
 fi

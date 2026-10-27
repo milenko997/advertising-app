@@ -369,7 +369,7 @@ class AdminAdvertisementController extends Controller
         $count = count($request->ids);
 
         if (in_array($request->action, ['pin', 'unpin'], true)) {
-            $titles = Advertisement::whereIn('id', $request->ids)->pluck('title')->map(fn ($t) => "„{$t}“")->implode(', ');
+            $titles = $ads->pluck('title')->map(fn ($t) => "„{$t}“")->implode(', ');
             AdminAction::record($request->action === 'pin' ? 'ad_pinned' : 'ad_unpinned', "Grupno ({$count}): {$titles} — globalno");
         }
         $label = match ($request->action) {

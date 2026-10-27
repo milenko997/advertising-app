@@ -82,7 +82,7 @@ class AdminCustomerController extends Controller
 
         abort_if($validated['role'] === 'admin' && !auth()->user()->isSuperAdmin(), 403);
 
-        $user = User::create([
+        $user = User::forceCreate([
             'name'     => $validated['name'],
             'email'    => $validated['email'],
             'password' => Hash::make($validated['password']),

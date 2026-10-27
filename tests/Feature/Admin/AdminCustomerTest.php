@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Admin;
 
+use App\Enums\UserRole;
 use App\Models\User;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -114,5 +115,23 @@ class AdminCustomerTest extends TestCase
             ->assertRedirect(route('admin.korisnici.index'));
 
         $this->assertDatabaseMissing('users', ['id' => $customer->id]);
+    }
+
+    public function test_super_admin_can_create_admin_account(): void
+    {
+        $superAdmin = User::factory()->admin()->create();
+        $superAdmin->forceFill(['role' => UserRole::SuperAdmin])->save();
+
+        $this->actingAs($superAdmin)
+            ->post(route('admin.korisnici.store'), [
+                'name'                  => 'Novi Admin',
+                'email'                 => 'novi.admin@example.com',
+                'password'              => 'Password1234',
+                'password_confirmation' => 'Password1234',
+                'role'                  => 'admin',
+            ])
+            ->assertSessionHasNoErrors();
+
+        $this->assertSame(UserRole::Admin, User::where('email', 'novi.admin@example.com')->first()->role);
     }
 }

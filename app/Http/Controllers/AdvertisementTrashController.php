@@ -64,8 +64,13 @@ class AdvertisementTrashController extends Controller
 
     public function renew($id)
     {
-        $ad = Advertisement::withTrashed()->findOrFail($id);
+        $ad = Advertisement::findOrFail($id);
         $this->authorize('update', $ad);
+
+        // Renewing moves the ad back to the top of listings, so only expired ads may be renewed.
+        if (!$ad->isExpired()) {
+            return back()->with('error', 'Samo istekli oglasi mogu da se obnove.');
+        }
 
         $ad->created_at = now();
         $ad->expires_at = now()->addDays(Advertisement::EXPIRY_DAYS);

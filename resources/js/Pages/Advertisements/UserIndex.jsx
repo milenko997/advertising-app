@@ -21,8 +21,10 @@ export default function UserIndex({ ads: initialAds }) {
     const handleRenew = (id) => {
         router.patch(`/oglasi/${id}/obnovi`, {}, {
             preserveScroll: true,
-            onSuccess: () => {
-                setAdList(prev => prev.map(a => a.id === id ? { ...a, is_expired: false } : a));
+            onSuccess: (page) => {
+                if (!page.props.flash?.error) {
+                    setAdList(prev => prev.map(a => a.id === id ? { ...a, is_expired: false } : a));
+                }
             },
         });
     };

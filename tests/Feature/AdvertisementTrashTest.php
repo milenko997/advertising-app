@@ -127,4 +127,29 @@ class AdvertisementTrashTest extends TestCase
             ->patch(route('advertisements.renew', $ad->id))
             ->assertForbidden();
     }
+
+    public function test_active_ad_cannot_be_renewed(): void
+    {
+        $user = User::factory()->customer()->create();
+        $ad   = $this->makeAd($user);
+        $ad->forceFill(['created_at' => now()->subDays(10), 'expires_at' => now()->addDays(50)])->save();
+
+        $this->actingAs($user)
+            ->patch(route('advertisements.renew', $ad->id))
+            ->assertSessionHas('error');
+
+        $this->assertTrue($ad->fresh()->created_at->lt(now()->subDays(9)));
+    }
+
+    public function test_trashed_ad_cannot_be_renewed(): void
+    {
+        $user = User::factory()->customer()->create();
+        $ad   = $this->makeAd($user);
+        $ad->update(['expires_at' => now()->subDays(1)]);
+        $ad->delete();
+
+        $this->actingAs($user)
+            ->patch(route('advertisements.renew', $ad->id))
+            ->assertNotFound();
+    }
 }

@@ -280,6 +280,39 @@ A deploy uploads the code with the frontend already built (the server needs no N
 
 Deploy key: run `ssh-keygen -t ed25519 -f deploy_key -N ""` locally, append `deploy_key.pub` to `~/.ssh/authorized_keys` of `SSH_USER` on the server, and paste `deploy_key` into the `SSH_PRIVATE_KEY` secret. The server needs PHP and Composer on the `PATH` of that user; it does not need git or Node.js.
 
+### 7. Backups (Cloudflare R2)
+
+`deploy/backup.sh` runs every night as the `deploy` user. It dumps the database (`php artisan backup:dump-database`) and uses [restic](https://restic.net) to upload it, together with `shared/.env` and `shared/storage/app` (uploaded images), to a Cloudflare R2 bucket. Backups are encrypted before they leave the server and incremental, so only new or changed files are uploaded. It keeps 14 daily, 8 weekly and 12 monthly snapshots.
+
+Settings live in `/home/deploy/.config/transporteri-backup.env` (not in git):
+
+```env
+RESTIC_REPOSITORY=s3:https://<ACCOUNT_ID>.r2.cloudflarestorage.com/transporteri-backup
+RESTIC_PASSWORD_FILE=/home/deploy/.config/restic-password
+AWS_ACCESS_KEY_ID=<R2 access key id>
+AWS_SECRET_ACCESS_KEY=<R2 secret access key>
+AWS_DEFAULT_REGION=auto
+# Optional: healthchecks.io ping URL, it mails you when a backup does not arrive
+HEALTHCHECK_URL=
+```
+
+Keep a copy of the restic password outside the server (password manager). Without it the backups cannot be decrypted.
+
+Cron (`/etc/cron.d/transporteri-backup`):
+
+```
+0 3 * * * deploy /bin/bash /var/www/advertising-app/current/deploy/backup.sh >> /home/deploy/backup.log 2>&1
+```
+
+**Restore** (as `deploy`, after `set -a; . ~/.config/transporteri-backup.env; set +a`):
+
+```bash
+restic snapshots                                  # list backups
+restic restore latest --target /tmp/restore       # or a snapshot id instead of latest
+# database: /tmp/restore/home/deploy/backup/database.sql (mysql < file, or copy the SQLite file)
+# images:   /tmp/restore/var/www/advertising-app/shared/storage/app
+```
+
 ---
 
 ## Image Storage

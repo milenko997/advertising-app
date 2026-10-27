@@ -209,4 +209,32 @@ class AdminAdvertisementTest extends TestCase
                 ->has('ads.data', 3)
             );
     }
+
+    public function test_index_can_be_filtered_by_user(): void
+    {
+        $owner = $this->customer();
+        $other = $this->customer();
+        $this->customer(); // has no ads, so isn't offered in the filter
+
+        $ownAds = Advertisement::factory()->count(2)->create(['user_id' => $owner->id]);
+        Advertisement::factory()->create(['user_id' => $other->id]);
+
+        $admin = $this->admin();
+
+        $this->actingAs($admin)
+            ->get(route('admin.oglasi.index', ['user' => $owner->id]))
+            ->assertInertia(fn ($page) => $page
+                ->where('user', $owner->id)
+                ->where('ads.data', fn ($ads) => collect($ads)->pluck('id')->sort()->values()->all() === $ownAds->pluck('id')->sort()->values()->all())
+                ->where('counts.all', 2)
+                ->where('users', fn ($users) => collect($users)->pluck('id')->sort()->values()->all() === collect([$owner->id, $other->id])->sort()->values()->all())
+            );
+
+        $this->actingAs($admin)
+            ->get(route('admin.oglasi.index', ['user' => 999999]))
+            ->assertInertia(fn ($page) => $page
+                ->where('user', null)
+                ->has('ads.data', 3)
+            );
+    }
 }

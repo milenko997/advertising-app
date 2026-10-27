@@ -7,6 +7,7 @@ use App\Mail\AdDeletedByAdminMail;
 use App\Mail\AdUpdatedByAdminMail;
 use App\Models\Advertisement;
 use App\Models\Category;
+use App\Models\User;
 use App\Notifications\AdDeletedByAdminNotification;
 use App\Notifications\AdUpdatedByAdminNotification;
 use App\Services\ImageService;
@@ -33,8 +34,13 @@ class AdminAdvertisementController extends Controller
             ? $categories->where('parent_id', $category->id)->pluck('id')->push($category->id)
             : null;
 
+        // Only users who actually have ads are worth offering in the filter
+        $users = User::whereHas('advertisements')->orderBy('name')->get(['id', 'name', 'email']);
+        $user  = $users->firstWhere('id', (int) $request->input('user'));
+
         $base = Advertisement::query()
             ->when($categoryIds, fn ($q) => $q->whereIn('category_id', $categoryIds))
+            ->when($user, fn ($q) => $q->where('user_id', $user->id))
             ->when($search, fn ($q) => $q->where(fn ($q) => $q
                 ->where('title', 'like', "%{$search}%")
                 ->orWhere('location', 'like', "%{$search}%")
@@ -62,7 +68,7 @@ class AdminAdvertisementController extends Controller
             'expires_at'  => $ad->expires_at?->format('d.m.Y'),
             'status'      => $this->status($ad),
             'category'    => $ad->category ? ['name' => $ad->category->name] : null,
-            'user'        => $ad->user ? ['name' => $ad->user->name] : null,
+            'user'        => $ad->user ? ['id' => $ad->user->id, 'name' => $ad->user->name] : null,
         ])->values();
 
         if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
@@ -84,6 +90,8 @@ class AdminAdvertisementController extends Controller
             'status'     => $status,
             'counts'     => $counts,
             'category'   => $category?->id,
+            'user'       => $user?->id,
+            'users'      => $users->map(fn ($u) => ['id' => $u->id, 'name' => $u->name, 'email' => $u->email]),
             'categories' => $categories->whereNull('parent_id')->values()->map(fn ($parent) => [
                 'id'       => $parent->id,
                 'name'     => $parent->name,

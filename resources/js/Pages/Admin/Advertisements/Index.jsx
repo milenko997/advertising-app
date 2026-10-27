@@ -30,7 +30,7 @@ const FILTERS = [
     { value: 'expired',  label: 'Istekli' },
 ];
 
-export default function AdminAdvertisementsIndex({ ads: initialAds, search: initialSearch = '', status = '', counts = {} }) {
+export default function AdminAdvertisementsIndex({ ads: initialAds, search: initialSearch = '', status = '', counts = {}, category = null, categories = [] }) {
     const [adList, setAdList] = useState(initialAds.data);
     const [currentPage, setCurrentPage] = useState(initialAds.current_page);
     const [hasMore, setHasMore] = useState(initialAds.current_page < initialAds.last_page);
@@ -52,12 +52,16 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
         setSearch(value);
         clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => {
-            router.get('/admin/oglasi', { search: value, status }, { preserveState: true, replace: true });
+            router.get('/admin/oglasi', { search: value, status, category: category ?? '' }, { preserveState: true, replace: true });
         }, 400);
     };
 
     const changeStatus = (value) => {
-        router.get('/admin/oglasi', { search, status: value }, { preserveState: true, preserveScroll: true, replace: true });
+        router.get('/admin/oglasi', { search, status: value, category: category ?? '' }, { preserveState: true, preserveScroll: true, replace: true });
+    };
+
+    const changeCategory = (value) => {
+        router.get('/admin/oglasi', { search, status, category: value }, { preserveState: true, preserveScroll: true, replace: true });
     };
 
     const allSelected = adList.length > 0 && selected.size === adList.length;
@@ -138,7 +142,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/admin/oglasi?page=${nextPage}&search=${encodeURIComponent(search)}&status=${encodeURIComponent(status)}`);
+            const { data } = await axios.get(`/admin/oglasi?page=${nextPage}&search=${encodeURIComponent(search)}&status=${encodeURIComponent(status)}&category=${encodeURIComponent(category ?? '')}`);
             setAdList(prev => [...prev, ...data.ads]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);
@@ -169,6 +173,22 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                             placeholder="Pretraži po naslovu, korisniku, kategoriji, lokaciji…"
                             className="w-full sm:w-96 px-4 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                         />
+                        <select
+                            value={category ?? ''}
+                            onChange={e => changeCategory(e.target.value)}
+                            aria-label="Filter po kategoriji"
+                            className="w-full sm:w-56 px-3 py-2 text-sm border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100"
+                        >
+                            <option value="">Sve kategorije</option>
+                            {categories.map(parent => (
+                                <optgroup key={parent.id} label={parent.name}>
+                                    <option value={parent.id}>{parent.name} (sve)</option>
+                                    {parent.children.map(child => (
+                                        <option key={child.id} value={child.id}>{child.name}</option>
+                                    ))}
+                                </optgroup>
+                            ))}
+                        </select>
                         <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filter po statusu">
                             {FILTERS.map(f => {
                                 const activeFilter = status === f.value;
@@ -263,7 +283,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                 {adList.length === 0 ? (
                                     <tr>
                                         <td colSpan={8} className="px-6 py-16 text-center text-gray-500 dark:text-neutral-400">
-                                            {search || status ? 'Nema oglasa koji odgovaraju filteru.' : 'Nema oglasa.'}
+                                            {search || status || category ? 'Nema oglasa koji odgovaraju filteru.' : 'Nema oglasa.'}
                                         </td>
                                     </tr>
                                 ) : adList.map(ad => (
@@ -370,7 +390,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                             <div className="divide-y divide-gray-100 dark:divide-neutral-700">
                                 {adList.length === 0 ? (
                                     <p className="px-4 py-10 text-center text-sm text-gray-400 dark:text-neutral-500">
-                                        {search || status ? 'Nema oglasa koji odgovaraju filteru.' : 'Nema oglasa.'}
+                                        {search || status || category ? 'Nema oglasa koji odgovaraju filteru.' : 'Nema oglasa.'}
                                     </p>
                                 ) : adList.map(ad => (
                                     <div key={ad.id} className={`p-4 ${selected.has(ad.id) ? 'bg-orange-50 dark:bg-orange-900/20' : ''}`}>

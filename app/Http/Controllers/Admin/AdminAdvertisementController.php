@@ -25,7 +25,16 @@ class AdminAdvertisementController extends Controller
         $search = $request->input('search', '');
         $status = in_array($request->input('status'), self::STATUSES, true) ? $request->input('status') : '';
 
+        $categories = Category::orderBy('name')->get(['id', 'name', 'parent_id']);
+        $category   = $categories->firstWhere('id', (int) $request->input('category'));
+
+        // A parent category also matches the ads in its subcategories
+        $categoryIds = $category
+            ? $categories->where('parent_id', $category->id)->pluck('id')->push($category->id)
+            : null;
+
         $base = Advertisement::query()
+            ->when($categoryIds, fn ($q) => $q->whereIn('category_id', $categoryIds))
             ->when($search, fn ($q) => $q->where(fn ($q) => $q
                 ->where('title', 'like', "%{$search}%")
                 ->orWhere('location', 'like', "%{$search}%")
@@ -72,8 +81,15 @@ class AdminAdvertisementController extends Controller
         return Inertia::render('Admin/Advertisements/Index', [
             'ads'    => $this->paginationData($paginator, $ads->values()->all()),
             'search' => $search,
-            'status' => $status,
-            'counts' => $counts,
+            'status'     => $status,
+            'counts'     => $counts,
+            'category'   => $category?->id,
+            'categories' => $categories->whereNull('parent_id')->values()->map(fn ($parent) => [
+                'id'       => $parent->id,
+                'name'     => $parent->name,
+                'children' => $categories->where('parent_id', $parent->id)->values()
+                    ->map(fn ($child) => ['id' => $child->id, 'name' => $child->name]),
+            ]),
         ]);
     }
 

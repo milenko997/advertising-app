@@ -4,6 +4,7 @@ namespace Tests\Feature\Admin;
 
 use App\Mail\AdDeletedByAdminMail;
 use App\Models\Advertisement;
+use App\Models\Category;
 use App\Models\User;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -169,6 +170,43 @@ class AdminAdvertisementTest extends TestCase
             ->assertInertia(fn ($page) => $page
                 ->where('status', '')
                 ->has('ads.data', 4)
+            );
+    }
+
+    public function test_index_can_be_filtered_by_category_including_subcategories(): void
+    {
+        $parent = Category::factory()->create();
+        $child  = Category::factory()->create(['parent_id' => $parent->id]);
+        $other  = Category::factory()->create();
+
+        $inParent = Advertisement::factory()->create(['category_id' => $parent->id, 'expires_at' => now()->addDays(30)]);
+        $inChild  = Advertisement::factory()->create(['category_id' => $child->id, 'expires_at' => now()->subDay()]);
+        Advertisement::factory()->create(['category_id' => $other->id]);
+
+        $admin = $this->admin();
+        $ids   = fn ($ads) => collect($ads)->pluck('id')->sort()->values()->all();
+
+        $this->actingAs($admin)
+            ->get(route('admin.oglasi.index', ['category' => $parent->id]))
+            ->assertInertia(fn ($page) => $page
+                ->where('category', $parent->id)
+                ->where('ads.data', fn ($ads) => $ids($ads) === collect([$inParent->id, $inChild->id])->sort()->values()->all())
+                ->where('counts.all', 2)
+                ->where('counts.expired', 1)
+                ->has('categories', 2)
+            );
+
+        $this->actingAs($admin)
+            ->get(route('admin.oglasi.index', ['category' => $child->id, 'status' => 'expired']))
+            ->assertInertia(fn ($page) => $page
+                ->where('ads.data', fn ($ads) => $ids($ads) === [$inChild->id])
+            );
+
+        $this->actingAs($admin)
+            ->get(route('admin.oglasi.index', ['category' => 999999]))
+            ->assertInertia(fn ($page) => $page
+                ->where('category', null)
+                ->has('ads.data', 3)
             );
     }
 }

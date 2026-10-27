@@ -24,7 +24,7 @@ class DashboardStatsQuery
             return [
                 'stats' => [
                     'ads' => [
-                        'total'    => Advertisement::withTrashed()->count(),
+                        'total'    => Advertisement::count(),
                         'active'   => Advertisement::active()->count(),
                         'expired'  => Advertisement::whereNotNull('expires_at')->where('expires_at', '<', $now)->count(),
                         'pinned'   => Advertisement::where('is_pinned', true)->count(),

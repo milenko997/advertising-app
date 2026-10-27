@@ -23,7 +23,7 @@ class ContactController extends Controller
             'email'           => 'required|email:rfc',
             'subject'         => 'required|string|min:3|max:150',
             'message'         => 'required|string|min:10|max:3000',
-            'recaptcha_token' => ['nullable', new RecaptchaToken('contact')],
+            'recaptcha_token' => [new RecaptchaToken('contact')],
         ]);
 
         try {

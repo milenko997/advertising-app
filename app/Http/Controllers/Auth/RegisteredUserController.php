@@ -43,7 +43,7 @@ class RegisteredUserController extends Controller
             'email'           => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'        => ['required', 'confirmed', Rules\Password::defaults()],
             'account_type'    => ['sometimes', 'string', 'in:personal,company'],
-            'recaptcha_token' => ['nullable', new RecaptchaToken('register')],
+            'recaptcha_token' => [new RecaptchaToken('register')],
         ];
 
         if ($accountType === 'company') {

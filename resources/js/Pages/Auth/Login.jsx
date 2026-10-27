@@ -69,6 +69,8 @@ export default function Login({ status }) {
                     <label htmlFor="remember" className="ml-2 text-sm text-gray-600 dark:text-neutral-400">Zapamti me</label>
                 </div>
 
+                {errors.recaptcha_token && <p className="text-xs text-red-600">{errors.recaptcha_token}</p>}
+
                 <div className="flex items-center justify-between pt-1">
                     <Link href="/zaboravljena-lozinka" className="text-sm text-gray-500 dark:text-neutral-400 hover:text-orange-600">
                         Zaboravili ste lozinku?

@@ -220,6 +220,8 @@ export default function Register() {
                     />
                 </div>
 
+                {errors.recaptcha_token && <p className="text-xs text-red-600">{errors.recaptcha_token}</p>}
+
                 <div className="flex items-center justify-between pt-1">
                     <Link href="/prijava" className="text-sm text-gray-500 dark:text-neutral-400 hover:text-orange-600">
                         Već imate nalog?

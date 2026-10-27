@@ -220,6 +220,8 @@ export default function Contact() {
                                             </div>
                                         </div>
 
+                                        {errors.recaptcha_token && <p className="text-xs text-red-500">{errors.recaptcha_token}</p>}
+
                                         <button
                                             type="submit"
                                             disabled={processing}

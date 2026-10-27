@@ -40,6 +40,7 @@ class ProfileTest extends TestCase
                 'name'  => 'New Name',
                 'email' => 'new@example.com',
                 'phone' => null,
+                'current_password' => 'password',
             ])
             ->assertRedirect();
 
@@ -100,5 +101,20 @@ class ProfileTest extends TestCase
                 'password_confirmation' => 'NewPassword1',
             ])
             ->assertSessionHasErrors('current_password');
+    }
+
+    public function test_changing_email_requires_current_password(): void
+    {
+        $user = User::factory()->customer()->create(['name' => 'Me', 'email' => 'me@example.com']);
+
+        $this->actingAs($user)
+            ->put(route('profile.update'), ['name' => 'Me', 'email' => 'attacker@example.com'])
+            ->assertSessionHasErrors('current_password');
+
+        $this->actingAs($user)
+            ->put(route('profile.update'), ['name' => 'Me', 'email' => 'attacker@example.com', 'current_password' => 'wrong-password'])
+            ->assertSessionHasErrors('current_password');
+
+        $this->assertEquals('me@example.com', $user->fresh()->email);
     }
 }

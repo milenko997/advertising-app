@@ -64,12 +64,19 @@ class ProfileController extends Controller
             $rules['website']      = ['nullable', 'url', 'max:255'];
         }
 
+        // Changing the login email needs the password, so a hijacked session can't take over the account.
+        if ($request->input('email') !== $user->email) {
+            $rules['current_password'] = ['required', 'string', 'current_password'];
+        }
+
         $request->validate($rules, [
             'name.min'    => 'Ime mora imati najmanje 2 karaktera.',
             'name.max'    => 'Ime ne sme imati više od 50 karaktera.',
             'name.regex'  => 'Ime sme sadržati samo slova, razmake, crtice i apostrofe.',
             'email.email' => 'Unesite ispravnu email adresu.',
             'phone.regex' => 'Unesite ispravan broj telefona (cifre, razmaci, +, -, zagrade).',
+            'current_password.required'         => 'Unesite trenutnu lozinku da biste promenili email adresu.',
+            'current_password.current_password' => 'Trenutna lozinka nije ispravna.',
         ]);
 
         $user->name         = $request->name;

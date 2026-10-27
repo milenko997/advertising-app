@@ -13,6 +13,7 @@ export default function ProfileShow({ user }) {
         account_type: user.account_type || 'personal',
         name: user.name,
         email: user.email,
+        current_password: '',
         phone: user.phone ?? '',
         avatar: null,
         remove_avatar: '0',
@@ -198,6 +199,20 @@ export default function ProfileShow({ user }) {
                                     />
                                     {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
                                 </div>
+                                {data.email !== user.email && (
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-1">Trenutna lozinka</label>
+                                        <input
+                                            type="password"
+                                            value={data.current_password}
+                                            onChange={e => setData('current_password', e.target.value)}
+                                            required autoComplete="current-password"
+                                            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100"
+                                        />
+                                        <p className="mt-1 text-xs text-gray-500 dark:text-neutral-400">Potrebna je za promenu email adrese.</p>
+                                        {errors.current_password && <p className="mt-1 text-xs text-red-600">{errors.current_password}</p>}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="mb-5">

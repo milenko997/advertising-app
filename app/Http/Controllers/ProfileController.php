@@ -51,7 +51,7 @@ class ProfileController extends Controller
             'name'         => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s\'\-]+$/u'],
             'email'        => 'required|email:rfc|max:255|unique:users,email,' . $user->id,
             'phone'        => ['nullable', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
-            'avatar'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1900',
+            'avatar'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1900|dimensions:max_width=8192,max_height=8192',
             'account_type' => ['sometimes', 'string', 'in:personal,company'],
         ];
 

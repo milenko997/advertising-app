@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase
@@ -116,5 +118,22 @@ class ProfileTest extends TestCase
             ->assertSessionHasErrors('current_password');
 
         $this->assertEquals('me@example.com', $user->fresh()->email);
+    }
+
+    public function test_avatar_with_huge_dimensions_is_rejected_before_processing(): void
+    {
+        Storage::fake('public');
+        $user = User::factory()->customer()->create(['name' => 'Me', 'email' => 'me@example.com']);
+
+        $this->actingAs($user)
+            ->put(route('profile.update'), [
+                'name'   => 'Me',
+                'email'  => 'me@example.com',
+                'avatar' => UploadedFile::fake()->image('huge.png', 9000, 10),
+            ])
+            ->assertSessionHasErrors('avatar');
+
+        $this->assertNull($user->fresh()->avatar);
+        $this->assertEmpty(Storage::disk('public')->allFiles());
     }
 }

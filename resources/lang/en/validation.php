@@ -30,7 +30,7 @@ return [
     'different'            => ':attribute i :other moraju biti različiti.',
     'digits'               => ':attribute mora imati :digits cifara.',
     'digits_between'       => ':attribute mora imati između :min i :max cifara.',
-    'dimensions'           => ':attribute ima neispravne dimenzije slike.',
+    'dimensions'           => ':attribute je prevelika (najviše :max_width×:max_height piksela).',
     'distinct'             => 'Polje :attribute ima duplikatu vrednost.',
     'email'                => ':attribute mora biti validna email adresa.',
     'ends_with'            => ':attribute mora završavati jednim od: :values.',

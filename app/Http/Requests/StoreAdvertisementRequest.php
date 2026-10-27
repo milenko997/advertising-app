@@ -21,9 +21,9 @@ class StoreAdvertisementRequest extends FormRequest
 
             'availability'  => 'required|in:available,on_request',
             'price'         => 'nullable|string|max:100',
-            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240|dimensions:max_width=8192,max_height=8192',
             'images'        => 'nullable|array|max:10',
-            'images.*'      => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+            'images.*'      => 'image|mimes:jpeg,png,jpg,gif|max:10240|dimensions:max_width=8192,max_height=8192',
             'phone'         => ['required', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
             'location'      => 'required|string|min:2|max:255',
             'category_id'   => 'required|exists:categories,id',

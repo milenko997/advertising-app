@@ -8,36 +8,47 @@ use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 use Intervention\Image\Encoders\JpegEncoder;
+use Intervention\Image\Encoders\WebpEncoder;
+use Intervention\Image\Format;
 use Intervention\Image\ImageManager;
 
 class ImageService
 {
-    private const MAX_WIDTH   = 1920;
-    private const MAX_BYTES   = 2 * 1024 * 1024; // 2 MB stored limit
-    private const MIN_QUALITY = 20;
+    private const MAX_DIMENSION    = 1920; // longest side for ad photos
+    private const AVATAR_DIMENSION = 512;  // avatars are only ever shown small
+    private const MAX_BYTES        = 1024 * 1024; // 1 MB stored limit
+    private const QUALITY          = 80;
+    private const MIN_QUALITY      = 40;
 
     public function store(UploadedFile $file, string $directory = 'ads'): string
     {
-        $manager = new ImageManager(extension_loaded('imagick') ? new ImagickDriver() : new GdDriver());
-        $image   = $manager->decodePath($file->getRealPath());
+        $driver  = extension_loaded('imagick') ? new ImagickDriver() : new GdDriver();
+        $image   = (new ImageManager($driver))->decodePath($file->getRealPath());
 
-        // Scale down to max width while preserving aspect ratio
-        $image->scaleDown(width: self::MAX_WIDTH);
+        // WebP is much smaller than JPEG at the same visual quality; fall back if this PHP build lacks it
+        $webp    = $driver->supports(Format::WEBP);
+        $encoder = fn (int $quality) => $webp
+            ? new WebpEncoder(quality: $quality, strip: true)
+            : new JpegEncoder(quality: $quality, strip: true);
 
-        // Start at 85% quality, reduce until under 2 MB
-        $quality = 85;
+        // Scale down so the longest side fits, preserving aspect ratio (covers tall portrait shots too)
+        $max = $directory === 'avatars' ? self::AVATAR_DIMENSION : self::MAX_DIMENSION;
+        $image->scaleDown(width: $max, height: $max);
+
+        // Strip EXIF (incl. GPS location) and lower quality until it fits
+        $quality = self::QUALITY;
         do {
-            $encoded = $image->encode(new JpegEncoder(quality: $quality));
+            $encoded = $image->encode($encoder($quality));
             $quality -= 10;
         } while (strlen((string) $encoded) > self::MAX_BYTES && $quality >= self::MIN_QUALITY);
 
         // If still oversized after reaching minimum quality, halve dimensions and re-encode
         if (strlen((string) $encoded) > self::MAX_BYTES) {
             $image->scale(width: (int) ($image->width() / 2));
-            $encoded = $image->encode(new JpegEncoder(quality: self::MIN_QUALITY));
+            $encoded = $image->encode($encoder(self::MIN_QUALITY));
         }
 
-        $path = $directory . '/' . Str::random(40) . '.jpg';
+        $path = $directory . '/' . Str::random(40) . ($webp ? '.webp' : '.jpg');
         Storage::disk('public')->put($path, (string) $encoded);
 
         return $path;

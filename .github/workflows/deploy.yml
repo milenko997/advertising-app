@@ -158,7 +158,7 @@ jobs:
 
           for path in shared/.env shared/storage; do
             if [ ! -e "$path" ]; then
-              echo "::error::$1/$path is missing. See README, Automatic deploys, one-time server setup."
+              echo "::error::$1/$path is missing. See docs/deployment.md, One-time server setup."
               exit 1
             fi
           done

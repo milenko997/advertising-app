@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Nightly encrypted backup of the database, uploaded files and .env to Cloudflare R2 (restic).
 # Runs from /etc/cron.d/transporteri-backup as the deploy user. Keys and the repository live in
-# ~/.config/transporteri-backup.env, outside git. See README, "7. Backups".
+# ~/.config/transporteri-backup.env, outside git. See docs/backups.md.
 set -euo pipefail
 
 APP=${APP:-/var/www/advertising-app}

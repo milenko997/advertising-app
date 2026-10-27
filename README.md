@@ -1,31 +1,33 @@
-# Advertising App
+# Transporteri
 
-A marketplace for posting and browsing advertisements, built with Laravel, React, and Inertia.js.
+Transporteri ([transporteri.rs](https://transporteri.rs)) is a Serbian marketplace for transport and logistics ads: trucks, vans, trailers and transport services. Carriers and companies post ads, visitors browse them by category and city and contact the advertiser directly, and admins moderate everything from an admin panel.
 
-## Tech Stack
+Built with Laravel, React and Inertia.js.
 
 | Layer | Technology |
 |-------|-----------|
-| Backend | Laravel 8.x, PHP 8.0+ |
-| Frontend | React 19, Inertia.js, Tailwind CSS 3 |
-| Database | SQLite (local) / MySQL or PostgreSQL (production) |
+| Backend | Laravel 12, PHP 8.2+ (production runs 8.3) |
+| Frontend | React 19, Inertia.js 2, Tailwind CSS 3 |
 | Assets | Vite |
-| Images | Intervention Image (GD) |
+| Database | SQLite (local), MySQL (production) |
+| Images | Intervention Image (GD), stored as WebP |
 
-## Requirements
-
-- PHP >= 8.0 with extensions: `pdo`, `mbstring`, `gd`, `sqlite3` (local) or `pdo_mysql` (production)
-- Composer
-- Node.js >= 18 and npm
+How each feature works, and how production is deployed and backed up, is described in [`docs/`](docs/README.md).
 
 ---
 
-## Local Development Setup
+## Requirements
 
-### 1. Clone and install dependencies
+- PHP 8.2+ with `pdo`, `mbstring`, `gd` and `pdo_sqlite` (local) or `pdo_mysql` (production)
+- Composer
+- Node.js 18+ and npm
+
+## Local setup
+
+### 1. Install dependencies
 
 ```bash
-git clone <repo-url>
+git clone git@github.com:milenko997/advertising-app.git
 cd advertising-app
 composer install
 npm install
@@ -38,327 +40,75 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-Open `.env` and verify:
+In `.env`, set the database to an absolute path and enable debugging:
 
 ```env
-APP_URL=http://localhost
+APP_URL=http://localhost:8000
 APP_DEBUG=true
 
 DB_CONNECTION=sqlite
-DB_DATABASE=/absolute/path/to/database/database.sqlite
+DB_DATABASE=/absolute/path/to/advertising-app/database/database.sqlite
 ```
 
-### 3. Database
+Optional: `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY` (forms work without reCAPTCHA when both are empty) and `MAIL_*` (use `MAIL_MAILER=log` to write mails to the log instead of sending them).
+
+### 3. Database and sample data
 
 ```bash
 touch database/database.sqlite
 php artisan migrate
+php artisan storage:link
 ```
 
-Optionally seed with sample categories, users, and advertisements:
+To fill the app with sample categories, users and ads, set the seed passwords in `.env` first, then seed:
+
+```env
+SEED_ADMIN_NAME=Admin
+SEED_ADMIN_EMAIL=admin@example.com
+SEED_ADMIN_PASSWORD=password
+SEED_USER_PASSWORD=password
+```
 
 ```bash
 php artisan db:seed
 ```
 
-> Note: Seeded ads will not have images since the storage folder is empty. Upload images manually after seeding.
+Seeded ads have no images; upload some through the app.
 
-### 4. Storage symlink
+### 4. Run
 
-```bash
-php artisan storage:link
-```
-
-### 5. Start the app
-
-Run these two commands in separate terminals:
+In two terminals:
 
 ```bash
-# Terminal 1 — backend
-php artisan serve
-
-# Terminal 2 — frontend assets (hot reload)
-npm run dev
+php artisan serve   # http://localhost:8000
+npm run dev         # Vite with hot reload
 ```
 
-Visit [http://localhost:8000](http://localhost:8000)
+### Admin account
 
-### One-liner (quick start)
-
-```bash
-composer install && npm install && cp .env.example .env && php artisan key:generate && touch database/database.sqlite && php artisan migrate --seed && php artisan storage:link && npm run dev &  php artisan serve
-```
-
----
-
-## Creating an Admin User
-
-Via Tinker:
-
-```bash
-php artisan tinker
-```
+`db:seed` creates the admin from the `SEED_ADMIN_*` values. Without seeding, create one in `php artisan tinker`. The `role` field is not mass assignable, so use `forceCreate`:
 
 ```php
-\App\Models\User::create([
+\App\Models\User::forceCreate([
     'name'     => 'Admin',
     'email'    => 'admin@example.com',
     'password' => bcrypt('your-password'),
-    'role'     => 'admin',
+    'role'     => 'admin',   // or 'super_admin', see docs/users.md
 ]);
 ```
 
-Or promote an existing user:
-
-```php
-\App\Models\User::where('email', 'user@example.com')->update(['role' => 'admin']);
-```
-
----
-
-## Production Deployment
-
-### 1. Upload and install
+## Tests
 
 ```bash
-git clone <repo-url> .
-composer install --no-dev --optimize-autoloader
-npm install
-npm run build
+php artisan test
 ```
 
-### 2. Environment
+The suite uses an in-memory SQLite database and also runs in GitHub Actions before every deploy.
+
+## Useful commands
 
 ```bash
-cp .env.example .env
-php artisan key:generate
-```
-
-Fill in `.env` with production values:
-
-```env
-APP_ENV=production
-APP_DEBUG=false
-APP_URL=https://yourdomain.com
-
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=your_database
-DB_USERNAME=your_user
-DB_PASSWORD=your_password
-
-SESSION_SECURE_COOKIE=true
-
-MAIL_MAILER=smtp
-MAIL_HOST=your_smtp_host
-MAIL_PORT=587
-MAIL_USERNAME=your_email
-MAIL_PASSWORD=your_password
-MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS=no-reply@yourdomain.com
-MAIL_FROM_NAME="${APP_NAME}"
-```
-
-### 3. Database, storage, and cache
-
-```bash
-php artisan migrate --force
-php artisan storage:link
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-### 4. Permissions
-
-```bash
-chmod -R 775 storage bootstrap/cache
-chown -R www-data:www-data storage bootstrap/cache
-```
-
-### 5. Web server
-
-Point the document root to the `public/` directory.
-
-**Nginx:**
-
-```nginx
-server {
-    listen 80;
-    server_name yourdomain.com;
-    root /var/www/advertising-app/public;
-
-    index index.php;
-
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
-
-    location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php8.0-fpm.sock;
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
-
-    location ~ /\.(?!well-known).* {
-        deny all;
-    }
-}
-```
-
-**Apache** (`.htaccess` is already included in `public/`):
-
-```apache
-<VirtualHost *:80>
-    ServerName yourdomain.com
-    DocumentRoot /var/www/advertising-app/public
-    <Directory /var/www/advertising-app/public>
-        AllowOverride All
-        Require all granted
-    </Directory>
-</VirtualHost>
-```
-
-### 6. Automatic deploys (GitHub Actions)
-
-`.github/workflows/deploy.yml` ("Deploy to prod") deploys every change on `main` without downtime:
-
-- **Direct push to `main`** → tests run, then it deploys automatically.
-- **Merged pull request** → tests run, then the deploy waits until someone opens the run in the Actions tab and clicks **Review deployments → Approve and deploy**.
-- **Manual run** → Actions → *Deploy to prod* → **Run workflow** deploys the current `main`.
-
-There is no maintenance mode. Each deploy is prepared in its own directory next to the live site, and the site switches over in one step at the end:
-
-```
-/var/www/advertising-app/          <- DEPLOY_PATH
-├── current -> releases/20261027163000-449096f
-├── releases/                      <- last 5 deploys, for rollbacks
-└── shared/
-    ├── .env
-    └── storage/                   <- uploaded images, logs, sessions
-```
-
-A deploy uploads the code with the frontend already built (the server needs no Node.js), links `shared/.env` and `shared/storage`, runs `composer install --no-dev`, caches config/routes/views, runs `migrate --force` and only then points `current` at the new release and restarts queue workers. If anything fails before the switch, the half-built release is deleted and visitors keep getting the previous version. Migrations run while the previous release is still serving, so they must not break it (add columns before using them, drop them in a later deploy).
-
-Right before `migrate --force` the deploy saves a copy of the database to `shared/backups/pre-deploy-<release>.sql` (the last 5 are kept), so a bad migration can be undone by restoring that file.
-
-After the switch the deploy checks that `/` and `/prijava` answer 200 from the server's own nginx. If they don't, it points `current` back at the previous release, deletes the broken one and fails the run. The code is rolled back, the database is not: the failed release's migrations stay applied.
-
-**Rollback:** `cd /var/www/advertising-app && ln -sfn releases/<older-release> current.new && mv -Tf current.new current`.
-
-#### One-time server setup
-
-1. Create the layout and move the existing `.env` and `storage/` into `shared/` (adjust the old path if your app lives elsewhere):
-
-   ```bash
-   cd /var/www/advertising-app
-   mkdir -p releases shared
-   cp .env shared/.env
-   cp -a storage shared/storage
-   ```
-
-2. Run the first deploy (push to `main` or **Run workflow**). It creates `current`.
-3. Point the web server at `current/public` and reload it. With Nginx keep `$realpath_root` in `fastcgi_param SCRIPT_FILENAME` (as in the config above), so PHP-FPM picks up each new release immediately:
-
-   ```nginx
-   root /var/www/advertising-app/current/public;
-   ```
-
-4. Copy anything uploaded since step 1 (`cp -a storage/. shared/storage/`), then update the cron entry and queue worker (Supervisor) to use `/var/www/advertising-app/current/artisan`. Once the site works from `current`, the old app files in `/var/www/advertising-app` (everything except `current`, `releases` and `shared`) can be removed.
-
-#### One-time GitHub setup (repository **Settings**)
-
-1. **Secrets and variables → Actions → New repository secret**:
-
-   | Secret | Value |
-   |---|---|
-   | `SSH_HOST` | Server hostname or IP |
-   | `SSH_USER` | User that owns the app directory (not root) |
-   | `SSH_PORT` | Optional, defaults to `22` |
-   | `SSH_PRIVATE_KEY` | Private key of a deploy-only key pair (see below) |
-   | `SSH_KNOWN_HOSTS` | Output of `ssh-keyscan -p <port> <host>`, so the runner only trusts your server |
-   | `DEPLOY_PATH` | Base directory on the server, e.g. `/var/www/advertising-app` |
-
-2. **Environments → New environment** `production-approval` → enable **Required reviewers** and add yourself. Without it, merged pull requests are refused instead of deployed. The `production` environment needs no rules (GitHub creates it on the first deploy).
-
-Deploy key: run `ssh-keygen -t ed25519 -f deploy_key -N ""` locally, append `deploy_key.pub` to `~/.ssh/authorized_keys` of `SSH_USER` on the server, and paste `deploy_key` into the `SSH_PRIVATE_KEY` secret. The server needs PHP and Composer on the `PATH` of that user; it does not need git or Node.js.
-
-### 7. Backups (Cloudflare R2)
-
-`deploy/backup.sh` runs every night as the `deploy` user. It dumps the database (`php artisan backup:dump-database`) and uses [restic](https://restic.net) to upload it, together with `shared/.env` and `shared/storage/app` (uploaded images), to a Cloudflare R2 bucket. Backups are encrypted before they leave the server and incremental, so only new or changed files are uploaded. It keeps 14 daily, 8 weekly and 12 monthly nightly snapshots, plus the last 10 manual ones.
-
-Settings live in `/home/deploy/.config/transporteri-backup.env` (not in git):
-
-```env
-RESTIC_REPOSITORY=s3:https://<ACCOUNT_ID>.r2.cloudflarestorage.com/transporteri-backup
-RESTIC_PASSWORD_FILE=/home/deploy/.config/restic-password
-AWS_ACCESS_KEY_ID=<R2 access key id>
-AWS_SECRET_ACCESS_KEY=<R2 secret access key>
-AWS_DEFAULT_REGION=auto
-# Optional: healthchecks.io ping URL, it mails you when a backup does not arrive
-HEALTHCHECK_URL=
-```
-
-Keep a copy of the restic password outside the server (password manager). Without it the backups cannot be decrypted.
-
-One-time setup (as root on the server): fill in the three values, then create the password file and initialise the repository:
-
-```bash
-F=/home/deploy/.config/transporteri-backup.env
-mkdir -p /home/deploy/.config
-echo 'RESTIC_REPOSITORY=s3:https://<ACCOUNT_ID>.r2.cloudflarestorage.com/transporteri-backup' > $F
-echo 'RESTIC_PASSWORD_FILE=/home/deploy/.config/restic-password' >> $F
-echo 'AWS_ACCESS_KEY_ID=<R2 access key id>' >> $F
-echo 'AWS_SECRET_ACCESS_KEY=<R2 secret access key>' >> $F
-echo 'AWS_DEFAULT_REGION=auto' >> $F
-openssl rand -base64 32 > /home/deploy/.config/restic-password
-chown -R deploy:deploy /home/deploy/.config
-chmod 600 /home/deploy/.config/*
-sudo -u deploy -H bash -c 'set -a; . ~/.config/transporteri-backup.env; set +a; restic init'
-```
-
-Cron (`/etc/cron.d/transporteri-backup`):
-
-```
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-0 3 * * * deploy /bin/bash /var/www/advertising-app/current/deploy/backup.sh >> /home/deploy/backup.log 2>&1
-```
-
-**Manual backup:** GitHub → **Actions** → **Backup now** → **Run workflow**. It runs the same script over SSH (with the deploy secrets) and shows the latest snapshots in the run summary.
-
-**Restore** (as `deploy`, after `set -a; . ~/.config/transporteri-backup.env; set +a`):
-
-```bash
-restic snapshots                                  # list backups
-restic restore latest --target /tmp/restore       # or a snapshot id instead of latest
-# database: /tmp/restore/home/deploy/backup/database.sql (mysql < file, or copy the SQLite file)
-# images:   /tmp/restore/var/www/advertising-app/shared/storage/app
-```
-
-### 8. Error and uptime alerts
-
-Set `ERROR_MAIL_TO=you@example.com` in `shared/.env` and every unexpected error (500) is mailed there right away, at most once an hour per error, with the URL and stack trace. It needs working `MAIL_*` settings. After changing `.env` run `php artisan config:cache` in `current` (or deploy again).
-
-For "the site is down" alerts use an external monitor such as UptimeRobot (free): an HTTP(s) monitor on `https://transporteri.rs/up` with a 5 minute interval. `/up` is Laravel's health route and returns 200 only when the app boots.
-
----
-
-## Image Storage
-
-Uploaded images are stored in `storage/app/public/ads/` and served via the `public/storage` symlink. The `storage/` directory is excluded from git — **back it up separately** on the production server and make sure your deploy process does not delete it.
-
----
-
-## Useful Commands
-
-```bash
-# Clear all caches
-php artisan optimize:clear
-
-# Fresh migration with seed (local only)
-php artisan migrate:fresh --seed
-
-# View application logs
-tail -f storage/logs/laravel.log
+php artisan optimize:clear          # clear all caches
+php artisan migrate:fresh --seed    # rebuild the local database (local only)
+tail -f storage/logs/laravel.log    # application log
 ```

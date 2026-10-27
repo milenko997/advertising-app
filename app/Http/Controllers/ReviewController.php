@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Notifications\NewReviewNotification;
 use App\Notifications\ReviewDeletedNotification;
 use App\Notifications\ReviewUpdatedNotification;
-use Illuminate\Database\QueryException;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -46,11 +46,8 @@ class ReviewController extends Controller
                 'rating'           => $validated['rating'],
                 'comment'          => isset($validated['comment']) ? strip_tags($validated['comment']) : null,
             ]);
-        } catch (QueryException $e) {
-            if (str_contains($e->getMessage(), 'UNIQUE constraint failed')) {
-                return back()->with('error', 'Već ste ostavili recenziju ovom korisniku.');
-            }
-            throw $e;
+        } catch (UniqueConstraintViolationException) {
+            return back()->with('error', 'Već ste ostavili recenziju ovom korisniku.');
         }
 
         $user->notify(new NewReviewNotification(auth()->user(), $validated['rating']));

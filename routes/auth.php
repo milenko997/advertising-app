@@ -34,6 +34,7 @@ Route::middleware('guest')->group(function () {
                 ->name('password.reset');
 
     Route::post('resetovanje-lozinke', [NewPasswordController::class, 'store'])
+                ->middleware('throttle:6,1')
                 ->name('password.update');
 });
 
@@ -52,7 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
                 ->name('password.confirm');
 
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store'])
+                ->middleware('throttle:6,1');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');

@@ -187,7 +187,7 @@ class AdminAdvertisementController extends Controller
             $owner->notify(new AdDeletedByAdminNotification($title));
 
             try {
-                Mail::to($owner->email)->send(new AdDeletedByAdminMail($owner->name, $title));
+                Mail::to($owner->email)->queue(new AdDeletedByAdminMail($owner->name, $title));
             } catch (\Exception) {}
         }
 
@@ -215,7 +215,7 @@ class AdminAdvertisementController extends Controller
                     $owner->notify(new AdDeletedByAdminNotification($title));
 
                     try {
-                        Mail::to($owner->email)->send(new AdDeletedByAdminMail($owner->name, $title));
+                        Mail::to($owner->email)->queue(new AdDeletedByAdminMail($owner->name, $title));
                     } catch (\Exception) {}
                 }
             }),

@@ -2,11 +2,13 @@
 
 namespace Tests\Feature\Admin;
 
+use App\Mail\AdDeletedByAdminMail;
 use App\Models\Advertisement;
 use App\Models\User;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -105,5 +107,20 @@ class AdminAdvertisementTest extends TestCase
                 'images'       => UploadedFile::fake()->image('single.jpg'),
             ])
             ->assertSessionHasErrors('images');
+    }
+
+    public function test_ad_deletion_emails_are_queued_not_sent_inline(): void
+    {
+        Mail::fake();
+        $ads = Advertisement::factory()->count(2)->create();
+
+        $this->actingAs($this->admin())
+            ->delete(route('admin.oglasi.destroy', $ads[0]));
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.advertisements.bulk'), ['action' => 'delete', 'ids' => [$ads[1]->id]]);
+
+        Mail::assertNothingSent();
+        Mail::assertQueued(AdDeletedByAdminMail::class, 2);
     }
 }

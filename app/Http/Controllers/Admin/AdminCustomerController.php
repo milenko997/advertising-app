@@ -167,23 +167,4 @@ class AdminCustomerController extends Controller
 
         return redirect()->route('admin.korisnici.index')->with('success', 'Korisnik je uspešno obrisan.');
     }
-
-    public function restore($id): RedirectResponse
-    {
-        $user = User::withTrashed()->with(['advertisements' => fn ($q) => $q->withTrashed()])->findOrFail($id);
-
-        if ($user->trashed()) {
-            $user->restore();
-
-            foreach ($user->advertisements as $post) {
-                if ($post->trashed()) {
-                    $post->restore();
-                }
-            }
-
-            return redirect()->back()->with('success', 'Korisnik i njegovi oglasi su uspešno vraćeni.');
-        }
-
-        return redirect()->back()->with('info', 'Korisnik nije obrisan.');
-    }
 }

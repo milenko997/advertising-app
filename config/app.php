@@ -10,6 +10,9 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    // Unexpected errors are mailed here (at most once an hour per error); empty turns it off
+    'error_mail' => env('ERROR_MAIL_TO'),
+
     'asset_url' => env('ASSET_URL', null),
 
     'timezone' => 'UTC',

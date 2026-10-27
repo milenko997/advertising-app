@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\ErrorMailer;
 use App\Http\Middleware\ContentSecurityPolicy;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\IsAdmin;
@@ -31,6 +32,8 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        $exceptions->report(fn (\Throwable $e) => ErrorMailer::send($e));
+
         $exceptions->respond(function (Response $response, \Throwable $e, $request) {
             if (!$request instanceof Request || $request->expectsJson()) {
                 return $response;

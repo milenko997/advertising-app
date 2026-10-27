@@ -336,6 +336,12 @@ restic restore latest --target /tmp/restore       # or a snapshot id instead of 
 # images:   /tmp/restore/var/www/advertising-app/shared/storage/app
 ```
 
+### 8. Error and uptime alerts
+
+Set `ERROR_MAIL_TO=you@example.com` in `shared/.env` and every unexpected error (500) is mailed there right away, at most once an hour per error, with the URL and stack trace. It needs working `MAIL_*` settings. After changing `.env` run `php artisan config:cache` in `current` (or deploy again).
+
+For "the site is down" alerts use an external monitor such as UptimeRobot (free): an HTTP(s) monitor on `https://transporteri.rs/up` with a 5 minute interval. `/up` is Laravel's health route and returns 200 only when the app boots.
+
 ---
 
 ## Image Storage

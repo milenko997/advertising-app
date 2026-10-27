@@ -304,6 +304,8 @@ Cron (`/etc/cron.d/transporteri-backup`):
 0 3 * * * deploy /bin/bash /var/www/advertising-app/current/deploy/backup.sh >> /home/deploy/backup.log 2>&1
 ```
 
+**Manual backup:** GitHub → **Actions** → **Backup now** → **Run workflow**. It runs the same script over SSH (with the deploy secrets) and shows the latest snapshots in the run summary.
+
 **Restore** (as `deploy`, after `set -a; . ~/.config/transporteri-backup.env; set +a`):
 
 ```bash
@@ -333,3 +335,6 @@ php artisan migrate:fresh --seed
 # View application logs
 tail -f storage/logs/laravel.log
 ```
+sudo -u deploy -H bash -c 'umask 077; read -p "Account ID: " A; read -p "Access Key ID: " K; read -sp "Secret Access Key: " S; echo; printf "%s\n" 
+  "RESTIC_REPOSITORY=s3:https://$A.r2.cloudflarestorage.com/transporteri-backup" "RESTIC_PASSWORD_FILE=/home/deploy/.config/restic-password" "AWS_ACCESS_KEY_ID=$K" 
+  "AWS_SECRET_ACCESS_KEY=$S" "AWS_DEFAULT_REGION=auto" "HEALTHCHECK_URL=" > ~/.config/transporteri-backup.env; echo "Fajl zapisan."'

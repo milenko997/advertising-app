@@ -103,21 +103,22 @@ class AdminAdvertisementController extends Controller
      */
     private function categoriesWithAds($categories, ?Category $selected)
     {
-        $used = Advertisement::distinct()->pluck('category_id');
-        if ($selected) {
-            $used->push($selected->id);
-        }
+        // Keyed by id so the lookups below don't scan the whole list
+        $used = Advertisement::distinct()->pluck('category_id')
+            ->push($selected?->id)
+            ->filter()
+            ->flip();
 
         return $categories->whereNull('parent_id')
             ->map(fn ($parent) => [
                 'id'       => $parent->id,
                 'name'     => $parent->name,
                 'children' => $categories->where('parent_id', $parent->id)
-                    ->filter(fn ($child) => $used->contains($child->id))
+                    ->filter(fn ($child) => $used->has($child->id))
                     ->values()
                     ->map(fn ($child) => ['id' => $child->id, 'name' => $child->name]),
             ])
-            ->filter(fn ($parent) => $used->contains($parent['id']) || $parent['children']->isNotEmpty())
+            ->filter(fn ($parent) => $used->has($parent['id']) || $parent['children']->isNotEmpty())
             ->values();
     }
 

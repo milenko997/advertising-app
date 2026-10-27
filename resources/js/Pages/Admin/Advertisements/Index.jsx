@@ -71,7 +71,10 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
     };
 
     const applyFilters = (changes, options = {}) => {
-        router.get('/admin/oglasi', { search, status, category: category ?? '', user: user ?? '', ...changes }, {
+        const params = { search, status, category, user, ...changes };
+        // Leave empty filters out of the URL
+        const query = Object.fromEntries(Object.entries(params).filter(([, v]) => v !== '' && v != null));
+        router.get('/admin/oglasi', query, {
             preserveState: true, preserveScroll: true, replace: true, ...options,
         });
     };

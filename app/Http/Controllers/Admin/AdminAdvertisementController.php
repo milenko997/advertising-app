@@ -44,6 +44,8 @@ class AdminAdvertisementController extends Controller
             'pinned_at'          => $ad->pinned_at?->format('d.m.Y'),
             'pinned_category_at' => $ad->pinned_category_at?->format('d.m.Y'),
             'created_at'  => $ad->created_at->format('d.m.Y'),
+            'expires_at'  => $ad->expires_at?->format('d.m.Y'),
+            'status'      => $this->status($ad),
             'category'    => $ad->category ? ['name' => $ad->category->name] : null,
             'user'        => $ad->user ? ['name' => $ad->user->name] : null,
         ])->values();
@@ -60,6 +62,18 @@ class AdminAdvertisementController extends Controller
             'ads'    => $this->paginationData($paginator, $ads->values()->all()),
             'search' => $search,
         ]);
+    }
+
+    /**
+     * "expiring" uses the same 7-day window as the ads:notify-expiring reminder.
+     */
+    private function status(Advertisement $ad): string
+    {
+        return match (true) {
+            $ad->isExpired()                                                  => 'expired',
+            $ad->expires_at !== null && $ad->expires_at->lte(now()->addDays(7)) => 'expiring',
+            default                                                           => 'active',
+        };
     }
 
     public function edit(Advertisement $advertisement)

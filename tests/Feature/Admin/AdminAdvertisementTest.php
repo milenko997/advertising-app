@@ -123,4 +123,22 @@ class AdminAdvertisementTest extends TestCase
         Mail::assertNothingSent();
         Mail::assertQueued(AdDeletedByAdminMail::class, 2);
     }
+
+    public function test_index_shows_expiry_status_of_each_ad(): void
+    {
+        $expired  = Advertisement::factory()->create(['expires_at' => now()->subDay()]);
+        $expiring = Advertisement::factory()->create(['expires_at' => now()->addDays(3)]);
+        $active   = Advertisement::factory()->create(['expires_at' => now()->addDays(30)]);
+
+        $this->actingAs($this->admin())
+            ->get(route('admin.oglasi.index'))
+            ->assertInertia(fn ($page) => $page
+                ->component('Admin/Advertisements/Index')
+                ->where('ads.data', fn ($ads) => collect($ads)->pluck('status', 'id')->sortKeys()->all() === collect([
+                    $expired->id  => 'expired',
+                    $expiring->id => 'expiring',
+                    $active->id   => 'active',
+                ])->sortKeys()->all())
+            );
+    }
 }

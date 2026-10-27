@@ -3,6 +3,26 @@ import { Head, Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
 
+const STATUS = {
+    active:   { label: 'Aktivan',       className: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300', date: 'Ističe' },
+    expiring: { label: 'Ističe uskoro', className: 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',         date: 'Ističe' },
+    expired:  { label: 'Istekao',       className: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-300',               date: 'Isteklo' },
+};
+
+function StatusBadge({ ad }) {
+    const status = STATUS[ad.status] ?? STATUS.active;
+    return (
+        <div>
+            <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold whitespace-nowrap ${status.className}`}>
+                {status.label}
+            </span>
+            {ad.expires_at && (
+                <p className="text-[11px] text-gray-400 dark:text-neutral-500 mt-0.5 whitespace-nowrap">{status.date} {ad.expires_at}</p>
+            )}
+        </div>
+    );
+}
+
 export default function AdminAdvertisementsIndex({ ads: initialAds, search: initialSearch = '' }) {
     const [adList, setAdList] = useState(initialAds.data);
     const [currentPage, setCurrentPage] = useState(initialAds.current_page);
@@ -126,7 +146,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                     <div className="flex flex-wrap items-start justify-between gap-3 mb-8">
                         <div>
                             <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100">Oglasi</h1>
-                            <p className="text-sm text-gray-500 dark:text-neutral-400 mt-0.5">Svi aktivni oglasi</p>
+                            <p className="text-sm text-gray-500 dark:text-neutral-400 mt-0.5">Svi oglasi</p>
                         </div>
                     </div>
 
@@ -201,13 +221,14 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Korisnik</th>
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Cena</th>
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Datum</th>
+                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider">Status</th>
                                     <th className="px-6 py-3" />
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100 dark:divide-neutral-700">
                                 {adList.length === 0 ? (
                                     <tr>
-                                        <td colSpan={7} className="px-6 py-16 text-center text-gray-500 dark:text-neutral-400">
+                                        <td colSpan={8} className="px-6 py-16 text-center text-gray-500 dark:text-neutral-400">
                                             {search ? 'Nema oglasa koji odgovaraju pretrazi.' : 'Nema oglasa.'}
                                         </td>
                                     </tr>
@@ -233,6 +254,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                         <td className="px-4 py-4 text-sm text-gray-600 dark:text-neutral-400">{ad.user?.name}</td>
                                         <td className="px-4 py-4 text-sm font-semibold text-orange-600 whitespace-nowrap">{ad.price || '—'}</td>
                                         <td className="px-4 py-4 text-sm text-gray-400 dark:text-neutral-500 whitespace-nowrap">{ad.created_at}</td>
+                                        <td className="px-4 py-4"><StatusBadge ad={ad} /></td>
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 {/* Global pin */}
@@ -347,6 +369,10 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                             <div>
                                                 <p className="text-gray-400 dark:text-neutral-500">Datum</p>
                                                 <p className="text-gray-500 dark:text-neutral-400">{ad.created_at}</p>
+                                            </div>
+                                            <div className="col-span-2">
+                                                <p className="text-gray-400 dark:text-neutral-500 mb-0.5">Status</p>
+                                                <StatusBadge ad={ad} />
                                             </div>
                                         </div>
                                         <div className="flex flex-wrap gap-2 ml-7">

@@ -6,6 +6,8 @@ use App\Models\Advertisement;
 use App\Models\User;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class AdminAdvertisementTest extends TestCase
@@ -85,5 +87,23 @@ class AdminAdvertisementTest extends TestCase
             ->assertRedirect(route('admin.oglasi.index'));
 
         $this->assertSoftDeleted('advertisements', ['id' => $ad->id]);
+    }
+
+    public function test_update_rejects_images_that_are_not_an_array(): void
+    {
+        Storage::fake('public');
+        $ad = Advertisement::factory()->create();
+
+        $this->actingAs($this->admin())
+            ->put(route('admin.oglasi.update', $ad), [
+                'title'        => 'Admin Updated Title',
+                'description'  => 'Updated description text here',
+                'availability' => 'available',
+                'phone'        => '0612345678',
+                'location'     => 'Belgrade',
+                'category_id'  => $ad->category_id,
+                'images'       => UploadedFile::fake()->image('single.jpg'),
+            ])
+            ->assertSessionHasErrors('images');
     }
 }

@@ -101,6 +101,7 @@ class AdminAdvertisementController extends Controller
             'location'     => 'required|string|min:2|max:255',
             'category_id'  => 'required|exists:categories,id',
             'image'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240|dimensions:max_width=8192,max_height=8192',
+            'images'       => 'nullable|array|max:10',
             'images.*'     => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240|dimensions:max_width=8192,max_height=8192',
         ]);
 

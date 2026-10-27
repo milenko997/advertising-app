@@ -181,6 +181,10 @@ jobs:
 
           php current/artisan queue:restart
 
+          # PHP-FPM caches resolved paths and opcode for a while; a graceful reload serves the new release at once
+          sudo -n /usr/bin/systemctl reload php8.3-fpm \
+            || echo "::warning::Could not reload php8.3-fpm; the previous release may be served for up to 2 minutes."
+
           # Keep the 5 newest releases for rollbacks
           ls -1d releases/*/ | sort -r | tail -n +6 | xargs -r rm -rf
           REMOTE

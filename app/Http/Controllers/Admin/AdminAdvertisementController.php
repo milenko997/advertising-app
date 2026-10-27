@@ -100,9 +100,9 @@ class AdminAdvertisementController extends Controller
             'phone'        => ['required', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
             'location'     => 'required|string|min:2|max:255',
             'category_id'  => 'required|exists:categories,id',
-            'image'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240|dimensions:max_width=8192,max_height=8192',
+            'image'        => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240|dimensions:max_width=8192,max_height=8192',
             'images'       => 'nullable|array|max:10',
-            'images.*'     => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240|dimensions:max_width=8192,max_height=8192',
+            'images.*'     => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240|dimensions:max_width=8192,max_height=8192',
         ]);
 
         if ($request->hasFile('images') &&

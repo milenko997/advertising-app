@@ -24,7 +24,7 @@ class UpdateCustomerRequest extends FormRequest
             'email'         => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($customer)],
             'role'          => 'required|in:admin,customer',
             'phone'         => ['nullable', 'regex:/^\+?[0-9][0-9 \-\(\)\.]{5,19}$/'],
-            'avatar'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1900|dimensions:max_width=8192,max_height=8192',
+            'avatar'        => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:1900|dimensions:max_width=8192,max_height=8192',
             'remove_avatar' => 'nullable|boolean',
         ];
 

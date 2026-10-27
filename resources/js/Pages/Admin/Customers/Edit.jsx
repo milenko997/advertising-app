@@ -93,7 +93,7 @@ export default function CustomersEdit({ customer }) {
                                 </div>
                                 <input
                                     type="file"
-                                    accept="image/jpeg,image/png,image/jpg,image/gif"
+                                    accept="image/jpeg,image/png,image/jpg,image/gif,image/webp"
                                     ref={fileRef}
                                     onChange={handleFileChange}
                                     className="hidden"

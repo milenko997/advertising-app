@@ -33,7 +33,7 @@ const faqs = [
             },
             {
                 q: 'Koliko slika mogu da otpremim po oglasu?',
-                a: 'Možete otpremiti do 10 slika po oglasu. Podržani formati su JPEG, PNG, GIF i JPG. Maksimalna veličina fajla je 10 MB po slici.',
+                a: 'Možete otpremiti do 10 slika po oglasu. Podržani formati su JPEG, PNG, GIF i WEBP. Maksimalna veličina fajla je 10 MB po slici.',
             },
             {
                 q: 'Koliko dugo oglas ostaje aktivan?',

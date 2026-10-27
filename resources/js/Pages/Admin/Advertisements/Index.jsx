@@ -23,7 +23,14 @@ function StatusBadge({ ad }) {
     );
 }
 
-export default function AdminAdvertisementsIndex({ ads: initialAds, search: initialSearch = '' }) {
+const FILTERS = [
+    { value: '',         label: 'Svi' },
+    { value: 'active',   label: 'Aktivni' },
+    { value: 'expiring', label: 'Ističu uskoro' },
+    { value: 'expired',  label: 'Istekli' },
+];
+
+export default function AdminAdvertisementsIndex({ ads: initialAds, search: initialSearch = '', status = '', counts = {} }) {
     const [adList, setAdList] = useState(initialAds.data);
     const [currentPage, setCurrentPage] = useState(initialAds.current_page);
     const [hasMore, setHasMore] = useState(initialAds.current_page < initialAds.last_page);
@@ -45,8 +52,12 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
         setSearch(value);
         clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => {
-            router.get('/admin/oglasi', { search: value }, { preserveState: true, replace: true });
+            router.get('/admin/oglasi', { search: value, status }, { preserveState: true, replace: true });
         }, 400);
+    };
+
+    const changeStatus = (value) => {
+        router.get('/admin/oglasi', { search, status: value }, { preserveState: true, preserveScroll: true, replace: true });
     };
 
     const allSelected = adList.length > 0 && selected.size === adList.length;
@@ -127,7 +138,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
         setLoading(true);
         const nextPage = currentPage + 1;
         try {
-            const { data } = await axios.get(`/admin/oglasi?page=${nextPage}&search=${encodeURIComponent(search)}`);
+            const { data } = await axios.get(`/admin/oglasi?page=${nextPage}&search=${encodeURIComponent(search)}&status=${encodeURIComponent(status)}`);
             setAdList(prev => [...prev, ...data.ads]);
             setHasMore(data.hasMore);
             setCurrentPage(nextPage);
@@ -150,7 +161,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                         </div>
                     </div>
 
-                    <div className="mb-4">
+                    <div className="mb-4 flex flex-col sm:flex-row sm:items-center gap-3">
                         <input
                             type="search"
                             value={search}
@@ -158,6 +169,29 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                             placeholder="Pretraži po naslovu, korisniku, kategoriji, lokaciji…"
                             className="w-full sm:w-96 px-4 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100 dark:placeholder-neutral-400"
                         />
+                        <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filter po statusu">
+                            {FILTERS.map(f => {
+                                const activeFilter = status === f.value;
+                                return (
+                                    <button
+                                        key={f.value || 'all'}
+                                        type="button"
+                                        onClick={() => changeStatus(f.value)}
+                                        aria-pressed={activeFilter}
+                                        className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition inline-flex items-center gap-1.5 ${
+                                            activeFilter
+                                                ? 'bg-orange-600 border-orange-600 text-white'
+                                                : 'border-gray-300 dark:border-neutral-600 text-gray-600 dark:text-neutral-300 bg-white dark:bg-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-700'
+                                        }`}
+                                    >
+                                        {f.label}
+                                        <span className={`text-[11px] ${activeFilter ? 'text-orange-100' : 'text-gray-400 dark:text-neutral-500'}`}>
+                                            {counts[f.value || 'all'] ?? 0}
+                                        </span>
+                                    </button>
+                                );
+                            })}
+                        </div>
                     </div>
 
                     {/* Bulk toolbar */}
@@ -229,7 +263,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                                 {adList.length === 0 ? (
                                     <tr>
                                         <td colSpan={8} className="px-6 py-16 text-center text-gray-500 dark:text-neutral-400">
-                                            {search ? 'Nema oglasa koji odgovaraju pretrazi.' : 'Nema oglasa.'}
+                                            {search || status ? 'Nema oglasa koji odgovaraju filteru.' : 'Nema oglasa.'}
                                         </td>
                                     </tr>
                                 ) : adList.map(ad => (
@@ -336,7 +370,7 @@ export default function AdminAdvertisementsIndex({ ads: initialAds, search: init
                             <div className="divide-y divide-gray-100 dark:divide-neutral-700">
                                 {adList.length === 0 ? (
                                     <p className="px-4 py-10 text-center text-sm text-gray-400 dark:text-neutral-500">
-                                        {search ? 'Nema oglasa koji odgovaraju pretrazi.' : 'Nema oglasa.'}
+                                        {search || status ? 'Nema oglasa koji odgovaraju filteru.' : 'Nema oglasa.'}
                                     </p>
                                 ) : adList.map(ad => (
                                     <div key={ad.id} className={`p-4 ${selected.has(ad.id) ? 'bg-orange-50 dark:bg-orange-900/20' : ''}`}>

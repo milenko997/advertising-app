@@ -23,16 +23,22 @@ class AdminAdvertisementController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search', '');
+        $status = in_array($request->input('status'), self::STATUSES, true) ? $request->input('status') : '';
 
-        $paginator = Advertisement::with('category', 'user')
+        $base = Advertisement::query()
             ->when($search, fn ($q) => $q->where(fn ($q) => $q
                 ->where('title', 'like', "%{$search}%")
                 ->orWhere('location', 'like', "%{$search}%")
                 ->orWhereHas('user', fn ($q) => $q->where('name', 'like', "%{$search}%"))
                 ->orWhereHas('category', fn ($q) => $q->where('name', 'like', "%{$search}%"))
-            ))
+            ));
+
+        $paginator = (clone $base)
+            ->with('category', 'user')
+            ->when($status, fn ($q) => $this->whereStatus($q, $status))
             ->latest()
-            ->paginate(21);
+            ->paginate(21)
+            ->withQueryString();
 
         $ads = $paginator->getCollection()->map(fn ($ad) => [
             'id'          => $ad->id,
@@ -58,10 +64,34 @@ class AdminAdvertisementController extends Controller
             ]);
         }
 
+        $counts = ['all' => (clone $base)->count()];
+        foreach (self::STATUSES as $s) {
+            $counts[$s] = $this->whereStatus(clone $base, $s)->count();
+        }
+
         return Inertia::render('Admin/Advertisements/Index', [
             'ads'    => $this->paginationData($paginator, $ads->values()->all()),
             'search' => $search,
+            'status' => $status,
+            'counts' => $counts,
         ]);
+    }
+
+    private const STATUSES = ['active', 'expiring', 'expired'];
+
+    /**
+     * Query counterpart of status(); keep the two in sync.
+     */
+    private function whereStatus($query, string $status)
+    {
+        $now  = now();
+        $soon = now()->addDays(7);
+
+        return match ($status) {
+            'expired'  => $query->whereNotNull('expires_at')->where('expires_at', '<=', $now),
+            'expiring' => $query->where('expires_at', '>', $now)->where('expires_at', '<=', $soon),
+            'active'   => $query->where(fn ($q) => $q->whereNull('expires_at')->orWhere('expires_at', '>', $soon)),
+        };
     }
 
     /**

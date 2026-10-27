@@ -141,4 +141,34 @@ class AdminAdvertisementTest extends TestCase
                 ])->sortKeys()->all())
             );
     }
+
+    public function test_index_can_be_filtered_by_status_and_counts_each_status(): void
+    {
+        $expired  = Advertisement::factory()->count(2)->create(['expires_at' => now()->subDay()]);
+        $expiring = Advertisement::factory()->create(['expires_at' => now()->addDays(3)]);
+        Advertisement::factory()->create(['expires_at' => now()->addDays(30)]);
+
+        $admin = $this->admin();
+
+        $this->actingAs($admin)
+            ->get(route('admin.oglasi.index', ['status' => 'expired']))
+            ->assertInertia(fn ($page) => $page
+                ->where('status', 'expired')
+                ->where('ads.data', fn ($ads) => collect($ads)->pluck('id')->sort()->values()->all() === $expired->pluck('id')->sort()->values()->all())
+                ->where('counts', ['all' => 4, 'active' => 1, 'expiring' => 1, 'expired' => 2])
+            );
+
+        $this->actingAs($admin)
+            ->get(route('admin.oglasi.index', ['status' => 'expiring']))
+            ->assertInertia(fn ($page) => $page
+                ->where('ads.data', fn ($ads) => collect($ads)->pluck('id')->all() === [$expiring->id])
+            );
+
+        $this->actingAs($admin)
+            ->get(route('admin.oglasi.index', ['status' => 'bogus']))
+            ->assertInertia(fn ($page) => $page
+                ->where('status', '')
+                ->has('ads.data', 4)
+            );
+    }
 }

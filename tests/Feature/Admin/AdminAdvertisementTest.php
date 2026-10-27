@@ -278,4 +278,23 @@ class AdminAdvertisementTest extends TestCase
 
         $this->assertTrue($ad->fresh()->isExpired());
     }
+
+    public function test_category_filter_only_lists_categories_with_ads(): void
+    {
+        $parent = Category::factory()->create(['parent_id' => null]);
+        $used   = Category::factory()->create(['parent_id' => $parent->id]);
+        $unused = Category::factory()->create(['parent_id' => $parent->id]);
+        $empty  = Category::factory()->create(['parent_id' => null]);
+        Advertisement::factory()->create(['category_id' => $used->id]);
+
+        $this->actingAs($this->admin())
+            ->get(route('admin.oglasi.index'))
+            ->assertInertia(function ($page) use ($parent, $used, $unused, $empty) {
+                $categories = collect($page->toArray()['props']['categories']);
+                $this->assertSame([$parent->id], $categories->pluck('id')->intersect([$parent->id, $empty->id])->values()->all());
+                $children = collect($categories->firstWhere('id', $parent->id)['children'])->pluck('id')->all();
+                $this->assertContains($used->id, $children);
+                $this->assertNotContains($unused->id, $children);
+            });
+    }
 }

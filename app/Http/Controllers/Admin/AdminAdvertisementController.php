@@ -93,13 +93,32 @@ class AdminAdvertisementController extends Controller
             'category'   => $category?->id,
             'user'       => $user?->id,
             'users'      => $users->map(fn ($u) => ['id' => $u->id, 'name' => $u->name, 'email' => $u->email]),
-            'categories' => $categories->whereNull('parent_id')->values()->map(fn ($parent) => [
+            'categories' => $this->categoriesWithAds($categories, $category),
+        ]);
+    }
+
+    /**
+     * Filter options: only categories that have ads (a parent also counts the ads in its
+     * subcategories), plus the selected one so the dropdown never loses the current filter.
+     */
+    private function categoriesWithAds($categories, ?Category $selected)
+    {
+        $used = Advertisement::distinct()->pluck('category_id');
+        if ($selected) {
+            $used->push($selected->id);
+        }
+
+        return $categories->whereNull('parent_id')
+            ->map(fn ($parent) => [
                 'id'       => $parent->id,
                 'name'     => $parent->name,
-                'children' => $categories->where('parent_id', $parent->id)->values()
+                'children' => $categories->where('parent_id', $parent->id)
+                    ->filter(fn ($child) => $used->contains($child->id))
+                    ->values()
                     ->map(fn ($child) => ['id' => $child->id, 'name' => $child->name]),
-            ]),
-        ]);
+            ])
+            ->filter(fn ($parent) => $used->contains($parent['id']) || $parent['children']->isNotEmpty())
+            ->values();
     }
 
     private const STATUSES = ['active', 'expiring', 'expired'];

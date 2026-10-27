@@ -282,7 +282,7 @@ Deploy key: run `ssh-keygen -t ed25519 -f deploy_key -N ""` locally, append `dep
 
 ### 7. Backups (Cloudflare R2)
 
-`deploy/backup.sh` runs every night as the `deploy` user. It dumps the database (`php artisan backup:dump-database`) and uses [restic](https://restic.net) to upload it, together with `shared/.env` and `shared/storage/app` (uploaded images), to a Cloudflare R2 bucket. Backups are encrypted before they leave the server and incremental, so only new or changed files are uploaded. It keeps 14 daily, 8 weekly and 12 monthly snapshots.
+`deploy/backup.sh` runs every night as the `deploy` user. It dumps the database (`php artisan backup:dump-database`) and uses [restic](https://restic.net) to upload it, together with `shared/.env` and `shared/storage/app` (uploaded images), to a Cloudflare R2 bucket. Backups are encrypted before they leave the server and incremental, so only new or changed files are uploaded. It keeps 14 daily, 8 weekly and 12 monthly nightly snapshots, plus the last 10 manual ones.
 
 Settings live in `/home/deploy/.config/transporteri-backup.env` (not in git):
 
@@ -298,9 +298,26 @@ HEALTHCHECK_URL=
 
 Keep a copy of the restic password outside the server (password manager). Without it the backups cannot be decrypted.
 
+One-time setup (as root on the server): fill in the three values, then create the password file and initialise the repository:
+
+```bash
+F=/home/deploy/.config/transporteri-backup.env
+mkdir -p /home/deploy/.config
+echo 'RESTIC_REPOSITORY=s3:https://<ACCOUNT_ID>.r2.cloudflarestorage.com/transporteri-backup' > $F
+echo 'RESTIC_PASSWORD_FILE=/home/deploy/.config/restic-password' >> $F
+echo 'AWS_ACCESS_KEY_ID=<R2 access key id>' >> $F
+echo 'AWS_SECRET_ACCESS_KEY=<R2 secret access key>' >> $F
+echo 'AWS_DEFAULT_REGION=auto' >> $F
+openssl rand -base64 32 > /home/deploy/.config/restic-password
+chown -R deploy:deploy /home/deploy/.config
+chmod 600 /home/deploy/.config/*
+sudo -u deploy -H bash -c 'set -a; . ~/.config/transporteri-backup.env; set +a; restic init'
+```
+
 Cron (`/etc/cron.d/transporteri-backup`):
 
 ```
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 0 3 * * * deploy /bin/bash /var/www/advertising-app/current/deploy/backup.sh >> /home/deploy/backup.log 2>&1
 ```
 
@@ -335,6 +352,3 @@ php artisan migrate:fresh --seed
 # View application logs
 tail -f storage/logs/laravel.log
 ```
-sudo -u deploy -H bash -c 'umask 077; read -p "Account ID: " A; read -p "Access Key ID: " K; read -sp "Secret Access Key: " S; echo; printf "%s\n" 
-  "RESTIC_REPOSITORY=s3:https://$A.r2.cloudflarestorage.com/transporteri-backup" "RESTIC_PASSWORD_FILE=/home/deploy/.config/restic-password" "AWS_ACCESS_KEY_ID=$K" 
-  "AWS_SECRET_ACCESS_KEY=$S" "AWS_DEFAULT_REGION=auto" "HEALTHCHECK_URL=" > ~/.config/transporteri-backup.env; echo "Fajl zapisan."'
